@@ -1,6 +1,6 @@
 class Manage::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check, only: [:destory, :new, :create]
+  #before_action :check, only: [:destory, :new, :create]
 
   def check
     if current_user.role!=User::ADMIN

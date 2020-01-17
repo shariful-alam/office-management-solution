@@ -1,5 +1,5 @@
 <% if current_user.role==User::ADMIN %>
-    <button><%= link_to "Add User information", new_manage_user_path %></button>
+    <%= link_to "Add User information", new_manage_user_path, class:"btn btn-primary" %>
 <% end %>
 <% @number=1 %>
 <h1>User List</h1>
@@ -36,4 +36,6 @@
       </tr>
   <% end %>
 </table>
-<%= link_to "Back to main page", '/' %>
+<div class="form-group">
+  <%= link_to "Back", root_path, class: "btn btn-primary" %>
+</div>

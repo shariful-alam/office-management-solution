@@ -1,5 +1,5 @@
 <% if current_user.role==User::ADMIN %>
-    <button><%= link_to "Add Budget information", new_budget_path %></button>
+    <%= link_to "Add Budget information", new_budget_path , class:"btn btn-primary"%>
 <% end %>
 <p class="text-success"><%= flash[:notices] %></p>
 <% @number=1 %>
@@ -36,4 +36,6 @@
       </tr>
   <% end %>
 </table>
-<%= link_to "Back to main page", '/' %>
+<div class="form-group">
+  <%= link_to "Back", root_path, class: "btn btn-primary" %>
+</div>

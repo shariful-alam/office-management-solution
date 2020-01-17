@@ -11,5 +11,8 @@
     <li class="list-group-item"><b>Time : </b><%= @expense.created_at %></li>
   </ul>
 
-  <%= link_to "Back", expenses_path %>
+  <br>
+  <div class="form-group">
+    <%= link_to "Back", expenses_path, class: "btn btn-primary" %>
+  </div>
 </div>

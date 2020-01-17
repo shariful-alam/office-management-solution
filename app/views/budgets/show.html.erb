@@ -9,6 +9,8 @@
     <li class="list-group-item"><b>Admin : </b><%= @budget.user.name %></li>
     <li class="list-group-item"><b>Time : </b><%= @budget.created_at %></li>
   </ul>
-
-  <%= link_to "Back", budgets_path %>
+  <br>
+  <div class="form-group">
+    <%= link_to "Back", budgets_path, class: "btn btn-primary" %>
+  </div>
 </div>

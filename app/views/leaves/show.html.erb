@@ -6,5 +6,5 @@
   <label>Leave Type : </label><%= @leave.leave_type %><br />
   <label>Reason for Leave : </label><%= @leave.reason %><br />
   <label>Status : </label><%= @leave.status %><br />
-  <p><%= link_to "Back", leaves_path %></p>
+  <%= link_to "Back", leaves_path, class: "btn btn-primary" %>
 </div>

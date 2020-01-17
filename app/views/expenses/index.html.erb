@@ -1,9 +1,7 @@
-<button><%= link_to "Add Expense information", new_expense_path %></button>
+<%= link_to "Add Expense information", new_expense_path, class:"btn btn-primary" %>
 <br>
 <br>
-
 <p class="text-success"><%= flash[:notices] %></p>
-
 <% @number=1 %>
 <h1>Expense List</h1>
 <table class="table table-bordered">
@@ -59,4 +57,7 @@
     <td colspan="3"><%= @total %></td>
   </tr>
 </table>
-<%= link_to "Back to main page", '/' %>
+
+<div class="form-group">
+  <%= link_to "Back", root_path, class: "btn btn-primary" %>
+</div>
