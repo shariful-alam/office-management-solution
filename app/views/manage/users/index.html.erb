@@ -1,0 +1,39 @@
+<% if current_user.role==User::ADMIN %>
+    <button><%= link_to "Add User information", new_manage_user_path %></button>
+<% end %>
+<% @number=1 %>
+<h1>User List</h1>
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Role</th>
+    <th>Action</th>
+
+  </tr>
+  </thead>
+
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= @number %> </td>
+        <% @number+=1 %>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.phone %></td>
+        <td><%= user.role %></td>
+        <% if current_user.role==User::ADMIN %>
+            <td>
+              <%= link_to "Show", manage_user_path(user) %> /
+              <%= link_to "Edit", edit_manage_user_path(user) %> /
+              <%= link_to "Delete", manage_user_path(user), method: :delete, data: {confirm: "Are you sure?"} %>
+            </td>
+        <% else %>
+            <td><%= link_to "Show", manage_user_path(user) %></td>
+        <% end %>
+      </tr>
+  <% end %>
+</table>
+<%= link_to "Back to main page", '/' %>

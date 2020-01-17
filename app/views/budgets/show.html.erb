@@ -1,0 +1,14 @@
+<div style="padding-right: 700px;">
+  <h1>Show Details</h1>
+  <p class="text-success"><%= flash[:notices] %></p>
+  <ul class="list-group">
+    <li class="list-group-item"><b>Year : </b><%= @budget.year %></li>
+    <li class="list-group-item"><b>Month : </b><%= @budget.month %></li>
+    <li class="list-group-item"><b>Amount : </b><%= @budget.amount %></li>
+    <li class="list-group-item"><b>Remaining : </b><%= @budget.remaining %></li>
+    <li class="list-group-item"><b>Admin : </b><%= @budget.user.name %></li>
+    <li class="list-group-item"><b>Time : </b><%= @budget.created_at %></li>
+  </ul>
+
+  <%= link_to "Back", budgets_path %>
+</div>

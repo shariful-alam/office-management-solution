@@ -1,0 +1,39 @@
+<% if current_user.role==User::ADMIN %>
+    <button><%= link_to "Add Budget information", new_budget_path %></button>
+<% end %>
+<p class="text-success"><%= flash[:notices] %></p>
+<% @number=1 %>
+<h1>Budget List</h1>
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Year - Month</th>
+    <th>Amount</th>
+    <th>Remaining</th>
+    <th>Admin</th>
+    <% if current_user.role==User::ADMIN %>
+        <th>Action</th>
+    <% end %>
+  </tr>
+  </thead>
+
+  <% @budgets.each do |budget| %>
+      <tr>
+        <td><%= @number %> </td>
+        <% @number+=1 %>
+        <td><%= budget.year %> - <%= budget.month %></td>
+        <td><%= budget.amount %></td>
+        <td><%= budget.remaining %></td>
+        <td><%= budget.user.name %></td>
+        <% if current_user.role==User::ADMIN %>
+            <td>
+              <%= link_to "Show", budget_path(budget) %> /
+              <%= link_to "Edit", edit_budget_path(budget) %> /
+              <%= link_to "Delete", budget_path(budget), method: :delete, data: {confirm: "Are you sure?"} %>
+            </td>
+        <% end %>
+      </tr>
+  <% end %>
+</table>
+<%= link_to "Back to main page", '/' %>

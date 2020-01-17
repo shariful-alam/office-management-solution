@@ -1,0 +1,12 @@
+<div style="padding-right: 700px;">
+  <h1>Show Details</h1>
+
+  <ul class="list-group">
+    <li class="list-group-item"><b>Name : </b><%= @user.name %></li>
+    <li class="list-group-item"><b>Email : </b><%= @user.email %></li>
+    <li class="list-group-item"><b>Phone : </b><%= @user.phone %></li>
+    <li class="list-group-item"><b>Role : </b><%= @user.role %></li>
+  </ul>
+
+  <%= link_to "Back", manage_users_path %>
+</div>

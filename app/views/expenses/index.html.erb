@@ -1,0 +1,62 @@
+<button><%= link_to "Add Expense information", new_expense_path %></button>
+<br>
+<br>
+
+<p class="text-success"><%= flash[:notices] %></p>
+
+<% @number=1 %>
+<h1>Expense List</h1>
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Employee</th>
+    <th>Cost</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+
+  <% @expenses.each do |expense| %>
+      <tr>
+        <td><%= @number %> </td>
+        <% @number+=1 %>
+        <td><%= expense.name %></td>
+        <td><%= expense.user.name %></td>
+        <td><%= expense.cost %></td>
+        <td><%= expense.status %></td>
+        <td>
+          <% if current_user.role==User::ADMIN %>
+              <% if expense.status==Expense::APPROVED %>
+                  <%= link_to "Undo", approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure to approve?'} %>
+                  /
+                  <%= link_to "Show", expense_path(expense) %>
+              <% else %>
+                  <%= link_to "Approve", approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure to approve?'} %>
+                  /
+                  <%= link_to "Show", expense_path(expense) %>
+                  <% if expense.user_id==current_user.id %>
+                      / <%= link_to "Edit", edit_expense_path(expense) %> /
+                      <%= link_to "Delete", expense_path(expense), method: :delete, data: {confirm: "Are you sure?"} %>
+                  <% end %>
+              <% end %>
+          <% else %>
+              <%= link_to "Show", expense_path(expense) %>
+              <% if expense.status!=Expense::APPROVED and current_user.id==expense.user.id %>
+                  / <%= link_to "Edit", edit_expense_path(expense) %> /
+                  <%= link_to "Delete", expense_path(expense), method: :delete, data: {confirm: "Are you sure?"} %>
+              <% end %>
+          <% end %>
+
+
+        </td>
+      </tr>
+  <% end %>
+
+  <tr>
+    <td colspan="3">Total</td>
+    <td colspan="3"><%= @total %></td>
+  </tr>
+</table>
+<%= link_to "Back to main page", '/' %>

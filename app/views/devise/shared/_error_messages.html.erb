@@ -1,0 +1,7 @@
+<% if resource.errors.any? %>
+    <div id="error_explanation">
+      <% resource.errors.full_messages.each do |message| %>
+          <p class="alert alert-danger"> <%= message if resource.errors.full_messages.first == message %> </p>
+      <% break end %>
+    </div>
+<% end %>
