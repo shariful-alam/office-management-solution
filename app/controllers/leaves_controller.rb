@@ -13,6 +13,7 @@ class LeavesController < ApplicationController
   def create
     @leave = Leave.new(leave_params)
     @leave.save
+    #raise @leave.inspect
     flash[:notice] = "Your Application Has Bees Submitted for Approval"
     redirect_to leaves_path
   end
