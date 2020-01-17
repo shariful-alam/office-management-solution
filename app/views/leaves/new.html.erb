@@ -26,9 +26,10 @@
         <%= collection_select(:leave, :user_id, User.all, :id, :name, {}, {:multiple => false}) %>
       </div>
       <br/>
-      <div>
-        <%= l.submit "Save" %> |
-        <%= link_to "Back", root_path %>
+      <div class="form-group">
+        <%= l.submit 'Save', class: "btn btn-success" %> |
+        <%= link_to "Back", root_path, class: "btn btn-primary" %>
       </div>
-  <% end %>
+
+<% end %>
 </div>

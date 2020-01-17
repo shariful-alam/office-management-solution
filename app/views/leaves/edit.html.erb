@@ -32,9 +32,9 @@
         <%= l.select(:status, options_for_select([["Approve", true], ["Pending", false]])) %>
       </div>
       <br/>
-      <div>
-        <%= l.submit "Save" %> |
-        <button><%= link_to "Back", leaves_path %></button>
+      <div class="form-group">
+        <%= l.submit 'Submit', class: "btn btn-success" %> |
+        <%= link_to "Back", root_path, class: "btn btn-primary" %>
       </div>
   <% end %>
 </div>
