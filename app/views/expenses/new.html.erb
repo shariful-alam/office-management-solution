@@ -32,8 +32,9 @@
 
 
       <div class="form-group">
-        <%= form.submit 'Submit', class: "btn btn-primary" %>
+        <%= form.submit 'Submit', class: "btn btn-success" %> |
+        <%= link_to "Back", expenses_path, class: "btn btn-primary" %>
       </div>
   <% end %>
-  <%= link_to "Back", expenses_path %>
+
 </div>
