@@ -1,0 +1,69 @@
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+</style>
+<div class="container">
+  <h1>List of Leave</h1>
+  <button class="btn btn-light"><p><%= link_to "Apply for Leave", new_leafe_path %></p></button>
+  <br/>
+  <br/>
+  <table>
+    <tr>
+      <th>Employee Name</th>
+      <th>Starting Date</th>
+      <th>Ending Date</th>
+      <th>Leave Type</th>
+      <th>Reason of Leave</th>
+      <th>Status</th>
+      <th style="text-align: center;">Action</th>
+    </tr>
+
+    <% @leave.each do |l| %>
+        <tr>
+          <td>
+            <%#= raise l.user.name %>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.start_date %>
+          </td>
+          <td>
+            <%= l.end_date %>
+          </td>
+          <td>
+            <%= l.leave_type %>
+          </td>
+          <td>
+            <%= l.reason %>
+          </td>
+          <td>
+            <% if l.status == true %>
+                <%= "Approved" %>
+            <% else %>
+                <%= "Pending" %>
+            <% end %>
+          </td>
+          <td style="text-align: center;">
+            <%= link_to "Details", leafe_path(l) %> |
+            <%= link_to "Edit", edit_leafe_path(l) %> |
+            <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Confirm Delete??"} %>
+          </td>
+        </tr>
+    <% end %>
+
+  </table>
+</div>
+

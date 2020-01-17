@@ -1,0 +1,40 @@
+<div class="container">
+  <h1>Edit</h1>
+
+  <%= form_for(@leave) do |l| %>
+      <div>
+        <%= l.label :start_date %> <br/>
+        <%= l.date_field :start_date %>
+      </div>
+      <br/>
+      <div>
+        <%= l.label :end_date %> <br/>
+        <%= l.date_field :end_date %>
+      </div>
+      <br/>
+      <div>
+        <%= l.label :reason %> <br/>
+        <%= l.text_area :reason %>
+      </div>
+      <br/>
+      <div>
+        <%= l.label :Leave_type %> <br/>
+        <%= l.select(:leave_type, Leave::LEAVE_TYPE) %>
+      </div>
+      <br/>
+      <div>
+        <%= l.label :user_id %> <br/>
+        <%= collection_select(:leave, :user_id, User.all, :id, :name, {}, {:multiple => false}) %>
+      </div>
+      <br/>
+      <div>
+        <%= l.label :status %> <br/>
+        <%= l.select(:status, options_for_select([["Approve", true], ["Pending", false]])) %>
+      </div>
+      <br/>
+      <div>
+        <%= l.submit "Save" %> |
+        <button><%= link_to "Back", leaves_path %></button>
+      </div>
+  <% end %>
+</div>

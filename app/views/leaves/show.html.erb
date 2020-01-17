@@ -1,0 +1,10 @@
+<h1>Details of Leave of <%= @leave.user.name %></h1>
+
+<div>
+  <label>From : </label><%= @leave.start_date %> <br />
+  <label>To : </label><%= @leave.end_date %><br />
+  <label>Leave Type : </label><%= @leave.leave_type %><br />
+  <label>Reason for Leave : </label><%= @leave.reason %><br />
+  <label>Status : </label><%= @leave.status %><br />
+  <p><%= link_to "Back", leaves_path %></p>
+</div>
