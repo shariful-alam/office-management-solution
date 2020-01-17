@@ -1,6 +1,6 @@
 class Manage::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check, only: [:destory,:new,:create]
+  before_action :check, only: [:destory, :new, :create]
 
   def check
     if current_user.role!=User::ADMIN
@@ -37,7 +37,7 @@ class Manage::UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    if @user.id!=current_user.id or current_user.role!=User::ADMIN
+    if @user.id != current_user.id and current_user.role!=User::ADMIN
       redirect_to manage_users_path
     end
   end

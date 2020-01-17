@@ -1,6 +1,7 @@
-<h2>Sign up</h2>
+<h2>Edit User Information</h2>
+
 <div style="padding-right:600px; ">
-  <%= form_for @user, url: edit_manage_users_path(@user) do |f| %>
+  <%= form_for @user, url: manage_users_path(@user) do |f| %>
 
       <div class="field">
         <%= f.label :email, class: "control-label" %><br/>
@@ -38,7 +39,7 @@
 
       <br>
       <div class="actions">
-        <%= f.submit "Sign up", class: "btn btn-primary" %>
+        <%= f.submit "Edit", class: "btn btn-primary" %>
       </div>
 
   <% end %>
