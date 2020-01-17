@@ -1,6 +1,6 @@
 <h2>Sign up</h2>
 <div style="padding-right:600px; ">
-  <%= form_for @user, url: manage_users_path(@user) do |f| %>
+  <%= form_for @user, url: edit_manage_users_path(@user) do |f| %>
 
       <div class="field">
         <%= f.label :email, class: "control-label" %><br/>

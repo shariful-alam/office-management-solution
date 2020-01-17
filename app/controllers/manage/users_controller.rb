@@ -37,7 +37,7 @@ class Manage::UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    if @user.id!=current_user.id and current_user.role!=User::ADMIN
+    if @user.id!=current_user.id or current_user.role!=User::ADMIN
       redirect_to manage_users_path
     end
   end
