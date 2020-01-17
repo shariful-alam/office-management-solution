@@ -36,6 +36,17 @@ ActiveRecord::Schema.define(version: 2020_01_16_221856) do
     t.string "status", default: "Pending"
   end
 
+  create_table "leaves", force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.text "reason"
+    t.string "leave_type"
+    t.boolean "status", default: false
+    t.decimal "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
