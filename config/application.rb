@@ -1,10 +1,11 @@
 require_relative 'boot'
-
+require 'letter_opener'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
 
 module Ems
   class Application < Rails::Application

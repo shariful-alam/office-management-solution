@@ -1,13 +1,16 @@
 class ExpensesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :check, except: [:index,:show,:new,:create]
+  before_action :check, except: [:index, :show, :new, :create]
 
   def check
-    @expense = Expense.find(params[:id])
-    if @expense.user_id!=current_user.id or current_user.role!=User::ADMIN
-      flash[:notice] = "Access Denied"
-      redirect_to expenses_path
+
+    if current_user.role!=User::ADMIN
+      @expense = Expense.find(params[:id])
+      if @expense.user_id!=current_user.id
+        flash[:notice] = "Access Denied"
+        redirect_to expenses_path
+      end
     end
   end
 
@@ -61,7 +64,7 @@ class ExpensesController < ApplicationController
     @date = Date.today
     @month=@date.strftime("%b")
     @year=@date.strftime("%Y")
-    @budget=Budget.find_by({ year: @year, month: @month })
+    @budget=Budget.find_by({year: @year, month: @month})
 
     if @expense.status == Expense::APPROVED
       @expense.status = Expense::PENDING

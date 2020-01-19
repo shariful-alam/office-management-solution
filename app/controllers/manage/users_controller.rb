@@ -1,11 +1,15 @@
 class Manage::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check, only: [:destory, :new, :create]
+  before_action :check, only: [:destory, :new, :create, :edit]
 
   def check
+
     if current_user.role!=User::ADMIN
-      flash[:notice] = "Access Denied"
-      redirect_to manage_users_path
+      @user = User.find(params[:id])
+      if @user.id!=current_user.id
+        flash[:notice] = "Access Denied"
+        redirect_to manage_users_path
+      end
     end
   end
 
@@ -16,6 +20,7 @@ class Manage::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      UserMailer.welcome(@user).deliver_now
       redirect_to manage_users_path
     else
       render 'new'
@@ -41,6 +46,7 @@ class Manage::UsersController < ApplicationController
     if @user.id != current_user.id and current_user.role!=User::ADMIN
       redirect_to manage_users_path
     end
+
   end
 
   def update
@@ -50,12 +56,13 @@ class Manage::UsersController < ApplicationController
     else
       render 'edit'
     end
+
   end
 
 
   private
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :role, :password,:password_confirmation)
+    params.require(:user).permit(:name, :email, :phone, :role, :password, :password_confirmation)
   end
 
 
