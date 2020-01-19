@@ -1,5 +1,6 @@
 <% if current_user.role==User::ADMIN %>
     <%= link_to "Add User information", new_manage_user_path, class:"btn btn-primary" %>
+    <br>
 <% end %>
 <% @number=1 %>
 <h1>User List</h1>

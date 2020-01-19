@@ -15,19 +15,9 @@
 </head>
 
 <body>
-  <div style="padding: 30px;">
-    <% if user_signed_in? %>
-        <div style="margin-left: 870px;">
-          Welcome <strong><%= current_user.name %></strong>,
-          <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-        </div>
-    <% else %>
-        <div style="margin-left: 900px;">
-        <%= link_to "Signin", new_user_session_path %>
-        </div>
-    <% end %>
-    <br>
-    <%= yield %>
-  </div>
+<div style="padding: 30px;">
+  <%= render "layouts/header" %>
+  <%= yield %>
+</div>
 </body>
 </html>

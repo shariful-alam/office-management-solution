@@ -5,7 +5,8 @@ class ExpensesController < ApplicationController
 
   def check
     @expense = Expense.find(params[:id])
-    if @expense.user_id!=current_user.id
+    if @expense.user_id!=current_user.id or current_user.role!=User::ADMIN
+      flash[:notice] = "Access Denied"
       redirect_to expenses_path
     end
   end
@@ -23,7 +24,7 @@ class ExpensesController < ApplicationController
     @expense = Expense.new(expense_params)
     @expense.user_id = current_user.id
     if @expense.save
-      flash[:notices] = "Expense was created successfully"
+      flash[:notice] = "Expense was created successfully"
       redirect_to expenses_path
     else
       render 'new'
@@ -37,7 +38,7 @@ class ExpensesController < ApplicationController
   def destroy
     @expense = Expense.find(params[:id])
     @expense.destroy
-    flash[:notices] = "Expense was removed successfully"
+    flash[:notice] = "Expense was removed successfully"
     redirect_to expenses_path
   end
 
@@ -48,7 +49,7 @@ class ExpensesController < ApplicationController
   def update
     @expense = Expense.find(params[:id])
     if @expense.update(expense_params)
-      flash[:notices] = "Expense was updated successfully"
+      flash[:notice] = "Expense was updated successfully"
       redirect_to expense_path
     else
       render 'edit'
@@ -65,15 +66,14 @@ class ExpensesController < ApplicationController
     if @expense.status == Expense::APPROVED
       @expense.status = Expense::PENDING
       @budget.remaining = @budget.remaining + @expense.cost
-      flash[:notices] = "Expense was changed successfully"
+      flash[:notice] = "Expense was changed successfully"
     else
       @expense.status = Expense::APPROVED
       @budget.remaining = @budget.remaining - @expense.cost
-      flash[:notices] = "Expense was approved successfully"
+      flash[:notice] = "Expense was approved successfully"
     end
     @budget.save
     @expense.save
-
     redirect_to expenses_path
   end
 

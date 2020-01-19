@@ -1,7 +1,7 @@
 <% if current_user.role==User::ADMIN %>
     <%= link_to "Add Budget information", new_budget_path , class:"btn btn-primary"%>
+    </b>
 <% end %>
-<p class="text-success"><%= flash[:notices] %></p>
 <% @number=1 %>
 <h1>Budget List</h1>
 <table class="table table-bordered">
