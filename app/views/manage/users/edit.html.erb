@@ -7,19 +7,21 @@
         <%= f.label :email, class: "control-label" %><br/>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
       </div>
+      <% if current_user.id==@user.id %>
 
-      <!--<div class="form-group">-->
-        <!--<%= f.label :password, class: "control-label" %>-->
-        <!--<% if @minimum_password_length %>-->
-            <!--<em>(<%= @minimum_password_length %> characters minimum)</em>-->
-        <% end %><br/>
-        <!--<%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>-->
-      <!--</div>-->
+          <div class="form-group">
+            <%= f.label :password, class: "control-label" %>
+            <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <% end %><br/>
+            <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+          </div>
 
-      <!--<div class="form-group">-->
-        <%= f.label :password_confirmation, class: "control-label" %><br/>
-        <!--<%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>-->
-      <!--</div>-->
+          <div class="form-group">
+            <%= f.label :password_confirmation, class: "control-label" %><br/>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+          </div>
+      <% end %>
 
       <div class="form-group">
         <%= f.label :name, class: "control-label" %>
@@ -32,10 +34,12 @@
         <%= f.phone_field :phone, class: "form-control" %>
       </div>
 
-      <div class="form-group">
-        <%= f.label :role %>
-        <%= f.select(:role, User::ROLE_LIST) %>
-      </div>
+      <% if current_user.role==User::ADMIN %>
+          <div class="form-group">
+            <%= f.label :role %>
+            <%= f.select(:role, User::ROLE_LIST) %>
+          </div>
+      <% end %>
 
       <div class="form-group">
         <%= f.submit 'Update', class: "btn btn-success" %> |
