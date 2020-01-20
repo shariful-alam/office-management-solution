@@ -2,12 +2,12 @@
     <%= link_to "Add User information", new_manage_user_path, class:"btn btn-primary" %>
     <br>
 <% end %>
-<% @number=1 %>
+<% @number = @users.offset + 1 %>
 <h1>User List</h1>
 <table class="table table-bordered">
   <thead>
   <tr>
-    <th>#</th>
+    <th>Sl</th>
     <th>Name</th>
     <th>Email</th>
     <th>Phone</th>
@@ -40,3 +40,5 @@
 <div class="form-group">
   <%= link_to "Back", root_path, class: "btn btn-primary" %>
 </div>
+
+<strong><%= will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %></strong>

@@ -25,5 +25,9 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  resources :leaves
+  resources :leaves do
+    member do
+      put :check
+    end
+  end
 end

@@ -5,8 +5,8 @@ class LeavesController < ApplicationController
 
   def check
     if current_user.role!=User::ADMIN
-      @user = User.find(params[:id])
-      if @user.user_id != current_user.user_id
+      @leave = Leave.find(params[:id])
+      if @leave.user_id != current_user.id
         flash[:notice] = "Access Denied"
         redirect_to leaves_path
       end
@@ -14,7 +14,7 @@ class LeavesController < ApplicationController
   end
 
   def index
-    @leave = Leave.all
+    @leave = Leave.order('id ASC').paginate(:page => params[:page], :per_page => 3)
   end
 
   def new
@@ -26,17 +26,12 @@ class LeavesController < ApplicationController
     @leave = Leave.new(leave_params)
     @leave.user_id = current_user.id
     @leave.save
-    raise @leave.inspect
-    #raise @leave.inspect
     flash[:notice] = "Your Application Has Bees Submitted for Approval"
     redirect_to leaves_path
   end
 
   def edit
     @leave = Leave.find(params[:id])
-    if @leave.user_id != current_user.id
-
-    end
   end
 
   def show

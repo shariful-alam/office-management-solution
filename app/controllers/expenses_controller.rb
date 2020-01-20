@@ -61,7 +61,6 @@ class ExpensesController < ApplicationController
     @month=@date.strftime("%b")
     @year=@date.strftime("%Y")
     @budget=Budget.find_by({year: @year, month: @month})
-
     if @expense.status == Expense::APPROVED
       @expense.status = Expense::PENDING
       @budget.remaining = @budget.remaining + @expense.cost

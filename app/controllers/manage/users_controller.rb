@@ -25,7 +25,8 @@ class Manage::UsersController < ApplicationController
   end
 
   def index
-    @users = User.order('users.id ASC').all
+    @users = User.order('users.id ASC').paginate(:page => params[:page], :per_page => 2)
+    #raise @users.to_sql
   end
 
   def show
