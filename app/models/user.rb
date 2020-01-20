@@ -7,4 +7,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   ADMIN = "Office Admin"
   ROLE_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief technical Officer']
+
+  after_create :send_message
+
+  private
+  def send_message
+    UserMailer.welcome(self).deliver_now
+  end
+
 end

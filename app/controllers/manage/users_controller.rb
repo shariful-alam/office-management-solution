@@ -5,7 +5,7 @@ class Manage::UsersController < ApplicationController
   def check
     if current_user.role != User::ADMIN
       @user = User.find(params[:id])
-      if @user.id!=current_user.id
+      if @user.id != current_user.id
         redirect_to manage_users_path, notice: "Access Denied"
       end
     end
@@ -18,9 +18,7 @@ class Manage::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserMailer.welcome(@user).deliver_now
-      flash[:notice] = "User has been created successfully"
-      redirect_to manage_users_path
+      redirect_to manage_users_path, notice: "User has been created successfully"
     else
       render 'new'
     end
@@ -37,8 +35,7 @@ class Manage::UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    flash[:notice] = "User has been removed successfully"
-    redirect_to manage_users_path
+    redirect_to manage_users_path, notice: "User has been removed successfully"
   end
 
   def edit
@@ -48,8 +45,7 @@ class Manage::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      flash[:notice] = "User data has been updated successfully"
-      redirect_to manage_user_path
+      redirect_to manage_user_path, notice: "User data has been updated successfully"
     else
       render 'edit'
     end

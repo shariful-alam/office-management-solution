@@ -6,8 +6,7 @@ class BudgetsController < ApplicationController
 
   def check
     if current_user.role!=User::ADMIN
-      flash[:notice] = "Access Denied"
-      redirect_to budgets_path
+      redirect_to budgets_path, notice: "Access Denied"
     end
   end
 
@@ -24,8 +23,7 @@ class BudgetsController < ApplicationController
     @budget.remaining=@budget.amount
     @budget.user_id=current_user.id
     if @budget.save
-      flash[:notice] = "Budget has been created successfully"
-      redirect_to budgets_path
+      redirect_to budgets_path, notice: "Budget has been created successfully"
     else
       render 'new'
     end
@@ -38,8 +36,7 @@ class BudgetsController < ApplicationController
   def destroy
     @budget = Budget.find(params[:id])
     @budget.destroy
-    flash[:notice] = "Budget has been removed successfully"
-    redirect_to budgets_path
+    redirect_to budgets_path, notice: "Budget has been removed successfully"
   end
 
   def edit
@@ -49,8 +46,7 @@ class BudgetsController < ApplicationController
   def update
     @budget = Budget.find(params[:id])
     if @budget.update(budget_params)
-      flash[:notice] = "Budget has been updated successfully"
-      redirect_to budget_path
+      redirect_to budget_path, notice: "Budget has been updated successfully"
     else
       render 'edit'
     end

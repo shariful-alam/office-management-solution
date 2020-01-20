@@ -8,8 +8,7 @@ class ExpensesController < ApplicationController
     if current_user.role!=User::ADMIN
       @expense = Expense.find(params[:id])
       if @expense.user_id!=current_user.id
-        flash[:notice] = "Access Denied"
-        redirect_to expenses_path
+        redirect_to expenses_path, notice: "Access Denied"
       end
     end
   end
@@ -27,8 +26,7 @@ class ExpensesController < ApplicationController
     @expense = Expense.new(expense_params)
     @expense.user_id = current_user.id
     if @expense.save
-      flash[:notice] = "Expense has been created successfully"
-      redirect_to expenses_path
+      redirect_to expenses_path, notice: "Expense has been created successfully"
     else
       render 'new'
     end
@@ -41,8 +39,7 @@ class ExpensesController < ApplicationController
   def destroy
     @expense = Expense.find(params[:id])
     @expense.destroy
-    flash[:notice] = "Expense has been removed successfully"
-    redirect_to expenses_path
+    redirect_to expenses_path, notice: "Expense has been removed successfully"
   end
 
   def edit
@@ -52,8 +49,7 @@ class ExpensesController < ApplicationController
   def update
     @expense = Expense.find(params[:id])
     if @expense.update(expense_params)
-      flash[:notice] = "Expense has been updated successfully"
-      redirect_to expense_path
+      redirect_to expense_path,notice: "Expense has been updated successfully"
     else
       render 'edit'
     end
