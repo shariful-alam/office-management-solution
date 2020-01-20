@@ -5,17 +5,17 @@ class ExpensesController < ApplicationController
 
   def check
 
-    if current_user.role!=User::ADMIN
+    if current_user.role != User::ADMIN
       @expense = Expense.find(params[:id])
-      if @expense.user_id!=current_user.id
+      if @expense.user_id != current_user.id
         redirect_to expenses_path, notice: "Access Denied"
       end
     end
   end
 
   def index
-    @expenses = Expense.order('expenses.id ASC').all
-    @total= @expenses.sum(:cost)
+    @expenses = Expense.order('expenses.id ASC').paginate(:page => params[:page], :per_page => 2)
+    #@total= @expenses.sum(:cost)
   end
 
   def new

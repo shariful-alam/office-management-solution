@@ -1,7 +1,6 @@
 <%= link_to "Add Expense information", new_expense_path, class:"btn btn-primary" %>
 <br>
-
-<% @number=1 %>
+<% @number=@expenses.offset + 1 %>
 <h1>Expense List</h1>
 <table class="table table-bordered">
   <thead>
@@ -50,12 +49,10 @@
         </td>
       </tr>
   <% end %>
-
-  <tr>
-    <td colspan="3">Total</td>
-    <td colspan="3"><%= @total %></td>
-  </tr>
 </table>
+
+<%= will_paginate @expenses , renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+
 
 <div class="form-group">
   <%= link_to "Back", root_path, class: "btn btn-primary" %>

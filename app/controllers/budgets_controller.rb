@@ -5,13 +5,13 @@ class BudgetsController < ApplicationController
   before_action :check, except: [:index]
 
   def check
-    if current_user.role!=User::ADMIN
+    if current_user.role != User::ADMIN
       redirect_to budgets_path, notice: "Access Denied"
     end
   end
 
   def index
-    @budgets = Budget.order('budgets.id ASC').all
+    @budgets = Budget.order('budgets.id ASC').paginate(:page => params[:page], :per_page => 2)
   end
 
   def new
@@ -20,8 +20,8 @@ class BudgetsController < ApplicationController
 
   def create
     @budget = Budget.new(budget_params)
-    @budget.remaining=@budget.amount
-    @budget.user_id=current_user.id
+    @budget.remaining = @budget.amount
+    @budget.user_id = current_user.id
     if @budget.save
       redirect_to budgets_path, notice: "Budget has been created successfully"
     else
