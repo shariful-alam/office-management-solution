@@ -56,3 +56,4 @@ gem 'devise'
 gem "letter_opener", group: :development
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
+gem "paperclip", "~> 5.1"
