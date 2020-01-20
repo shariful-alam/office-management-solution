@@ -1,6 +1,6 @@
 <h1>Insert Budget Information</h1>
 <div style="padding-right:600px; ">
-<%=form_for(@budget)  do |form| %>
+<%= form_for(@budget)  do |form| %>
 
     <% if @budget.errors.full_messages.any? %>
         <% @budget.errors.full_messages.each do |error_message| %>

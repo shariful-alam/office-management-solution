@@ -27,7 +27,7 @@ class ExpensesController < ApplicationController
     @expense = Expense.new(expense_params)
     @expense.user_id = current_user.id
     if @expense.save
-      flash[:notice] = "Expense was created successfully"
+      flash[:notice] = "Expense has been created successfully"
       redirect_to expenses_path
     else
       render 'new'
@@ -41,7 +41,7 @@ class ExpensesController < ApplicationController
   def destroy
     @expense = Expense.find(params[:id])
     @expense.destroy
-    flash[:notice] = "Expense was removed successfully"
+    flash[:notice] = "Expense has been removed successfully"
     redirect_to expenses_path
   end
 
@@ -52,7 +52,7 @@ class ExpensesController < ApplicationController
   def update
     @expense = Expense.find(params[:id])
     if @expense.update(expense_params)
-      flash[:notice] = "Expense was updated successfully"
+      flash[:notice] = "Expense has been updated successfully"
       redirect_to expense_path
     else
       render 'edit'
@@ -69,11 +69,11 @@ class ExpensesController < ApplicationController
     if @expense.status == Expense::APPROVED
       @expense.status = Expense::PENDING
       @budget.remaining = @budget.remaining + @expense.cost
-      flash[:notice] = "Expense was changed successfully"
+      flash[:notice] = "The Expense information has been changed successfully"
     else
       @expense.status = Expense::APPROVED
       @budget.remaining = @budget.remaining - @expense.cost
-      flash[:notice] = "Expense was approved successfully"
+      flash[:notice] = "Expense has been approved successfully"
     end
     @budget.save
     @expense.save
