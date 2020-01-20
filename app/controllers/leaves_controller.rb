@@ -12,6 +12,7 @@ class LeavesController < ApplicationController
 
   def create
     @leave = Leave.new(leave_params)
+    @leave.user_id = current_user.id
     @leave.save
     #raise @leave.inspect
     flash[:notice] = "Your Application Has Bees Submitted for Approval"
@@ -45,7 +46,7 @@ class LeavesController < ApplicationController
 
   private
   def leave_params
-    params.require(:leave).permit(:start_date, :end_date, :reason, :leave_type, :status, :user_id)
+    params.require(:leave).permit(:start_date, :end_date, :reason, :leave_type, :status )
   end
 
 

@@ -2,6 +2,10 @@
   <h1>Ask for Leave</h1>
   <%= form_for(@leave) do |l| %>
       <div>
+        <h3>User : <%= current_user.name %></h3>
+      </div>
+      <br/>
+      <div>
         <%= l.label :start_date, class: 'control-label' %> <br/>
         <%= l.date_field :start_date, class: 'form-control' %>
       </div>
@@ -19,11 +23,6 @@
       <div>
         <%= l.label :Leave_type %> <br/>
         <%= l.select(:leave_type, Leave::LEAVE_TYPE) %>
-      </div>
-      <br/>
-      <div>
-        <%= l.label :user_id %> <br/>
-        <%= collection_select(:leave, :user_id, User.all, :id, :name, {}, {:multiple => false}) %>
       </div>
       <br/>
       <div class="form-group">
