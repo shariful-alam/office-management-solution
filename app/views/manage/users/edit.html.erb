@@ -1,5 +1,38 @@
-<h2>Edit User Information</h2>
+<script>
+    function myFunction()
+    {
+        var cancel_image = document.getElementById("cancel_image");
+        var cancel_show = document.getElementById("cancel_show");
+        if(cancel_image.checked == false)
+        {
+            cancel_show.style.display = "block";
+            cancel_show.style.opacity = "1";
+        }
+        else
+        {
+            var txt;
+            if (confirm("Are you sure ?"))
+            {
+                txt = 1;
+            }
+            else
+            {
+                txt = 0;
+            }
+            if(txt == 1)
+            {
+                cancel_show.style.display = "block";
+                cancel_show.style.opacity = ".3";
+            }
+            else
+            {
+                cancel_image.checked = false;
+            }
+        }
+    }
+</script>
 
+<h2>Edit User Information</h2>
 <div style="padding-right:600px; ">
   <%= form_for @user, url: manage_user_path(@user) do |f| %>
 
@@ -19,14 +52,18 @@
         <%= f.text_field :name, class: "form-control" %>
       </div>
 
-
       <div class="form-group">
         <%= f.label :phone, class: "control-label" %>
         <%= f.phone_field :phone, class: "form-control" %>
       </div>
 
+      <div class="form-group" id="cancel_show">
+        <%= image_tag(@user.image.url,:size => "100x100") if @user.image.exists? %>
+        <%= f.check_box :remove_image, style: "margin-left : 10px; position: absolute;",id: "cancel_image",onclick:"myFunction()" if @user.image.exists? %>
+      </div>
+
       <div class="form-group">
-        <%= f.label :image,'Image', class: "control-label" %>
+        <%= f.label :image, 'Image', class: "control-label" %>
         <%= f.file_field :image, class: "form-control" %>
       </div>
 

@@ -25,7 +25,11 @@ class Manage::UsersController < ApplicationController
   end
 
   def index
-    @users = User.order('users.id ASC').paginate(:page => params[:page], :per_page => 2)
+    if params[:search]
+      @users = User.search(params[:search]).order('users.id ASC').paginate(:page => params[:page], :per_page => 2)
+    else
+      @users = User.order('users.id ASC').paginate(:page => params[:page], :per_page => 2)
+    end
     #raise @users.to_sql
   end
 
@@ -55,7 +59,7 @@ class Manage::UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :role, :password, :password_confirmation ,:image_file_name ,:image, :image_content_type , :image_file_size , :image_updated_at)
+    params.require(:user).permit(:name, :email, :phone, :role, :password, :password_confirmation, :image_file_name, :image, :image_content_type, :image_file_size, :image_updated_at, :remove_image)
   end
 
 

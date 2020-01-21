@@ -1,7 +1,13 @@
 <% if current_user.role==User::ADMIN %>
-    <%= link_to "Add User information", new_manage_user_path, class:"btn btn-primary" %>
-    <br>
+    <%= link_to "Add User information", new_manage_user_path, class: "btn btn-primary" %>
+    <br><br>
 <% end %>
+
+<%= form_tag(manage_users_path, :method => "get",class: "form-inline") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search Posts", class: "form-control" %>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
+
 <% @number = @users.offset + 1 %>
 <h1>User List</h1>
 <table class="table table-bordered">
@@ -26,7 +32,8 @@
         <td><%= user.email %></td>
         <td><%= user.phone %></td>
         <td><%= user.role %></td>
-        <td><%= image_tag(user.image.url)  if user.image.exists? %> </td>
+        <td><%= image_tag(user.image.url, :size => "100x100") if user.image.exists? %> </td>
+
         <% if current_user.role==User::ADMIN %>
             <td>
               <%= link_to "Show", manage_user_path(user) %> /

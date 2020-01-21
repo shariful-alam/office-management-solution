@@ -7,14 +7,9 @@ class User < ApplicationRecord
   validates_attachment :image,
                        content_type: {content_type: /\Aimage\/.*\z/},
                        size: {less_than: 1.megabyte},
-                       styles: {
-                           thumb: ["100x100#", :jpeg],
-                           original: [:jpeg]
-                       },
-                       convert_options: {
-                           thumb: "-quality 70 -strip",
-                           original: "-quality 90"
-                       }
+                       styles: {orginal: "300x300#", thumb: "100x100#"},
+                       source_file_options: {regular: "-density 96 -depth 8 -quality 85"},
+                       convert_options: {regular: "-posterize 3"}
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -22,10 +17,21 @@ class User < ApplicationRecord
   ROLE_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief technical Officer']
 
   after_create :send_message
+  attr_accessor :remove_image
 
+  before_save :delete_image, if: -> {remove_image == '1'}
   private
   def send_message
     UserMailer.welcome(self).deliver_now
+  end
+
+  def delete_image
+    self.image = nil
+  end
+
+  def self.search(search)
+    @key="%#{search}%"
+    where('name LIKE :search OR email LIKE :search OR phone LIKE :search OR role LIKE :search', search: @key)
   end
 
 end
