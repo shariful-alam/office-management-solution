@@ -29,6 +29,7 @@ class Manage::UsersController < ApplicationController
       @users = User.search(params[:search]).order('users.id ASC').paginate(:page => params[:page], :per_page => 2)
     else
       @users = User.order('users.id ASC').paginate(:page => params[:page], :per_page => 2)
+      #raise @users.to_sql
     end
     #raise @users.to_sql
   end

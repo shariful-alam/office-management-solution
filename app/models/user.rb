@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
   has_many :expenses
   has_many :budgets
   has_attached_file :image
@@ -13,14 +14,18 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
   ADMIN = "Office Admin"
   ROLE_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief technical Officer']
 
-  after_create :send_message
+
   attr_accessor :remove_image
 
+  after_create :send_message
   before_save :delete_image, if: -> {remove_image == '1'}
+
   private
+
   def send_message
     UserMailer.welcome(self).deliver_now
   end

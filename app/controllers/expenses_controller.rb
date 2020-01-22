@@ -1,10 +1,10 @@
 class ExpensesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :check, except: [:index, :show, :new, :create]
+  #before_action :check, except: [:index, :show, :new, :create]
+  load_and_authorize_resource
 
   def check
-
     if current_user.role != User::ADMIN
       @expense = Expense.find(params[:id])
       if @expense.user_id != current_user.id

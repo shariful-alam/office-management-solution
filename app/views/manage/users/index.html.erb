@@ -4,9 +4,10 @@
 <% end %>
 
 <%= form_tag(manage_users_path, :method => "get",class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search Posts", class: "form-control" %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search",class:"form-control" %>
     <%= submit_tag "Search", class: "btn btn-primary" %>
 <% end %>
+<br>
 
 <% @number = @users.offset + 1 %>
 <h1>User List</h1>
@@ -32,7 +33,7 @@
         <td><%= user.email %></td>
         <td><%= user.phone %></td>
         <td><%= user.role %></td>
-        <td><%= image_tag(user.image.url, :size => "100x100") if user.image.exists? %> </td>
+        <td><%= image_tag(user.image.url, :size => "50x50") if user.image.exists? %> </td>
 
         <% if current_user.role==User::ADMIN %>
             <td>
