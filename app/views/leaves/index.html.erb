@@ -1,26 +1,20 @@
-<style>
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
 
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
-</style>
 <% @number = @leave.offset + 1 %>
+  <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-primary" %>
+
+<br/>
+<br/>
+<div style="width: 40%">
+  <%= form_for(leaves_path, :method => "get", class: "form-inline" ) do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search Posts", class: "form-control" %>
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+
+
 <h1>List of Leave</h1>
-<button class="btn btn-light"><p><%= link_to "Apply for Leave", new_leafe_path %></p></button>
-<br/>
-<br/>
-<table>
+<table class="table table-bordered">
   <tr>
     <th>Sl</th>
     <th>Employee Name</th>

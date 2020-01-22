@@ -11,7 +11,13 @@ class BudgetsController < ApplicationController
   end
 
   def index
-    @budgets = Budget.order('budgets.id ASC').paginate(:page => params[:page], :per_page => 2)
+    if params[:search]
+      @budgets = Budget.search(params[:search]).order('budgets.id ASC').paginate(:page => params[:page], :per_page => 2)
+      #raise @budgets.to_sql
+    else
+      @budgets = Budget.order('budgets.id ASC').paginate(:page => params[:page], :per_page => 2)
+    end
+
   end
 
   def new

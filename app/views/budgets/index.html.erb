@@ -1,13 +1,20 @@
 <% if current_user.role==User::ADMIN %>
-    <%= link_to "Add Budget information", new_budget_path , class:"btn btn-primary"%>
-    </b>
+    <%= link_to "Add Budget information", new_budget_path, class: "btn btn-primary" %>
+    <br><br>
 <% end %>
+<div style="width: 40%">
+  <%= form_for(budgets_path, :method => "get", class: "form-inline" ) do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search Posts", class: "form-control" %>
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
 <% @number=@budgets.offset + 1 %>
 <h1>Budget List</h1>
 <table class="table table-bordered">
   <thead>
   <tr>
-    <th>#</th>
+    <th>Sl</th>
     <th>Year - Month</th>
     <th>Amount</th>
     <th>Remaining</th>
@@ -36,7 +43,7 @@
       </tr>
   <% end %>
 </table>
-<%= will_paginate @expenses , renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+<%= will_paginate @expenses, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 <div class="form-group">
   <%= link_to "Back", root_path, class: "btn btn-primary" %>
 </div>

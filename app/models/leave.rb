@@ -10,4 +10,11 @@ class Leave < ApplicationRecord
 
   belongs_to :user
 
+
+  private
+  def self.search(search)
+    @key = "%#{search}%"
+    self.joins(:user).where('users.name ilike :search OR leave_type ilike :search', search: @key)
+  end
+
 end

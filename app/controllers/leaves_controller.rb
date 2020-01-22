@@ -14,7 +14,11 @@ class LeavesController < ApplicationController
   end
 
   def index
-    @leave = Leave.order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    if params[:search]
+      @leave = Leave.search(params[:search]).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    else
+      @leave = Leave.order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    end
   end
 
   def new
