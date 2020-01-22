@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :leaves do
     member do
       put :check
+      put :approve
     end
   end
 end

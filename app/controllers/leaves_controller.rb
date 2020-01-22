@@ -15,9 +15,9 @@ class LeavesController < ApplicationController
 
   def index
     if params[:search]
-      @leave = Leave.search(params[:search]).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+      @leaves = Leave.search(params[:search]).order('id ASC').paginate(:page => params[:page], :per_page => 3)
     else
-      @leave = Leave.order('id ASC').paginate(:page => params[:page], :per_page => 3)
+      @leaves = Leave.order('id ASC').paginate(:page => params[:page], :per_page => 3)
     end
   end
 
@@ -55,6 +55,19 @@ class LeavesController < ApplicationController
     @leave = Leave.find(params[:id])
     @leave.destroy
     flash[:notice] = "Information Has Destroyed"
+    redirect_to leaves_path
+  end
+
+  def approve
+    @leave = Leave.find(params[:id])
+    if @leave.status == true
+      @leave.status = false
+      flash[:notice] = "The Leave information has been changed successfully"
+    else
+      @leave.status = true
+      flash[:notice] = "Leave has been approved successfully"
+    end
+    @leave.save
     redirect_to leaves_path
   end
 

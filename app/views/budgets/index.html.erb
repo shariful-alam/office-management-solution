@@ -4,7 +4,7 @@
 <% end %>
 
 <%= form_tag(budgets_path, :method => "get",class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search",class:"form-control" %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month",class:"form-control" %>
     <%= submit_tag "Search", class: "btn btn-primary" %>
 <% end %>
 <br>

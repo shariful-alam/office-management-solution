@@ -1,11 +1,18 @@
-<%= link_to "Add Expense information", new_expense_path, class:"btn btn-primary" %>
+<%= link_to "Add Expense information", new_expense_path, class: "btn btn-primary" %>
+<br><br>
+
+<%= form_tag(expenses_path, :method => "get", class: "form-inline") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search by Product or Name", class: "form-control" %>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
 <br>
+
 <% @number=@expenses.offset + 1 %>
 <h1>Expense List</h1>
 <table class="table table-bordered">
   <thead>
   <tr>
-    <th>#</th>
+    <th>Sl</th>
     <th>Name</th>
     <th>Employee</th>
     <th>Cost</th>
@@ -18,7 +25,7 @@
       <tr>
         <td><%= @number %> </td>
         <% @number+=1 %>
-        <td><%= expense.name %></td>
+        <td><%= expense.product_name %></td>
         <td><%= expense.user.name %></td>
         <td><%= expense.cost %></td>
         <td><%= expense.status %></td>
@@ -51,7 +58,7 @@
   <% end %>
 </table>
 
-<%= will_paginate @expenses , renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+<%= will_paginate @expenses, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 
 
 <div class="form-group">

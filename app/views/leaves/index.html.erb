@@ -1,18 +1,16 @@
-
-<% @number = @leave.offset + 1 %>
-  <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-primary" %>
+<%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-primary" %>
 
 <br/>
 <br/>
-<div style="width: 40%">
-  <%= form_for(leaves_path, :method => "get", class: "form-inline" ) do %>
-      <%= text_field_tag :search, params[:search], placeholder: "Search Posts", class: "form-control" %>
-      <%= submit_tag "Search", class: "btn btn-primary" %>
-  <% end %>
-</div>
+
+<%= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Type", class: "form-control" %>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
+<br>
 
 
-
+<% @number = @leaves.offset + 1 %>
 <h1>List of Leave</h1>
 <table class="table table-bordered">
   <tr>
@@ -26,7 +24,7 @@
     <th style="text-align: center;">Action</th>
   </tr>
 
-  <% @leave.each do |l| %>
+  <% @leaves.each do |l| %>
       <tr>
         <td><%= @number %> </td>
         <% @number+=1 %>
@@ -53,10 +51,30 @@
               <%= "Pending" %>
           <% end %>
         </td>
-        <td style="text-align: center;">
-          <%= link_to "Details", leafe_path(l) %> |
-          <%= link_to "Edit", edit_leafe_path(l) %> |
-          <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Confirm Delete??"} %>
+        <td>
+          <% if current_user.role == User::ADMIN %>
+              <% if l.status == true %>
+                  <%= link_to "Undo", approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to approve?'} %>
+                  /
+                  <%= link_to "Show", leafe_path(l) %>
+              <% else %>
+                  <%= link_to "Approve", approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to approve?'} %>
+                  /
+                  <%= link_to "Show", leafe_path(l) %>
+                  <% if l.user_id == current_user.id %>
+                      / <%= link_to "Edit", edit_leafe_path(l) %> /
+                      <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
+                  <% end %>
+              <% end %>
+          <% else %>
+              <%= link_to "Show", leafe_path(l) %>
+              <% if l.status != 1 and current_user.id == l.user.id %>
+                  / <%= link_to "Edit", edit_leafe_path(l) %> /
+                  <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
+              <% end %>
+          <% end %>
+
+
         </td>
       </tr>
   <% end %>
@@ -67,7 +85,7 @@
   <%= link_to "Back", root_path, class: "btn btn-primary" %>
 </div>
 <div>
-  <%= will_paginate @leave, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  <%= will_paginate @leaves, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 </div>
 
 

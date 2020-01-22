@@ -14,7 +14,11 @@ class ExpensesController < ApplicationController
   # end
 
   def index
-    @expenses = Expense.order('expenses.id ASC').paginate(:page => params[:page], :per_page => 2)
+    if params[:search]
+      @expenses = Expense.search(params[:search]).order('expenses.id ASC').paginate(:page => params[:page], :per_page => 2)
+    else
+      @expenses = Expense.order('expenses.id ASC').paginate(:page => params[:page], :per_page => 2)
+    end
   end
 
   def new
@@ -72,7 +76,7 @@ class ExpensesController < ApplicationController
 
   private
   def expense_params
-    params.require(:expense).permit(:name, :category, :cost, :details)
+    params.require(:expense).permit(:product_name, :category, :cost, :details, :user_id)
   end
 
 
