@@ -1,29 +1,27 @@
 class ExpensesController < ApplicationController
 
   before_action :authenticate_user!
-  #before_action :check, except: [:index, :show, :new, :create]
   load_and_authorize_resource
 
-  def check
-    if current_user.role != User::ADMIN
-      @expense = Expense.find(params[:id])
-      if @expense.user_id != current_user.id
-        redirect_to expenses_path, notice: "Access Denied"
-      end
-    end
-  end
+  # before_action :check, except: [:index, :show, :new, :create]
+  # def check
+  #   if current_user.role != User::ADMIN
+  #     @expense = Expense.find(params[:id])
+  #     if @expense.user_id != current_user.id
+  #       redirect_to expenses_path, notice: "Access Denied"
+  #     end
+  #   end
+  # end
 
   def index
     @expenses = Expense.order('expenses.id ASC').paginate(:page => params[:page], :per_page => 2)
-    #@total= @expenses.sum(:cost)
   end
 
   def new
-    @expense=Expense.new
+
   end
 
   def create
-    @expense = Expense.new(expense_params)
     @expense.user_id = current_user.id
     if @expense.save
       redirect_to expenses_path, notice: "Expense has been created successfully"
@@ -33,21 +31,19 @@ class ExpensesController < ApplicationController
   end
 
   def show
-    @expense = Expense.find(params[:id])
+
   end
 
   def destroy
-    @expense = Expense.find(params[:id])
     @expense.destroy
     redirect_to expenses_path, notice: "Expense has been removed successfully"
   end
 
   def edit
-    @expense = Expense.find(params[:id])
+
   end
 
   def update
-    @expense = Expense.find(params[:id])
     if @expense.update(expense_params)
       redirect_to expense_path,notice: "Expense has been updated successfully"
     else
@@ -56,7 +52,6 @@ class ExpensesController < ApplicationController
   end
 
   def approve
-    @expense = Expense.find(params[:id])
     @date = Date.today
     @month=@date.strftime("%b")
     @year=@date.strftime("%Y")

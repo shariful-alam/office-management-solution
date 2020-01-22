@@ -1,15 +1,17 @@
 class Manage::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check, only: [:destory, :new, :create, :edit]
+  load_and_authorize_resource
 
-  def check
-    if current_user.role != User::ADMIN
-      @user = User.find(params[:id])
-      if @user.id != current_user.id
-        redirect_to manage_users_path, notice: "Access Denied"
-      end
-    end
-  end
+  # before_action :check, only: [:destory, :new, :create, :edit]
+  #
+  # def check
+  #   if current_user.role != User::ADMIN
+  #     @user = User.find(params[:id])
+  #     if @user.id != current_user.id
+  #       redirect_to manage_users_path, notice: "Access Denied"
+  #     end
+  #   end
+  # end
 
   def new
     @user = User.new
@@ -29,7 +31,6 @@ class Manage::UsersController < ApplicationController
       @users = User.search(params[:search]).order('users.id ASC').paginate(:page => params[:page], :per_page => 2)
     else
       @users = User.order('users.id ASC').paginate(:page => params[:page], :per_page => 2)
-      #raise @users.to_sql
     end
     #raise @users.to_sql
   end

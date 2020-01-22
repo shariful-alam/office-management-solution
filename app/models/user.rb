@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-
   has_many :expenses
   has_many :budgets
   has_attached_file :image
@@ -14,18 +13,16 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
   ADMIN = "Office Admin"
   ROLE_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief technical Officer']
 
 
   attr_accessor :remove_image
 
-  after_create :send_message
+
   before_save :delete_image, if: -> {remove_image == '1'}
 
   private
-
   def send_message
     UserMailer.welcome(self).deliver_now
   end
@@ -36,7 +33,7 @@ class User < ApplicationRecord
 
   def self.search(search)
     @key="%#{search}%"
-    where('name LIKE :search OR email LIKE :search OR phone LIKE :search OR role LIKE :search', search: @key)
+    where('name LIKE ?', @key)
   end
 
 end
