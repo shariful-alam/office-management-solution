@@ -56,7 +56,6 @@ class Manage::UsersController < ApplicationController
     else
       render 'edit'
     end
-
   end
 
   private

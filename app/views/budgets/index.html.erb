@@ -2,12 +2,12 @@
     <%= link_to "Add Budget information", new_budget_path, class: "btn btn-primary" %>
     <br><br>
 <% end %>
-<div style="width: 40%">
-  <%= form_for(budgets_path, :method => "get", class: "form-inline" ) do %>
-      <%= text_field_tag :search, params[:search], placeholder: "Search Posts", class: "form-control" %>
-      <%= submit_tag "Search", class: "btn btn-primary" %>
-  <% end %>
-</div>
+
+<%= form_tag(budgets_path, :method => "get",class: "form-inline") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search",class:"form-control" %>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
+<br>
 
 <% @number=@budgets.offset + 1 %>
 <h1>Budget List</h1>
@@ -19,9 +19,7 @@
     <th>Amount</th>
     <th>Remaining</th>
     <th>Admin</th>
-    <% if current_user.role==User::ADMIN %>
-        <th>Action</th>
-    <% end %>
+    <th>Action</th>
   </tr>
   </thead>
 
@@ -39,11 +37,13 @@
               <%= link_to "Edit", edit_budget_path(budget) %> /
               <%= link_to "Delete", budget_path(budget), method: :delete, data: {confirm: "Are you sure?"} %>
             </td>
+        <% else %>
+            <td> <%= link_to "Show", budget_path(budget) %> </td>
         <% end %>
       </tr>
   <% end %>
 </table>
-<%= will_paginate @expenses, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+<%= will_paginate @budgets, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 <div class="form-group">
   <%= link_to "Back", root_path, class: "btn btn-primary" %>
 </div>

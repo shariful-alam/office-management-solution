@@ -1,14 +1,15 @@
 class BudgetsController < ApplicationController
 
   before_action :authenticate_user!
+  load_and_authorize_resource
 
-  before_action :check, except: [:index]
-
-  def check
-    if current_user.role != User::ADMIN
-      redirect_to budgets_path, notice: "Access Denied"
-    end
-  end
+  # before_action :check, except: [:index]
+  #
+  # def check
+  #   if current_user.role != User::ADMIN
+  #     redirect_to budgets_path, notice: "Access Denied"
+  #   end
+  # end
 
   def index
     if params[:search]
@@ -17,7 +18,6 @@ class BudgetsController < ApplicationController
     else
       @budgets = Budget.order('budgets.id ASC').paginate(:page => params[:page], :per_page => 2)
     end
-
   end
 
   def new
@@ -28,6 +28,7 @@ class BudgetsController < ApplicationController
     @budget = Budget.new(budget_params)
     @budget.remaining = @budget.amount
     @budget.user_id = current_user.id
+
     if @budget.save
       redirect_to budgets_path, notice: "Budget has been created successfully"
     else
@@ -60,7 +61,7 @@ class BudgetsController < ApplicationController
 
   private
   def budget_params
-    params.require(:budget).permit(:year, :month, :amount, :remaining, :user_id)
+    params.require(:budget).permit(:year, :month, :amount, :remaining)
   end
 
 end
