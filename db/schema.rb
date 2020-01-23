@@ -10,13 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_144452) do
+ActiveRecord::Schema.define(version: 2020_01_23_143358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "allocated_leaves", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "total_leave"
+    t.integer "used_leave"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "attendances", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "info"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "budgets", force: :cascade do |t|
-    t.integer "year"
     t.string "month"
     t.decimal "amount"
     t.decimal "remaining"
@@ -34,6 +48,11 @@ ActiveRecord::Schema.define(version: 2020_01_22_144452) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
     t.string "status", default: "Pending"
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer "budget_id"
   end
 
   create_table "leaves", force: :cascade do |t|
