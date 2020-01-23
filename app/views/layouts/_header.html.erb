@@ -42,21 +42,21 @@
 <nav class="navbar navbar-expand-sm bg-light">
   <ul class="navbar-nav">
     <li class="nav-item">
-      <%= link_to "User Information", manage_users_path, class: "nav-link btn btnclass" %>
+      <%= link_to "Employees", manage_users_path, class: "nav-link btn btnclass" %>
     </li>
     <li class="nav-item">
-      <%= link_to "Budget Information", budgets_path, class: "nav-link btn btnclass" %>
+      <%= link_to "Budgets", budgets_path, class: "nav-link btn btnclass" %>
     </li>
     <li class="nav-item">
-      <%= link_to "Expense Information", expenses_path, class: "nav-link btn btnclass" %>
+      <%= link_to "Expenses", expenses_path, class: "nav-link btn btnclass" %>
     </li>
     <li class="nav-item">
-      <%= link_to "Leave Information", leaves_path, class: "nav-link btn btnclass" %>
+      <%= link_to "Leaves", leaves_path, class: "nav-link btn btnclass" %>
     </li>
 
     <li style="margin-top: 10px;">
       <% if user_signed_in? %>
-          <div style="margin-left: 360px;">
+          <div style="margin-left: 670px;">
             <div class="dropdown">
               <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <strong><%= current_user.name %></strong>
@@ -68,8 +68,8 @@
             </div>
           </div>
       <% else %>
-          <div style="margin-left: 460px;">
-            <%= link_to "Signin", new_user_session_path %>
+          <div style="margin-left: 670px;">
+            <%= link_to "Signin", new_user_session_path, class: "btn btn-primary" %>
           </div>
       <% end %>
     </li>
