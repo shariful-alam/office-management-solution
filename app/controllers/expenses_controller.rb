@@ -15,9 +15,9 @@ class ExpensesController < ApplicationController
 
   def index
     if params[:search]
-      @expenses = Expense.search(params[:search]).order('expenses.id ASC').paginate(:page => params[:page], :per_page => 2)
+      @expenses = Expense.search(params[:search]).order('expenses.id ASC').paginate(:page => params[:page], :per_page => 12)
     else
-      @expenses = Expense.order('expenses.id ASC').paginate(:page => params[:page], :per_page => 2)
+      @expenses = Expense.order('expenses.id ASC').paginate(:page => params[:page], :per_page => 12)
     end
   end
 

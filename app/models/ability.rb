@@ -6,14 +6,11 @@ class Ability
     if user.present?
       if user.role == 'Office Admin'
         can :manage, :all
+
       else
-        can :read, Expense, :all
-        can :read, Budget, :all
-
+        can :read, :all
         can :manage, Expense, {user_id: user.id}
-        cannot :approve,Expense, {user_id: user.id}
-        can :manage, User, user_id: user.id
-
+        cannot :approve, Expense,:all
       end
 
     end
