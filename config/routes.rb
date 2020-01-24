@@ -10,7 +10,6 @@ Rails.application.routes.draw do
 
   resources :budgets do
     member do
-      put :check
     end
   end
 

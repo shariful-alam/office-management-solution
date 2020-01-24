@@ -4,6 +4,7 @@
   <td><%= expense.product_name %></td>
   <td><%= expense.user.name %></td>
   <td><%= expense.cost %></td>
+  <td><%= image_tag(expense.image.url, :size => "50x50") if expense.image.exists? %> </td>
   <td><%= expense.status %></td>
   <td>
     <% if current_user.role==User::ADMIN %>

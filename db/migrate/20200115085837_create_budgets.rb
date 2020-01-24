@@ -6,7 +6,6 @@ class CreateBudgets < ActiveRecord::Migration[6.0]
       t.decimal :amount
       t.decimal :remaining
       t.string :admin
-
       t.timestamps
     end
   end

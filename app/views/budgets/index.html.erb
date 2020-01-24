@@ -17,6 +17,7 @@
     <th>Sl</th>
     <th>Year - Month</th>
     <th>Amount</th>
+    <th>Expense</th>
     <th>Remaining</th>
     <th>Admin</th>
     <th>Action</th>
@@ -27,9 +28,10 @@
       <tr>
         <td><%= @number %> </td>
         <% @number+=1 %>
-        <td><%= budget.year %> - <%= budget.month %></td>
+        <td><%= budget.month %></td>
         <td><%= budget.amount %></td>
-        <td><%= budget.remaining %></td>
+        <td><%= budget.expense %></td>
+        <td><%=  budget.amount-budget.expense %></td>
         <td><%= budget.user.name %></td>
         <% if current_user.role==User::ADMIN %>
             <td>

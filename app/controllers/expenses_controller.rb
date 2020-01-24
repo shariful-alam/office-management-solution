@@ -3,16 +3,6 @@ class ExpensesController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
-  # before_action :check, except: [:index, :show, :new, :create]
-  # def check
-  #   if current_user.role != User::ADMIN
-  #     @expense = Expense.find(params[:id])
-  #     if @expense.user_id != current_user.id
-  #       redirect_to expenses_path, notice: "Access Denied"
-  #     end
-  #   end
-  # end
-
   def index
     if params[:search]
       @expenses = Expense.search(params[:search]).order('expenses.id ASC').paginate(:page => params[:page], :per_page => 12)
@@ -27,6 +17,10 @@ class ExpensesController < ApplicationController
 
   def create
     @expense.user_id = current_user.id
+    @date = Date.today
+    @month=@date.strftime("%B")+', '+@date.strftime("%Y")
+    @budget=Budget.find_by(month: @month)
+    @expense.budget_id = @budget.id
     if @expense.save
       redirect_to expenses_path, notice: "Expense has been created successfully"
     else
@@ -56,10 +50,7 @@ class ExpensesController < ApplicationController
   end
 
   def approve
-    @date = Date.today
-    @month=@date.strftime("%b")
-    @year=@date.strftime("%Y")
-    @budget=Budget.find_by({year: @year, month: @month})
+
     if @expense.status == Expense::APPROVED
       @expense.status = Expense::PENDING
       @budget.remaining = @budget.remaining + @expense.cost
@@ -76,7 +67,7 @@ class ExpensesController < ApplicationController
 
   private
   def expense_params
-    params.require(:expense).permit(:product_name, :category, :cost, :details, :user_id)
+    params.require(:expense).permit(:product_name, :category, :cost, :details, :image)
   end
 
 

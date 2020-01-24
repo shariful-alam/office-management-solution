@@ -1,3 +1,37 @@
+<script>
+    function myFunction()
+    {
+        var cancel_image = document.getElementById("cancel_image");
+        var cancel_show = document.getElementById("cancel_show");
+        if(cancel_image.checked == false)
+        {
+            cancel_show.style.display = "block";
+            cancel_show.style.opacity = "1";
+        }
+        else
+        {
+            var txt;
+            if (confirm("Are you sure ?"))
+            {
+                txt = 1;
+            }
+            else
+            {
+                txt = 0;
+            }
+            if(txt == 1)
+            {
+                cancel_show.style.display = "block";
+                cancel_show.style.opacity = ".3";
+            }
+            else
+            {
+                cancel_image.checked = false;
+            }
+        }
+    }
+</script>
+
 <h1>Edit Expense Information</h1>
 
 
@@ -23,6 +57,16 @@
       <div class="form-group">
         <%= form.label :cost, class: "control-label" %>
         <%= form.text_field :cost, class: "form-control" %>
+      </div>
+
+      <div class="form-group" id="cancel_show">
+        <%= image_tag(@expense.image.url,:size => "100x100") if @expense.image.exists? %>
+        <%= form.check_box :remove_image, style: "margin-left : 10px; position: absolute;",id: "cancel_image",onclick:"myFunction()" if @expense.image.exists? %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :image, 'Image', class: "control-label" %>
+        <%= form.file_field :image, class: "form-control" %>
       </div>
 
       <div class="form-group">

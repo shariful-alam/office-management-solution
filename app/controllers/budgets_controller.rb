@@ -3,20 +3,11 @@ class BudgetsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
-  # before_action :check, except: [:index]
-  #
-  # def check
-  #   if current_user.role != User::ADMIN
-  #     redirect_to budgets_path, notice: "Access Denied"
-  #   end
-  # end
-
   def index
     if params[:search]
-      @budgets = Budget.search(params[:search]).order('budgets.id ASC').paginate(:page => params[:page], :per_page => 2)
-      #raise @budgets.to_sql
+      @budgets = Budget.search(params[:search]).order('budgets.id ASC').paginate(:page => params[:page], :per_page => 12) #raise @budgets.to_sql
     else
-      @budgets = Budget.order('budgets.id ASC').paginate(:page => params[:page], :per_page => 2)
+      @budgets = Budget.order('budgets.id ASC').paginate(:page => params[:page], :per_page => 12)
     end
   end
 
@@ -26,9 +17,7 @@ class BudgetsController < ApplicationController
 
   def create
     @budget = Budget.new(budget_params)
-    @budget.remaining = @budget.amount
     @budget.user_id = current_user.id
-
     if @budget.save
       redirect_to budgets_path, notice: "Budget has been created successfully"
     else
@@ -48,6 +37,8 @@ class BudgetsController < ApplicationController
 
   def edit
     @budget = Budget.find(params[:id])
+    @budget.year=@budget.month.chars.last(4).join
+    @budget.month=@budget.month[0...-6]
   end
 
   def update
@@ -61,7 +52,7 @@ class BudgetsController < ApplicationController
 
   private
   def budget_params
-    params.require(:budget).permit(:year, :month, :amount, :remaining)
+    params.require(:budget).permit(:year, :month, :amount ,:add)
   end
 
 end

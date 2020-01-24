@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_23_143358) do
+ActiveRecord::Schema.define(version: 2020_01_24_122223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2020_01_23_143358) do
   create_table "budgets", force: :cascade do |t|
     t.string "month"
     t.decimal "amount"
-    t.decimal "remaining"
+    t.decimal "expense"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2020_01_23_143358) do
     t.integer "image_file_size"
     t.datetime "image_updated_at"
     t.integer "budget_id"
+    t.datetime "approve_time"
   end
 
   create_table "leaves", force: :cascade do |t|
