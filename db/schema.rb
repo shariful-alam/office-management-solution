@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_23_143358) do
+ActiveRecord::Schema.define(version: 2020_01_24_122724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_01_23_143358) do
   create_table "allocated_leaves", force: :cascade do |t|
     t.integer "user_id"
     t.integer "total_leave"
-    t.integer "used_leave"
+    t.integer "used_leave", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -60,10 +60,11 @@ ActiveRecord::Schema.define(version: 2020_01_23_143358) do
     t.date "end_date"
     t.text "reason"
     t.string "leave_type"
-    t.boolean "status", default: false
+    t.string "status", default: "Pending"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.time "approve_time"
   end
 
   create_table "users", force: :cascade do |t|

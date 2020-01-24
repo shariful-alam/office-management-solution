@@ -1,0 +1,59 @@
+<%= link_to "Add Leave", new_allocated_leafe_path, class: "btn btn-primary" %>
+
+<br/>
+<br/>
+
+<%= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Type", class: "form-control" %>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
+<br>
+
+
+<% @number = @allocated_leaves.offset + 1 %>
+<h1>List of Leave</h1>
+<table class="table table-bordered">
+  <tr>
+    <th>Sl</th>
+    <th>Employee Name</th>
+    <th>Total Leave</th>
+    <th>Used Leave</th>
+    <th>Remaining Leave</th>
+    <th style="text-align: center;">Action</th>
+  </tr>
+
+  <% @allocated_leaves.each do |al| %>
+      <tr>
+        <td><%= @number %> </td>
+        <% @number+=1 %>
+        <td>
+          <%#= raise l.user.name %>
+          <%= link_to al.user.name, show_all_allocated_leafe_path(al) %>
+        </td>
+        <td>
+          <%= al.total_leave %>
+        </td>
+        <td>
+          <%= al.used_leave %>
+        </td>
+        <td>
+          <%= al.total_leave - al.used_leave %>
+        </td>
+        <td style="text-align: center;">
+          <%= link_to "Show", allocated_leafe_path(al) %> |
+          <%= link_to "Edit", edit_allocated_leafe_path(al) %> |
+          <%= link_to "Delete", allocated_leafe_path(al), method: :delete, data: {confirm: "Are you sure?"} %>
+        </td>
+      </tr>
+  <% end %>
+
+</table>
+<br/>
+<div class="form-group">
+  <%= link_to "Back", allocated_leaves_path, class: "btn btn-primary" %>
+</div>
+<div>
+  <%= will_paginate @allocated_leaves, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+</div>
+
+

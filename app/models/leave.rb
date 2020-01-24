@@ -7,6 +7,9 @@ class Leave < ApplicationRecord
   validates :reason , presence: true
   validates :leave_type , presence: true
 
+  APPROVED = "Approved"
+  PENDING = "Pending"
+
 
   belongs_to :user
 

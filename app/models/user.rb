@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   has_many :expenses
   has_many :budgets
+  has_many :leaves
+  has_one :allocated_leave
   has_attached_file :image
   validates_attachment :image,
                        content_type: {content_type: /\Aimage\/.*\z/},

@@ -23,7 +23,7 @@ class LeavesController < ApplicationController
 
   def new
     @leave = Leave.new
-    @user = User.all
+    #@user = User.all
   end
 
   def create
@@ -60,13 +60,14 @@ class LeavesController < ApplicationController
 
   def approve
     @leave = Leave.find(params[:id])
-    if @leave.status == true
-      @leave.status = false
+    if @leave.status == Leave::APPROVED
+      @leave.status = Leave::PENDING
       flash[:notice] = "The Leave information has been changed successfully"
     else
-      @leave.status = true
+      @leave.status = Leave::APPROVED
       flash[:notice] = "Leave has been approved successfully"
     end
+    #raise @leave.inspect
     @leave.save
     redirect_to leaves_path
   end

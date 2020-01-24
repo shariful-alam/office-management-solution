@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :users, :controllers => {:registrations => "users/registrations"}
 
   resources :expenses do
@@ -13,7 +14,6 @@ Rails.application.routes.draw do
       put :check
     end
   end
-
 
   namespace :manage do
     resources :users do
@@ -31,4 +31,12 @@ Rails.application.routes.draw do
       put :approve
     end
   end
+
+  resources :allocated_leaves do
+    member do
+      get :show_all
+    end
+  end
+
+
 end

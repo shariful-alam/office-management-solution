@@ -1,21 +1,8 @@
-<%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-primary" %>
-
-<br/>
-<br/>
-
-<%= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Type", class: "form-control" %>
-    <%= submit_tag "Search", class: "btn btn-primary" %>
-<% end %>
-<br>
-
-
 <% @number = @leaves.offset + 1 %>
-<h1>List of Leave</h1>
+<h1>List of Leaves of <strong><%= @allocated_leave.user.name %></strong> </h1>
 <table class="table table-bordered">
   <tr>
     <th>Sl</th>
-    <th>Employee Name</th>
     <th>Starting Date</th>
     <th>Ending Date</th>
     <th>Leave Type</th>
@@ -28,10 +15,6 @@
       <tr>
         <td><%= @number %> </td>
         <% @number+=1 %>
-        <td>
-          <%#= raise l.user.name %>
-          <%= l.user.name %>
-        </td>
         <td>
           <%= l.start_date %>
         </td>
@@ -78,7 +61,7 @@
 </table>
 <br/>
 <div class="form-group">
-  <%= link_to "Back", root_path, class: "btn btn-primary" %>
+  <%= link_to "Back", allocated_leaves_path, class: "btn btn-primary" %>
 </div>
 <div>
   <%= will_paginate @leaves, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
