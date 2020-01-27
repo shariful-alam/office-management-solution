@@ -62,14 +62,21 @@ class LeavesController < ApplicationController
     @leave = Leave.find(params[:id])
     if @leave.status == Leave::APPROVED
       @leave.status = Leave::PENDING
+      @allocated_leave = AllocatedLeave.find(@leave.user_id)
+      @allocated_leave.used_leave -= 1
+      @allocated_leave.save
       flash[:notice] = "The Leave information has been changed successfully"
     else
       @leave.status = Leave::APPROVED
+      @allocated_leave = AllocatedLeave.find(@leave.user_id)
+      @allocated_leave.used_leave += 1
+      @allocated_leave.save
+      #raise @allocated_leave.inspect
       flash[:notice] = "Leave has been approved successfully"
     end
     #raise @leave.inspect
     @leave.save
-    redirect_to leaves_path
+    redirect_to show_all_allocated_leafe_path(@leave.user_id)
   end
 
 

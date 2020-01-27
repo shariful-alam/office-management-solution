@@ -1,5 +1,6 @@
 class AllocatedLeavesController < ApplicationController
 
+  before_action :authenticate_user!
 
   def index
     @allocated_leaves = AllocatedLeave.order('id ASC').paginate(:page => params[:page], :per_page => 3)
