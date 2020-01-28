@@ -26,7 +26,10 @@ class BudgetsController < ApplicationController
   end
 
   def show
-    @budget = Budget.find(params[:id])
+    @approved_expenses = Expense.status_expenses(params[:search], params[:page], params[:id],params[:status]='Approved')
+    @pending_expenses = Expense.status_expenses(params[:search], params[:page], params[:id],params[:status]='Pending')
+    @rejected_expenses = Expense.status_expenses(params[:search], params[:page], params[:id],params[:status]='Rejected')
+    @total=Expense.where(budget_id: params[:id], status: 'Approved').sum(:cost)
   end
 
   def destroy

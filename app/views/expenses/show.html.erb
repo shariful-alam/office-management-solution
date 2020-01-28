@@ -8,9 +8,10 @@
     <li class="list-group-item"><b>Employee : </b><%= @expense.user.name %></li>
     <li class="list-group-item"><b>Status : </b><%= @expense.status %></li>
     <li class="list-group-item"><b>Time : </b><%= @expense.created_at %></li>
+    <li class="list-group-item"><b>Approve Time : </b><%=full_date(@expense.approve_time) %></li>
   </ul>
   <br>
   <div class="form-group">
-    <%= link_to "Back", expenses_path, class: "btn btn-primary" %>
+    <%= link_to "Back", :back, fallback_location: root_path, class: "btn btn-primary" %>
   </div>
 </div>

@@ -47,9 +47,16 @@ class Manage::UsersController < ApplicationController
     end
   end
 
+  def show_all
+    @approved_expenses = Expense.user_expenses(params[:search], params[:page], params[:id],params[:status]='Approved')
+    @pending_expenses = Expense.user_expenses(params[:search], params[:page], params[:id],params[:status]='Pending')
+    @rejected_expenses = Expense.user_expenses(params[:search], params[:page], params[:id],params[:status]='Rejected')
+    @total=Expense.where(budget_id: params[:id], status: 'Approved').sum(:cost)
+  end
+
   private
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :role, :password, :password_confirmation, :image_file_name, :image, :image_content_type, :image_file_size, :image_updated_at, :remove_image)
+    params.require(:user).permit(:name, :email, :phone, :role, :password, :password_confirmation, :image, :remove_image)
   end
 
 

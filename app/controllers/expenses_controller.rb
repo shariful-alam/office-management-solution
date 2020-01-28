@@ -4,11 +4,7 @@ class ExpensesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if params[:search]
-      @expenses = Expense.search(params[:search]).order('expenses.id ASC').paginate(:page => params[:page], :per_page => 12)
-    else
-      @expenses = Expense.order('expenses.id ASC').paginate(:page => params[:page], :per_page => 12)
-    end
+    @expenses = Expense.search(params[:search], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role)
   end
 
   def new
@@ -17,10 +13,21 @@ class ExpensesController < ApplicationController
 
   def create
     @expense.user_id = current_user.id
-    @date = Date.today
-    @month=@date.strftime("%B")+', '+@date.strftime("%Y")
-    @budget=Budget.find_by(month: @month)
-    @expense.budget_id = @budget.id
+    if @expense.late == '1'
+      @month = @expense.month+', '+@expense.year
+      @budget=Budget.find_by(month: @month)
+      if @budget
+        @expense.budget_id=@budget.id
+      end
+    else
+      @date = Date.today
+      @month=@date.strftime("%B")+', '+@date.strftime("%Y")
+      @budget=Budget.find_by(month: @month)
+      if @budget
+        @expense.budget_id=@budget.id
+      end
+    end
+
     if @expense.save
       redirect_to expenses_path, notice: "Expense has been created successfully"
     else
@@ -34,7 +41,8 @@ class ExpensesController < ApplicationController
 
   def destroy
     @expense.destroy
-    redirect_to expenses_path, notice: "Expense has been removed successfully"
+    flash[:notice] = "Expense has been removed successfully"
+    redirect_back(fallback_location: expenses_path)
   end
 
   def edit
@@ -43,31 +51,43 @@ class ExpensesController < ApplicationController
 
   def update
     if @expense.update(expense_params)
-      redirect_to expense_path,notice: "Expense has been updated successfully"
+      flash[:notice] = "Expense has been updated successfully"
+      redirect_back(fallback_location: expenses_path)
     else
       render 'edit'
     end
   end
 
-  def approve
+  def reject
+    if @expense.status != Expense::REJECTED
+      @expense.status = Expense::REJECTED
+    end
+    @expense.save
+    flash[:notice] = "Expense has been rejected successfully"
+    redirect_back(fallback_location: expenses_path)
+  end
 
+  def approve
+    @budget = Budget.find(@expense.budget_id)
     if @expense.status == Expense::APPROVED
       @expense.status = Expense::PENDING
-      @budget.remaining = @budget.remaining + @expense.cost
+      @budget.expense = @budget.expense - @expense.cost
+      @expense.approve_time = nil
       flash[:notice] = "The Expense information has been changed successfully"
     else
       @expense.status = Expense::APPROVED
-      @budget.remaining = @budget.remaining - @expense.cost
+      @expense.approve_time = @expense.updated_at
+      @budget.expense = @budget.expense + @expense.cost
       flash[:notice] = "Expense has been approved successfully"
     end
     @budget.save
     @expense.save
-    redirect_to expenses_path
+    redirect_back(fallback_location: expenses_path)
   end
 
   private
   def expense_params
-    params.require(:expense).permit(:product_name, :category, :cost, :details, :image)
+    params.require(:expense).permit(:product_name, :category, :cost, :details, :image, :year, :month, :late)
   end
 
 

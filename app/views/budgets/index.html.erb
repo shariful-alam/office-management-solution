@@ -35,7 +35,7 @@
         <td><%= budget.user.name %></td>
         <% if current_user.role==User::ADMIN %>
             <td>
-              <%= link_to "Show", budget_path(budget) %> /
+              <%= link_to "Show Expenses", budget_path(budget) %> /
               <%= link_to "Edit", edit_budget_path(budget) %> /
               <%= link_to "Delete", budget_path(budget), method: :delete, data: {confirm: "Are you sure?"} %>
             </td>

@@ -19,7 +19,7 @@
     <th>Email</th>
     <th>Phone</th>
     <th>Role</th>
-    <th>Image</th>
+    <!--<th>Image</th>-->
     <th>Action</th>
 
   </tr>
@@ -33,11 +33,12 @@
         <td><%= user.email %></td>
         <td><%= user.phone %></td>
         <td><%= user.role %></td>
-        <td><%= image_tag(user.image.url, :size => "50x50") if user.image.exists? %> </td>
+        <!--<td><%= image_tag(user.image.url, :size => "50x50") if user.image.exists? %> </td>-->
 
         <% if current_user.role==User::ADMIN %>
             <td>
               <%= link_to "Show", manage_user_path(user) %> /
+              <%= link_to "Show all expenses", show_all_manage_user_path(user) %> /
               <%= link_to "Edit", edit_manage_user_path(user) %> /
               <%= link_to "Delete", manage_user_path(user), method: :delete, data: {confirm: "Are you sure?"} %>
             </td>

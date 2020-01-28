@@ -1,3 +1,22 @@
+<script>
+
+    function myFunction()
+    {
+        var previous = document.getElementById("previous");
+        var select_previous = document.getElementById("select_previous");
+
+        if(previous.checked == false)
+        {
+            select_previous.style.display = "none";
+        }
+        else
+        {
+            select_previous.style.display = "block";
+        }
+
+    }
+</script>
+
 <h1>Insert Expense Information</h1>
 
 <div style="padding-right:600px; ">
@@ -33,6 +52,22 @@
         <%= form.label :details, class: "control-label" %>
         <%= form.text_area :details, class: "form-control" %>
       </div>
+
+      <div class="form-group">
+        <%= form.label :late, 'Late/Future Entry', class: "control-label" %>
+        <%= form.check_box :late, style: "margin-left : 10px; position: absolute;", id: "previous", onclick: "myFunction()" %>
+      </div>
+
+
+      <div class="form-group" id="select_previous" style="display: none">
+        <%= form.label :year, class: "control-label" %>
+        <%= form.select :year, Date.today.year.. 10.years.from_now.year %>
+
+        <%= form.label :month %>
+        <%= form.select :month, Date::MONTHNAMES[1..12] %>
+      </div>
+
+
 
       <div class="form-group">
         <%= form.submit 'Submit', class: "btn btn-success" %> |

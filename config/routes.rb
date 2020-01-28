@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :expenses do
     member do
       put :approve
-      put :check
+      put :reject
     end
   end
 
@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   namespace :manage do
     resources :users do
       member do
+        get :show_all
         put :check
       end
     end
@@ -26,7 +27,6 @@ Rails.application.routes.draw do
 
   resources :leaves do
     member do
-      put :check
       put :approve
     end
   end
