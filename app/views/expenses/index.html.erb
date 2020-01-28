@@ -1,34 +1,37 @@
-<%= link_to "Add Expense information", new_expense_path, class: "btn btn-primary" %>
-<br><br>
-
 <%= form_tag(expenses_path, :method => "get", class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search by Product or Name", class: "form-control" %>
-    <%= submit_tag "Search", class: "btn btn-primary" %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
+    &nbsp <%= submit_tag "Search", class: "btn btn-primary" %> &nbsp
+    <%= link_to 'Reset', expenses_path, class: "btn btn-secondary" %>
 <% end %>
 <br>
 
-<% @number=@expenses.offset + 1 %>
-<h1>Expense List</h1>
-<table class="table table-bordered">
-  <thead>
-  <tr>
-    <th>Sl</th>
-    <th>Name</th>
-    <th>Employee</th>
-    <th>Cost</th>
-    <th>Status</th>
-    <th>Action</th>
-  </tr>
-  </thead>
+<%= form_tag(expenses_path, :method => "get", class: "form-inline", style: "float:left") do %>
+    <%= date_field_tag :from, params[:from], class: "form-control" %> &nbsp
+    <%= date_field_tag :to, params[:to], class: "form-control" %> &nbsp
+    <%= submit_tag 'Search', class: 'btn btn-primary' %> &nbsp
+    <%= link_to 'Reset', expenses_path, class: "btn btn-secondary" %>
+<% end %>
 
-  <% @expenses.each do |expense| %>
-      <%= render partial: 'row', locals: {expense: expense} %>
-  <% end %>
-</table>
+<br>
+<br>
+<br>
 
-<%= will_paginate @expenses, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+<button class="accordion btn btn-warning">Pending (<%= @pending_expenses.count %>)</button>
+<%= render partial: 'table', locals: {expenses: @pending_expenses} %>
+<br>
+
+<button class="accordion btn btn-success">Approved (<%= @approved_expenses.count %>)</button>
+<%= render partial: 'table', locals: {expenses: @approved_expenses} %>
+<br>
+
+<button class="accordion btn btn-danger">Rejected (<%= @rejected_expenses.count %>)</button>
+<%= render partial: 'table', locals: {expenses: @rejected_expenses} %>
 
 
 <div class="form-group">
+  <br>
   <%= link_to "Back", root_path, class: "btn btn-primary" %>
 </div>
+
+
+<%= javascript_pack_tag :accordion %>

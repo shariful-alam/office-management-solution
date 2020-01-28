@@ -1,25 +1,7 @@
-<script>
-
-    function myFunction()
-    {
-        var previous = document.getElementById("previous");
-        var select_previous = document.getElementById("select_previous");
-
-        if(previous.checked == false)
-        {
-            select_previous.style.display = "none";
-        }
-        else
-        {
-            select_previous.style.display = "block";
-        }
-
-    }
-</script>
 
 <h1>Insert Expense Information</h1>
 
-<div style="padding-right:600px; ">
+<div>
   <%= form_for(@expense) do |form| %>
 
       <% if @expense.errors.full_messages.any? %>

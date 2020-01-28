@@ -5,11 +5,13 @@ Rails.application.routes.draw do
     member do
       put :approve
       put :reject
+      get :search_by_date
     end
   end
 
   resources :budgets do
     member do
+      get :search_by_date
     end
   end
 
@@ -18,6 +20,7 @@ Rails.application.routes.draw do
     resources :users do
       member do
         get :show_all
+        get :search_by_date
         put :check
       end
     end

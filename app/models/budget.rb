@@ -15,7 +15,7 @@ class Budget < ApplicationRecord
   private
   def self.search(search)
     @key = "%#{search}%"
-    self.joins(:user).where('users.name ilike :search OR month ilike :search OR CAST(year as varchar(20)) ilike :search', search: @key)
+    self.joins(:user).where('users.name ilike :search OR month ilike :search', search: @key)
   end
 
   def define_month_year

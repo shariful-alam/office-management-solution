@@ -1,4 +1,5 @@
 class Expense < ApplicationRecord
+
   validates :product_name, :presence => true
   validates :cost, :presence => true, numericality: {integer: true}
   has_attached_file :image
@@ -19,28 +20,59 @@ class Expense < ApplicationRecord
   CATEGORY_LIST = ["Fixed", "Regular"]
 
   private
-  def self.search(search, page, user_id, role)
+
+  def self.search(search, page, user_id, role, status)
     if role == User::ADMIN
       if search
         @key = "%#{search}%"
-        self.joins(:user).where('users.name ilike :search OR product_name ilike :search', search: @key).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+        self.joins(:user).where(status: status).where('users.name ilike :search OR product_name ilike :search', search: @key).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
       else
-        self.order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+        self.where(status: status).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
       end
     else
       if search
         @key = "%#{search}%"
-        self.joins(:user).where(user_id: user_id).where('users.name ilike :search OR product_name ilike :search', search: @key).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+        self.joins(:user).where(user_id: user_id, status: status).where('users.name ilike :search OR product_name ilike :search OR status ilike :search', search: @key).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
       else
-        self.where(user_id: user_id).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+        self.where(user_id: user_id, status: status).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
       end
     end
   end
 
-  def self.status_expenses(search, page, id, status)
+  def self.expenses_date_search(from, to, page, user_id, role, status)
+    if role == User::ADMIN
+      if from != nil and to != nil
+        @from = Date.parse(from)
+        @to = Date.parse(to)
+        self.joins(:user).where(status: status, created_at: @from..@to).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+      else
+        self.where(status: status).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+      end
+    else
+      if from != nil and to != nil
+        @from = Date.parse(from)
+        @to = Date.parse(to)
+        self.joins(:user).where(user_id: user_id, status: status, created_at: @from..@to).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+      else
+        self.where(user_id: user_id, status: status).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+      end
+    end
+  end
+
+  def self.budget_expenses(search, page, id, status)
     if search
       @key = "%#{search}%"
-      self.joins(:user).where(budget_id: id, status: status).where('users.name ilike :search OR product_name ilike :search', search: @key).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+      self.joins(:user).where(budget_id: id, status: status).where('users.name ilike :search OR product_name ilike :search OR status ilike :search', search: @key).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+    else
+      self.where(budget_id: id, status: status).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+    end
+  end
+
+  def self.budget_expenses_date_search(from, to, page, id, status)
+    if from != nil and to != nil
+      @from = Date.parse(from)
+      @to = Date.parse(to)
+      self.joins(:user).where(budget_id: id, status: status, created_at: @from..@to).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
     else
       self.where(budget_id: id, status: status).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
     end
@@ -49,12 +81,22 @@ class Expense < ApplicationRecord
   def self.user_expenses(search, page, id, status)
     if search
       @key = "%#{search}%"
-      self.joins(:user).where(user_id: id, status: status).where('users.name ilike :search OR product_name ilike :search', search: @key).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+      self.joins(:user).where(user_id: id, status: status).where('users.name ilike :search OR product_name ilike :search OR status ilike :search', search: @key).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
     else
       self.where(user_id: id, status: status).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
     end
   end
 
+  def self.user_expenses_date_search(from, to, page, id, status)
+
+    if from != nil and to != nil
+      @from = Date.parse(from)
+      @to = Date.parse(to)
+      self.joins(:user).where(user_id: id, status: status, created_at: @from..@to).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+    else
+      self.where(user_id: id, status: status).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
+    end
+  end
 
   def delete_image
     self.image = nil

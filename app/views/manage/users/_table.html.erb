@@ -1,10 +1,4 @@
 <div class="panel">
-  <br>
-  <%= form_tag(expense_path, :method => "get",class: "form-inline") do %>
-      <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month",class:"form-control" %>
-      <%= submit_tag "Search", class: "btn btn-primary" %>
-  <% end %>
-  <br>
   <% @number=expenses.offset + 1 %>
   <table class="table table-bordered">
     <thead>

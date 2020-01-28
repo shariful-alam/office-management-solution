@@ -2,7 +2,6 @@ class BudgetsController < ApplicationController
 
   before_action :authenticate_user!
   load_and_authorize_resource
-
   def index
     if params[:search]
       @budgets = Budget.search(params[:search]).order('budgets.id ASC').paginate(:page => params[:page], :per_page => 12) #raise @budgets.to_sql
@@ -26,10 +25,15 @@ class BudgetsController < ApplicationController
   end
 
   def show
-    @approved_expenses = Expense.status_expenses(params[:search], params[:page], params[:id],params[:status]='Approved')
-    @pending_expenses = Expense.status_expenses(params[:search], params[:page], params[:id],params[:status]='Pending')
-    @rejected_expenses = Expense.status_expenses(params[:search], params[:page], params[:id],params[:status]='Rejected')
-    @total=Expense.where(budget_id: params[:id], status: 'Approved').sum(:cost)
+    @approved_expenses = Expense.budget_expenses(params[:search], params[:page], params[:id],params[:status]='Approved')
+    @pending_expenses = Expense.budget_expenses(params[:search], params[:page], params[:id],params[:status]='Pending')
+    @rejected_expenses = Expense.budget_expenses(params[:search], params[:page], params[:id],params[:status]='Rejected')
+  end
+
+  def search_by_date
+    @approved_expenses = Expense.budget_expenses_date_search(params[:from], params[:to], params[:page], params[:id], params[:status]='Approved')
+    @pending_expenses = Expense.budget_expenses_date_search(params[:from], params[:to], params[:page], params[:id], params[:status]='Pending')
+    @rejected_expenses = Expense.budget_expenses_date_search(params[:from], params[:to], params[:page], params[:id], params[:status]='Rejected')
   end
 
   def destroy

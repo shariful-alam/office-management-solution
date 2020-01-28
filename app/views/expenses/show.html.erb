@@ -8,7 +8,9 @@
     <li class="list-group-item"><b>Employee : </b><%= @expense.user.name %></li>
     <li class="list-group-item"><b>Status : </b><%= @expense.status %></li>
     <li class="list-group-item"><b>Time : </b><%= @expense.created_at %></li>
-    <li class="list-group-item"><b>Approve Time : </b><%=full_date(@expense.approve_time) %></li>
+    <% if @expense.approve_time? %>
+        <li class="list-group-item"><b>Approve Time : </b><%= full_date(@expense.approve_time) %></li>
+    <% end %>
   </ul>
   <br>
   <div class="form-group">
