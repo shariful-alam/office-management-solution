@@ -13,7 +13,7 @@
   <div class="card-body">
     <b>Status : </b><%= @expense.status %>
     <% if @expense.approve_time? %>
-        <b>Approve Time : </b><%= full_date(@expense.approve_time) %>
+        <b>Approve Time : </b><%= full_date_with_time(@expense.approve_time) %>
     <% end %>
   </div>
 </div>
