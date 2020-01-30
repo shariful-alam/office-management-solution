@@ -64,7 +64,7 @@ class Manage::UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :role, :password, :password_confirmation, :image, :remove_image)
+    params.require(:user).permit(:name, :email, :phone, :role, :password, :password_confirmation, :image, :remove_image, :target_amount,:bonus_percentage)
   end
 
 

@@ -3,6 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
   has_many :expenses
+  has_many :incomes
   has_many :budgets
   has_many :leaves
   has_one :allocated_leafe

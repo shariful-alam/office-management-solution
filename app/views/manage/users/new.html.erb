@@ -39,6 +39,16 @@
       </div>
 
       <div class="form-group">
+        <%= f.label :target_amount,'Target Amount', class: "control-label" %>
+        <%= f.text_field :target_amount, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :bonus_percentage,'Bonus Percentage', class: "control-label" %>
+        <%= f.text_field :bonus_percentage, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
         <%= f.label :image, 'Image', class: "control-label" %>
         <%= f.file_field :image, class: "form-control" %>
       </div>

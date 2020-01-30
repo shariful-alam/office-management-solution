@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_29_124233) do
+ActiveRecord::Schema.define(version: 2020_01_30_125023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_01_29_124233) do
   create_table "allocated_leaves", force: :cascade do |t|
     t.integer "user_id"
     t.integer "total_leave"
-    t.integer "used_leave", default: 0
+    t.integer "used_leave"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -57,6 +57,17 @@ ActiveRecord::Schema.define(version: 2020_01_29_124233) do
     t.datetime "approve_time"
   end
 
+  create_table "incomes", force: :cascade do |t|
+    t.integer "user_id"
+    t.decimal "amount"
+    t.date "income_date"
+    t.string "year_month"
+    t.string "status", default: "Pending"
+    t.datetime "approve_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "leaves", force: :cascade do |t|
     t.date "start_date"
     t.date "end_date"
@@ -84,6 +95,8 @@ ActiveRecord::Schema.define(version: 2020_01_29_124233) do
     t.string "image_content_type"
     t.integer "image_file_size"
     t.datetime "image_updated_at"
+    t.decimal "target_amount"
+    t.decimal "bonus_percentage"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

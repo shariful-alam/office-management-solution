@@ -14,5 +14,10 @@ module ApplicationHelper
   def taka(amount)
     number_to_currency(amount, precision: 2,unit: " Taka",format: "%n %u")
   end
+
+  def conversion(string)
+    string.singularize()
+    string.pluralize()
+  end
 end
 
