@@ -1,9 +1,14 @@
 <div class="container" style="padding-right: 600px; ">
   <h1>Ask for Leave</h1>
   <%= form_for(@allocated_leave) do |l| %>
+      <% if @allocated_leave.errors.full_messages.any? %>
+          <% @allocated_leave.errors.full_messages.each do |error_message| %>
+              <p class="alert alert-danger"> <%= error_message if @allocated_leave.errors.full_messages.first == error_message %> </p>
+          <% break end %>
+      <% end %>
       <div>
         <%= l.label :user_id %> <br/>
-        <%= collection_select(:allocated_leave, :user_id, User.all, :id, :name, {}, {:multiple => false}) %>
+        <%= collection_select(:allocated_leafe, :user_id, User.all, :id, :name, {}, {:multiple => false}) %>
       </div>
       <br/>
       <div>

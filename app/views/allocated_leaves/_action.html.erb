@@ -1,0 +1,43 @@
+<td>
+  <%= full_date(l.start_date) %>
+</td>
+<td>
+  <%= full_date(l.end_date) %>
+</td>
+<td>
+  <%= l.leave_type %>
+</td>
+<td>
+  <%= l.reason %>
+</td>
+<td>
+  <%= l.status %>
+</td>
+<td style="text-align: center;">
+  <% if current_user.role == User::ADMIN %>
+      <% if l.status == Leafe::APPROVED %>
+          <%= link_to "Undo", approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to Approve?'} %>
+          |
+          <%= link_to "Show", leafe_path(l) %>
+      <% elsif l.status == Leafe::REJECTED %>
+          <%= link_to "Show", leafe_path(l) %> |
+          <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
+      <% else %>
+          <%= link_to "Approve", approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to Approve?'} %>
+          |
+          <%= link_to "Reject", reject_leafe_path(l), method: :put, data: {confirm: 'Are you sure to Reject?'} %>
+          |
+          <%= link_to "Show", leafe_path(l) %>
+          <% if l.user_id==current_user.id %>
+              | <%= link_to "Edit", edit_leafe_path(l) %> |
+              <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
+          <% end %>
+      <% end %>
+  <% else %>
+      <%= link_to "Show", leafe_path(l) %>
+      <% if l.status == Leafe::PENDING and current_user.id==l.user.id %>
+          | <%= link_to "Edit", edit_leafe_path(l) %> |
+          <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
+      <% end %>
+  <% end %>
+</td>

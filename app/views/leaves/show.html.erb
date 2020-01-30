@@ -8,9 +8,12 @@
     <li class="list-group-item"><b>Leave Type : </b><%= @leave.leave_type %></li>
     <li class="list-group-item"><b>Reason : </b><%= @leave.reason %></li>
     <li class="list-group-item"><b>Status : </b><%= @leave.status %></li>
+    <% if @leave.status == Leafe::APPROVED %>
+        <li class="list-group-item"><b>Approved at : </b><%= full_date_with_time(@leave.approve_time) %></li>
+    <% end %>
   </ul>
   <br>
   <div class="form-group">
-    <%= link_to "Back", leaves_path, class: "btn btn-primary" %>
+    <%= link_to "Back", :back, class: "btn btn-primary" %>
   </div>
 </div>

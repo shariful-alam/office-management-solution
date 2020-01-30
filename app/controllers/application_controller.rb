@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+
   protected
 
   def configure_permitted_parameters
@@ -10,7 +11,8 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_path,notice: "Access Denied"
+    flash[:notice] = "Access Denied"
+    redirect_back(fallback_location: root_path)
   end
 
 

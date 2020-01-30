@@ -1,70 +1,19 @@
-<% @number = @leaves.offset + 1 %>
-<h1>List of Leaves of <strong><%= @allocated_leave.user.name %></strong> </h1>
-<table class="table table-bordered">
-  <tr>
-    <th>Sl</th>
-    <th>Starting Date</th>
-    <th>Ending Date</th>
-    <th>Leave Type</th>
-    <th>Reason of Leave</th>
-    <th>Status</th>
-    <th style="text-align: center;">Action</th>
-  </tr>
+<h1>List of Leaves of <strong><%= @allocated_leave.user.name %></strong></h1>
 
-  <% @leaves.each do |l| %>
-      <tr>
-        <td><%= @number %> </td>
-        <% @number+=1 %>
-        <td>
-          <%= l.start_date %>
-        </td>
-        <td>
-          <%= l.end_date %>
-        </td>
-        <td>
-          <%= l.leave_type %>
-        </td>
-        <td>
-          <%= l.reason %>
-        </td>
-        <td>
-          <%= l.status %>
-        </td>
-        <td style="text-align: center;">
-          <% if current_user.role==User::ADMIN %>
-              <% if l.status==Expense::APPROVED %>
-                  <%= link_to "Undo", approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to approve?'} %>
-                  |
-                  <%= link_to "Show", leafe_path(l) %>
-              <% else %>
-                  <%= link_to "Approve", approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to approve?'} %>
-                  |
-                  <%= link_to "Show", leafe_path(l) %>
-                  <% if l.user_id==current_user.id %>
-                      | <%= link_to "Edit", edit_leafe_path(l) %> |
-                      <%= link_to "Delete", expense_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
-                  <% end %>
-              <% end %>
-          <% else %>
-              <%= link_to "Show", expense_path(l) %>
-              <% if l.status!=Expense::APPROVED and current_user.id==l.user.id %>
-                  | <%= link_to "Edit", edit_leafe_path(l) %> |
-                  <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
-              <% end %>
-          <% end %>
+<button class="accordion btn btn-warning">Pending (<%= @leaves_pending.count %>)</button>
+<%= render partial: 'table', locals: {leaves: @leaves_pending} %>
 
+<button class="accordion btn btn-success">Approved (<%= @leaves_approved.count %>)</button>
+<%= render partial: 'table', locals: {leaves: @leaves_approved} %>
 
-        </td>
-      </tr>
-  <% end %>
+<button class="accordion btn btn-danger">Rejected (<%= @leaves_rejected.count %>)</button>
+<%= render partial: 'table', locals: {leaves: @leaves_rejected} %>
 
-</table>
 <br/>
 <div class="form-group">
   <%= link_to "Back", allocated_leaves_path, class: "btn btn-primary" %>
 </div>
-<div>
-  <%= will_paginate @leaves, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-</div>
+
+<%= javascript_pack_tag :accordion %>
 
 

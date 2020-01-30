@@ -58,3 +58,4 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 gem "paperclip", "~> 5.1"
 gem 'cancancan'
+gem 'ransack'
