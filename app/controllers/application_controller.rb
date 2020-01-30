@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:notice] =  "Access Denied"
+    flash[:alert] =  "Access Denied"
     redirect_back(fallback_location: root_path)
   end
 

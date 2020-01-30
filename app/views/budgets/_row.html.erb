@@ -11,12 +11,12 @@
         <% if expense.status==Expense::APPROVED %>
             <%= link_to "Undo", approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure to approve?'} %> /
         <% else %>
-            <%= link_to "Approve", approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure to approve?'} %> /
+            <%= link_to "Approve", approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure to do undo?'} %> /
         <% end %>
     <% end %>
 
     <% if can? :reject, expense %>
-       <%= link_to "Reject", reject_expense_path(expense), method: :put, data: {confirm: 'Are you sure to approve?'} %> /
+       <%= link_to "Reject", reject_expense_path(expense), method: :put, data: {confirm: 'Are you sure to reject?'} %> /
     <% end %>
 
     <% if can? :read, expense %>

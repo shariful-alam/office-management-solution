@@ -3,8 +3,6 @@
   "accordion.js.map": "/packs/js/accordion-afd7289678bc6eebead5.js.map",
   "application.js": "/packs/js/application-0b67a3cc2fcde6055024.js",
   "application.js.map": "/packs/js/application-0b67a3cc2fcde6055024.js.map",
-  "custom_date_expense.js": "/packs/js/custom_date_expense-d0c3d9b72b4e451f292b.js",
-  "custom_date_expense.js.map": "/packs/js/custom_date_expense-d0c3d9b72b4e451f292b.js.map",
   "edit_image.js": "/packs/js/edit_image-97b354c3882d7f7d71cd.js",
   "edit_image.js.map": "/packs/js/edit_image-97b354c3882d7f7d71cd.js.map",
   "entrypoints": {
@@ -22,14 +20,6 @@
       ],
       "js.map": [
         "/packs/js/application-0b67a3cc2fcde6055024.js.map"
-      ]
-    },
-    "custom_date_expense": {
-      "js": [
-        "/packs/js/custom_date_expense-d0c3d9b72b4e451f292b.js"
-      ],
-      "js.map": [
-        "/packs/js/custom_date_expense-d0c3d9b72b4e451f292b.js.map"
       ]
     },
     "edit_image": {

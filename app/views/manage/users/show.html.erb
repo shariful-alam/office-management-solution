@@ -1,11 +1,17 @@
-<div style="padding-right: 700px;">
-  <h1>Show Details</h1>
-  <ul class="list-group">
-    <li class="list-group-item"><b>Name : </b><%= @user.name %></li>
-    <li class="list-group-item"><b>Email : </b><%= @user.email %></li>
-    <li class="list-group-item"><b>Phone : </b><%= @user.phone %></li>
-    <li class="list-group-item"><b>Role : </b><%= @user.role %></li>
+<div class="card" style="width: 28rem;">
+  <%= image_tag(@user.image.url, :class => "card-img-top") if @user.image.exists? %>
+  <hr>
+  <div class="card-body">
+    <h4 class="card-title"><b>Employee : </b><%= @user.name %></h4>
+    <h4 class="card-title"><b>Email : </b><%= @user.email %></h4>
+  </div><hr>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><b>Phone : </b><%= @user.phone %> </li>
+    <li class="list-group-item"><b>Designation : </b><%= @user.role%></li>
+    <li class="list-group-item"><b>Registration Date : </b><%= full_date(@user.created_at)%></li>
   </ul>
-  <br>
-  <%= link_to "Back", manage_users_path, class: "btn btn-primary" %>
+</div>
+<br>
+<div class="form-group">
+  <%= link_to "Back", manage_users_path, class: "btn btn-dark" %>
 </div>

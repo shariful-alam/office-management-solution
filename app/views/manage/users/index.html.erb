@@ -1,11 +1,11 @@
 <% if current_user.role==User::ADMIN %>
-    <%= link_to "Add User information", new_manage_user_path, class: "btn btn-primary" %>
+    <%= link_to "Add User information", new_manage_user_path, class: "btn btn-dark" %>
     <br><br>
 <% end %>
 
 <%= form_tag(manage_users_path, :method => "get",class: "form-inline") do %>
     <%= text_field_tag :search, params[:search], placeholder: "Search",class:"form-control" %>
-    <%= submit_tag "Search", class: "btn btn-primary" %>
+    &nbsp <%= submit_tag "Search", class: "btn btn-dark" %>
 <% end %>
 <br>
 
@@ -52,6 +52,6 @@
 <strong><%= will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %></strong>
 
 <div class="form-group">
-  <%= link_to "Back", root_path, class: "btn btn-primary" %>
+  <%= link_to "Back", root_path, class: "btn btn-dark" %>
 </div>
 

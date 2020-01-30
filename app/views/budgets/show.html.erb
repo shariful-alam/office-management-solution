@@ -1,19 +1,34 @@
-<h1>Expense List for <%= @budget.month %></h1>
+<div class="row">
+  <div class="col-sm">
+    <div class="card" style="width: 28rem;">
+      <div class="card-body">
+        <h3 class="card-title">Expense List for <%= @budget.month %></h3>
+      </div><hr>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><b>Total Budget : </b><%= taka(@budget.amount) %> </li>
+        <li class="list-group-item"><b>Expense : </b><%= taka(@budget.expense) %></li>
+        <li class="list-group-item"><b>Remaining : </b><%=taka(@budget.amount- @budget.expense)%></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-sm">
+    <%= form_tag(budget_path, :method => "get",class: "form-inline") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month",class:"form-control" %>
+        &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
+        <%= link_to 'Reset', budget_path , class: "btn btn-secondary" %>
+    <% end %>
+    <br>
 
-<br>
-<%= form_tag(budget_path, :method => "get",class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month",class:"form-control" %>
-    &nbsp <%= submit_tag "Search", class: "btn btn-primary" %> &nbsp
-    <%= link_to 'Reset', budget_path , class: "btn btn-secondary" %>
-<% end %>
-<br>
+    <%= form_tag(search_by_date_budget_path, :method => "get", class: "form-inline", style: "float:left") do %>
+        <%= date_field_tag :from, params[:from], class: "form-control" %> &nbsp
+        <%= date_field_tag :to, params[:to], class: "form-control" %> &nbsp
+        <%= submit_tag 'Search', class: 'btn btn-dark' %> &nbsp
+        <%= link_to 'Reset', budget_path , class: "btn btn-secondary" %>
+    <% end %>
+  </div>
+</div>
 
-<%= form_tag(search_by_date_budget_path, :method => "get", class: "form-inline", style: "float:left") do %>
-    <%= date_field_tag :from, params[:from], class: "form-control" %> &nbsp
-    <%= date_field_tag :to, params[:to], class: "form-control" %> &nbsp
-    <%= submit_tag 'Search', class: 'btn btn-primary' %> &nbsp
-    <%= link_to 'Reset', budget_path , class: "btn btn-secondary" %>
-<% end %>
+
 <br>
 <br>
 <br>
@@ -32,7 +47,7 @@
 
 <div class="form-group">
   <br>
-  <%= link_to "Back", budgets_path, class: "btn btn-primary" %>
+  <%= link_to "Back", budgets_path, class: "btn btn-dark" %>
 </div>
 
 

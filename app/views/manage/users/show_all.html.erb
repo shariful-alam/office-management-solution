@@ -1,26 +1,40 @@
-<h1>Expense List for <%= @user.name %></h1>
+<div class="row">
+  <div class="col-sm">
+    <div class="card" style="width: 28rem;">
+      <div class="card-body">
+        <h3 class="card-title">Expense List for <%= @user.name %></h3>
+      </div>
+      <hr>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Total Expense : <b><%= taka(@expense_for_user) %> </b></li>
+        <li class="list-group-item">Total Approved : <b><%= @approved_expenses.count %></b> </li>
+        <li class="list-group-item">Total Pending : <b><%= @pending_expenses.count %></b> </li>
+        <li class="list-group-item">Total Rejected : <b><%= @rejected_expenses.count %></b> </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-sm">
+    <%= form_tag(show_all_manage_user_path, :method => "get", class: "form-inline") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
+        &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
+        <%= link_to 'Reset', show_all_manage_user_path, class: "btn btn-secondary" %>
+    <% end %>
+    <br>
+
+    <%= form_tag(search_by_date_manage_user_path, :method => "get", class: "form-inline", style: "float:left") do %>
+        <%= date_field_tag :from, params[:from], class: "form-control" %> &nbsp
+        <%= date_field_tag :to, params[:to], class: "form-control" %> &nbsp
+        <%= submit_tag 'Search', class: 'btn btn-dark' %> &nbsp
+        <%= link_to 'Reset', show_all_manage_user_path, class: "btn btn-secondary" %>
+    <% end %>
+  </div>
+</div>
 
 <br>
-<%= form_tag(show_all_manage_user_path, :method => "get",class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month",class:"form-control" %>
-    &nbsp <%= submit_tag "Search", class: "btn btn-primary" %> &nbsp
-    <%= link_to 'Reset', show_all_manage_user_path , class: "btn btn-secondary" %>
-<% end %>
-<br>
-
-
-<%= form_tag(search_by_date_manage_user_path, :method => "get", class: "form-inline", style: "float:left") do %>
-    <%= date_field_tag :from, params[:from], class: "form-control" %> &nbsp
-    <%= date_field_tag :to, params[:to], class: "form-control" %> &nbsp
-    <%= submit_tag 'Search', class: 'btn btn-primary' %> &nbsp
-    <%= link_to 'Reset', show_all_manage_user_path , class: "btn btn-secondary" %>
-<% end %>
-
-<br>
 <br>
 <br>
 
-<button class="accordion btn btn-warning">Pending (<%= @pending_expenses.count %>) </button>
+<button class="accordion btn btn-warning">Pending (<%= @pending_expenses.count %>)</button>
 <%= render partial: 'table', locals: {expenses: @pending_expenses} %>
 <br>
 
@@ -34,7 +48,7 @@
 
 <div class="form-group">
   <br>
-  <%= link_to "Back", manage_users_path, class: "btn btn-primary" %>
+  <%= link_to "Back", manage_users_path, class: "btn btn-dark" %>
 </div>
 
 

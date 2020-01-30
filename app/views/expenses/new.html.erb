@@ -1,3 +1,21 @@
+<script type="text/javascript" charset="utf-8">
+    function Function()
+    {
+        var previous = document.getElementById("previous");
+        var select_previous = document.getElementById("select_previous");
+
+        if(previous.checked == false)
+        {
+            select_previous.style.display = "none";
+        }
+        else
+        {
+            select_previous.style.display = "block";
+        }
+
+    }
+</script>
+
 
 <h1>Insert Expense Information</h1>
 
@@ -37,7 +55,7 @@
 
       <div class="form-group">
         <%= form.label :late, 'Late/Future Entry', class: "control-label" %>
-        <%= form.check_box :late, style: "margin-left : 10px; position: absolute;", id: "previous", onclick: "myFunction()" %>
+        <%= form.check_box :late, style: "margin-left : 10px; position: absolute;", id: "previous", onclick: "Function()" %>
       </div>
 
 
@@ -53,7 +71,7 @@
 
       <div class="form-group">
         <%= form.submit 'Submit', class: "btn btn-success" %> |
-        <%= link_to "Back", expenses_path, class: "btn btn-primary" %>
+        <%= link_to "Back", expenses_path, class: "btn btn-dark" %>
       </div>
   <% end %>
 

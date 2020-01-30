@@ -48,10 +48,10 @@ class Manage::UsersController < ApplicationController
   end
 
   def show_all
+    @expense_for_user=Expense.where(user_id: params[:id], status: 'Approved').sum(:cost)
     @approved_expenses = Expense.user_expenses(params[:search], params[:page], params[:id], params[:status]='Approved')
     @pending_expenses = Expense.user_expenses(params[:search], params[:page], params[:id], params[:status]='Pending')
     @rejected_expenses = Expense.user_expenses(params[:search], params[:page], params[:id], params[:status]='Rejected')
-    @total=Expense.where(budget_id: params[:id], status: 'Approved').sum(:cost)
   end
 
   def search_by_date

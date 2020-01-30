@@ -1,11 +1,12 @@
-<% if current_user.role==User::ADMIN %>
-    <%= link_to "Add Budget information", new_budget_path, class: "btn btn-primary" %>
-    <br><br>
-<% end %>
+
+<%= link_to "Add Budget information", new_budget_path, class: "btn btn-dark" %>
+<br><br>
+
 
 <%= form_tag(budgets_path, :method => "get",class: "form-inline") do %>
     <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month",class:"form-control" %>
-    <%= submit_tag "Search", class: "btn btn-primary" %>
+    &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
+    <%= link_to 'Reset', budgets_path, class: "btn btn-secondary" %>  &nbsp
 <% end %>
 <br>
 
@@ -29,9 +30,9 @@
         <td><%= @number %> </td>
         <% @number+=1 %>
         <td><%= budget.month %></td>
-        <td><%= budget.amount %></td>
-        <td><%= budget.expense %></td>
-        <td><%=  budget.amount-budget.expense %></td>
+        <td><%= taka(budget.amount) %></td>
+        <td><%= taka(budget.expense) %></td>
+        <td><%=  taka(budget.amount-budget.expense) %></td>
         <td><%= budget.user.name %></td>
         <% if current_user.role==User::ADMIN %>
             <td>
@@ -47,5 +48,5 @@
 </table>
 <%= will_paginate @budgets, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 <div class="form-group">
-  <%= link_to "Back", root_path, class: "btn btn-primary" %>
+  <%= link_to "Back", root_path, class: "btn btn-dark" %>
 </div>

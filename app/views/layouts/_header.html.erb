@@ -1,4 +1,3 @@
-
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
   <div class="container">
@@ -11,47 +10,53 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>
-        <li class="nav-item">
-          <%= link_to "Employees", manage_users_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Budgets", budgets_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Expenses", expenses_path, class: "nav-link" %>
-        </li>
-        <li >
-          <%= link_to "Leaves", leaves_path, class: "nav-link" %>
-        </li>
+            <% if can? :show, User %>
+            <li class="nav-item">
+                  <%= link_to "Employees", manage_users_path, class: "nav-link" %>
+            </li>
+            <% end %>
+            <% if can? :show, Budget %>
+            <li class="nav-item">
+              <%= link_to "Budgets", budgets_path, class: "nav-link" %>
+            </li>
+            <% end %>
+            <li class="nav-item">
+              <%= link_to "Expenses", expenses_path, class: "nav-link" %>
+            </li>
+            <li>
+              <%= link_to "Leaves", leaves_path, class: "nav-link" %>
+            </li>
 
-        <li class="nav-item">
-            <div>
-              <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <strong><%= current_user.name %></strong>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <%= link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item' %>
-                  <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+            <li class="nav-item">
+              <div>
+                <div class="dropdown">
+                  <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <strong><%= current_user.name %></strong>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <%= link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item' %>
+                    <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+                  </div>
                 </div>
               </div>
-            </div>
         <% else %>
             <div>
-              <%= link_to "Signin", new_user_session_path, class: "nav-link"%>
+              <%= link_to "Signin", new_user_session_path, class: "nav-link" %>
             </div>
         <% end %>
-      </li>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
 
 <br>
-<% flash.each do |key, value| %>
-    <% if key=="alert" || value=="Access Denied" %>
-        <%= content_tag(:div, value, class: "alert alert-danger") %>
-    <% elsif key=="notice" %>
-        <%= content_tag(:div, value, class: "alert alert-success") %>
-    <% end %>
-<% end %>
+<div class="container">
+  <% flash.each do |key, value| %>
+      <% if key=="alert" %>
+          <%= content_tag(:div, value, class: "alert alert-danger") %>
+      <% elsif key=="notice" %>
+          <%= content_tag(:div, value, class: "alert alert-success") %>
+      <% end %>
+  <% end %>
+</div>

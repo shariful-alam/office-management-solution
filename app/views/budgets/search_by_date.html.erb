@@ -1,9 +1,9 @@
-<h1>Expense List for <%= @budget.month %></h1>
+<h1>Search Result for <%= @budget.month %></h1>
 
 <br>
 <%= form_tag(budget_path, :method => "get",class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month",class:"form-control" %>
-    &nbsp <%= submit_tag "Search", class: "btn btn-primary" %> &nbsp
+    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month",class:"form-control" ,presence:true%>
+    &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
     <%= link_to 'Reset', budget_path , class: "btn btn-secondary" %>
 <% end %>
 <br>
@@ -11,7 +11,7 @@
 <%= form_tag(search_by_date_budget_path, :method => "get", class: "form-inline", style: "float:left") do %>
     <%= date_field_tag :from, params[:from], class: "form-control" %> &nbsp
     <%= date_field_tag :to, params[:to], class: "form-control" %> &nbsp
-    <%= submit_tag 'Search', class: 'btn btn-primary' %> &nbsp
+    <%= submit_tag 'Search', class: 'btn btn-dark' %> &nbsp
     <%= link_to 'Reset', budget_path , class: "btn btn-secondary" %>
 <% end %>
 <br>
@@ -32,7 +32,7 @@
 
 <div class="form-group">
   <br>
-  <%= link_to "Back", budgets_path, class: "btn btn-primary" %>
+  <%= link_to "Back", budgets_path, class: "btn btn-dark" %>
 </div>
 
 

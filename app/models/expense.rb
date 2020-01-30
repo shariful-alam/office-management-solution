@@ -41,7 +41,7 @@ class Expense < ApplicationRecord
 
   def self.expenses_date_search(from, to, page, user_id, role, status)
     if role == User::ADMIN
-      if from != nil and to != nil
+      if from != '' and to != ''
         @from = Date.parse(from)
         @to = Date.parse(to)
         self.joins(:user).where(status: status, created_at: @from..@to).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
@@ -49,7 +49,7 @@ class Expense < ApplicationRecord
         self.where(status: status).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
       end
     else
-      if from != nil and to != nil
+      if from != '' and to != ''
         @from = Date.parse(from)
         @to = Date.parse(to)
         self.joins(:user).where(user_id: user_id, status: status, created_at: @from..@to).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
@@ -69,7 +69,7 @@ class Expense < ApplicationRecord
   end
 
   def self.budget_expenses_date_search(from, to, page, id, status)
-    if from != nil and to != nil
+    if from != '' and to != ''
       @from = Date.parse(from)
       @to = Date.parse(to)
       self.joins(:user).where(budget_id: id, status: status, created_at: @from..@to).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
@@ -89,7 +89,7 @@ class Expense < ApplicationRecord
 
   def self.user_expenses_date_search(from, to, page, id, status)
 
-    if from != nil and to != nil
+    if from != '' and to != ''
       @from = Date.parse(from)
       @to = Date.parse(to)
       self.joins(:user).where(user_id: id, status: status, created_at: @from..@to).order('expenses.id ASC').paginate(:page => page, :per_page => 20)
