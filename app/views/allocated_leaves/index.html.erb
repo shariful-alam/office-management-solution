@@ -3,7 +3,7 @@
     <%= link_to "All leaves", leaves_path, class: "btn btn-dark" %>
     <%= link_to "Availability", attendances_path, class: "btn btn-dark" %>
 <% end %>
-<%= link_to "Apply for Leafe", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
+<%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
 <% if @attendance != nil %>
     <% if @attendance.status == true %>
         <%= link_to "Check Out", attendance_path(@attendance), method: :put, class: "btn btn-dark" %>

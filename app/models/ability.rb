@@ -11,11 +11,15 @@ class Ability
         cannot :reject, Expense, {status: 'Approved'}
         cannot :update, Expense, {status: 'Approved'}
         cannot :update, Expense, {status: 'Rejected'}
+
         can :manage, AllocatedLeafe, :all
+
         can :manage, Attendance, :all
+
         can :manage, Leafe, :all
       else
         can :update, User, {user_id: user.id}
+
         can :manage, Expense, {user_id: user.id}
         cannot :manage, Expense, {status: 'Rejected'}
         cannot :manage, Expense, {status: 'Approved'}
@@ -23,12 +27,16 @@ class Ability
         cannot :reject, Expense, {user_id: user.id}
         can :read, Expense, {user_id: user.id}
         cannot :approve, Expense, :all
-        cannot :read, AllocatedLeafe, :all
+
         can :show_all, AllocatedLeafe, {user_id: user.id}
+        cannot :manage, AllocatedLeafe, :all
+
         can :manage, Attendance, {user_id: user.id}
-        cannot :read, Attendance
-        can :create, Leafe
-        cannot :read, Leafe
+
+        can :manage, Leafe, {user_id: user.id, status: 'Pending'}
+        can :read, Leafe, {user_id: user.id, status: 'Approved'}
+        can :read, Leafe, {user_id: user.id, status: 'Rejected'}
+        cannot :approve, Leafe, :all
       end
     else
       cannot :manage, :all
