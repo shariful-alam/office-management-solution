@@ -1,19 +1,20 @@
 <div>
 
-  <%= link_to "Apply for Leafe", new_leafe_path, class: "btn btn-primary", style: "float:right" %>
+  <%= link_to "Apply for Leafe", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
   <br/>
   <br/>
   <%= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
       <%= text_field_tag :search, params[:search], placeholder: "Search by Name", class: "form-control" %> &nbsp
-      <%= submit_tag "Search", class: "btn btn-primary" %> &nbsp
-      <%= link_to "Reset", leaves_path, class: "btn btn-primary" %>
+      <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
+      <%= link_to "Reset", leaves_path, class: "btn btn-secondary" %>
   <% end %>
   <br>
   <%= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
       <%= date_field_tag :date_from, params[:date_from], class: "form-control" %> &nbsp
       <%= date_field_tag :date_to, params[:date_to], class: "form-control" %> &nbsp
-      <%= submit_tag 'Search', class: 'btn btn-primary' %>
-  <% end %>
+      <%= submit_tag 'Search', class: 'btn btn-dark' %>&nbsp
+      <%= link_to "Reset", leaves_path, class: "btn btn-secondary" %>
+<% end %>
 
   <br>
 </div>
@@ -31,7 +32,7 @@
 
 <br/>
 <div class="form-group">
-  <%= link_to "Back", allocated_leaves_path, class: "btn btn-primary" %>
+  <%= link_to "Back", allocated_leaves_path, class: "btn btn-dark" %>
 </div>
 
 

@@ -1,24 +1,24 @@
 <% if current_user.role == 'Office Admin' %>
-    <%= link_to "Add Leafe", new_allocated_leafe_path, class: "btn btn-primary" %>
-    <%= link_to "All leaves", leaves_path, class: "btn btn-primary" %>
-    <%= link_to "Availability", attendances_path, class: "btn btn-primary" %>
+    <%= link_to "Add Leafe", new_allocated_leafe_path, class: "btn btn-dark" %>
+    <%= link_to "All leaves", leaves_path, class: "btn btn-dark" %>
+    <%= link_to "Availability", attendances_path, class: "btn btn-dark" %>
 <% end %>
-<%= link_to "Apply for Leafe", new_leafe_path, class: "btn btn-primary", style: "float:right" %>
+<%= link_to "Apply for Leafe", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
 <% if @attendance != nil %>
     <% if @attendance.status == true %>
-        <%= link_to "Check Out", attendance_path(@attendance), method: :put, class: "btn btn-primary" %>
+        <%= link_to "Check Out", attendance_path(@attendance), method: :put, class: "btn btn-dark" %>
     <% else %>
-        <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-primary" %>
+        <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-dark" %>
     <% end %>
 <% else %>
-    <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-primary" %>
+    <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-dark" %>
 <% end %>
 <br/>
 <br/>
 
 <%#= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
 <%#= text_field_tag :search, params[:search], placeholder: "Search by Name or Type", class: "form-control" %>
-<%#= submit_tag "Search", class: "btn btn-primary" %>
+<%#= submit_tag "Search", class: "btn btn-dark" %>
 <%#= end %>
 <br>
 
@@ -69,7 +69,7 @@
 </table>
 <br/>
 <div class="form-group">
-  <%= link_to "Back", root_path, class: "btn btn-primary" %>
+  <%= link_to "Back", root_path, class: "btn btn-dark" %>
 </div>
 <div>
   <%= will_paginate @allocated_leaves, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
