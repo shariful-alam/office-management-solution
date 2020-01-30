@@ -62,7 +62,7 @@ class LeavesController < ApplicationController
     @leave = Leafe.find(params[:id])
     @leave.destroy
     flash[:notice] = "Information Has Destroyed"
-    redirect_to allocated_leaves_path
+    redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id) )
   end
 
   def approve
