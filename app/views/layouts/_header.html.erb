@@ -27,7 +27,7 @@
               <% if current_user.role == User::ADMIN %>
                   <%= link_to "Leaves", allocated_leaves_path, class: "nav-link" %>
               <% else %>
-                  <%= link_to "Leaves", show_all_allocated_leafe_path(current_user.id), class: "nav-link" %>
+                  <%= link_to "Leaves", leaves_path, class: "nav-link" %>
               <% end %>
             </li>
 
