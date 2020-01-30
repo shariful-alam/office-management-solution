@@ -8,7 +8,7 @@ class Modification < ActiveRecord::Migration[6.0]
     create_table :allocated_leaves do |t|
       t.integer :user_id
       t.integer :total_leave
-      t.integer :used_leave
+      t.integer :used_leave, default: 0
       t.timestamps
     end
     add_column :expenses, :image_file_name, :string

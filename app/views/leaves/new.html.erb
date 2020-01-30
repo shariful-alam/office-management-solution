@@ -1,5 +1,5 @@
 <div class="container" style="padding-right: 600px; ">
-  <h1>Ask for Leave</h1>
+  <h1>Apply for Leave</h1>
   <%= form_for(@leave) do |l| %>
       <div>
         <h3>User : <%= current_user.name %></h3>
@@ -22,12 +22,12 @@
       <br/>
       <div>
         <%= l.label :Leave_type %> <br/>
-        <%= l.select(:leave_type, Leave::LEAVE_TYPE) %>
+        <%= l.select(:leave_type, Leafe::LEAVE_TYPE) %>
       </div>
       <br/>
       <div class="form-group">
         <%= l.submit 'Save', class: "btn btn-success" %> |
-        <%= link_to "Back", leaves_path, class: "btn btn-dark" %>
+        <%= link_to "Back", allocated_leaves_path, class: "btn btn-primary" %>
       </div>
 
 <% end %>

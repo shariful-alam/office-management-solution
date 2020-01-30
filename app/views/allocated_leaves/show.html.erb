@@ -1,0 +1,14 @@
+<div style="padding-right: 700px;">
+  <h1>Details</h1>
+  <p class="text-success"><%= flash[:notices] %></p>
+  <ul class="list-group">
+    <li class="list-group-item"><b>Employee : </b><%= @allocated_leave.user.name %></li>
+    <li class="list-group-item"><b>Total Leave : </b><%= @allocated_leave.total_leave %></li>
+    <li class="list-group-item"><b>Used Leave : </b><%= @allocated_leave.used_leave %></li>
+    <li class="list-group-item"><b>Remaining Leave : </b><%= @allocated_leave.total_leave - @allocated_leave.used_leave %></li>
+  </ul>
+  <br>
+  <div class="form-group">
+    <%= link_to "Back", allocatedLeaves_path, class: "btn btn-primary" %>
+  </div>
+</div>

@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_01_24_122223) do
   create_table "allocated_leaves", force: :cascade do |t|
     t.integer "user_id"
     t.integer "total_leave"
-    t.integer "used_leave"
+    t.integer "used_leave", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2020_01_24_122223) do
     t.string "info"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "status", default: false
   end
 
   create_table "budgets", force: :cascade do |t|
@@ -61,10 +62,11 @@ ActiveRecord::Schema.define(version: 2020_01_24_122223) do
     t.date "end_date"
     t.text "reason"
     t.string "leave_type"
-    t.boolean "status", default: false
+    t.string "status", default: "Pending"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "approve_time"
   end
 
   create_table "users", force: :cascade do |t|

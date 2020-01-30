@@ -1,91 +1,41 @@
-<%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark" %>
+<div>
 
-<br/>
-<br/>
-
-<%= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Type", class: "form-control" %>
-    <%= submit_tag "Search", class: "btn btn-dark" %>
-<% end %>
-<br>
-
-
-<% @number = @leaves.offset + 1 %>
-<h1>List of Leave</h1>
-<table class="table table-bordered">
-  <tr>
-    <th>Sl</th>
-    <th>Employee Name</th>
-    <th>Starting Date</th>
-    <th>Ending Date</th>
-    <th>Leave Type</th>
-    <th>Reason of Leave</th>
-    <th>Status</th>
-    <th style="text-align: center;">Action</th>
-  </tr>
-
-  <% @leaves.each do |l| %>
-      <tr>
-        <td><%= @number %> </td>
-        <% @number+=1 %>
-        <td>
-          <%#= raise l.user.name %>
-          <%= l.user.name %>
-        </td>
-        <td>
-          <%= l.start_date %>
-        </td>
-        <td>
-          <%= l.end_date %>
-        </td>
-        <td>
-          <%= l.leave_type %>
-        </td>
-        <td>
-          <%= l.reason %>
-        </td>
-        <td>
-          <% if l.status == true %>
-              <%= "Approved" %>
-          <% else %>
-              <%= "Pending" %>
-          <% end %>
-        </td>
-        <td>
-          <% if current_user.role == User::ADMIN %>
-              <% if l.status == true %>
-                  <%= link_to "Undo", approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to approve?'} %>
-                  /
-                  <%= link_to "Show", leafe_path(l) %>
-              <% else %>
-                  <%= link_to "Approve", approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to approve?'} %>
-                  /
-                  <%= link_to "Show", leafe_path(l) %>
-                  <% if l.user_id == current_user.id %>
-                      / <%= link_to "Edit", edit_leafe_path(l) %> /
-                      <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
-                  <% end %>
-              <% end %>
-          <% else %>
-              <%= link_to "Show", leafe_path(l) %>
-              <% if l.status != 1 and current_user.id == l.user.id %>
-                  / <%= link_to "Edit", edit_leafe_path(l) %> /
-                  <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
-              <% end %>
-          <% end %>
-
-
-        </td>
-      </tr>
+  <%= link_to "Apply for Leafe", new_leafe_path, class: "btn btn-primary", style: "float:right" %>
+  <br/>
+  <br/>
+  <%= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search by Name", class: "form-control" %> &nbsp
+      <%= submit_tag "Search", class: "btn btn-primary" %> &nbsp
+      <%= link_to "Reset", leaves_path, class: "btn btn-primary" %>
+  <% end %>
+  <br>
+  <%= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
+      <%= date_field_tag :date_from, params[:date_from], class: "form-control" %> &nbsp
+      <%= date_field_tag :date_to, params[:date_to], class: "form-control" %> &nbsp
+      <%= submit_tag 'Search', class: 'btn btn-primary' %>
   <% end %>
 
-</table>
+  <br>
+</div>
+
+<br>
+<h1>List of Leave</h1> <br/>
+<button class="accordion btn btn-warning">Pending (<%= @leaves_pending.count %>)</button>
+<%= render partial: 'table', locals: {leaves: @leaves_pending} %>
+
+<button class="accordion btn btn-success">Approved (<%= @leaves_approved.count %>)</button>
+<%= render partial: 'table', locals: {leaves: @leaves_approved} %>
+
+<button class="accordion btn btn-danger">Rejected (<%= @leaves_rejected.count %>)</button>
+<%= render partial: 'table', locals: {leaves: @leaves_rejected} %>
+
 <br/>
 <div class="form-group">
-  <%= link_to "Back", root_path, class: "btn btn-dark" %>
+  <%= link_to "Back", allocated_leaves_path, class: "btn btn-primary" %>
 </div>
-<div>
-  <%= will_paginate @leaves, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-</div>
+
+
+<%= javascript_pack_tag :accordion %>
+
 
 

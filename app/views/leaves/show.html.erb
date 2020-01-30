@@ -1,10 +1,19 @@
-<h1>Details of Leave of <%= @leave.user.name %></h1>
-
-<div>
-  <label>From : </label><%= @leave.start_date %> <br />
-  <label>To : </label><%= @leave.end_date %><br />
-  <label>Leave Type : </label><%= @leave.leave_type %><br />
-  <label>Reason for Leave : </label><%= @leave.reason %><br />
-  <label>Status : </label><%= @leave.status %><br />
-  <%= link_to "Back", leaves_path, class: "btn btn-dark" %>
+<div style="padding-right: 700px;">
+  <h1>Details</h1>
+  <p class="text-success"><%= flash[:notices] %></p>
+  <ul class="list-group">
+    <li class="list-group-item"><b>Employee : </b><%= @leave.user.name %></li>
+    <li class="list-group-item"><b>From : </b><%= @leave.start_date %></li>
+    <li class="list-group-item"><b>To : </b><%= @leave.end_date %></li>
+    <li class="list-group-item"><b>Leave Type : </b><%= @leave.leave_type %></li>
+    <li class="list-group-item"><b>Reason : </b><%= @leave.reason %></li>
+    <li class="list-group-item"><b>Status : </b><%= @leave.status %></li>
+    <% if @leave.status == Leafe::APPROVED %>
+        <li class="list-group-item"><b>Approved at : </b><%= full_date_with_time(@leave.approve_time) %></li>
+    <% end %>
+  </ul>
+  <br>
+  <div class="form-group">
+    <%= link_to "Back", :back, class: "btn btn-primary" %>
+  </div>
 </div>
