@@ -5,19 +5,36 @@ class LeavesController < ApplicationController
 
 
   def index
-    if params[:date_from] and params[:date_to]
-      #@search = Leafe.new(params[:search])
-      @leaves_pending = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Pending').order('id ASC')
-      @leaves_approved = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Approved').order('id ASC')
-      @leaves_rejected = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Rejected').order('id ASC')
-    elsif params[:search]
-      @leaves_pending = Leafe.search(params[:search]).where(status: 'Pending').order('id ASC')
-      @leaves_approved = Leafe.search(params[:search]).where(status: 'Approved').order('id ASC')
-      @leaves_rejected = Leafe.search(params[:search]).where(status: 'Rejected').order('id ASC')
+    if current_user.role != User::ADMIN
+      if params[:date_from] and params[:date_to]
+        #@search = Leafe.new(params[:search])
+        @leaves_pending = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Pending').order('id ASC')
+        @leaves_approved = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Approved').order('id ASC')
+        @leaves_rejected = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Rejected').order('id ASC')
+      elsif params[:search]
+        @leaves_pending = Leafe.search(params[:search]).where(status: 'Pending').order('id ASC')
+        @leaves_approved = Leafe.search(params[:search]).where(status: 'Approved').order('id ASC')
+        @leaves_rejected = Leafe.search(params[:search]).where(status: 'Rejected').order('id ASC')
+      else
+        @leaves_pending = Leafe.where(user_id: current_user.id, status: 'Pending').order('id ASC')
+        @leaves_approved = Leafe.where(user_id:current_user.id, status: 'Approved').order('id ASC')
+        @leaves_rejected = Leafe.where(user_id: current_user.id, status: 'Rejected').order('id ASC')
+      end
     else
-      @leaves_pending = Leafe.where(status: 'Pending').order('id ASC')
-      @leaves_approved = Leafe.where(status: 'Approved').order('id ASC')
-      @leaves_rejected = Leafe.where(status: 'Rejected').order('id ASC')
+      if params[:date_from] and params[:date_to]
+        #@search = Leafe.new(params[:search])
+        @leaves_pending = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Pending').order('id ASC')
+        @leaves_approved = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Approved').order('id ASC')
+        @leaves_rejected = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Rejected').order('id ASC')
+      elsif params[:search]
+        @leaves_pending = Leafe.search(params[:search]).where(status: 'Pending').order('id ASC')
+        @leaves_approved = Leafe.search(params[:search]).where(status: 'Approved').order('id ASC')
+        @leaves_rejected = Leafe.search(params[:search]).where(status: 'Rejected').order('id ASC')
+      else
+        @leaves_pending = Leafe.where(status: 'Pending').order('id ASC')
+        @leaves_approved = Leafe.where(status: 'Approved').order('id ASC')
+        @leaves_rejected = Leafe.where(status: 'Rejected').order('id ASC')
+      end
     end
     @leaves_pending = @leaves_pending.paginate(:page => params[:page], :per_page => 3)
     @leaves_approved = @leaves_approved.paginate(:page => params[:page], :per_page => 3)
@@ -33,7 +50,7 @@ class LeavesController < ApplicationController
     @leave = Leafe.new(leafe_params)
     @leave.user_id = current_user.id
     if @leave.save
-      redirect_to show_all_allocated_leafe_path(@leave.user_id), notice: "Your Application Has Bees Submitted for Approval"
+      redirect_to leaves_path, notice: "Your Application Has Bees Submitted for Approval"
     else
       render 'new'
     end
@@ -101,7 +118,6 @@ class LeavesController < ApplicationController
     @leave.save
     redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id) )
   end
-
 
   private
   def leafe_params
