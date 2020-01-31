@@ -19,5 +19,12 @@ module ApplicationHelper
     string.singularize()
     string.pluralize()
   end
+
+  def budget_for_present_month
+    @date = Date.today
+    @month=@date.strftime("%B")+', '+@date.strftime("%Y")
+    @present_budget=Budget.find_by(month: @month)
+  end
+
 end
 
