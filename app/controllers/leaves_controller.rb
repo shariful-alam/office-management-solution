@@ -52,7 +52,7 @@ class LeavesController < ApplicationController
     @leave = Leafe.new(leafe_params)
     @leave.user_id = current_user.id
     if @leave.save
-      redirect_to leaves_path, notice: "Your Application Has Bees Submitted for Approval"
+      redirect_to leaves_path, notice: "Your Application has bees Submitted for Approval"
     else
       render 'new'
     end
@@ -71,7 +71,7 @@ class LeavesController < ApplicationController
     #raise params.inspect
     @leave = Leafe.find(params[:id])
     if @leave.update(leafe_params)
-      redirect_to show_all_allocated_leafe_path(@leave.user_id), notice: "Your Information Has Been Updated"
+      redirect_to show_all_allocated_leafe_path(@leave.user_id), notice: "Leave Information has been Updated!!"
     else
       render 'edit'
     end
@@ -80,7 +80,7 @@ class LeavesController < ApplicationController
   def destroy
     @leave = Leafe.find(params[:id])
     @leave.destroy
-    flash[:notice] = "Information Has Destroyed"
+    flash[:alert] = "Leave has been Removed!!"
     redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id) )
   end
 
@@ -91,7 +91,7 @@ class LeavesController < ApplicationController
       @allocated_leave = AllocatedLeafe.find(@leave.user_id)
       @allocated_leave.used_leave -= 1
       @allocated_leave.save
-      flash[:notice] = "The Leafe information has been changed successfully"
+      flash[:warning] = "The Leave has been Queued for Pending!!"
     else
       @leave.status = Leafe::APPROVED
       @leave.approve_time = @leave.updated_at
@@ -100,7 +100,7 @@ class LeavesController < ApplicationController
       @allocated_leave.save
       @leave.save
       #raise @allocated_leave.inspect
-      flash[:notice] = "Leafe has been approved successfully"
+      flash[:notice] = "Leave has been Approved Successfully"
     end
     #raise @leave.inspect
     @leave.save
@@ -110,13 +110,8 @@ class LeavesController < ApplicationController
 
   def reject
     @leave = Leafe.find(params[:id])
-    if @leave.status == Leafe::REJECTED
-      @leave.status = Leafe::PENDING
-      flash[:notice] = "Rejection Has Been Undone Successfully"
-    else
-      @leave.status = Leafe::REJECTED
-      flash[:notice] = "The Leafe information has been changed successfully"
-    end
+    @leave.status = Leafe::REJECTED
+    flash[:alert] = "The Leave has been Rejected!!"
     @leave.save
     redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id) )
   end

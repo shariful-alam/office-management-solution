@@ -20,7 +20,7 @@ class AllocatedLeavesController < ApplicationController
     @allocated_leave = AllocatedLeafe.new(allocated_leafe_params)
     @allocated_leave.used_leave = 0
     if @allocated_leave.save
-    redirect_to allocated_leaves_path, notice: "Leafe Information Has Been Created"
+    redirect_to allocated_leaves_path, notice: "Leave Information has been Created Successfully!!"
     else
       render 'new'
     end
@@ -37,15 +37,13 @@ class AllocatedLeavesController < ApplicationController
   def update
     @allocated_leave = AllocatedLeafe.find(params[:id])
     @allocated_leave.update(allocated_leafe_params)
-    flash[:notice] = "Your Information Has Been Updated"
-    redirect_to allocated_leaves_path
+    redirect_to allocated_leaves_path, notice: "Your Information has been Updated Successfully!!"
   end
 
   def destroy
     @allocated_leave = AllocatedLeafe.find(params[:id])
     @allocated_leave.destroy
-    flash[:notice] = "Information Has Destroyed"
-    redirect_to allocated_leaves_path
+    redirect_to allocated_leaves_path, alert: "Information has been Removed!!"
   end
 
   def show_all
