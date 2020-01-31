@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def taka(amount)
-    number_to_currency(amount, precision: 2,unit: " Taka",format: "%n %u")
+    number_to_currency(amount, precision: 2, unit: " Taka", format: "%n %u")
   end
 
   def conversion(string)
@@ -20,10 +20,15 @@ module ApplicationHelper
     string.pluralize()
   end
 
-  def budget_for_present_month
-    @date = Date.today
-    @month=@date.strftime("%B")+', '+@date.strftime("%Y")
-    @present_budget=Budget.find_by(month: @month)
+  def budget_hint
+    date = Date.today
+    month=date.strftime("%B")+', '+date.strftime("%Y")
+    present_budget=Budget.find_by(month: month)
+
+    "<h6> Budget for <strong>  #{present_budget.month}  </strong> </h6>
+      <strong> Total :   #{taka(present_budget.amount)} </strong>
+      <strong> Expense :   #{taka(present_budget.expense)}  </strong>
+      <strong> Remaining :  #{taka(present_budget.amount- present_budget.expense)}  </strong>".html_safe
   end
 
 end

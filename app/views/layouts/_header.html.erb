@@ -17,25 +17,17 @@
                   <%= link_to "Employees", manage_users_path, class: "nav-link" %>
                 </li>
             <% end %>
-            <% if can? :show, Budget %>
-                <% budget_for_present_month %>
-                <div data-toggle="tooltip" data-html="true"
-                     title=
-                         "
-                           <h6> Budget for <strong> <%= @present_budget.month %> </strong> </h6>
-                           <strong> Total :  <%= taka(@present_budget.amount) %> </strong>
-                           <strong> Expense :  <%= taka(@present_budget.expense) %> </strong>
-                           <strong> Remaining :  <%= taka(@present_budget.amount- @present_budget.expense) %> </strong>
-                         ">
-                  <li class="nav-item">
-                    <%= link_to "Budgets", budgets_path, class: "nav-link" %>
-                  </li>
-                </div>
 
+            <% if can? :show, Budget %>
+                  <li class="nav-item">
+                    <%= link_to "Budgets", budgets_path, class: "nav-link", "data-toggle": "tooltip" ,"data-html":"true", title: budget_hint  %>
+                  </li>
             <% end %>
+
             <li class="nav-item">
               <%= link_to "Expenses", expenses_path, class: "nav-link" %>
             </li>
+
             <li>
               <% if current_user.role == User::ADMIN %>
                   <%= link_to "Leaves", allocated_leaves_path, class: "nav-link" %>
