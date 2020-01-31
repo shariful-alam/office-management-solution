@@ -1,6 +1,17 @@
 <div>
 
   <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
+  <% if current_user.role != User::ADMIN %>
+      <% if @attendance != nil %>
+          <% if @attendance.status == true %>
+              <%= link_to "Check Out", attendance_path(@attendance), method: :put, class: "btn btn-dark" %>
+          <% else %>
+              <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-dark" %>
+          <% end %>
+      <% else %>
+          <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-dark" %>
+      <% end %>
+  <% end %>
   <br/>
   <br/>
   <%= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
@@ -14,7 +25,7 @@
       <%= date_field_tag :date_to, params[:date_to], class: "form-control" %> &nbsp
       <%= submit_tag 'Search', class: 'btn btn-dark' %>&nbsp
       <%= link_to "Reset", leaves_path, class: "btn btn-secondary" %>
-<% end %>
+  <% end %>
 
   <br>
 </div>

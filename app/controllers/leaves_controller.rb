@@ -39,6 +39,8 @@ class LeavesController < ApplicationController
     @leaves_pending = @leaves_pending.paginate(:page => params[:page], :per_page => 3)
     @leaves_approved = @leaves_approved.paginate(:page => params[:page], :per_page => 3)
     @leaves_rejected = @leaves_rejected.paginate(:page => params[:page], :per_page => 3)
+    @info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
+    @attendance = Attendance.where(info: @info).last
   end
 
   def new
@@ -93,7 +95,7 @@ class LeavesController < ApplicationController
     else
       @leave.status = Leafe::APPROVED
       @leave.approve_time = @leave.updated_at
-      @allocated_leave = AllocatedLeafe.find(@leave.user_id)
+      @allocated_leave = AllocatedLeafe.find_by(user_id: @leave.user_id)
       @allocated_leave.used_leave += 1
       @allocated_leave.save
       @leave.save

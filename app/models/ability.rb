@@ -31,7 +31,8 @@ class Ability
         can :show_all, AllocatedLeafe, {user_id: user.id}
         cannot :manage, AllocatedLeafe, :all
 
-        can :manage, Attendance, {user_id: user.id}
+        can :create, Attendance, {user_id: user.id}
+        can :update, Attendance, {user_id: user.id}
 
         can :manage, Leafe, {user_id: user.id, status: 'Pending'}
         can :read, Leafe, {user_id: user.id, status: 'Approved'}
