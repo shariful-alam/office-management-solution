@@ -22,15 +22,16 @@ module ApplicationHelper
 
   def budget_hint
     date = Date.today
-    month=date.strftime("%B")+', '+date.strftime("%Y")
+    month = date.strftime("%B")+', '+date.strftime("%Y")
     present_budget=Budget.find_by(month: month)
     if present_budget == nil
       "<strong> The budget is not added yet !</strong>".html_safe
-    end
-    "<h6> Budget for <strong>  #{present_budget.month}  </strong> </h6>
+    else
+      "<h6> Budget for <strong>  #{present_budget.month}  </strong> </h6>
      <strong> Total :   #{taka(present_budget.amount)} </strong>
      <strong> Expense :   #{taka(present_budget.expense)}  </strong>
      <strong> Remaining :  #{taka(present_budget.amount- present_budget.expense)}  </strong>".html_safe
+    end
   end
 
   def see_pending_request
