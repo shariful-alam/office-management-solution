@@ -18,7 +18,7 @@ class BudgetsController < ApplicationController
     @budget = Budget.new(budget_params)
     @budget.user_id = current_user.id
     if @budget.save
-      redirect_to budgets_path, notice: "Budget has been created successfully"
+      redirect_to budgets_path, notice: "Budget has been Created Successfully!!"
     else
       render 'new'
     end
@@ -39,7 +39,7 @@ class BudgetsController < ApplicationController
   def destroy
     @budget = Budget.find(params[:id])
     @budget.destroy
-    redirect_to budgets_path, notice: "Budget has been removed successfully"
+    redirect_to budgets_path, alert: "Budget has been Removed!!"
   end
 
   def edit
@@ -51,7 +51,7 @@ class BudgetsController < ApplicationController
   def update
     @budget = Budget.find(params[:id])
     if @budget.update(budget_params)
-      redirect_to budget_path, notice: "Budget has been updated successfully"
+      redirect_to budget_path, notice: "Budget has been Updated Successfully!!"
     else
       render 'edit'
     end

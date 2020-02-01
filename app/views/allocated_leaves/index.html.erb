@@ -1,26 +1,19 @@
 <% if current_user.role == 'Office Admin' %>
-    <%= link_to "Add Leafe", new_allocated_leafe_path, class: "btn btn-dark" %>
-    <%= link_to "All leaves", leaves_path, class: "btn btn-dark" %>
+    <%= link_to "Add Leave", new_allocated_leafe_path, class: "btn btn-dark" %>
+    <%= link_to "All Leaves", leaves_path, class: "btn btn-dark" %>
     <%= link_to "Availability", attendances_path, class: "btn btn-dark" %>
 <% end %>
 <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
 <% if @attendance != nil %>
     <% if @attendance.status == true %>
-        <%= link_to "Check Out", attendance_path(@attendance), method: :put, class: "btn btn-dark" %>
+        <%= link_to "Check Out", attendance_path(@attendance), method: :put, class: "btn btn-dark", data: {confirm: "Are You Sure?"} %>
     <% else %>
         <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-dark" %>
     <% end %>
 <% else %>
     <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-dark" %>
 <% end %>
-<br/>
-<br/>
 
-<%#= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
-<%#= text_field_tag :search, params[:search], placeholder: "Search by Name or Type", class: "form-control" %>
-<%#= submit_tag "Search", class: "btn btn-dark" %>
-<%#= end %>
-<br>
 
 
 <% @number = @allocated_leaves.offset + 1 %>

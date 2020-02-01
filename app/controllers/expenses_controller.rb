@@ -37,7 +37,7 @@ class ExpensesController < ApplicationController
       end
     end
     if @expense.save
-      redirect_to expenses_path, notice: "Expense has been created successfully"
+      redirect_to expenses_path, notice: "Expense has been Created Successfully!!"
     else
       render 'new'
     end
@@ -49,7 +49,7 @@ class ExpensesController < ApplicationController
 
   def destroy
     @expense.destroy
-    flash[:notice] = "Expense has been removed successfully"
+    flash[:alert] = "Expense has been Removed!!"
     redirect_back(fallback_location: expenses_path)
   end
 
@@ -59,8 +59,7 @@ class ExpensesController < ApplicationController
 
   def update
     if @expense.update(expense_params)
-      flash[:notice] = "Expense has been updated successfully"
-      redirect_to expenses_path
+      redirect_to expenses_path, success: "Expense has been Updated Successfully!!"
     else
       render 'edit'
     end
@@ -71,7 +70,7 @@ class ExpensesController < ApplicationController
       @expense.status = Expense::REJECTED
     end
     @expense.save
-    flash[:notice] = "Expense has been rejected successfully"
+    flash[:alert] = "Expense has been Rejected!!"
     redirect_back(fallback_location: expenses_path)
   end
 
@@ -81,12 +80,12 @@ class ExpensesController < ApplicationController
       @expense.status = Expense::PENDING
       @budget.expense = @budget.expense - @expense.cost
       @expense.approve_time = nil
-      flash[:notice] = "The Expense information has been changed successfully"
+      flash[:warning] = "The Expense has been Queued for Pending!!"
     else
       @expense.status = Expense::APPROVED
       @expense.approve_time = @expense.updated_at
       @budget.expense = @budget.expense + @expense.cost
-      flash[:notice] = "Expense has been approved successfully"
+      flash[:notice] = "Expense has been Approved Successfully!!"
     end
     @budget.save
     @expense.save

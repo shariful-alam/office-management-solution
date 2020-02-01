@@ -29,9 +29,9 @@ class AttendancesController < ApplicationController
 
     #raise @attendance.inspect
     if @attendance.save
-      redirect_to allocated_leaves_path, notice: "Your Attendance has been recorded"
+      redirect_to allocated_leaves_path, notice: "You have Checked In Successfully!!"
     else
-      redirect_to allocated_leaves_path, alert: "You have already checked in"
+      redirect_to allocated_leaves_path, alert: "You have Already Checked In Today!!"
     end
   end
 
@@ -43,7 +43,7 @@ class AttendancesController < ApplicationController
     #@attendance.
 
     # @attendance.save
-    redirect_to allocated_leaves_path, notice: "You have checked out"
+    redirect_to allocated_leaves_path, notice: "You have checked Out Successfully!!"
   end
 
 
