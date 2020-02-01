@@ -18,6 +18,9 @@ Rails.application.routes.draw do
 
   namespace :manage do
     resources :users do
+      collection do
+        get :show_all_pending
+      end
       member do
         get :show_all
         get :search_by_date

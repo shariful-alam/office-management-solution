@@ -26,10 +26,17 @@ module ApplicationHelper
     present_budget=Budget.find_by(month: month)
 
     "<h6> Budget for <strong>  #{present_budget.month}  </strong> </h6>
-      <strong> Total :   #{taka(present_budget.amount)} </strong>
-      <strong> Expense :   #{taka(present_budget.expense)}  </strong>
-      <strong> Remaining :  #{taka(present_budget.amount- present_budget.expense)}  </strong>".html_safe
+     <strong> Total :   #{taka(present_budget.amount)} </strong>
+     <strong> Expense :   #{taka(present_budget.expense)}  </strong>
+     <strong> Remaining :  #{taka(present_budget.amount- present_budget.expense)}  </strong>".html_safe
   end
+
+  def see_pending_request
+    pending=Expense.where(status: 'Pending').count + Leafe.where(status: 'Pending').count
+    return pending
+  end
+
+
 
 end
 

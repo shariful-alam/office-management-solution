@@ -19,9 +19,9 @@
             <% end %>
 
             <% if can? :show, Budget %>
-                  <li class="nav-item">
-                    <%= link_to "Budgets", budgets_path, class: "nav-link", "data-toggle": "tooltip" ,"data-html":"true", title: budget_hint  %>
-                  </li>
+                <li class="nav-item">
+                  <%= link_to "Budgets", budgets_path, class: "nav-link", "data-toggle": "tooltip", "data-html": "true", title: budget_hint %>
+                </li>
             <% end %>
 
             <li class="nav-item">
@@ -40,9 +40,15 @@
               <div>
                 <div class="dropdown">
                   <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <strong><%= current_user.name %></strong>
+                    <strong> <%= current_user.name %> </strong>
+                    <% if see_pending_request > 0 %>
+                        <span class="badge">
+                          <%= see_pending_request %>
+                        </span>
+                    <% end %>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <%= link_to "Pending Request", show_all_pending_manage_users_path, class: 'dropdown-item' %>
                     <%= link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item' %>
                     <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
                   </div>
