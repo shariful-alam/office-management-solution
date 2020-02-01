@@ -24,7 +24,6 @@ module ApplicationHelper
     date = Date.today
     month=date.strftime("%B")+', '+date.strftime("%Y")
     present_budget=Budget.find_by(month: month)
-
     "<h6> Budget for <strong>  #{present_budget.month}  </strong> </h6>
      <strong> Total :   #{taka(present_budget.amount)} </strong>
      <strong> Expense :   #{taka(present_budget.expense)}  </strong>
@@ -36,6 +35,19 @@ module ApplicationHelper
     return pending
   end
 
+  def check_in_out
+    info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
+    attendance = Attendance.where(info: info).last
+    if attendance != nil
+      if attendance.status == true
+        link_to ("Check Out <span class='status green'></span>").html_safe, attendance_path(attendance), method: :put, class: "dropdown-item", data: {confirm: "Are You Sure?"}
+      else
+        link_to ("Check In <span class='status red'></span>").html_safe, attendances_path, method: :post, class: "dropdown-item"
+      end
+    else
+      link_to ("Check In <span class='status red'></span>").html_safe, attendances_path, method: :post, class: "dropdown-item"
+    end
+  end
 
 
 end

@@ -4,16 +4,6 @@
     <%= link_to "Availability", attendances_path, class: "btn btn-dark" %>
 <% end %>
 <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
-<% if @attendance != nil %>
-    <% if @attendance.status == true %>
-        <%= link_to "Check Out", attendance_path(@attendance), method: :put, class: "btn btn-dark", data: {confirm: "Are You Sure?"} %>
-    <% else %>
-        <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-dark" %>
-    <% end %>
-<% else %>
-    <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-dark" %>
-<% end %>
-
 
 
 <% @number = @allocated_leaves.offset + 1 %>

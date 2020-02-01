@@ -48,7 +48,10 @@
                     <% end %>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <%= check_in_out %>
+                    <% if current_user.role == User::ADMIN %>
                     <%= link_to "Pending Request", show_all_pending_manage_users_path, class: 'dropdown-item' %>
+                    <% end %>
                     <%= link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item' %>
                     <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
                   </div>

@@ -4,11 +4,8 @@ class AllocatedLeavesController < ApplicationController
   load_and_authorize_resource
 
 
-
   def index
     @allocated_leaves = AllocatedLeafe.order('id ASC').paginate(:page => params[:page], :per_page => 3)
-    @info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
-    @attendance = Attendance.where(info: @info).last
     #raise @attendance.inspect
   end
 

@@ -26,6 +26,7 @@ class Ability
         cannot :approve, Expense, {user_id: user.id}
         cannot :reject, Expense, {user_id: user.id}
         can :read, Expense, {user_id: user.id}
+        cannot :show_all_pending, User, :all
         cannot :approve, Expense, :all
 
         can :show_all, AllocatedLeafe, {user_id: user.id}
