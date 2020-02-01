@@ -52,7 +52,7 @@ class LeavesController < ApplicationController
     @leave = Leafe.new(leafe_params)
     @leave.user_id = current_user.id
     if @leave.save
-      redirect_to leaves_path, notice: "Your Application Has Bees Submitted for Approval"
+      redirect_to show_all_allocated_leafe_path(@leave.user_id), notice: "Your Application Has Bees Submitted for Approval"
     else
       render 'new'
     end
@@ -88,7 +88,7 @@ class LeavesController < ApplicationController
     @leave = Leafe.find(params[:id])
     if @leave.status == Leafe::APPROVED
       @leave.status = Leafe::PENDING
-      @allocated_leave = AllocatedLeafe.find(@leave.user_id)
+      @allocated_leave = AllocatedLeafe.where(user_id: @leave.user_id).last
       @allocated_leave.used_leave -= 1
       @allocated_leave.save
       flash[:notice] = "The Leafe information has been changed successfully"
@@ -98,12 +98,13 @@ class LeavesController < ApplicationController
       @allocated_leave = AllocatedLeafe.find_by(user_id: @leave.user_id)
       @allocated_leave.used_leave += 1
       @allocated_leave.save
-      @leave.save
+      LeafeMailer.approved(@leave).deliver_now
       #raise @allocated_leave.inspect
       flash[:notice] = "Leafe has been approved successfully"
     end
-    #raise @leave.inspect
     @leave.save
+
+    #raise @leave.inspect
     #redirect_to show_all_allocated_leafe_path(@leave.user_id)
     redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id) )
   end

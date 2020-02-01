@@ -1,5 +1,5 @@
 class Leafe < ApplicationRecord
-  LEAVE_TYPE = ["Personal Leafe", "Training", "Vacation", "Medical Leafe"]
+  LEAVE_TYPE = ["Personal Leave", "Training", "Vacation", "Medical Leafe"]
   validates :start_date , presence: true
   validates :end_date , presence: true
   validates :reason , presence: true
@@ -8,6 +8,7 @@ class Leafe < ApplicationRecord
   PENDING = "Pending"
   REJECTED = "Rejected"
   belongs_to :user
+
 
   private
   def self.search_in_date_range(date_from, date_to)
