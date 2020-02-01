@@ -3,7 +3,6 @@ class LeavesController < ApplicationController
   load_and_authorize_resource
 
 
-
   def index
     if current_user.role != User::ADMIN
       if params[:date_from] and params[:date_to]
@@ -17,7 +16,7 @@ class LeavesController < ApplicationController
         @leaves_rejected = Leafe.search(params[:search]).where(status: 'Rejected').order('id ASC')
       else
         @leaves_pending = Leafe.where(user_id: current_user.id, status: 'Pending').order('id ASC')
-        @leaves_approved = Leafe.where(user_id:current_user.id, status: 'Approved').order('id ASC')
+        @leaves_approved = Leafe.where(user_id: current_user.id, status: 'Approved').order('id ASC')
         @leaves_rejected = Leafe.where(user_id: current_user.id, status: 'Rejected').order('id ASC')
       end
     else
@@ -81,7 +80,7 @@ class LeavesController < ApplicationController
     @leave = Leafe.find(params[:id])
     @leave.destroy
     flash[:notice] = "Information Has Destroyed"
-    redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id) )
+    redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id))
   end
 
   def approve
@@ -106,27 +105,22 @@ class LeavesController < ApplicationController
 
     #raise @leave.inspect
     #redirect_to show_all_allocated_leafe_path(@leave.user_id)
-    redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id) )
+    redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id))
   end
 
   def reject
     @leave = Leafe.find(params[:id])
-    if @leave.status == Leafe::REJECTED
-      @leave.status = Leafe::PENDING
-      flash[:notice] = "Rejection Has Been Undone Successfully"
-    else
-      @leave.status = Leafe::REJECTED
-      flash[:notice] = "The Leafe information has been changed successfully"
-    end
+    @leave.status = Leafe::REJECTED
+    flash[:notice] = "The Leafe information has been changed successfully"
     @leave.save
-    redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id) )
+    LeafeMailer.rejected(@leave).deliver_now
+    redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id))
   end
 
   private
   def leafe_params
-    params.require(:leafe).permit(:start_date, :end_date, :reason, :leave_type, :status )
+    params.require(:leafe).permit(:start_date, :end_date, :reason, :leave_type, :status)
   end
-
 
 
 end
