@@ -11,7 +11,7 @@ class Expense < ApplicationRecord
                        convert_options: {regular: "-posterize 3"}
   belongs_to :user
   belongs_to :budget
-  attr_accessor :remove_image, :year, :month, :late
+  attr_accessor :remove_image
   before_save :delete_image, if: -> {remove_image == '1'}
 
   APPROVED = "Approved"

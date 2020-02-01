@@ -19,8 +19,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  ADMIN = "Office Admin"
-  ROLE_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief technical Officer']
+  ADMIN = "Admin"
+  SUPER_ADMIN ="Super Admin"
+  DESIGNATION_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief technical Officer']
+  ROLE_LIST = ['Super Admin', 'Admin', 'Employee']
 
 
   attr_accessor :remove_image

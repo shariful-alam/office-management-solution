@@ -22,19 +22,10 @@ class ExpensesController < ApplicationController
 
   def create
     @expense.user_id = current_user.id
-    if @expense.late == '1'
-      @month = @expense.month+', '+@expense.year
-      @budget=Budget.find_by(month: @month)
-      if @budget
-        @expense.budget_id=@budget.id
-      end
-    else
-      @date = Date.today
-      @month=@date.strftime("%B")+', '+@date.strftime("%Y")
-      @budget=Budget.find_by(month: @month)
-      if @budget
-        @expense.budget_id=@budget.id
-      end
+    month=@expense.expense_date.strftime("%B")+', '+@expense.expense_date.strftime("%Y")
+    @budget=Budget.find_by(month: month)
+    if @budget
+      @expense.budget_id=@budget.id
     end
     if @expense.save
       redirect_to expenses_path, notice: "Expense has been Created Successfully!!"
@@ -42,6 +33,7 @@ class ExpensesController < ApplicationController
       render 'new'
     end
   end
+
 
   def show
 
@@ -59,6 +51,12 @@ class ExpensesController < ApplicationController
 
   def update
     if @expense.update(expense_params)
+      month=@expense.expense_date.strftime("%B")+', '+@expense.expense_date.strftime("%Y")
+      @budget=Budget.find_by(month: month)
+      if @budget
+        @expense.budget_id=@budget.id
+      end
+      @expense.save
       redirect_to expenses_path, success: "Expense has been Updated Successfully!!"
     else
       render 'edit'
@@ -98,7 +96,7 @@ class ExpensesController < ApplicationController
 
   private
   def expense_params
-    params.require(:expense).permit(:product_name, :category, :cost, :details, :image, :year, :month, :late)
+    params.require(:expense).permit(:product_name, :category, :cost, :details, :image, :expense_date)
   end
 
 

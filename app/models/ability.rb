@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
     if user.present?
-      if user.role == 'Office Admin'
+      if user.role == User::ADMIN
         can :manage, :all
         cannot :reject, Expense, {status: 'Rejected'}
         cannot :approve, Expense, {status: 'Rejected'}

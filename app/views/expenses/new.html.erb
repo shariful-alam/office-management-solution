@@ -53,20 +53,11 @@
         <%= form.text_area :details, class: "form-control" %>
       </div>
 
+
       <div class="form-group">
-        <%= form.label :late, 'Late/Future Entry', class: "control-label" %>
-        <%= form.check_box :late, style: "margin-left : 10px; position: absolute;", id: "previous", onclick: "Function()" %>
+        <%= form.label :expense_date, 'Late/Future Entry', class: "control-label" %>
+        <%= form.date_field :expense_date, class: "form-control" %>
       </div>
-
-
-      <div class="form-group" id="select_previous" style="display: none">
-        <%= form.label :year, class: "control-label" %>
-        <%= form.select :year, Date.today.year.. 10.years.from_now.year %>
-
-        <%= form.label :month %>
-        <%= form.select :month, Date::MONTHNAMES[1..12] %>
-      </div>
-
 
 
       <div class="form-group">
