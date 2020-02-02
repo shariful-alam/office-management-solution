@@ -29,21 +29,25 @@ class AttendancesController < ApplicationController
 
     #raise @attendance.inspect
     if @attendance.save
-      redirect_to allocated_leaves_path, notice: "You have Checked In Successfully!!"
+      flash[:notice] = "You have Checked In Successfully!!"
+      redirect_back(fallback_location: root_path)
     else
-      redirect_to allocated_leaves_path, alert: "You have Already Checked In Today!!"
+      flash[:alert] = "You have Already Checked In Today!!"
+      redirect_back(fallback_location: root_path)
     end
   end
 
   def update
     #raise @attendance.inspect
     #@info = .to_s + '=>' + Date.today.to_date.to_s
-    @attendance = Attendance.find(params[:id]).update(status: false)
+    @attendance = Attendance.find(params[:id])
+    @attendance.update(status: false)
     #raise @attendance.inspect
     #@attendance.
 
     # @attendance.save
-    redirect_to allocated_leaves_path, notice: "You have checked Out Successfully!!"
+    flash[:notice] = "You have checked Out Successfully!!"
+    redirect_back(fallback_location: root_path)
   end
 
 

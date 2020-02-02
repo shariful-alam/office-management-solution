@@ -1,4 +1,4 @@
-<% if current_user.role == 'Office Admin' %>
+<% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
     <%= link_to "Add Leave", new_allocated_leafe_path, class: "btn btn-dark" %>
     <%= link_to "All Leaves", leaves_path, class: "btn btn-dark" %>
     <%= link_to "Availability", attendances_path, class: "btn btn-dark" %>
