@@ -1,0 +1,70 @@
+<div class="panel">
+  <table class="table table-bordered">
+    <tr>
+      <th>Employee Name</th>
+      <th>JAN</th>
+      <th>FEB</th>
+      <th>MAR</th>
+      <th>APR</th>
+      <th>MAY</th>
+      <th>JUN</th>
+      <th>JUL</th>
+      <th>AUG</th>
+      <th>SEP</th>
+      <th>OCT</th>
+      <th>NOV</th>
+      <th>DEC</th>
+      <th>Total</th>
+    </tr>
+
+    <% incomes.each do |l| %>
+        <tr>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+          <td>
+            <%= l.user.name %>
+          </td>
+        </tr>
+    <% end %>
+  </table>
+  <div>
+    <%= will_paginate incomes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
+</div>

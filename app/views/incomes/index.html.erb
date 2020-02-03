@@ -1,0 +1,87 @@
+<%= link_to "Add Income", new_income_path, class: "btn btn-dark", style: "float:right" %>
+
+<% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
+    <h1>All Income List</h1>
+<% else %>
+    <h1>Your Income List</h1>
+<% end %>
+<br>
+
+
+  <table class="table table-bordered">
+    <tr>
+      <th>Employee Name</th>
+      <th>JAN</th>
+      <th>FEB</th>
+      <th>MAR</th>
+      <th>APR</th>
+      <th>MAY</th>
+      <th>JUN</th>
+      <th>JUL</th>
+      <th>AUG</th>
+      <th>SEP</th>
+      <th>OCT</th>
+      <th>NOV</th>
+      <th>DEC</th>
+      <th>TOTAL</th>
+    </tr>
+
+    <% @users.each do |l| %>
+        <tr>
+          <td>
+            <%= link_to l.name, show_individual_manage_user_path(l) %>
+          </td>
+          <td>
+            <%= link_to find_by_month(1, l), incomes_path() %>
+          </td>
+          <td>
+            <%= find_by_month(2, l) %>
+          </td>
+          <td>
+            <%= find_by_month(3, l) %>
+          </td>
+          <td>
+            <%= find_by_month(4, l) %>
+          </td>
+          <td>
+            <%= find_by_month(5, l) %>
+          </td>
+          <td>
+            <%= find_by_month(6, l) %>
+          </td>
+          <td>
+            <%= find_by_month(7, l) %>
+          </td>
+          <td>
+            <%= find_by_month(8, l) %>
+          </td>
+          <td>
+            <%= find_by_month(9, l) %>
+          </td>
+          <td>
+            <%= find_by_month(10, l) %>
+          </td>
+          <td>
+            <%= find_by_month(11, l) %>
+          </td>
+          <td>
+            <%= find_by_month(12, l) %>
+          </td>
+          <td>
+            <%= find_total(l) %>
+          </td>
+        </tr>
+    <% end %>
+  </table>
+  <div>
+    <%= will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
+
+
+<br/>
+<div class="form-group">
+  <%= link_to "Back", root_path, class: "btn btn-dark" %>
+</div>
+
+
+

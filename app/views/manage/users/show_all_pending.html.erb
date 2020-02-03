@@ -1,9 +1,12 @@
-
+<h1>All Pending Resources</h1>
 <button class="accordion btn btn-warning">Pending Expenses <strong>(<%= @all_pending_expenses.count %>)</strong></button>
 <%= render partial: 'table', locals: {expenses: @all_pending_expenses} %>
 <br>
 <button class="accordion btn btn-warning">Pending Leaves <strong>(<%= @all_pending_leaves.count %>)</strong></button>
 <%= render partial: 'leaves/table', locals: {leaves: @all_pending_leaves} %>
+<br>
+<button class="accordion btn btn-warning">Pending Incomes <strong>(<%= @all_pending_incomes.count %>)</strong></button>
+<%= render partial: 'incomes/table', locals: {incomes: @all_pending_incomes} %>
 <br>
 
 <div class="form-group">

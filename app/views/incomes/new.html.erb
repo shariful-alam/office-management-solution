@@ -1,0 +1,31 @@
+<div class="container" style="padding-right: 600px; ">
+  <h1>Add Income</h1>
+  <%= form_for(@income) do |l| %>
+
+      <% if @income.errors.full_messages.any? %>
+          <% @income.errors.full_messages.each do |error_message| %>
+              <p class="alert alert-danger"> <%= error_message if @income.errors.full_messages.first == error_message %> </p>
+          <% break end %>
+      <% end %>
+
+      <div>
+        <h3>User : <%= current_user.name %></h3>
+      </div>
+      <br/>
+      <div>
+        <%= l.label :amount, class: 'control-label' %> <br/>
+        <%= l.number_field :amount, class: 'form-control' %>
+      </div>
+      <br/>
+      <div>
+        <%= l.label :income_date, class: 'control-label' %> <br/>
+        <%= l.date_field :income_date, class: 'form-control' %>
+      </div>
+      <br/>
+      <div class="form-group">
+        <%= l.submit 'Save', class: "btn btn-success" %> |
+        <%= link_to "Back", :back, class: "btn btn-dark" %>
+      </div>
+
+  <% end %>
+</div>

@@ -5,6 +5,7 @@ class Manage::UsersController < ApplicationController
   def show_all_pending
     @all_pending_expenses =  Expense.where(status: 'Pending').order('expenses.id ASC').paginate(:page => params[:page], :per_page => 20)
     @all_pending_leaves =  Leafe.where(status: 'Pending').order('leaves.id ASC').paginate(:page => params[:page], :per_page => 20)
+    @all_pending_incomes =  Income.where(status: 'Pending').order('incomes.id ASC').paginate(:page => params[:page], :per_page => 20)
   end
 
   def new
@@ -64,6 +65,21 @@ class Manage::UsersController < ApplicationController
     @pending_expenses = Expense.user_expenses_date_search(params[:from], params[:to], params[:page], params[:id], params[:status]='Pending')
     @rejected_expenses = Expense.user_expenses_date_search(params[:from], params[:to], params[:page], params[:id], params[:status]='Rejected')
     @total=Expense.where(budget_id: params[:id], status: 'Approved').sum(:cost)
+  end
+
+  def show_individual
+    #raise params.inspect
+    if params[:id]
+      @user = User.find(params[:id])
+      #raise @user.inspect
+      @incomes_pending = Income.where(status: 'Pending', user_id: @user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+      @incomes_approved = Income.where(status: 'Approved', user_id: @user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+      @incomes_rejected = Income.where(status: 'Rejected', user_id: @user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    else
+      @incomes_pending = Income.where(status: 'Pending', user_id: current_user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+      @incomes_approved = Income.where(status: 'Approved', user_id: current_user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+      @incomes_rejected = Income.where(status: 'Rejected', user_id: current_user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    end
   end
 
 

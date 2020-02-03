@@ -35,7 +35,7 @@ module ApplicationHelper
   end
 
   def see_pending_request
-    pending=Expense.where(status: 'Pending').count + Leafe.where(status: 'Pending').count
+    pending=Expense.where(status: 'Pending').count + Leafe.where(status: 'Pending').count + Income.where(status: 'Pending').count
     return pending
   end
 
@@ -51,6 +51,16 @@ module ApplicationHelper
     else
       link_to ("Check In <span class='status red'></span>").html_safe, attendances_path, method: :post, class: "dropdown-item"
     end
+  end
+
+  def find_by_month(month,user)
+    i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ?',month).sum(:amount)
+    return i
+  end
+
+  def find_total(user)
+    i = Income.where(user_id: user.id, status: Income::APPROVED).sum(:amount)
+    return i
   end
 
 

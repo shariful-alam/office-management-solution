@@ -102,9 +102,6 @@ class LeavesController < ApplicationController
       flash[:notice] = "Leafe has been approved successfully"
     end
     @leave.save
-
-    #raise @leave.inspect
-    #redirect_to show_all_allocated_leafe_path(@leave.user_id)
     redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id))
   end
 

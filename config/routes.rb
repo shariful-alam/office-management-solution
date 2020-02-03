@@ -25,6 +25,7 @@ Rails.application.routes.draw do
         get :show_all
         get :search_by_date
         put :check
+        get :show_individual
       end
     end
   end
@@ -45,6 +46,14 @@ Rails.application.routes.draw do
   end
 
   resources :attendances
-  resources :incomes
+  resources :incomes do
+    collection do
+      get :show_individual
+    end
+    member do
+      put :approve
+      put :reject
+    end
+  end
 
 end
