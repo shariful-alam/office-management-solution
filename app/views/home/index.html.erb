@@ -6,7 +6,7 @@
 
 <h4 >Budget Statistics</h4><br>
 
-<%= line_chart Budget.group(:month).sum(:expense), label:"Total Expense" , min: 0 ,xtitle: "Month", ytitle: "Expense", width: "500px", height: "300px" do %>
-<% end %>
+<%= line_chart Budget.group(:month).sum(:expense), label:"Total Expense" , min: 0 ,xtitle: "Month", ytitle: "Expense", width: "500px", height: "300px"  %>
+
 
 
