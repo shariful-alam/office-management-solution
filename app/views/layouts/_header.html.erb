@@ -55,10 +55,6 @@
                   </div>
                 </div>
               </div>
-        <% else %>
-            <div>
-              <%= link_to "Signin", new_user_session_path, class: "nav-link" %>
-            </div>
         <% end %>
         </li>
       </ul>
@@ -80,10 +76,6 @@
 </div>
 
 
-<script type="text/javascript" charset="utf-8">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
+<%= javascript_pack_tag :tooltip %>
 
 
