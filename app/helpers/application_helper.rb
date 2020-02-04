@@ -59,7 +59,7 @@ module ApplicationHelper
       @year = Date.today.year
       i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ? AND extract(year from income_date) = ?',month,@year).sum(:amount)
     else
-      @year = params[:search][0]
+      @year = params[:search]
       #raise @year.to_i.inspect
       i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ? AND extract(year from income_date) = ?',month,@year.to_i).sum(:amount)
     end

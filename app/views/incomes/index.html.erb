@@ -11,7 +11,7 @@
 <% end %>
 <br>
 <%= form_tag(incomes_path, :method => "get", class: "form-inline") do %>
-    <%= select :search, params[:search], Date.today.years_ago(10).year.. Date.today.year,{:multiple => false}, class: "form-control" %>
+    <%= select_tag "search", options_for_select(Date.today.years_ago(10).year.. Date.today.year), class: "form-control" %>
     &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
     <%= link_to 'Reset', incomes_path, class: "btn btn-secondary" %>  &nbsp
 <% end %>
@@ -20,18 +20,9 @@
 <table class="table table-bordered">
   <tr>
     <th>Employee Name</th>
-    <th>JAN</th>
-    <th>FEB</th>
-    <th>MAR</th>
-    <th>APR</th>
-    <th>MAY</th>
-    <th>JUN</th>
-    <th>JUL</th>
-    <th>AUG</th>
-    <th>SEP</th>
-    <th>OCT</th>
-    <th>NOV</th>
-    <th>DEC</th>
+    <% Date::MONTHNAMES.slice(1,12).each do |month| %>
+      <th><%= month[0..2].upcase %></th>
+    <% end %>
     <th>TOTAL</th>
   </tr>
 
