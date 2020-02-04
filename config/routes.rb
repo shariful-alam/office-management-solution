@@ -25,7 +25,6 @@ Rails.application.routes.draw do
         get :show_all
         get :search_by_date
         put :check
-        get :show_individual
       end
     end
   end

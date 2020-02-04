@@ -1,8 +1,15 @@
-
 <%= link_to "Add Income", new_income_path, class: "btn btn-dark", style: "float:right" %>
 
 
-<h1>Your Income List</h1> <br/>
+<% if params[:month] %>
+    <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %> </h1> <br/>
+    <% if bonus_amount(params[:month], @user) > 0 %>
+        <h2>Hurrah!! You are getting <%= taka(bonus_amount(params[:month], @user)) %> BONUS!! </h2>
+    <% end %>
+<% else %>
+    <h1>Income List of <%= @user.name %></h1> <br/>
+<% end %>
+
 <button class="accordion btn btn-success">Approved (<%= @incomes_approved.count %>)</button>
 <%= render partial: 'table', locals: {incomes: @incomes_approved} %>
 
@@ -14,7 +21,7 @@
 
 <br/>
 <div class="form-group">
-  <%= link_to "Back", root_path, class: "btn btn-dark" %>
+  <%= link_to "Back", :back, class: "btn btn-dark" %>
 </div>
 
 

@@ -67,20 +67,6 @@ class Manage::UsersController < ApplicationController
     @total=Expense.where(budget_id: params[:id], status: 'Approved').sum(:cost)
   end
 
-  def show_individual
-    #raise params.inspect
-    if params[:id]
-      @user = User.find(params[:id])
-      #raise @user.inspect
-      @incomes_pending = Income.where(status: 'Pending', user_id: @user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-      @incomes_approved = Income.where(status: 'Approved', user_id: @user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-      @incomes_rejected = Income.where(status: 'Rejected', user_id: @user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-    else
-      @incomes_pending = Income.where(status: 'Pending', user_id: current_user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-      @incomes_approved = Income.where(status: 'Approved', user_id: current_user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-      @incomes_rejected = Income.where(status: 'Rejected', user_id: current_user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-    end
-  end
 
 
   private

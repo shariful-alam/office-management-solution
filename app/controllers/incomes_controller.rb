@@ -4,8 +4,8 @@ class IncomesController < ApplicationController
   load_and_authorize_resource
 
   def index
+    #raise params.inspect
     @users = User.all.order('id ASC').paginate(:page => params[:page], :per_page => 3)
-
   end
 
   def new
@@ -81,23 +81,31 @@ class IncomesController < ApplicationController
 
   def show_individual
     #raise params.inspect
-    if params[:id]
-      @user = User.find(params[:id])
-      #raise @user.inspect
-      @incomes_pending = Income.where(status: 'Pending', user_id: @user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-      @incomes_approved = Income.where(status: 'Approved', user_id: @user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-      @incomes_rejected = Income.where(status: 'Rejected', user_id: @user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+      @incomes_pending = Income.where(status: 'Pending', user_id: params[:user_id]).order('id ASC')
+      @incomes_approved = Income.where(status: 'Approved', user_id: params[:user_id]).order('id ASC')
+      @incomes_rejected = Income.where(status: 'Rejected', user_id: params[:user_id]).order('id ASC')
+    elsif params[:user_id] and params[:month]
+      @user = User.find(params[:user_id])
+      @incomes_pending = Income.where(status: 'Pending', user_id: params[:user_id]).where('extract(month from income_date) = ?', params[:month]).order('id ASC')
+      @incomes_approved = Income.where(status: 'Approved', user_id: params[:user_id]).where('extract(month from income_date) = ?', params[:month]).order('id ASC')
+      @incomes_rejected = Income.where(status: 'Rejected', user_id: params[:user_id]).where('extract(month from income_date) = ?', params[:month]).order('id ASC')
     else
-      @incomes_pending = Income.where(status: 'Pending', user_id: current_user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-      @incomes_approved = Income.where(status: 'Approved', user_id: current_user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-      @incomes_rejected = Income.where(status: 'Rejected', user_id: current_user.id).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+      @user = User.find(current_user.id)
+      @incomes_pending = Income.where(status: 'Pending', user_id: current_user.id).order('id ASC')
+      @incomes_approved = Income.where(status: 'Approved', user_id: current_user.id).order('id ASC')
+      @incomes_rejected = Income.where(status: 'Rejected', user_id: current_user.id).order('id ASC')
     end
+    @incomes_pending = @incomes_pending.paginate(:page => params[:page], :per_page => 10)
+    @incomes_approved = @incomes_approved.paginate(:page => params[:page], :per_page => 10)
+    @incomes_rejected = @incomes_rejected.paginate(:page => params[:page], :per_page => 10)
   end
 
 
   private
   def income_params
-    params.require(:income).permit(:user_id, :amount, :income_date)
+    params.require(:income).permit(:user_id, :amount, :income_date, :search)
   end
 
 end

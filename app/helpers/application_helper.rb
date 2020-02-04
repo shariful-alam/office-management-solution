@@ -54,13 +54,43 @@ module ApplicationHelper
   end
 
   def find_by_month(month,user)
-    i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ?',month).sum(:amount)
+    #raise params[:search_by_year].inspect
+    if params[:search].nil?
+      @year = Date.today.year
+      i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ? AND extract(year from income_date) = ?',month,@year).sum(:amount)
+    else
+      @year = params[:search][0]
+      #raise @year.to_i.inspect
+      i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ? AND extract(year from income_date) = ?',month,@year.to_i).sum(:amount)
+    end
     return i
   end
 
   def find_total(user)
-    i = Income.where(user_id: user.id, status: Income::APPROVED).sum(:amount)
+    if params[:search_by_year].nil?
+      @year = Date.today.year
+      i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(year from income_date) = ?', @year).sum(:amount)
+    else
+      @year = params[:search_by_year][0]
+      i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(year from income_date) = ?', @year).sum(:amount)
+    end
     return i
+  end
+
+  def find_class(month,user)
+    @income = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ?', month).sum(:amount)
+    if @income > user.target_amount.to_i
+      return "bonusable"
+    else
+      return "not-bonusable"
+    end
+  end
+
+
+  def bonus_amount(month,user)
+    @income = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ?', month).sum(:amount).to_i
+    @bonus = (@income - user.target_amount) * (user.bonus_percentage / 100.0)
+    return @bonus
   end
 
 
