@@ -37,6 +37,12 @@ module ApplicationHelper
   def see_pending_request
     pending=Expense.where(status: 'Pending').count + Leafe.where(status: 'Pending').count + Income.where(status: 'Pending').count
     return pending
+    pending=Expense.where(status: 'Pending').count + Leafe.where(status: 'Pending').count
+    if pending > 0
+      "<span class='badge'>
+          #{pending}
+      </span>".html_safe
+    end
   end
 
   def check_in_out

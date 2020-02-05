@@ -26,8 +26,6 @@ class AttendancesController < ApplicationController
     @attendance.info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
     @attendance.user_id = current_user.id
     @attendance.status = true
-
-    #raise @attendance.inspect
     if @attendance.save
       flash[:notice] = "You have Checked In Successfully!!"
       redirect_back(fallback_location: root_path)
@@ -38,14 +36,8 @@ class AttendancesController < ApplicationController
   end
 
   def update
-    #raise @attendance.inspect
-    #@info = .to_s + '=>' + Date.today.to_date.to_s
     @attendance = Attendance.find(params[:id])
     @attendance.update(status: false)
-    #raise @attendance.inspect
-    #@attendance.
-
-    # @attendance.save
     flash[:notice] = "You have checked Out Successfully!!"
     redirect_back(fallback_location: root_path)
   end

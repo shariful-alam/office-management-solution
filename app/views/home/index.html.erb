@@ -1,3 +1,12 @@
 <% if user_signed_in? %>
     <h3 style="margin-left: 20px;">Welcome <%=current_user.name%> </h3>
 <% end %>
+<br>
+<br>
+
+<h4 >Budget Statistics</h4><br>
+
+<%= line_chart Budget.group(:month).sum(:expense), label:"Total Expense" , min: 0 ,xtitle: "Month", ytitle: "Expense", width: "500px", height: "300px"  %>
+
+
+

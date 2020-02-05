@@ -4,16 +4,9 @@ class ExpensesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if params[:from] != nil and params[:to] != nil
-      @approved_expenses = Expense.expenses_date_search(params[:from], params[:to], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Approved')
-      @pending_expenses = Expense.expenses_date_search(params[:from], params[:to], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Pending')
-      @rejected_expenses = Expense.expenses_date_search(params[:from], params[:to], params[:page], params[:id] = current_user.id, params[:role] = current_user.role, params[:status]='Rejected')
-    else
-      @expenses=Expense.all.order('budgets.id ASC').paginate(:page => params[:page], :per_page => 12) #raise @budgets.to_sql
-      @approved_expenses = Expense.search(params[:search], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Approved')
-      @pending_expenses = Expense.search(params[:search], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Pending')
-      @rejected_expenses = Expense.search(params[:search], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Rejected')
-    end
+    @approved_expenses = Expense.search(params[:from], params[:to], params[:search], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Approved')
+    @pending_expenses = Expense.search(params[:from], params[:to], params[:search], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Pending')
+    @rejected_expenses = Expense.search(params[:from], params[:to], params[:search], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Rejected')
   end
 
   def new
@@ -33,7 +26,6 @@ class ExpensesController < ApplicationController
       render 'new'
     end
   end
-
 
   def show
 
@@ -98,6 +90,5 @@ class ExpensesController < ApplicationController
   def expense_params
     params.require(:expense).permit(:product_name, :category, :cost, :details, :image, :expense_date)
   end
-
 
 end

@@ -3,10 +3,22 @@
     <br><br>
 <% end %>
 
-<%= form_tag(manage_users_path, :method => "get",class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search",class:"form-control" %>
-    &nbsp <%= submit_tag "Search", class: "btn btn-dark" %>
-<% end %>
+<div class="row">
+  <div class="col-sm">
+    <%= form_tag(manage_users_path, :method => "get") do %>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
+          </div>
+        </div>
+        <br>
+        <div class="row container">
+          <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
+          <%= link_to 'Reset', manage_users_path, class: "btn btn-secondary" %>
+        </div>
+    <% end %>
+  </div>
+</div>
 <br>
 
 <% @number = @users.offset + 1 %>
