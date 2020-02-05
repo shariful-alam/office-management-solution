@@ -29,16 +29,6 @@
       "js.map": [
         "/packs/js/edit_image-97b354c3882d7f7d71cd.js.map"
       ]
-    },
-    "tooltip": {
-      "js": [
-        "/packs/js/tooltip-17fb46f6d0be0787db63.js"
-      ],
-      "js.map": [
-        "/packs/js/tooltip-17fb46f6d0be0787db63.js.map"
-      ]
     }
-  },
-  "tooltip.js": "/packs/js/tooltip-17fb46f6d0be0787db63.js",
-  "tooltip.js.map": "/packs/js/tooltip-17fb46f6d0be0787db63.js.map"
+  }
 }
