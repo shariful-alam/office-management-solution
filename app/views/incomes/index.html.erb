@@ -1,10 +1,10 @@
 <%= link_to "Add Income", new_income_path, class: "btn btn-dark", style: "float:right" %>
 
 <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
-    <% if params[:search_by_year].nil? %>
+    <% if params[:search].nil? %>
         <h1>All Income List of <%= Date.today.year %> </h1>
     <% else %>
-        <h1>All Income List of <%= params[:search_by_year][0].to_i %> </h1>
+        <h1>All Income List of <%= params[:search] %> </h1>
     <% end %>
 <% else %>
     <h1>Your Income List</h1>
