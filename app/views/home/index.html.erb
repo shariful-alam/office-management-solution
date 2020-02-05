@@ -1,10 +1,11 @@
 <% if user_signed_in? %>
-    <h3 style="margin-left: 20px;">Welcome <%=current_user.name%> </h3>
+    <h3 style="margin-left: 20px;">Welcome <%= current_user.name %> </h3>
 <% end %>
 <br>
 <br>
-
-<div class="container col-md-6">
-<h4 class="container col-md-5" >Budget Statistics</h4><br>
-<%= line_chart Budget.group(:month).sum(:expense), label:"Total Expense" , min: 0 ,xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px"  %>
-</div>
+<% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
+    <div class="container col-md-6">
+      <h4 class="container col-md-5">Budget Statistics</h4><br>
+      <%= line_chart Budget.group(:month).sum(:expense), label: "Total Expense", min: 0, xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px" %>
+    </div>
+<% end %>
