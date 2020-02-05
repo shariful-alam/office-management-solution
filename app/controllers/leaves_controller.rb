@@ -90,7 +90,7 @@ class LeavesController < ApplicationController
     if @leave.status == Leafe::APPROVED
       @leave.status = Leafe::PENDING
       @allocated_leave = AllocatedLeafe.where(user_id: @leave.user_id).last
-      @allocated_leave.used_leave -= 1
+      #@allocated_leave.used_leave -= 1
       @allocated_leave.save
       flash[:notice] = "The Leafe information has been changed successfully"
     else
