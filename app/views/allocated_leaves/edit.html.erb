@@ -9,7 +9,11 @@
               <p class="alert alert-danger"> <%= error_message if @allocated_leave.errors.full_messages.first == error_message %> </p>
           <% break end %>
       <% end %>
-
+      <div class="form-group">
+        <%= form.label :year, class: "control-label" %>
+        <%= form.select :year, Date.today.year.. 10.years.from_now.year, {}, {:multiple => false, class: "form-control"} %>
+      </div>
+      <br/>
       <div class="form-group">
         <%= form.label :total_leave, class: "control-label" %>
         <%= form.number_field :total_leave, class: "form-control" %>

@@ -11,6 +11,11 @@
         <%= collection_select(:allocated_leafe, :user_id, User.all, :id, :name, {}, {:multiple => false, class: "form-control"}) %>
       </div>
       <br/>
+      <div class="form-group">
+        <%= l.label :year, class: "control-label" %>
+        <%= l.select :year, Date.today.years_ago(5).year.. 5.years.from_now.year,{}, {:multiple => false, class: "form-control"} %>
+      </div>
+      <br/>
       <div>
         <%= l.label :total_leave, class: 'control-label' %> <br/>
         <%= l.number_field :total_leave, class: 'form-control' %>

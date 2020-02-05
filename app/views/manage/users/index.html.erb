@@ -1,8 +1,7 @@
 <% if current_user.role==User::ADMIN %>
-    <%= link_to "Add User information", new_manage_user_path, class: "btn btn-dark" %>
-    <br><br>
+    <%= link_to "Add User information", new_manage_user_path, class: "btn btn-dark", style: "float:right" %>
 <% end %>
-
+<h1>Employee List</h1>
 <div class="row">
   <div class="col-sm">
     <%= form_tag(manage_users_path, :method => "get") do %>
@@ -22,7 +21,6 @@
 <br>
 
 <% @number = @users.offset + 1 %>
-<h1>User List</h1>
 <table class="table table-bordered">
   <thead>
   <tr>

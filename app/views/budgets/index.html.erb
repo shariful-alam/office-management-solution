@@ -1,6 +1,6 @@
 
-<%= link_to "Add Budget information", new_budget_path, class: "btn btn-dark" %>
-<br><br>
+<%= link_to "Add Budget information", new_budget_path, class: "btn btn-dark", style: "float:right" %>
+<h1>Budget List</h1>
 
 <div class="row">
   <div class="col-sm">
@@ -22,7 +22,6 @@
 
 
 <% @number=@budgets.offset + 1 %>
-<h1>Budget List</h1>
 <table class="table table-bordered">
   <thead>
   <tr>
