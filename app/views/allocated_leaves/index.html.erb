@@ -1,13 +1,25 @@
-<% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
-    <%= link_to "Add Leave", new_allocated_leafe_path, class: "btn btn-dark" %>
-    <%= link_to "All Leaves", leaves_path, class: "btn btn-dark" %>
-    <%= link_to "Availability", attendances_path, class: "btn btn-dark" %>
-<% end %>
+
 <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
 
 
 <% @number = @allocated_leaves.offset + 1 %>
-<h1>List of Leave</h1>
+<% if params[:search] %>
+    <h1>List of Leave of Year : <%= params[:search] %> </h1>
+<% else %>
+    <h1>List of Leave of Year : <%= Date.today.year %> </h1>
+<% end %>
+<br>
+
+<%= form_tag(allocated_leaves_path, :method => "get", class: "form-inline") do %>
+    <%= select_tag "search", options_for_select(Date.today.years_ago(5).year.. 5.years.from_now.year), class: "form-control" %>
+    &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
+    <%= link_to 'Reset', incomes_path, class: "btn btn-secondary" %>  &nbsp
+<% end %>
+<br>
+<br>
+
+
+
 <table class="table table-bordered">
   <tr>
     <th>Sl</th>
@@ -52,7 +64,7 @@
 </table>
 <br/>
 <div class="form-group">
-  <%= link_to "Back", root_path, class: "btn btn-dark" %>
+  <%= link_to "Back", :back, class: "btn btn-dark" %>
 </div>
 <div>
   <%= will_paginate @allocated_leaves, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

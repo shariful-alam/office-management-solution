@@ -3,6 +3,7 @@
   <p class="text-success"><%= flash[:notices] %></p>
   <ul class="list-group">
     <li class="list-group-item"><b>Employee : </b><%= @allocated_leave.user.name %></li>
+    <li class="list-group-item"><b>Leave for Year : </b><%= @allocated_leave.year %></li>
     <li class="list-group-item"><b>Total Leave : </b><%= @allocated_leave.total_leave %></li>
     <li class="list-group-item"><b>Used Leave : </b><%= @allocated_leave.used_leave %></li>
     <li class="list-group-item"><b>Remaining Leave : </b><%= @allocated_leave.total_leave - @allocated_leave.used_leave %></li>

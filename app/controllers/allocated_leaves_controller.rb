@@ -5,7 +5,11 @@ class AllocatedLeavesController < ApplicationController
 
 
   def index
-    @allocated_leaves = AllocatedLeafe.order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    if params[:search]
+      @allocated_leaves = AllocatedLeafe.where(year: params[:search]).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    else
+      @allocated_leaves = AllocatedLeafe.where(year: Date.today.year.to_s).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    end
     #raise @attendance.inspect
   end
 
@@ -53,7 +57,7 @@ class AllocatedLeavesController < ApplicationController
 
   private
   def allocated_leafe_params
-    params.require(:allocated_leafe).permit(:user_id, :total_leave )
+    params.require(:allocated_leafe).permit(:user_id, :total_leave, :year )
   end
 
 
