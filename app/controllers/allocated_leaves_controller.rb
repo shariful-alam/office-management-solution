@@ -33,6 +33,10 @@ class AllocatedLeavesController < ApplicationController
 
   def show
     @allocated_leave = AllocatedLeafe.find(params[:id])
+    @allocated_personal = Leafe.where(user_id:@allocated_leave.user_id, leave_type: "Personal Leave").count
+    @allocated_training = Leafe.where(user_id:@allocated_leave.user_id,leave_type: "Training").count
+    @allocated_vacation = Leafe.where(user_id:@allocated_leave.user_id,leave_type: "Vacation").count
+    @allocated_medical = Leafe.where(user_id:@allocated_leave.user_id,leave_type: "Medical Leafe").count
   end
 
   def update
