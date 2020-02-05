@@ -20,4 +20,6 @@ class Leafe < ApplicationRecord
     self.joins(:user).where('users.name ilike :search OR leave_type ilike :search', search: @key)
   end
 
+
+
 end

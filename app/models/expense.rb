@@ -22,7 +22,7 @@ class Expense < ApplicationRecord
   private
 
   def self.search(from, to, search, page, user_id, role, status)
-    if role == User::ADMIN
+    if role == User::ADMIN or role == User::SUPER_ADMIN
       if search != "" and search !=nil
         @key = "%#{search}%"
         if from != "" and from != nil and to != "" and to != nil
