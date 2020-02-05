@@ -1,8 +1,8 @@
 {
   "accordion.js": "/packs/js/accordion-afd7289678bc6eebead5.js",
   "accordion.js.map": "/packs/js/accordion-afd7289678bc6eebead5.js.map",
-  "application.js": "/packs/js/application-44f689b40868bcae6051.js",
-  "application.js.map": "/packs/js/application-44f689b40868bcae6051.js.map",
+  "application.js": "/packs/js/application-f1bacf1e7bd07c418126.js",
+  "application.js.map": "/packs/js/application-f1bacf1e7bd07c418126.js.map",
   "edit_image.js": "/packs/js/edit_image-97b354c3882d7f7d71cd.js",
   "edit_image.js.map": "/packs/js/edit_image-97b354c3882d7f7d71cd.js.map",
   "entrypoints": {
@@ -16,10 +16,10 @@
     },
     "application": {
       "js": [
-        "/packs/js/application-44f689b40868bcae6051.js"
+        "/packs/js/application-f1bacf1e7bd07c418126.js"
       ],
       "js.map": [
-        "/packs/js/application-44f689b40868bcae6051.js.map"
+        "/packs/js/application-f1bacf1e7bd07c418126.js.map"
       ]
     },
     "edit_image": {
