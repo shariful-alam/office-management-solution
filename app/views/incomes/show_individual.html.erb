@@ -1,0 +1,31 @@
+<%= link_to "Add Income", new_income_path, class: "btn btn-dark", style: "float:right" %>
+
+
+<% if params[:month] %>
+    <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %> </h1> <br/>
+    <% if bonus_amount(params[:month], @user) > 0 %>
+        <h2>Hurrah!! You are getting <%= taka(bonus_amount(params[:month], @user)) %> BONUS!! </h2>
+    <% end %>
+<% else %>
+    <h1>Income List of <%= @user.name %></h1> <br/>
+<% end %>
+
+<button class="accordion btn btn-success">Approved (<%= @incomes_approved.count %>)</button>
+<%= render partial: 'table', locals: {incomes: @incomes_approved} %>
+
+<button class="accordion btn btn-warning">Pending (<%= @incomes_pending.count %>)</button>
+<%= render partial: 'table', locals: {incomes: @incomes_pending} %>
+
+<button class="accordion btn btn-danger">Rejected (<%= @incomes_rejected.count %>)</button>
+<%= render partial: 'table', locals: {incomes: @incomes_rejected} %>
+
+<br/>
+<div class="form-group">
+  <%= link_to "Back", :back, class: "btn btn-dark" %>
+</div>
+
+
+<%= javascript_pack_tag :accordion %>
+
+
+

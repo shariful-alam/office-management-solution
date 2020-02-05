@@ -1,6 +1,13 @@
-<div class="container" style="padding-right: 600px; ">
+<div class="col-sm-5" >
   <h1>Apply for Leave</h1>
   <%= form_for(@leave) do |l| %>
+
+      <% if @leave.errors.full_messages.any? %>
+          <% @leave.errors.full_messages.each do |error_message| %>
+              <p class="alert alert-danger"> <%= error_message if @leave.errors.full_messages.first == error_message %> </p>
+          <% break end %>
+      <% end %>
+
       <div>
         <h3>User : <%= current_user.name %></h3>
       </div>
@@ -22,7 +29,7 @@
       <br/>
       <div>
         <%= l.label :Leave_type %> <br/>
-        <%= l.select(:leave_type, Leafe::LEAVE_TYPE) %>
+        <%= l.select(:leave_type, Leafe::LEAVE_TYPE, {}, {class: "form-control"}) %>
       </div>
       <br/>
       <div class="form-group">

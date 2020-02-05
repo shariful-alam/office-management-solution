@@ -5,6 +5,7 @@ class Manage::UsersController < ApplicationController
   def show_all_pending
     @all_pending_expenses =  Expense.where(status: 'Pending').order('expenses.id ASC').paginate(:page => params[:page], :per_page => 20)
     @all_pending_leaves =  Leafe.where(status: 'Pending').order('leaves.id ASC').paginate(:page => params[:page], :per_page => 20)
+    @all_pending_incomes =  Income.where(status: 'Pending').order('incomes.id ASC').paginate(:page => params[:page], :per_page => 20)
   end
 
   def new

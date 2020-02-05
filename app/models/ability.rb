@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
     if user.present?
-      if user.role == User::ADMIN
+      if user.role == User::ADMIN or user.role == User::SUPER_ADMIN
         can :manage, :all
         cannot :reject, Expense, {status: 'Rejected'}
         cannot :approve, Expense, {status: 'Rejected'}
@@ -17,6 +17,8 @@ class Ability
         can :manage, Attendance, :all
 
         can :manage, Leafe, :all
+
+        can :manage, Income, :all
       else
         can :update, User, {user_id: user.id}
 
@@ -39,6 +41,13 @@ class Ability
         can :read, Leafe, {user_id: user.id, status: 'Approved'}
         can :read, Leafe, {user_id: user.id, status: 'Rejected'}
         cannot :approve, Leafe, :all
+
+        can :create, Income
+        can :manage, Income, {user_id: user.id, status: 'Pending'}
+        can :read, Income, {user_id: user.id, status: 'Approved'}
+        can :read, Income, {user_id: user.id, status: 'Rejected'}
+        cannot :approve, Income, :all
+        cannot :reject, Income, :all
       end
     else
       cannot :manage, :all

@@ -35,7 +35,7 @@ module ApplicationHelper
   end
 
   def see_pending_request
-    pending=Expense.where(status: 'Pending').count + Leafe.where(status: 'Pending').count
+    pending =Expense.where(status: 'Pending').count + Leafe.where(status: 'Pending').count + Income.where(status: 'Pending').count
     if pending > 0
       "<span class='badge'>
           #{pending}
@@ -55,6 +55,46 @@ module ApplicationHelper
     else
       link_to ("Check In <span class='status red'></span>").html_safe, attendances_path, method: :post, class: "dropdown-item"
     end
+  end
+
+  def find_by_month(month,user)
+    #raise params[:search_by_year].inspect
+    if params[:search].nil?
+      @year = Date.today.year
+      i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ? AND extract(year from income_date) = ?',month,@year).sum(:amount)
+    else
+      @year = params[:search]
+      #raise @year.to_i.inspect
+      i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ? AND extract(year from income_date) = ?',month,@year.to_i).sum(:amount)
+    end
+    return i
+  end
+
+  def find_total(user)
+    if params[:search_by_year].nil?
+      @year = Date.today.year
+      i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(year from income_date) = ?', @year).sum(:amount)
+    else
+      @year = params[:search_by_year][0]
+      i = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(year from income_date) = ?', @year).sum(:amount)
+    end
+    return i
+  end
+
+  def find_class(month,user)
+    @income = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ?', month).sum(:amount)
+    if @income > user.target_amount.to_i
+      return "bonusable"
+    else
+      return "not-bonusable"
+    end
+  end
+
+
+  def bonus_amount(month,user)
+    @income = Income.where(user_id: user.id, status: Income::APPROVED).where('extract(month from income_date) = ?', month).sum(:amount).to_i
+    @bonus = (@income - user.target_amount) * (user.bonus_percentage / 100.0)
+    return @bonus
   end
 
 

@@ -1,0 +1,87 @@
+<%= link_to "Add Income", new_income_path, class: "btn btn-dark", style: "float:right" %>
+
+<% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
+    <% if params[:search_by_year].nil? %>
+        <h1>All Income List of <%= Date.today.year %> </h1>
+    <% else %>
+        <h1>All Income List of <%= params[:search_by_year][0].to_i %> </h1>
+    <% end %>
+<% else %>
+    <h1>Your Income List</h1>
+<% end %>
+<br>
+<%= form_tag(incomes_path, :method => "get", class: "form-inline") do %>
+    <%= select_tag "search", options_for_select(Date.today.years_ago(10).year.. Date.today.year), class: "form-control" %>
+    &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
+    <%= link_to 'Reset', incomes_path, class: "btn btn-secondary" %>  &nbsp
+<% end %>
+<br>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Employee Name</th>
+    <% Date::MONTHNAMES.slice(1,12).each do |month| %>
+      <th><%= month[0..2].upcase %></th>
+    <% end %>
+    <th>TOTAL</th>
+  </tr>
+
+  <% @users.each do |l| %>
+      <tr>
+        <td>
+          <%= link_to l.name, show_individual_incomes_path(user_id: l.id) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(1, l), show_individual_incomes_path(user_id: l.id, month: 1), class: find_class(1, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(2, l), show_individual_incomes_path(user_id: l.id, month: 2), class: find_class(2, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(3, l), show_individual_incomes_path(user_id: l.id, month: 3), class: find_class(3, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(4, l), show_individual_incomes_path(user_id: l.id, month: 4), class: find_class(4, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(5, l), show_individual_incomes_path(user_id: l.id, month: 5), class: find_class(5, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(6, l), show_individual_incomes_path(user_id: l.id, month: 6), class: find_class(6, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(7, l), show_individual_incomes_path(user_id: l.id, month: 7), class: find_class(7, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(8, l), show_individual_incomes_path(user_id: l.id, month: 8), class: find_class(8, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(9, l), show_individual_incomes_path(user_id: l.id, month: 9), class: find_class(9, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(10, l), show_individual_incomes_path(user_id: l.id, month: 10), class: find_class(10, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(11, l), show_individual_incomes_path(user_id: l.id, month: 11), class: find_class(11, l) %>
+        </td>
+        <td>
+          <%= link_to find_by_month(12, l), show_individual_incomes_path(user_id: l.id, month: 12), class: find_class(12, l) %>
+        </td>
+        <td>
+          <%= find_total(l) %>
+        </td>
+      </tr>
+  <% end %>
+</table>
+<div>
+  <%= will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+</div>
+
+
+<br/>
+<div class="form-group">
+  <%= link_to "Back", root_path, class: "btn btn-dark" %>
+</div>
+
+
+
