@@ -82,8 +82,6 @@ class ExpensesController < ApplicationController
     redirect_back(fallback_location: expenses_path)
   end
 
-  def search_by_date
-  end
 
 
   private

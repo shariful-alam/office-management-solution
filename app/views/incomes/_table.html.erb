@@ -1,22 +1,24 @@
 <div class="panel">
-  <table class="table table-bordered">
-    <tr>
-      <th>Employee Name</th>
-      <th>Income Amount</th>
-      <th>Date</th>
-      <th style="text-align: center;">Action</th>
-    </tr>
+  <div class="table-responsive-sm">
+    <table class="table table-bordered">
+      <tr>
+        <th>Employee Name</th>
+        <th>Income Amount</th>
+        <th>Date</th>
+        <th style="text-align: center;">Action</th>
+      </tr>
 
-    <% incomes.each do |l| %>
-        <tr>
-          <td>
-            <%= l.user.name %>
-          </td>
-          <%= render partial: 'incomes/action', locals: {l: l} %>
-        </tr>
-    <% end %>
-  </table>
-  <div>
-    <%= will_paginate incomes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+      <% incomes.each do |l| %>
+          <tr>
+            <td>
+              <%= l.user.name %>
+            </td>
+            <%= render partial: 'incomes/action', locals: {l: l} %>
+          </tr>
+      <% end %>
+    </table>
+    <div>
+      <%= will_paginate incomes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    </div>
   </div>
 </div>

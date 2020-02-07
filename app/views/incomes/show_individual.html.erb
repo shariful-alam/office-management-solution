@@ -2,12 +2,20 @@
 
 
 <% if params[:month] %>
-    <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %> </h1> <br/>
-    <% if bonus_amount(params[:month], @user) > 0 %>
-        <h2>Hurrah!! You are getting <%= taka(bonus_amount(params[:month], @user)) %> BONUS!! </h2>
+    <% if params[:year] %>
+        <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>, <%= params[:year] %> </h1> <br/>
+    <% else %>
+        <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>, <%= Date.today.year %> </h1> <br/>
+    <% end %>
+    <% if bonus_amount(params[:month], params[:year], @user) > 0 %>
+        <h2>Hurrah!! You are getting <%= taka(bonus_amount(params[:month], params[:year], @user)) %> BONUS!! </h2>
     <% end %>
 <% else %>
-    <h1>Income List of <%= @user.name %></h1> <br/>
+    <% if params[:year] %>
+        <h1>All Income List of <%= @user.name %> of year <%= params[:year] %> </h1> <br/>
+    <% else %>
+        <h1>All Income List of <%= @user.name %> of year <%= Date.today.year %> </h1> <br/>
+    <% end %>
 <% end %>
 
 <button class="accordion btn btn-success">Approved (<%= @incomes_approved.count %>)</button>

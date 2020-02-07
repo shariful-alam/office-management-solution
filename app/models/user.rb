@@ -20,7 +20,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   ADMIN = "Admin"
-  SUPER_ADMIN ="Super Admin"
+  SUPER_ADMIN = "Super Admin"
+  EMPLOYEE = "Employee"
   DESIGNATION_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief technical Officer']
   ROLE_LIST = ['Super Admin', 'Admin', 'Employee']
 

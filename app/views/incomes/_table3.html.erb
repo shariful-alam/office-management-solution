@@ -1,0 +1,30 @@
+<div class="panel">
+  <div class="table-responsive-sm">
+    <br>
+    <table class="table table-bordered">
+      <tr>
+        <th>Employee Name</th>
+        <% Date::MONTHNAMES.slice(1, 12).each do |month| %>
+            <th><%= month[0..2].upcase %></th>
+        <% end %>
+      </tr>
+
+      <% users.each do |l| %>
+          <tr>
+            <td>
+              <%= link_to l.name, show_individual_incomes_path(user_id: l.id, year: params[:search]) %>
+            </td>
+            <% Income::MONTHS.each do |m| %>
+                <td>
+                  <%= bonus_amount(m, params[:search], l) %>
+                </td>
+            <% end %>
+          </tr>
+      <% end %>
+
+    </table>
+    <div>
+      <%= will_paginate users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    </div>
+  </div>
+</div>

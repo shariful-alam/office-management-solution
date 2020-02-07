@@ -1,5 +1,5 @@
 class Leafe < ApplicationRecord
-  LEAVE_TYPE = ["Personal Leave", "Training", "Vacation", "Medical Leafe"]
+  LEAVE_TYPE = ["Personal Leave", "Training", "Vacation", "Medical Leave"]
   validates :start_date, presence: true
   validates :end_date, presence: true
   validates :reason, presence: true
@@ -8,20 +8,15 @@ class Leafe < ApplicationRecord
   PENDING = "Pending"
   REJECTED = "Rejected"
   belongs_to :user
-
+  PL = "Personal Leave"
+  TL = "Training"
+  VL = "Vacation"
+  ML = "Medical Leave"
 
   private
   def self.search_in_date_range(date_from, date_to)
     raise self.where(:start_date => date_from..date_to).inspect
   end
-
-=begin
-  def self.search(search)
-    @key = "%#{search}%"
-    self.joins(:user).where('users.name ilike :search OR leave_type ilike :search', search: @key)
-  end
-=end
-
 
   def self.search(from, to, search, user_id, role, status, page)
 

@@ -5,7 +5,8 @@ class IncomesController < ApplicationController
 
   def index
     #raise params.inspect
-    @users = User.all.order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    @users = User.all.order('id ASC').paginate(:page => params[:page], :per_page => 10)
+    @monthly_totals = Array.new(13,0)
   end
 
   def new
@@ -58,13 +59,13 @@ class IncomesController < ApplicationController
     @income = Income.find(params[:id])
     if @income.status == Leafe::APPROVED
       @income.status = Leafe::PENDING
-      flash[:notice] = "The Income information has been changed successfully"
+      flash[:notice] = "The Income Information has been Changed Successfully!!!"
     else
       @income.status = Leafe::APPROVED
       @income.approve_time = @income.updated_at
       #LeafeMailer.approved(@leave).deliver_now
       #raise @allocated_leave.inspect
-      flash[:notice] = "Leafe has been approved successfully"
+      flash[:notice] = "Income has been Approved!!!"
     end
     @income.save
     redirect_back(fallback_location: incomes_path)
@@ -73,49 +74,18 @@ class IncomesController < ApplicationController
   def reject
     @income = Income.find(params[:id])
     @income.status = Leafe::REJECTED
-    flash[:notice] = "The Leafe information has been changed successfully"
+    flash[:notice] = "Income has been Rejected!!!"
     @income.save
     #LeafeMailer.rejected(@leave).deliver_now
     redirect_back(fallback_location: incomes_path)
   end
 
   def show_individual
-    #raise params.inspect
-    if params[:search]
-      if params[:user_id] and params[:month].nil?
-        @user = User.find(params[:user_id])
-        @incomes_pending = Income.where(status: 'Pending', user_id: params[:user_id]).where('extract(year from income_date) = ?', params[:search]).order('id ASC')
-        @incomes_approved = Income.where(status: 'Approved', user_id: params[:user_id]).where('extract(year from income_date) = ?', params[:search]).order('id ASC')
-        @incomes_rejected = Income.where(status: 'Rejected', user_id: params[:user_id]).where('extract(year from income_date) = ?', params[:search]).order('id ASC')
-      elsif params[:user_id] and params[:month]
-        @user = User.find(params[:user_id])
-        @incomes_pending = Income.where(status: 'Pending', user_id: params[:user_id]).where('extract(month from income_date) = ?', params[:month]).where('extract(year from income_date) = ?', params[:search]).order('id ASC')
-        @incomes_approved = Income.where(status: 'Approved', user_id: params[:user_id]).where('extract(month from income_date) = ?', params[:month]).where('extract(year from income_date) = ?', params[:search]).order('id ASC')
-        @incomes_rejected = Income.where(status: 'Rejected', user_id: params[:user_id]).where('extract(month from income_date) = ?', params[:month]).where('extract(year from income_date) = ?', params[:search]).order('id ASC')
-      else
-        @user = User.find(current_user.id)
-        @incomes_pending = Income.where(status: 'Pending', user_id: current_user.id).where('extract(year from income_date) = ?', params[:search]).order('id ASC')
-        @incomes_approved = Income.where(status: 'Approved', user_id: current_user.id).where('extract(year from income_date) = ?', params[:search]).order('id ASC')
-        @incomes_rejected = Income.where(status: 'Rejected', user_id: current_user.id).where('extract(year from income_date) = ?', params[:search]).order('id ASC')
-      end
-    else
-      if params[:user_id] and params[:month].nil?
-        @user = User.find(params[:user_id])
-        @incomes_pending = Income.where(status: 'Pending', user_id: params[:user_id]).where('extract(year from income_date) = ?', Date.today.year).order('id ASC')
-        @incomes_approved = Income.where(status: 'Approved', user_id: params[:user_id]).where('extract(year from income_date) = ?', Date.today.year).order('id ASC')
-        @incomes_rejected = Income.where(status: 'Rejected', user_id: params[:user_id]).where('extract(year from income_date) = ?', Date.today.year).order('id ASC')
-      elsif params[:user_id] and params[:month]
-        @user = User.find(params[:user_id])
-        @incomes_pending = Income.where(status: 'Pending', user_id: params[:user_id]).where('extract(month from income_date) = ?', params[:month]).where('extract(year from income_date) = ?', Date.today.year).order('id ASC')
-        @incomes_approved = Income.where(status: 'Approved', user_id: params[:user_id]).where('extract(month from income_date) = ?', params[:month]).where('extract(year from income_date) = ?', Date.today.year).order('id ASC')
-        @incomes_rejected = Income.where(status: 'Rejected', user_id: params[:user_id]).where('extract(month from income_date) = ?', params[:month]).where('extract(year from income_date) = ?', Date.today.year).order('id ASC')
-      else
-        @user = User.find(current_user.id)
-        @incomes_pending = Income.where(status: 'Pending', user_id: current_user.id).where('extract(year from income_date) = ?', Date.today.year).order('id ASC')
-        @incomes_approved = Income.where(status: 'Approved', user_id: current_user.id).where('extract(year from income_date) = ?', Date.today.year).order('id ASC')
-        @incomes_rejected = Income.where(status: 'Rejected', user_id: current_user.id).where('extract(year from income_date) = ?', Date.today.year).order('id ASC')
-      end
-    end
+    #raise params[:year].inspect
+    @user = User.find(params[:user_id])
+    @incomes_approved = Income.search(params[:user_id], params[:month], params[:year], Income::APPROVED)
+    @incomes_pending = Income.search(params[:user_id], params[:month], params[:year], Income::PENDING)
+    @incomes_rejected = Income.search(params[:user_id], params[:month], params[:year], Income::REJECTED)
 
     @incomes_pending = @incomes_pending.paginate(:page => params[:page], :per_page => 10)
     @incomes_approved = @incomes_approved.paginate(:page => params[:page], :per_page => 10)

@@ -1,7 +1,7 @@
 <%= javascript_pack_tag :edit_image %>
 
 <h2>Edit User Information</h2>
-<div>
+<div class="col-sm-5">
   <%= form_for @user, url: manage_user_path(@user) do |f| %>
 
       <% if @user.errors.full_messages.any? %>
@@ -26,18 +26,18 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :target_amount,'Target Amount', class: "control-label" %>
+        <%= f.label :target_amount, 'Target Amount', class: "control-label" %>
         <%= f.text_field :target_amount, class: "form-control" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :bonus_percentage,'Bonus Percentage', class: "control-label" %>
+        <%= f.label :bonus_percentage, 'Bonus Percentage', class: "control-label" %>
         <%= f.text_field :bonus_percentage, class: "form-control" %>
       </div>
 
       <div class="form-group" id="cancel_show">
-        <%= image_tag(@user.image.url,:size => "100x100") if @user.image.exists? %>
-        <%= f.check_box :remove_image, style: "margin-left : 10px; position: absolute;",id: "cancel_image",onclick:"myFunction()" if @user.image.exists? %>
+        <%= image_tag(@user.image.url, :size => "100x100") if @user.image.exists? %>
+        <%= f.check_box :remove_image, style: "margin-left : 10px; position: absolute;", id: "cancel_image", onclick: "myFunction()" if @user.image.exists? %>
       </div>
 
       <div class="form-group">
@@ -60,8 +60,6 @@
         <%= f.submit 'Update', class: "btn btn-success" %> |
         <%= link_to "Back", manage_users_path, class: "btn btn-dark" %>
       </div>
-
   <% end %>
-
 </div>
 

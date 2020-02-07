@@ -28,15 +28,15 @@
               <%= link_to "Expenses", expenses_path, class: "nav-link" %>
             </li>
 
-            <li>
+            <li class="nav-item">
               <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
                   <%= link_to "Incomes", incomes_path, class: "nav-link" %>
               <% else %>
-                  <%= link_to "Incomes", show_individual_incomes_path, class: "nav-link" %>
+                  <%= link_to "Incomes", show_individual_incomes_path(user_id: current_user.id), class: "nav-link" %>
               <% end %>
             </li>
 
-            <li>
+            <li class="nav-item">
               <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
                   <div>
                     <div class="dropdown">
@@ -44,6 +44,7 @@
                         <strong> Leave </strong>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <%= link_to "Apply for Leave", new_leafe_path, class: 'dropdown-item' %>
                         <%= link_to "Appointed Leaves", allocated_leaves_path, class: 'dropdown-item' %>
                         <%= link_to "Leave Requests", leaves_path, class: 'dropdown-item' %>
                         <%= link_to "Appoint Leave", new_allocated_leafe_path, class: 'dropdown-item' %>

@@ -4,39 +4,6 @@ class LeavesController < ApplicationController
 
 
   def index
-=begin
-    if current_user.role != User::ADMIN
-      if params[:date_from] and params[:date_to]
-        #@search = Leafe.new(params[:search])
-        @leaves_pending = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Pending').order('id ASC')
-        @leaves_approved = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Approved').order('id ASC')
-        @leaves_rejected = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Rejected').order('id ASC')
-      elsif params[:search]
-        @leaves_pending = Leafe.search(params[:search]).where(status: 'Pending').order('id ASC')
-        @leaves_approved = Leafe.search(params[:search]).where(status: 'Approved').order('id ASC')
-        @leaves_rejected = Leafe.search(params[:search]).where(status: 'Rejected').order('id ASC')
-      else
-        @leaves_pending = Leafe.where(user_id: current_user.id, status: 'Pending').order('id ASC')
-        @leaves_approved = Leafe.where(user_id: current_user.id, status: 'Approved').order('id ASC')
-        @leaves_rejected = Leafe.where(user_id: current_user.id, status: 'Rejected').order('id ASC')
-      end
-    else
-      if params[:date_from] and params[:date_to]
-        #@search = Leafe.new(params[:search])
-        @leaves_pending = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Pending').order('id ASC')
-        @leaves_approved = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Approved').order('id ASC')
-        @leaves_rejected = Leafe.search_in_date_range(params[:date_from], params[:date_to]).where(status: 'Rejected').order('id ASC')
-      elsif params[:search]
-        @leaves_pending = Leafe.search(params[:search]).where(status: 'Pending').order('id ASC')
-        @leaves_approved = Leafe.search(params[:search]).where(status: 'Approved').order('id ASC')
-        @leaves_rejected = Leafe.search(params[:search]).where(status: 'Rejected').order('id ASC')
-      else
-        @leaves_pending = Leafe.where(status: 'Pending').order('id ASC')
-        @leaves_approved = Leafe.where(status: 'Approved').order('id ASC')
-        @leaves_rejected = Leafe.where(status: 'Rejected').order('id ASC')
-      end
-    end
-=end
     @leaves_pending = Leafe.search(params[:from], params[:to], params[:search], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]= Leafe::PENDING, params[:page])
     @leaves_approved = Leafe.search(params[:from], params[:to], params[:search], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]=Leafe::APPROVED, params[:page])
     @leaves_rejected = Leafe.search(params[:from], params[:to], params[:search], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]=Leafe::REJECTED, params[:page])
@@ -46,7 +13,6 @@ class LeavesController < ApplicationController
 
   def new
     @leave = Leafe.new
-    #@user = User.all
   end
 
   def create
@@ -100,7 +66,6 @@ class LeavesController < ApplicationController
       @allocated_leave.used_leave += 1
       @allocated_leave.save
       LeafeMailer.approved(@leave).deliver_now
-      #raise @allocated_leave.inspect
       flash[:notice] = "Leafe has been approved successfully"
     end
     @leave.save

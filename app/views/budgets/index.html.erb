@@ -1,4 +1,3 @@
-
 <%= link_to "Add Budget information", new_budget_path, class: "btn btn-dark", style: "float:right" %>
 <h1>Budget List</h1>
 
@@ -22,40 +21,42 @@
 
 
 <% @number=@budgets.offset + 1 %>
-<table class="table table-bordered">
-  <thead>
-  <tr>
-    <th>Sl</th>
-    <th>Year - Month</th>
-    <th>Amount</th>
-    <th>Expense</th>
-    <th>Remaining</th>
-    <th>Admin</th>
-    <th>Action</th>
-  </tr>
-  </thead>
+<div class="table-responsive-sm">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Sl</th>
+      <th>Year - Month</th>
+      <th>Amount</th>
+      <th>Expense</th>
+      <th>Remaining</th>
+      <th>Admin</th>
+      <th>Action</th>
+    </tr>
+    </thead>
 
-  <% @budgets.each do |budget| %>
-      <tr>
-        <td><%= @number %> </td>
-        <% @number+=1 %>
-        <td><%= budget.month %></td>
-        <td><%= taka(budget.amount) %></td>
-        <td><%= taka(budget.expense) %></td>
-        <td><%=  taka(budget.amount-budget.expense) %></td>
-        <td><%= budget.user.name %></td>
-        <% if current_user.role==User::ADMIN %>
-            <td>
-              <%= link_to "Show Expenses", budget_path(budget) %> /
-              <%= link_to "Edit", edit_budget_path(budget) %> /
-              <%= link_to "Delete", budget_path(budget), method: :delete, data: {confirm: "Are you sure?"} %>
-            </td>
-        <% else %>
-            <td> <%= link_to "Show", budget_path(budget) %> </td>
-        <% end %>
-      </tr>
-  <% end %>
-</table>
+    <% @budgets.each do |budget| %>
+        <tr>
+          <td><%= @number %> </td>
+          <% @number+=1 %>
+          <td><%= budget.month %></td>
+          <td><%= taka(budget.amount) %></td>
+          <td><%= taka(budget.expense) %></td>
+          <td><%= taka(budget.amount-budget.expense) %></td>
+          <td><%= budget.user.name %></td>
+          <% if current_user.role==User::ADMIN %>
+              <td>
+                <%= link_to "Show Expenses", budget_path(budget) %> /
+                <%= link_to "Edit", edit_budget_path(budget) %> /
+                <%= link_to "Delete", budget_path(budget), method: :delete, data: {confirm: "Are you sure?"} %>
+              </td>
+          <% else %>
+              <td> <%= link_to "Show", budget_path(budget) %> </td>
+          <% end %>
+        </tr>
+    <% end %>
+  </table>
+</div>
 <%= will_paginate @budgets, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 <div class="form-group">
   <%= link_to "Back", root_path, class: "btn btn-dark" %>

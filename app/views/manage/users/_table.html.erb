@@ -1,19 +1,21 @@
 <div class="panel">
-  <% @number=expenses.offset + 1 %>
-  <table class="table table-bordered">
-    <thead>
-    <tr>
-      <th>Sl</th>
-      <th>Name</th>
-      <th>Employee</th>
-      <th>Cost</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-    </thead>
-    <% expenses.each do |expense| %>
-        <%= render partial: 'row', locals: {expense: expense} %>
-    <% end %>
-  </table>
-<%= will_paginate expenses, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  <div class="table-responsive-sm">
+    <% @number=expenses.offset + 1 %>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Sl</th>
+        <th>Name</th>
+        <th>Employee</th>
+        <th>Cost</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <% expenses.each do |expense| %>
+          <%= render partial: 'row', locals: {expense: expense} %>
+      <% end %>
+    </table>
+  </div>
+  <%= will_paginate expenses, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 </div>
