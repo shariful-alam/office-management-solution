@@ -1,5 +1,12 @@
 <% if user_signed_in? %>
     <h3 style="margin-left: 20px;">Welcome <%= current_user.name %> </h3>
+    <h3 style="margin-left: 20px;">Welcome <%= request.remote_ip %> </h3>
+    <h3 style="margin-left: 20px;">Welcome <%= request.env["HTTP_X_FORWARDED_FOR"] %> </h3>
+    <h3 style="margin-left: 20px;">Welcome <%=  request.remote_addr %> </h3>
+    <h3 style="margin-left: 20px;">Welcome <%=  request.env['REMOTE_ADDR'] %> </h3>
+
+
+
 <% end %>
 <br>
 <br>
