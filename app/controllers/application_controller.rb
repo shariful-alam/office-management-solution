@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :block_foreign_hosts
   protected
 
   def configure_permitted_parameters
@@ -13,21 +12,5 @@ class ApplicationController < ActionController::Base
     flash[:alert] =  "Access Denied!!"
     redirect_back(fallback_location: root_path)
   end
-
-
-
-  def whitelisted?(ip)
-    return true if ['::1'].include?(ip)
-    false
-  end
-
-  def block_foreign_hosts
-    return false if whitelisted?(request.remote_ip)
-    redirect_to "https://www.google.com" unless request.remote_ip.start_with?("123.456.789")
-  end
-
-
-
-
 
 end
