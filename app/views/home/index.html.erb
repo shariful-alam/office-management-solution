@@ -1,6 +1,7 @@
 <% if user_signed_in? %>
     <h3 style="margin-left: 20px;">Welcome <%= current_user.name %> </h3>
     <h3 style="margin-left: 20px;">Ip address - <%= request.remote_ip %> </h3>
+    <h3 class="container col-md-6">Welcome <%= current_user.name %> </h3>
 <% end %>
 <br>
 <br>
