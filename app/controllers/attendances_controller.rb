@@ -1,6 +1,7 @@
 class AttendancesController < ApplicationController
 
   before_action :authenticate_user!
+  before_action :block_foreign_hosts,only:[:create,:update]
   load_and_authorize_resource
 
   def index
@@ -42,7 +43,15 @@ class AttendancesController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def whitelisted?(ip)
+    return true if ['27.147.206.53'].include?(ip)
+    false
+  end
 
+  def block_foreign_hosts
+    return false if whitelisted?(request.remote_ip)
+    redirect_to "https://www.google.com" unless request.remote_ip.start_with?("123.456.789")
+  end
 
 
 end
