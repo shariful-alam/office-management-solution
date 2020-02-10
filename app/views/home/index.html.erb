@@ -7,6 +7,6 @@
 <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
     <div class="container col-md-6">
       <h4 class="container col-md-5">Budget Statistics</h4><br>
-      <%= line_chart Budget.group(:month).sum(:expense), label: "Total Expense", min: 0, xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px" %>
+      <%= line_chart Budget.group(:month,:id).order(:month,:id).sum(:expense), label: "Total Expense", min: 0, xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px" %>
     </div>
 <% end %>
