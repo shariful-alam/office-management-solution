@@ -55,4 +55,6 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'income_vs_expense', to: "home#income_vs_expense"
+
 end
