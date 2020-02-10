@@ -16,8 +16,9 @@
     </div>
 <% end %>
 
-
 <script>
+  var m = <%=raw @incomes %>
+  var n = <%=raw @expenses %>
     new Chart(document.getElementById("bar-chart-grouped"), {
         type: 'bar',
         data: {
@@ -25,9 +26,9 @@
             labels: ["1900", "1950", "1999", "2050"],
             datasets: [
                 {
-                    label: "Africa",
+                    label: "Incomes",
                     backgroundColor: "#3e95cd",
-                    data: [133,221,783,2478]
+                    data: m
                 }, {
                     label: "Europe",
                     backgroundColor: "#8e5ea2",

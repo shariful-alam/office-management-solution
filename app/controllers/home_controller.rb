@@ -5,29 +5,36 @@ class HomeController < ApplicationController
         redirect_to new_user_session_path
       end
       @arr = Array.new
-      @incomes = Income.all
-
+      @incomes = Income.pluck(:amount)
+      #raise @incomes.inspect
 
       @arr << @incomes
 
-      @expenses = Expense.all
+      @expenses = Expense.pluck(:cost)
 
+=begin
       @arr << @expenses
       #raise arr.inspect
-      #render json: @arr
+=end
+      #render json: @incomes
   end
 
   def income_vs_expense
     arr = Array.new
-    @incomes = Income.all
 
+    january = {}
+    january[:label] = "January"
+    january[:income] = 50000
+    january[:expense] = 50000
 
-    arr << @incomes
+    arr << january
 
-    @expenses = Expense.all
+    february = {}
+    february[:label] = "February"
+    february[:income] = 50000
+    february[:expense] = 50000
 
-    arr << @expenses
-    #raise arr.inspect
+    arr << february
     render json: arr
 
   end
