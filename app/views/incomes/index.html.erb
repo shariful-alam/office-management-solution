@@ -1,26 +1,28 @@
 <%= link_to "Add Income", new_income_path, class: "btn btn-dark", style: "float:right" %>
 
 <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
-    <% if params[:search].nil? %>
-        <h1>All Income List of <%= Date.today.year %> </h1>
-    <% else %>
-        <h1>All Income List of <%= params[:search] %> </h1>
-    <% end %>
+  <% if params[:search].nil? %>
+    <h1>All Income List of <%= Date.today.year %> </h1>
+    <% @year = Date.today.year %>
+  <% else %>
+    <h1>All Income List of <%= params[:search] %> </h1>
+    <% @year = params[:search] %>
+  <% end %>
 <% else %>
-    <h1>Your Income List</h1>
+  <h1>Your Income List</h1>
 <% end %>
 <br>
 <%= form_tag(incomes_path, :method => "get", class: "form-inline") do %>
-    <%= select_tag "search", options_for_select(Date.today.years_ago(10).year.. Date.today.year, :selected => params[:search]), class: "form-control" %>
-    &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
-    <%= link_to 'Reset', incomes_path, class: "btn btn-secondary" %>  &nbsp
+  <%= select_tag "search", options_for_select(Date.today.years_ago(10).year.. Date.today.year, :selected => @year), class: "form-control" %>
+  &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
+  <%= link_to 'Reset', incomes_path, class: "btn btn-secondary" %>  &nbsp
 <% end %>
 <br>
 
-<button class="accordion btn btn-info">All Incomes </button>
+<button class="accordion btn btn-info">All Incomes</button>
 <%= render partial: 'table2', locals: {users: @users} %>
 
-<button class="accordion btn btn-info">All Bonuses </button>
+<button class="accordion btn btn-info">All Bonuses</button>
 <%= render partial: 'table3', locals: {users: @users} %>
 
 <br/>
