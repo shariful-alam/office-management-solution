@@ -1,4 +1,3 @@
-
 <td>
   <%= taka(l.amount) %>
 </td>
@@ -10,29 +9,55 @@
 </td>
 <td style="text-align: center;">
   <% if current_user.role == User::ADMIN %>
-      <% if l.status == Income::APPROVED %>
-          <%= link_to "Undo", approve_income_path(l), method: :put, data: {confirm: 'Are you sure to Approve?'} %>
-          |
-          <%= link_to "Show", income_path(l) %>
-      <% elsif l.status == Income::REJECTED %>
-          <%= link_to "Show", income_path(l) %> |
-          <%= link_to "Delete", income_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
-      <% else %>
-          <%= link_to "Approve", approve_income_path(l), method: :put, data: {confirm: 'Are you sure to Approve?'} %>
-          |
-          <%= link_to "Reject", reject_income_path(l), method: :put, data: {confirm: 'Are you sure to Reject?'} %>
-          |
-          <%= link_to "Show", income_path(l) %>
-          <% if l.user_id==current_user.id %>
-              | <%= link_to "Edit", edit_income_path(l) %> |
-              <%= link_to "Delete", income_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
-          <% end %>
+    <% if l.status == Income::APPROVED %>
+      <%= link_to approve_income_path(l), method: :put, data: {confirm: 'Are you sure?'} do %>
+        <i class="fa fa-undo" title="Undo"></i>
       <% end %>
+      |
+      <%= link_to income_path(l) do %>
+        <i class="fa fa-eye" title="Show Details"></i>
+      <% end %>
+    <% elsif l.status == Income::REJECTED %>
+      <%= link_to income_path(l) do %>
+        <i class="fa fa-eye" title="Show Details"></i>
+      <% end %>
+      |
+      <%= link_to income_path(l), method: :delete, data: {confirm: "Are you sure?"} do %>
+        <i class="fa fa-trash" title="Drop"></i>
+      <% end %>
+    <% else %>
+      <%= link_to approve_income_path(l), method: :put, data: {confirm: 'Are you sure to Approve?'} do %>
+        <i class="fa fa-check" title="Approve"></i>
+      <% end %>
+      |
+      <%= link_to reject_income_path(l), method: :put, data: {confirm: 'Are you sure to Reject?'} do %>
+        <i class="fa fa-ban" title="Reject"></i>
+      <% end %>
+      |
+      <%= link_to income_path(l) do %>
+        <i class="fa fa-eye" title="Show Details"></i>
+      <% end %>
+      <% if l.user_id==current_user.id %>
+        |
+        <%= link_to edit_income_path(l) do %>
+          <i class="fa fa-edit" title="Edit"></i>
+        <% end %>
+        |
+        <%= link_to income_path(l), method: :delete, data: {confirm: "Are you sure?"} do %>
+          <i class="fa fa-trash" title="Drop"></i>
+        <% end %>
+      <% end %>
+    <% end %>
   <% else %>
-      <%= link_to "Show", income_path(l) %>
-      <% if l.status == Income::PENDING and current_user.id==l.user.id %>
-          | <%= link_to "Edit", edit_income_path(l) %> |
-          <%= link_to "Delete", income_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
+    <%= link_to "Show", income_path(l) %>
+    <% if l.status == Income::PENDING and current_user.id==l.user.id %>
+      | <%= link_to edit_income_path(l) do %>
+        <i class="fa fa-edit" title="Edit"></i>
       <% end %>
+      |
+      <%= link_to income_path(l), method: :delete, data: {confirm: "Are you sure?"} do %>
+        <i class="fa fa-trash" title="Drop"></i>
+      <% end %>
+    <% end %>
   <% end %>
 </td>

@@ -65,3 +65,4 @@ gem "paperclip", "~> 5.1"
 gem 'cancancan'
 gem 'chartkick'
 gem 'groupdate'
+gem "font-awesome-rails"

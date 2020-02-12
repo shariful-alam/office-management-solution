@@ -52,13 +52,21 @@
         </td>
         <td style="text-align: center;">
           <% if can? :read, al %>
-            <%= link_to "Show", allocated_leafe_path(al) %>
+            <%= link_to allocated_leafe_path(al) do %>
+              <i class="fa fa-eye" title="Show Details"></i>
+            <% end %>
           <% end %>
           <% if can? :write, al %>
-            | <%= link_to "Edit", edit_allocated_leafe_path(al) %>
+            |
+            <%= link_to edit_allocated_leafe_path(al) do %>
+              <i class="fa fa-edit" title="Edit"></i>
+            <% end %>
           <% end %>
           <% if can? :destroy, al %>
-            | <%= link_to "Delete", allocated_leafe_path(al), method: :delete, data: {confirm: "Are you sure?"} %>
+            |
+            <%= link_to allocated_leafe_path(al), method: :delete, data: {confirm: "Are you sure?"} do %>
+              <i class="fa fa-trash" title="Drop"></i>
+            <% end %>
           <% end %>
         </td>
       </tr>
