@@ -1,20 +1,28 @@
 <% if user_signed_in? %>
-    <h3 class="container col-md-6">Welcome <%= current_user.name %> </h3>
+    <h3 class="justify-content-center">User Dashboard </h3>
 <% end %>
-<br>
-<br>
+
 <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
-    <div class="row">
-      <div class="container col-sm-6">
-        <h4 class="container col-md-5">Budget Statistics</h4><br>
+  <br>
+  <div class="row">
+    <div class="container col-sm-6">
+      <button class="accordion btn btn-warning">Budget Statistics</button>
+      <div class="panel">
+        <br>
         <%= line_chart Budget.group(:month).sum(:expense), label: "Total Expense", min: 0, xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px" %>
       </div>
-      <div class="container col-sm-6">
-        <h4 class="container col-md-5">Revenue Graph</h4><br>
+    </div>
+    <div class="container col-sm-6">
+      <button class="accordion btn btn-warning">Revenue Graph</button>
+      <div class="panel">
+        <br>
         <canvas id="bar-chart-grouped" width="800" height="450" responsive="true"></canvas>
       </div>
     </div>
+  </div>
 <% end %>
+
+<%= javascript_pack_tag :accordion %>
 
 <script>
   var m = <%=raw @income_arr.slice(1..12) %>
