@@ -18,11 +18,18 @@ class LeavesController < ApplicationController
   def create
     @leave = Leafe.new(leafe_params)
     @leave.user_id = current_user.id
-    if @leave.save
-      redirect_to show_all_allocated_leafe_path(@leave.user_id), notice: "Your Application Has Bees Submitted for Approval"
+    @count = (@leave.start_date..@leave.end_date).select{|a| a.wday < 6 && a.wday > 0}.count
+    if @count > 0
+      if @leave.save
+        redirect_to show_all_allocated_leafe_path(@leave.user_id), notice: "Your Application Has Bees Submitted for Approval"
+      else
+        render :new
+      end
     else
-      render 'new'
+      flash[:warning] = "Please Select a Valid Date Range!!"
+      render :new
     end
+
   end
 
   def edit
@@ -53,17 +60,18 @@ class LeavesController < ApplicationController
 
   def approve
     @leave = Leafe.find(params[:id])
+    @count = (@leave.start_date..@leave.end_date).select{|a| a.wday < 6 && a.wday > 0}.count
     if @leave.status == Leafe::APPROVED
       @leave.status = Leafe::PENDING
       @allocated_leave = AllocatedLeafe.where(user_id: @leave.user_id).last
-      #@allocated_leave.used_leave -= 1
+      @allocated_leave.used_leave -= @count
       @allocated_leave.save
       flash[:notice] = "The Leafe information has been changed successfully"
     else
       @leave.status = Leafe::APPROVED
       @leave.approve_time = @leave.updated_at
       @allocated_leave = AllocatedLeafe.find_by(user_id: @leave.user_id)
-      @allocated_leave.used_leave += 1
+      @allocated_leave.used_leave += @count
       @allocated_leave.save
       LeafeMailer.approved(@leave).deliver_now
       flash[:notice] = "Leafe has been approved successfully"
