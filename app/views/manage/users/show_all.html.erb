@@ -23,10 +23,10 @@
         <br>
         <div class="row">
           <div class="col-sm-6">
-            <%= date_field_tag :from, params[:from], class: "form-control",id: "datepicker" %> <br>
+            <%= text_field_tag :from, params[:from], class: "form-control", id:"datepicker" ,placeholder: "yyyy-mm-yy" %> <br>
           </div>
           <div class="col-sm-6">
-            <%= date_field_tag :to, params[:to], class: "form-control" ,id: "datepicker2"%> <br>
+            <%= text_field_tag :to, params[:to], class: "form-control" ,id: "datepicker2" , placeholder: "yyyy-mm-yy" %> <br>
           </div>
         </div>
 

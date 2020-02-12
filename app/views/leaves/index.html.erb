@@ -11,10 +11,10 @@
         <br>
         <div class="row">
           <div class="col-sm-3">
-            <%= date_field_tag :from, params[:from], :selected => params[:from], class: "form-control" %> <br>
+            <%= text_field_tag :from, params[:from], :selected => params[:from], class: "form-control",id: "datepicker", placeholder: "yyyy-mm-yy" %> <br>
           </div>
           <div class="col-sm-3">
-            <%= date_field_tag :to, params[:to], :selected => params[:to], class: "form-control" %> <br>
+            <%= text_field_tag :to, params[:to], :selected => params[:to], class: "form-control",id: "datepicker", placeholder: "yyyy-mm-yy" %> <br>
           </div>
         </div>
 

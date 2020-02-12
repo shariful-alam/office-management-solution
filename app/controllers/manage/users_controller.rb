@@ -54,6 +54,7 @@ class Manage::UsersController < ApplicationController
   end
 
   def show_all
+    #raise "dd"
     @expense_for_user=Expense.where(user_id: params[:id], status: 'Approved').sum(:cost)
     @approved_expenses = Expense.user_expenses(params[:from], params[:to],params[:search], params[:page], params[:id], params[:status]='Approved')
     @pending_expenses = Expense.user_expenses(params[:from], params[:to],params[:search], params[:page], params[:id], params[:status]='Pending')
