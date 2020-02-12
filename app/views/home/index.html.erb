@@ -10,37 +10,46 @@
         <%= line_chart Budget.group(:month).sum(:expense), label: "Total Expense", min: 0, xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px" %>
       </div>
       <div class="container col-sm-6">
-        <h4 class="container col-md-5">Budget Statistics</h4><br>
-        <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+        <h4 class="container col-md-5">Revenue Graph</h4><br>
+        <canvas id="bar-chart-grouped" width="800" height="450" responsive="true"></canvas>
       </div>
     </div>
 <% end %>
 
 <script>
-  var m = <%=raw @incomes %>
-  var n = <%=raw @expenses %>
+  var m = <%=raw @income_arr.slice(1..12) %>
+  var n = <%=raw @expense_arr.slice(1..12) %>
+  var months = <%=raw @months %>
+    <%#= raise @income_arr.inspect %>
     new Chart(document.getElementById("bar-chart-grouped"), {
         type: 'bar',
         data: {
 
-            labels: ["1900", "1950", "1999", "2050"],
+            labels: months,
             datasets: [
                 {
                     label: "Incomes",
                     backgroundColor: "#3e95cd",
                     data: m
                 }, {
-                    label: "Europe",
+                    label: "Expenses",
                     backgroundColor: "#8e5ea2",
-                    data: [408,547,675,734]
+                    data: n
                 }
             ]
         },
         options: {
             title: {
                 display: true,
-                text: 'Population growth (millions)'
-            }
+                text: 'Incomes VS Expenses'
+            },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
         }
     });
 </script>

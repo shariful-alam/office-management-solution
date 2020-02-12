@@ -1,42 +1,27 @@
 class HomeController < ApplicationController
 
   def index
-      if current_user.nil?
-        redirect_to new_user_session_path
+    if current_user.nil?
+      redirect_to new_user_session_path
+    end
+
+    @months = Date::MONTHNAMES.slice(1, 12)
+
+    @income_arr = Array.new(13, 0)
+    @incomes = Income.group('(extract(month from income_date))::integer').sum(:amount)
+    Income::MONTHS.each do |m|
+      if @incomes[m]
+        @income_arr[m] += @incomes[m]
       end
-      @arr = Array.new
-      @incomes = Income.pluck(:amount)
-      #raise @incomes.inspect
+    end
 
-      @arr << @incomes
-
-      @expenses = Expense.pluck(:cost)
-
-=begin
-      @arr << @expenses
-      #raise arr.inspect
-=end
-      #render json: @incomes
+    @expense_arr = Array.new(13, 0)
+    @expense = Expense.group('(extract(month from expense_date))::integer').sum(:cost)
+    Income::MONTHS.each do |m|
+      if @expense[m]
+        @expense_arr[m] += @expense[m]
+      end
+    end
   end
-
-  def income_vs_expense
-    arr = Array.new
-
-    january = {}
-    january[:label] = "January"
-    january[:income] = 50000
-    january[:expense] = 50000
-
-    arr << january
-
-    february = {}
-    february[:label] = "February"
-    february[:income] = 50000
-    february[:expense] = 50000
-
-    arr << february
-    render json: arr
-
-  end
-
 end
+
