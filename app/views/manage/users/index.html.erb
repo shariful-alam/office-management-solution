@@ -48,13 +48,26 @@
 
           <% if current_user.role==User::ADMIN %>
               <td>
-                <%= link_to "Show", manage_user_path(user) %> /
-                <%= link_to "Show all expenses", show_all_manage_user_path(user) %> /
-                <%= link_to "Edit", edit_manage_user_path(user) %> /
-                <%= link_to "Delete", manage_user_path(user), method: :delete, data: {confirm: "Are you sure?"} %>
+                <%= link_to manage_user_path(user) do %>
+                  <i class="fa fa-eye" title="Show Details"></i>
+                <% end %>
+                |
+                <%= link_to show_all_manage_user_path(user) do %>
+                  <i class="fa fa-money" title="Show All Expenses"></i>
+                <% end %>
+                |
+                <%= link_to edit_manage_user_path(user) do %>
+                  <i class="fa fa-edit" title="Edit"></i>
+                <% end %>
+                |
+                <%= link_to manage_user_path(user), method: :delete, data: {confirm: "Are you sure?"} do %>
+                  <i class="fa fa-trash" title="Drop"></i>
+                <% end %>
               </td>
           <% else %>
-              <td><%= link_to "Show", manage_user_path(user) %></td>
+            <%= link_to manage_user_path(user) do %>
+              <i class="fa fa-eye" title="Show Details"></i>
+            <% end %>
           <% end %>
         </tr>
     <% end %>
