@@ -13,7 +13,7 @@
       <br/>
       <div class="form-group">
         <%= l.label :year, class: "control-label" %>
-        <%= l.select :year, Date.today.years_ago(5).year.. 5.years.from_now.year,{}, {:multiple => false, class: "form-control"} %>
+        <%= l.select :year, Date.today.years_ago(5).year.. 5.years.from_now.year,{:selected=> Date.today.year}, {:multiple => false, class: "form-control"} %>
       </div>
       <br/>
       <div>

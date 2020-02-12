@@ -1,22 +1,3 @@
-<script type="text/javascript" charset="utf-8">
-    function Function()
-    {
-        var previous = document.getElementById("previous");
-        var select_previous = document.getElementById("select_previous");
-
-        if(previous.checked == false)
-        {
-            select_previous.style.display = "none";
-        }
-        else
-        {
-            select_previous.style.display = "block";
-        }
-
-    }
-</script>
-
-
 <h1>Insert Expense Information</h1>
 
 <div class="col-sm-5">
@@ -55,8 +36,8 @@
 
 
       <div class="form-group">
-        <%= form.label :expense_date, 'Late/Future Entry', class: "control-label" %>
-        <%= form.date_field :expense_date, class: "form-control" %>
+        <%= form.label :expense_date, 'Date', class: "control-label" %>
+        <%= form.text_field :expense_date, class: "form-control",id: "datepicker" %>
       </div>
 
 
