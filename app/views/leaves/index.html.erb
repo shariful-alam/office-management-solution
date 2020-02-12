@@ -1,27 +1,29 @@
-<%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
+<% if current_user.role == User::EMPLOYEE %>
+  <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
+<% end %>
 <h1>All Leave Requests</h1>
 <div class="row">
   <div class="col-sm">
     <%= form_tag(leaves_path, :method => "get") do %>
-        <div class="row">
-          <div class="col-sm-6">
-            <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
-          </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
         </div>
-        <br>
-        <div class="row">
-          <div class="col-sm-3">
-            <%= date_field_tag :from, params[:from], :selected => params[:from], class: "form-control" %> <br>
-          </div>
-          <div class="col-sm-3">
-            <%= date_field_tag :to, params[:to], :selected => params[:to], class: "form-control" %> <br>
-          </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-3">
+          <%= date_field_tag :from, params[:from], :selected => params[:from], class: "form-control" %> <br>
         </div>
+        <div class="col-sm-3">
+          <%= date_field_tag :to, params[:to], :selected => params[:to], class: "form-control" %> <br>
+        </div>
+      </div>
 
-        <div class="row container">
-          <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
-          <%= link_to 'Reset', leaves_path, class: "btn btn-secondary" %>
-        </div>
+      <div class="row container">
+        <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
+        <%= link_to 'Reset', leaves_path, class: "btn btn-secondary" %>
+      </div>
     <% end %>
   </div>
 </div>

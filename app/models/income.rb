@@ -1,15 +1,15 @@
 class Income < ApplicationRecord
   belongs_to :user
-  validates :income_date, :presence => true
   validates :amount, :presence => true, numericality: {decimal: true}
+  validates :income_date, :presence => true
+  validates :source, :presence => true
 
   APPROVED = "Approved"
   PENDING = "Pending"
   REJECTED = "Rejected"
 
   MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ,11, 12]
-  MONTHLY_TOTAL = Array.new(13,0)
-
+  SOURCE = ['Employee', 'Service']
 
   private
   def self.search(user_id, month, year, status)

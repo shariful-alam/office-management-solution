@@ -5,6 +5,9 @@
 <td>
   <%= full_date(l.income_date) %>
 </td>
+<td>
+  <%= l.source %>
+</td>
 <td style="text-align: center;">
   <% if current_user.role == User::ADMIN %>
       <% if l.status == Income::APPROVED %>

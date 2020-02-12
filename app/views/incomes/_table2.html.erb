@@ -5,38 +5,42 @@
       <tr>
         <th>Employee Name</th>
         <% Date::MONTHNAMES.slice(1, 12).each do |month| %>
-            <th><%= month[0..2].upcase %></th>
+          <th><%= month[0..2].upcase %></th>
         <% end %>
         <th>TOTAL</th>
       </tr>
 
       <% users.each do |l| %>
-          <tr>
+        <tr>
+          <td>
+            <%= link_to l.name, show_individual_incomes_path(user_id: l.id, year: params[:search]) %>
+          </td>
+          <% Income::MONTHS.each do |m| %>
             <td>
-              <%= link_to l.name, show_individual_incomes_path(user_id: l.id, year: params[:search]) %>
+              <% x = find_by_month(m, l, params[:search]) %>
+              <% if x > 0 %>
+                <%= link_to x, show_individual_incomes_path(user_id: l.id, month: m, year: params[:search]), class: find_class(m, l, params[:search]) %>
+                <% @monthly_totals[m] += x.to_i %>
+              <% else %>
+                <%= x %>
+              <% end %>
             </td>
-            <% Income::MONTHS.each do |m| %>
-                <td>
-                  <% x = find_by_month(m, l, params[:search]) %>
-                  <%= link_to x, show_individual_incomes_path(user_id: l.id, month: m, year: params[:search]), class: find_class(m, l, params[:search]) %>
-                  <% @monthly_totals[m] += x.to_i %>
-                </td>
-            <% end %>
-            <td>
-              <% y = find_total(l, params[:search]) %>
-              <% @monthly_totals[0] += y %>
-              <strong><%= y %></strong>
-            </td>
-          </tr>
+          <% end %>
+          <td>
+            <% y = find_total(l, params[:search]) %>
+            <% @monthly_totals[0] += y %>
+            <strong><%= y %></strong>
+          </td>
+        </tr>
       <% end %>
       <tr>
         <td>
           <strong>Monthly Total</strong>
         </td>
         <% @monthly_totals.slice(1, 12).each do |mt| %>
-            <td>
-              <strong><%= mt %></strong>
-            </td>
+          <td>
+            <strong><%= mt %></strong>
+          </td>
         <% end %>
         <td>
           <strong><%= @monthly_totals[0] %></strong>
