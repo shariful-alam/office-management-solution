@@ -1,4 +1,6 @@
-<%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
+<% if current_user.role == User::EMPLOYEE %>
+  <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
+<% end %>
 <h1>All Leave Requests</h1>
 <div class="row">
   <div class="col-sm">

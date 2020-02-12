@@ -35,9 +35,10 @@ class IncomesController < ApplicationController
 
   def update
     @income = Income.find(params[:id])
+    @month = @income.income_date.month
     if @income.update(income_params)
       flash[:notice] = "Your Income Information has been Updated!!!"
-      redirect_back(fallback_location: incomes_path)
+      redirect_to show_individual_incomes_path(user_id: current_user.id, month: @month, year: params[:search])
     else
       render :edit
     end
@@ -95,7 +96,7 @@ class IncomesController < ApplicationController
 
   private
   def income_params
-    params.require(:income).permit(:user_id, :amount, :income_date, :search)
+    params.require(:income).permit(:user_id, :amount, :income_date, :source, :search)
   end
 
 end

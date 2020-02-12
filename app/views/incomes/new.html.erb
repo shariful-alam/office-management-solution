@@ -22,6 +22,11 @@
         <%= l.text_field :income_date, class: "form-control",id: "datepicker" , placeholder: "yyyy-mm-yy"%>
       </div>
       <br/>
+    <div class="form-group">
+      <%= l.label :source, class: "control-label" %> <br/>
+      <%= l.select(:source, Income::SOURCE, {}, {class: "form-control"}) %>
+    </div>
+    <br/>
       <div class="form-group">
         <%= l.submit 'Save', class: "btn btn-success" %> |
         <%= link_to "Back", :back, class: "btn btn-dark" %>
