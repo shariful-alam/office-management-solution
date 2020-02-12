@@ -50,7 +50,8 @@ class AttendancesController < ApplicationController
 
   def block_foreign_hosts
     return false if whitelisted?(request.remote_ip)
-    redirect_to "https://www.google.com" unless request.remote_ip.start_with?("123.456.789")
+    flash[:alert] = "You can not access this from outside !!"
+    redirect_back(fallback_location: root_path)
   end
 
 
