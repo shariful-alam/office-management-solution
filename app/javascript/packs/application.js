@@ -10,7 +10,6 @@ require("chartkick")
 require("chart.js")
 
 
-
 Chartkick.use(Chart)
 
 
