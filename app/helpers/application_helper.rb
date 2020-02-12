@@ -25,12 +25,12 @@ module ApplicationHelper
     month = date.strftime("%B")+', '+date.strftime("%Y")
     present_budget=Budget.find_by(month: month)
     if present_budget == nil
-      "<strong> The budget is not added yet !</strong>".html_safe
+      "The budget is not added yet !".html_safe
     else
-      "<h6> Budget for <strong>  #{present_budget.month}  </strong> </h6>
-     <strong> Total :   #{taka(present_budget.amount)} </strong>
-     <strong> Expense :   #{taka(present_budget.expense)}  </strong>
-     <strong> Remaining :  #{taka(present_budget.amount- present_budget.expense)}  </strong>".html_safe
+      "Budget for  #{present_budget.month}
+     Total :   #{taka(present_budget.amount)}
+     Expense :   #{taka(present_budget.expense)}
+     Remaining :  #{taka(present_budget.amount - present_budget.expense)}".html_safe
     end
   end
 
