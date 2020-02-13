@@ -6,15 +6,15 @@
   <br>
   <div class="row">
     <div class="container col-sm-6">
-      <button class="accordion btn btn-warning">Budget Statistics</button>
-      <div class="panel">
+      <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">Budget Statistics</button>
+      <div class="collapse show in" id="demo">
         <br>
         <%= line_chart Budget.group(:month).sum(:expense), label: "Total Expense", min: 0, xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px" %>
       </div>
     </div>
     <div class="container col-sm-6">
-      <button class="accordion btn btn-warning">Revenue Graph</button>
-      <div class="panel">
+      <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo2">Revenue Graph</button>
+      <div class="collapse show in" id="demo2">
         <br>
         <canvas id="bar-chart-grouped" width="800" height="450" responsive="true"></canvas>
       </div>
