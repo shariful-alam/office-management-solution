@@ -37,9 +37,9 @@ class Ability
         can :create, Attendance, {user_id: user.id}
         can :update, Attendance, {user_id: user.id}
 
-        can :manage, Leafe, {user_id: user.id, status: 'Pending'}
-        can :read, Leafe, {user_id: user.id, status: 'Approved'}
-        can :read, Leafe, {user_id: user.id, status: 'Rejected'}
+        can :manage, Leafe, {user_id: user.id, status: Leafe::PENDING}
+        can :read, Leafe, {user_id: user.id, status: Leafe::APPROVED}
+        can :read, Leafe, {user_id: user.id, status: Leafe::REJECTED}
         cannot :approve, Leafe, :all
 
         can :create, Income
