@@ -1,7 +1,7 @@
-<h2>Create a new User</h2>
+<h2>Create a New User</h2>
 
 <div class="col-sm-5">
-  <%= form_for @user, url: manage_users_path(@user) do |f| %>
+  <%= form_for(@user, url: manage_users_path(@user), html: {autocomplete: 'off'}) do |f| %>
 
       <% if @user.errors.full_messages.any? %>
           <% @user.errors.full_messages.each do |error_message| %>

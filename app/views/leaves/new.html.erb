@@ -1,6 +1,6 @@
 <div class="col-sm-5" >
   <h1>Apply for Leave</h1>
-  <%= form_for(@leave) do |l| %>
+  <%= form_for(@leave, html: {autocomplete: 'off'}) do |l| %>
 
       <% if @leave.errors.full_messages.any? %>
           <% @leave.errors.full_messages.each do |error_message| %>
@@ -14,7 +14,7 @@
       <br/>
       <div>
         <%= l.label :start_date, class: 'control-label' %> <br/>
-        <%= l.text_field :start_date, class: 'form-control',id: "datepicker" , placeholder: "yyyy-mm-yy"%>
+        <%= l.text_field :start_date, class: 'form-control',id: "datepicker" , placeholder: "yyyy-mm-yy" %>
       </div>
       <br/>
       <div>
