@@ -4,24 +4,30 @@ class LeavesController < ApplicationController
 
 
   def index
-    @leaves_pending = Leafe.search(params[:from], params[:to], params[:search], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]= Leafe::PENDING, params[:page])
-    @leaves_approved = Leafe.search(params[:from], params[:to], params[:search], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]=Leafe::APPROVED, params[:page])
-    @leaves_rejected = Leafe.search(params[:from], params[:to], params[:search], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]=Leafe::REJECTED, params[:page])
-    @info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
-    @attendance = Attendance.where(info: @info).last
+    if params[:search].present?
+      search = "%#{params[:search]}%"
+      @leaves = @leaves.joins(:user).where("users.name ilike :search OR leave_type ilike :search", {search: search})
+    end
+
+    @leaves = @leaves.where(':from <= end_date ', {from: params[:from]}) if params[:from].present?
+    @leaves = @leaves.where(':to >= start_date ', {to: params[:to]}) if params[:to].present?
+    @leaves = @leaves.order('id ASC')
+
+    @leaves_pending = @leaves.with_status(Leafe::PENDING).paginate(:page => params[:page], :per_page => 20)
+    @leaves_approved = @leaves.with_status(Leafe::APPROVED).paginate(:page => params[:page], :per_page => 20)
+    @leaves_rejected = @leaves.with_status(Leafe::REJECTED).paginate(:page => params[:page], :per_page => 20)
   end
 
   def new
-    @leave = Leafe.new
+    @leave = current_user.leaves.new
   end
 
   def create
-    @leave = Leafe.new(leafe_params)
-    @leave.user_id = current_user.id
+    @leave = current_user.leaves.new(leafe_params)
     @count = (@leave.start_date..@leave.end_date).select{|a| a.wday < 6 && a.wday > 0}.count
     if @count > 0
       if @leave.save
-        redirect_to show_all_allocated_leafe_path(@leave.user_id), notice: "Your Application Has Bees Submitted for Approval"
+        redirect_to leaves_path, notice: "Your Application Has Been Submitted for Approval"
       else
         render :new
       end
