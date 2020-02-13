@@ -1,7 +1,7 @@
 <h1>Insert Expense Information</h1>
 
 <div class="col-sm-5">
-  <%= form_for(@expense) do |form| %>
+  <%= form_for(@expense, html: {autocomplete: 'off'} ) do |form| %>
 
       <% if @expense.errors.full_messages.any? %>
           <% @expense.errors.full_messages.each do |error_message| %>

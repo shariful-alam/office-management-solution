@@ -1,6 +1,6 @@
 <div class="col-sm-5">
   <h1>Ask for Leave</h1>
-  <%= form_for(@allocated_leave) do |l| %>
+  <%= form_for(@allocated_leave, html: {autocomplete: 'off'}) do |l| %>
       <% if @allocated_leave.errors.full_messages.any? %>
           <% @allocated_leave.errors.full_messages.each do |error_message| %>
               <p class="alert alert-danger"> <%= error_message if @allocated_leave.errors.full_messages.first == error_message %> </p>

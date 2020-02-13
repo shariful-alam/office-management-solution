@@ -1,6 +1,6 @@
 <h1>Add Income</h1>
 <div class="col-sm-5">
-  <%= form_for(@income) do |l| %>
+  <%= form_for(@income, html: {autocomplete: 'off'}) do |l| %>
 
       <% if @income.errors.full_messages.any? %>
           <% @income.errors.full_messages.each do |error_message| %>
