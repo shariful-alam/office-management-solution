@@ -2,38 +2,51 @@
 
 
 <% if params[:month] %>
-    <% if params[:year] %>
-        <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>, <%= params[:year] %> </h1> <br/>
-    <% else %>
-        <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>, <%= Date.today.year %> </h1> <br/>
-    <% end %>
-    <% if bonus_amount(params[:month], params[:year], @user) > 0 %>
-        <h2>Hurrah!! You are getting <%= taka(bonus_amount(params[:month], params[:year], @user)) %> BONUS!! </h2>
-    <% end %>
+  <% if params[:year] %>
+    <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>, <%= params[:year] %> </h1>
+    <br/>
+  <% else %>
+    <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>, <%= Date.today.year %> </h1>
+    <br/>
+  <% end %>
+  <% if bonus_amount(params[:month], params[:year], @user) > 0 %>
+    <h2>Hurrah!! You are getting <%= taka(bonus_amount(params[:month], params[:year], @user)) %> BONUS!! </h2>
+  <% end %>
 <% else %>
-    <% if params[:year] %>
-        <h1>All Income List of <%= @user.name %> of year <%= params[:year] %> </h1> <br/>
-    <% else %>
-        <h1>All Income List of <%= @user.name %> of year <%= Date.today.year %> </h1> <br/>
-    <% end %>
+  <% if params[:year] %>
+    <h1>All Income List of <%= @user.name %> of year <%= params[:year] %> </h1> <br/>
+  <% else %>
+    <h1>All Income List of <%= @user.name %> of year <%= Date.today.year %> </h1> <br/>
+  <% end %>
 <% end %>
 
-<button class="accordion btn btn-success">Approved (<%= @incomes_approved.count %>)</button>
-<%= render partial: 'table', locals: {incomes: @incomes_approved} %>
+<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">Pending
+  (<%= @incomes_pending.count %>)
+</button>
+<div class="collapse show in" id="demo">
+  <%= render partial: 'table', locals: {incomes: @incomes_pending} %>
+</div>
+<br>
+<br>
 
-<button class="accordion btn btn-warning">Pending (<%= @incomes_pending.count %>)</button>
-<%= render partial: 'table', locals: {incomes: @incomes_pending} %>
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">Approved
+  (<%= @incomes_approved.count %>)
+</button>
+<div class="collapse in" id="demo1">
+  <%= render partial: 'table', locals: {incomes: @incomes_approved} %>
+</div>
+<br>
+<br>
 
-<button class="accordion btn btn-danger">Rejected (<%= @incomes_rejected.count %>)</button>
-<%= render partial: 'table', locals: {incomes: @incomes_rejected} %>
-
-<br/>
-<div class="form-group">
-  <%= link_to "Back", :back, class: "btn btn-dark" %>
+<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">Rejected
+  (<%= @incomes_rejected.count %>)
+</button>
+<div class="collapse in" id="demo2">
+  <%= render partial: 'table', locals: {incomes: @incomes_rejected} %>
 </div>
 
-
-<%= javascript_pack_tag :accordion %>
-
-
+<div class="form-group">
+  <br>
+  <%= link_to "Back", :back, class: "btn btn-dark" %>
+</div>
 
