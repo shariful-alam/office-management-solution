@@ -3,6 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
   has_many :expenses
+  has_many :incomes
   has_many :budgets
   has_many :leaves
   has_one :allocated_leafe
@@ -18,8 +19,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  ADMIN = "Office Admin"
-  ROLE_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief technical Officer']
+  ADMIN = "Admin"
+  SUPER_ADMIN = "Super Admin"
+  EMPLOYEE = "Employee"
+  DESIGNATION_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief technical Officer']
+  ROLE_LIST = ['Super Admin', 'Admin', 'Employee']
 
 
   attr_accessor :remove_image

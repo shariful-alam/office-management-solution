@@ -1,0 +1,26 @@
+<h1>All Pending Resources</h1>
+
+
+<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">Pending Expenses <strong>(<%= @all_pending_expenses.count %>)</strong></button>
+<div  class="collapse show in" id="demo">
+  <%= render partial: 'table', locals: {expenses: @all_pending_expenses} %>
+</div>
+<br>
+<br>
+
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">Pending Leaves <strong>(<%= @all_pending_leaves.count %>)</strong></button>
+<div  class="collapse in" id="demo1">
+  <%= render partial: 'leaves/table', locals: {leaves: @all_pending_leaves} %>
+</div>
+<br>
+<br>
+
+
+<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">Pending Incomes <strong>(<%= @all_pending_incomes.count %>)</strong></button>
+<div  class="collapse in" id="demo2">
+  <%= render partial: 'incomes/table', locals: {incomes: @all_pending_incomes} %>
+</div>
+<div class="form-group">
+  <br>
+  <%= link_to "Back", root_path, class: "btn btn-dark" %>
+</div>

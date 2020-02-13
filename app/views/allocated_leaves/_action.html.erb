@@ -8,36 +8,61 @@
   <%= l.leave_type %>
 </td>
 <td>
-  <%= l.reason %>
-</td>
-<td>
   <%= l.status %>
 </td>
 <td style="text-align: center;">
   <% if current_user.role == User::ADMIN %>
-      <% if l.status == Leafe::APPROVED %>
-          <%= link_to "Undo", approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to Approve?'} %>
-          |
-          <%= link_to "Show", leafe_path(l) %>
-      <% elsif l.status == Leafe::REJECTED %>
-          <%= link_to "Show", leafe_path(l) %> |
-          <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
-      <% else %>
-          <%= link_to "Approve", approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to Approve?'} %>
-          |
-          <%= link_to "Reject", reject_leafe_path(l), method: :put, data: {confirm: 'Are you sure to Reject?'} %>
-          |
-          <%= link_to "Show", leafe_path(l) %>
-          <% if l.user_id==current_user.id %>
-              | <%= link_to "Edit", edit_leafe_path(l) %> |
-              <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
-          <% end %>
+    <% if l.status == Leafe::APPROVED %>
+      <%= link_to approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure?'} do %>
+        <i class="fa fa-undo" title="Undo"></i>
       <% end %>
+      |
+      <%= link_to leafe_path(l) do %>
+        <i class="fa fa-eye" title="Show Details"></i>
+      <% end %>
+    <% elsif l.status == Leafe::REJECTED %>
+      <%= link_to leafe_path(l) do %>
+        <i class="fa fa-eye" title="Show Details"></i>
+      <% end %>
+      |
+      <%= link_to leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} do %>
+        <i class="fa fa-trash" title="Drop"></i>
+      <% end %>
+    <% else %>
+      <%= link_to approve_leafe_path(l), method: :put, data: {confirm: 'Are you sure to Approve?'} do %>
+        <i class="fa fa-check" title="Approve"></i>
+      <% end %>
+      |
+      <%= link_to reject_leafe_path(l), method: :put, data: {confirm: 'Are you sure to Reject?'} do %>
+        <i class="fa fa-ban" title="Reject"></i>
+      <% end %>
+      |
+      <%= link_to leafe_path(l) do %>
+        <i class="fa fa-eye" title="Show Details"></i>
+      <% end %>
+      <% if l.user_id==current_user.id %>
+        | <%= link_to edit_leafe_path(l) do %>
+          <i class="fa fa-edit" title="Edit"></i>
+        <% end %>
+        |
+        <%= link_to leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} do %>
+          <i class="fa fa-trash" title="Drop"></i>
+        <% end %>
+      <% end %>
+    <% end %>
   <% else %>
-      <%= link_to "Show", leafe_path(l) %>
-      <% if l.status == Leafe::PENDING and current_user.id==l.user.id %>
-          | <%= link_to "Edit", edit_leafe_path(l) %> |
-          <%= link_to "Delete", leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} %>
+    <%= link_to leafe_path(l) do %>
+      <i class="fa fa-eye" title="Show Details"></i>
+    <% end %>
+    <% if l.status == Leafe::PENDING and current_user.id==l.user.id %>
+      |
+      <%= link_to edit_leafe_path(l) do %>
+        <i class="fa fa-edit" title="Edit"></i>
       <% end %>
+      |
+      <%= link_to leafe_path(l), method: :delete, data: {confirm: "Are you sure?"} do %>
+        <i class="fa fa-trash" title="Drop"></i>
+      <% end %>
+    <% end %>
   <% end %>
 </td>

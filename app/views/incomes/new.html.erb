@@ -1,0 +1,38 @@
+<h1>Add Income</h1>
+<div class="col-sm-5">
+  <%= form_for(@income, html: {autocomplete: 'off'}) do |l| %>
+
+      <% if @income.errors.full_messages.any? %>
+          <% @income.errors.full_messages.each do |error_message| %>
+              <p class="alert alert-danger"> <%= error_message if @income.errors.full_messages.first == error_message %> </p>
+          <% break end %>
+      <% end %>
+
+      <div class="form-group">
+        <h3>User : <%= current_user.name %></h3>
+      </div>
+      <br/>
+      <div class="form-group">
+        <%= l.label :amount, class: "control-label" %> <br/>
+        <%= l.number_field :amount, class: "form-control" %>
+      </div>
+      <br/>
+      <div class="form-group">
+        <%= l.label :income_date, class: "control-label" %> <br/>
+        <%= l.text_field :income_date, class: "form-control",id: "datepicker" , placeholder: "yyyy-mm-yy"%>
+      </div>
+      <br/>
+    <div class="form-group">
+      <%= l.label :source, class: "control-label" %> <br/>
+      <%= l.select(:source, Income::SOURCE, {}, {class: "form-control"}) %>
+    </div>
+    <br/>
+      <div class="form-group">
+        <%= l.submit 'Save', class: "btn btn-success" %> |
+        <%= link_to "Back", :back, class: "btn btn-dark" %>
+      </div>
+
+  <% end %>
+</div>
+
+

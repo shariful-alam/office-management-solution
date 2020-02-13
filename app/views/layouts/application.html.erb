@@ -12,6 +12,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   <style>
     .accordion {
       background-color: #eee;
@@ -49,26 +54,90 @@
       background-color: #1d2124;
       border-color: #171a1d;
     }
-    .page-link
-    {
-      color:#1d2124;
+
+    .page-link {
+      color: #1d2124;
     }
+
     .page-link:hover {
-      color:#1d2124;
+      color: #1d2124;
     }
+
     .active:after {
       content: none;
     }
 
+    .badge {
+      border-radius: 50%;
+      background: #ff675c;
+      position: absolute;
+      color: white;
+    }
+
+    .status {
+      border-radius: 3.5px;
+      display: inline-block;
+      height: 7px;
+      margin-bottom: 2px;
+      margin-right: 3px;
+      width: 7px;
+    }
+
+    .red {
+      background-color: red;
+    }
+
+    .green {
+      background-color: green;
+    }
+
+    .bonusable {
+      color: green;
+    }
+
+    .not-bonusable {
+      color: black;
+    }
+    .fa {
+      font-size: 18px;
+    }
+    .fa-trash {
+      color: red;
+    }
+    .fa-ban {
+      color: red;
+    }
+    .fa-check {
+      color: forestgreen;
+    }
+    .fa-eye {
+      color: black;
+    }
+    .fa-undo {
+      color: black;
+    }
+    .fa-money {
+      color: #00ff21;
+    }
 
   </style>
 </head>
 
+<script>
+  $(function()
+    {
+      $("#datepicker,#datepicker2").datepicker({
+        dateFormat: "yy-mm-dd"
+      });
+    }
+  );
+</script>
+
 <body>
-<div style="padding: 30px;">
+<div class="container-fluid px-4 mx-auto">
 
   <%= render "layouts/header" %>
-  <div class="container">
+  <div class="container-fluid px-4 mx-auto">
     <%= yield %>
   </div>
 

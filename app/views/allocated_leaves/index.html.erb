@@ -1,41 +1,39 @@
-<% if current_user.role == 'Office Admin' %>
-    <%= link_to "Add Leafe", new_allocated_leafe_path, class: "btn btn-dark" %>
-    <%= link_to "All leaves", leaves_path, class: "btn btn-dark" %>
-    <%= link_to "Availability", attendances_path, class: "btn btn-dark" %>
+<% if current_user.role == User::EMPLOYEE %>
+  <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
 <% end %>
-<%= link_to "Apply for Leafe", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
-<% if @attendance != nil %>
-    <% if @attendance.status == true %>
-        <%= link_to "Check Out", attendance_path(@attendance), method: :put, class: "btn btn-dark" %>
-    <% else %>
-        <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-dark" %>
-    <% end %>
-<% else %>
-    <%= link_to "Check In", attendances_path, method: :post, class: "btn btn-dark" %>
-<% end %>
-<br/>
-<br/>
-
-<%#= form_tag(leaves_path, :method => "get", class: "form-inline") do %>
-<%#= text_field_tag :search, params[:search], placeholder: "Search by Name or Type", class: "form-control" %>
-<%#= submit_tag "Search", class: "btn btn-dark" %>
-<%#= end %>
-<br>
 
 
 <% @number = @allocated_leaves.offset + 1 %>
-<h1>List of Leave</h1>
-<table class="table table-bordered">
-  <tr>
-    <th>Sl</th>
-    <th>Employee Name</th>
-    <th>Total Leave</th>
-    <th>Used Leave</th>
-    <th>Remaining Leave</th>
-    <th style="text-align: center;">Action</th>
-  </tr>
+<% if params[:search] %>
+  <% @year = params[:search] %>
+  <h1>List of Leave of Year : <%= params[:search] %> </h1>
+<% else %>
+  <% @year = Date.today.year %>
+  <h1>List of Leave of Year : <%= Date.today.year %> </h1>
+<% end %>
+<br>
 
-  <% @allocated_leaves.each do |al| %>
+<%= form_tag(allocated_leaves_path, :method => "get", class: "form-inline") do %>
+  <%= select_tag "search", options_for_select(Date.today.years_ago(5).year.. 5.years.from_now.year, :selected => @year), class: "form-control" %>
+  &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
+  <%= link_to 'Reset', allocated_leaves_path, class: "btn btn-secondary" %>  &nbsp
+<% end %>
+<br>
+<br>
+
+
+<div class="table-responsive-sm">
+  <table class="table table-bordered">
+    <tr>
+      <th>Sl</th>
+      <th>Employee Name</th>
+      <th>Total Leave</th>
+      <th>Used Leave</th>
+      <th>Remaining Leave</th>
+      <th style="text-align: center;">Action</th>
+    </tr>
+
+    <% @allocated_leaves.each do |al| %>
       <tr>
         <td><%= @number %> </td>
         <% @number+=1 %>
@@ -54,22 +52,31 @@
         </td>
         <td style="text-align: center;">
           <% if can? :read, al %>
-              <%= link_to "Show", allocated_leafe_path(al) %>
+            <%= link_to allocated_leafe_path(al) do %>
+              <i class="fa fa-eye" title="Show Details"></i>
+            <% end %>
           <% end %>
           <% if can? :write, al %>
-              | <%= link_to "Edit", edit_allocated_leafe_path(al) %>
+            |
+            <%= link_to edit_allocated_leafe_path(al) do %>
+              <i class="fa fa-edit" title="Edit"></i>
+            <% end %>
           <% end %>
           <% if can? :destroy, al %>
-              | <%= link_to "Delete", allocated_leafe_path(al), method: :delete, data: {confirm: "Are you sure?"} %>
+            |
+            <%= link_to allocated_leafe_path(al), method: :delete, data: {confirm: "Are you sure?"} do %>
+              <i class="fa fa-trash" title="Drop"></i>
+            <% end %>
           <% end %>
         </td>
       </tr>
-  <% end %>
+    <% end %>
 
-</table>
+  </table>
+</div>
 <br/>
 <div class="form-group">
-  <%= link_to "Back", root_path, class: "btn btn-dark" %>
+  <%= link_to "Back", :back, class: "btn btn-dark" %>
 </div>
 <div>
   <%= will_paginate @allocated_leaves, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

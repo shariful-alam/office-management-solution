@@ -10,12 +10,17 @@
     <li class="list-group-item"><b>Cost : </b><%= taka(@expense.cost) %> </li>
     <li class="list-group-item"><b>Category : </b><%= @expense.category %></li>
   </ul>
-  <div class="card-body">
-    <b>Status : </b><%= @expense.status %>
-    <% if @expense.approve_time? %>
-        <b>Approve Time : </b><%= full_date_with_time(@expense.approve_time) %>
-    <% end %>
-  </div>
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><b>Status : </b><%= @expense.status %></li>
+
+      <% if @expense.approve_time? %>
+        <li class="list-group-item">   <b>Approve Time : </b><%= full_date_with_time(@expense.approve_time) %></li>
+        <li class="list-group-item">    <b>Approve Time : </b><%= @expense.approve_time %></li>
+      <% end %>
+
+  </ul>
+
 </div>
 <br>
 <div class="form-group">

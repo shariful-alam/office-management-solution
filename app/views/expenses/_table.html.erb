@@ -1,5 +1,5 @@
-<div class="panel">
-  <% @number=expenses.offset + 1 %>
+<% @number=expenses.offset + 1 %>
+<div class="table-responsive-sm">
   <table class="table table-bordered">
     <thead>
     <tr>
@@ -12,8 +12,8 @@
     </tr>
     </thead>
     <% expenses.each do |expense| %>
-        <%= render partial: 'row', locals: {expense: expense} %>
+      <%= render partial: 'row', locals: {expense: expense} %>
     <% end %>
   </table>
-<%= will_paginate expenses, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 </div>
+<%= will_paginate expenses, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

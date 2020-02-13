@@ -1,3 +1,62 @@
 <% if user_signed_in? %>
-    <h3 style="margin-left: 20px;">Welcome <%=current_user.name%> </h3>
+    <h3 class="justify-content-center">User Dashboard </h3>
 <% end %>
+
+<% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
+  <br>
+  <div class="row">
+    <div class="container col-sm-6">
+      <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">Budget Statistics</button>
+      <div class="collapse show in" id="demo">
+        <br>
+        <%= line_chart Budget.group(:month).sum(:expense), label: "Total Expense", min: 0, xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px" %>
+      </div>
+    </div>
+    <div class="container col-sm-6">
+      <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo2">Revenue Graph</button>
+      <div class="collapse show in" id="demo2">
+        <br>
+        <canvas id="bar-chart-grouped" width="800" height="450" responsive="true"></canvas>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+<script>
+  var m = <%=raw @income_arr.slice(1..12) %>
+  var n = <%=raw @expense_arr.slice(1..12) %>
+  var months = <%=raw @months %>
+    <%#= raise @income_arr.inspect %>
+    new Chart(document.getElementById("bar-chart-grouped"), {
+        type: 'bar',
+        data: {
+
+            labels: months,
+            datasets: [
+                {
+                    label: "Incomes",
+                    backgroundColor: "#3e95cd",
+                    data: m
+                }, {
+                    label: "Expenses",
+                    backgroundColor: "#8e5ea2",
+                    data: n
+                }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Incomes VS Expenses'
+            },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+    });
+</script>

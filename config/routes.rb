@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'attendances/index'
-  get 'attendances/show'
-  get 'attendances/edit'
-  get 'attendances/destroy'
-  get 'attendances/new'
   devise_for :users, :controllers => {:registrations => "users/registrations"}
 
   resources :expenses do
@@ -23,6 +18,9 @@ Rails.application.routes.draw do
 
   namespace :manage do
     resources :users do
+      collection do
+        get :show_all_pending
+      end
       member do
         get :show_all
         get :search_by_date
@@ -47,6 +45,14 @@ Rails.application.routes.draw do
   end
 
   resources :attendances
-
+  resources :incomes do
+    collection do
+      get :show_individual
+    end
+    member do
+      put :approve
+      put :reject
+    end
+  end
 
 end

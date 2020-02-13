@@ -1,15 +1,19 @@
-<div class="card" style="width: 28rem;">
-  <%= image_tag(@user.image.url, :class => "card-img-top") if @user.image.exists? %>
-  <hr>
-  <div class="card-body">
-    <h4 class="card-title"><b>Employee : </b><%= @user.name %></h4>
-    <h4 class="card-title"><b>Email : </b><%= @user.email %></h4>
-  </div><hr>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item"><b>Phone : </b><%= @user.phone %> </li>
-    <li class="list-group-item"><b>Designation : </b><%= @user.role%></li>
-    <li class="list-group-item"><b>Registration Date : </b><%= full_date_with_time(@user.created_at)%></li>
-  </ul>
+<div class="card">
+  <div class="col-sm-5">
+    <%= image_tag(@user.image.url, :class => "card-img-top") if @user.image.exists? %>
+    <hr>
+    <div class="card-body">
+      <h4 class="card-title"><b>Employee : </b><%= @user.name %></h4>
+      <h5 class="card-title"><b>Email : </b><%= @user.email %></h5>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item"><b>Phone : </b> <%= @user.phone %> </li>
+      <li class="list-group-item"><b>Designation : </b> <%= @user.role %> </li>
+      <li class="list-group-item"><b>Target Amount : </b> <%= taka(@user.target_amount) %> </li>
+      <li class="list-group-item"><b>Bonus Percentage : </b> <%= @user.bonus_percentage %> %</li>
+      <li class="list-group-item"><b>Registration Date : </b> <%= full_date_with_time(@user.created_at) %> </li>
+    </ul>
+  </div>
 </div>
 <br>
 <div class="form-group">

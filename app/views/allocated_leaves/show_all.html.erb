@@ -1,3 +1,7 @@
+<% if current_user.role == User::EMPLOYEE %>
+    <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
+<% end %>
+
 <h1>List of Leaves of <strong><%= @allocated_leave.user.name %></strong></h1>
 
 <button class="accordion btn btn-warning">Pending (<%= @leaves_pending.count %>)</button>

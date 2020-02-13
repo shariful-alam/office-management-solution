@@ -1,40 +1,55 @@
-<%= link_to "Add Expense information", new_expense_path, class: "btn btn-dark" %>
-<br><br>
+<%= link_to "Add Expense information", new_expense_path, class: "btn btn-dark", style: "float:right" %>
+<h1>Expense List</h1>
+<div class="row">
+  <div class="col-sm">
+    <%= form_tag(expenses_path, :method => "get", :autocomplete => "off" ) do %>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-sm-3">
+            <%= text_field_tag :from, params[:from], :selected => params[:from], class: "form-control",id: "datepicker", placeholder: "yyyy-mm-yy" %> <br>
+          </div>
+          <div class="col-sm-3">
+            <%= text_field_tag :to, params[:to], :selected => params[:to], class: "form-control",id: "datepicker2" , placeholder: "yyyy-mm-yy"%> <br>
+          </div>
+        </div>
 
-<%= form_tag(expenses_path, :method => "get", class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
-    &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
-    <%= link_to 'Reset', expenses_path, class: "btn btn-secondary" %>
-<% end %>
+        <div class="row container">
+          <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
+          <%= link_to 'Reset', expenses_path, class: "btn btn-secondary" %>
+        </div>
+    <% end %>
+  </div>
+</div>
+
 <br>
 
-<%= form_tag(expenses_path, :method => "get", class: "form-inline", style: "float:left") do %>
-    <%= date_field_tag :from, params[:from], class: "form-control" %> &nbsp
-    <%= date_field_tag :to, params[:to], class: "form-control" %> &nbsp
-    <%= submit_tag 'Search', class: 'btn btn-dark' %> &nbsp
-    <%= link_to 'Reset', expenses_path, class: "btn btn-secondary" %>
-<% end %>
+<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">Pending (<%= @pending_expenses.count %>)</button>
+<div  class="collapse show in" id="demo">
+  <%= render partial: 'table', locals: {expenses: @pending_expenses} %>
+</div>
 
 <br>
 <br>
-<br>
 
-<button class="accordion btn btn-warning">Pending (<%= @pending_expenses.count %>)</button>
-<%= render partial: 'table', locals: {expenses: @pending_expenses} %>
-<br>
-
-<button class="accordion btn btn-success">Approved (<%= @approved_expenses.count %>)</button>
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo2">Approved (<%= @approved_expenses.count %>)</button>
+<div  class="collapse in" id="demo2">
 <%= render partial: 'table', locals: {expenses: @approved_expenses} %>
+</div>
+<br>
 <br>
 
-<button class="accordion btn btn-danger">Rejected (<%= @rejected_expenses.count %>)</button>
+<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo3">Rejected (<%= @rejected_expenses.count %>)</button>
+<div  class="collapse in" id="demo3">
 <%= render partial: 'table', locals: {expenses: @rejected_expenses} %>
+</div>
 
 
 <div class="form-group">
   <br>
   <%= link_to "Back", root_path, class: "btn btn-dark" %>
 </div>
-
-
-<%= javascript_pack_tag :accordion %>

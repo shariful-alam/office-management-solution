@@ -2,13 +2,14 @@ class AllocatedLeavesController < ApplicationController
 
   before_action :authenticate_user!
   load_and_authorize_resource
-  
 
 
   def index
-    @allocated_leaves = AllocatedLeafe.order('id ASC').paginate(:page => params[:page], :per_page => 3)
-    @info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
-    @attendance = Attendance.where(info: @info).last
+    if params[:search]
+      @allocated_leaves = AllocatedLeafe.where(year: params[:search]).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    else
+      @allocated_leaves = AllocatedLeafe.where(year: Date.today.year.to_s).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    end
     #raise @attendance.inspect
   end
 
@@ -20,7 +21,7 @@ class AllocatedLeavesController < ApplicationController
     @allocated_leave = AllocatedLeafe.new(allocated_leafe_params)
     @allocated_leave.used_leave = 0
     if @allocated_leave.save
-    redirect_to allocated_leaves_path, notice: "Leafe Information Has Been Created"
+    redirect_to allocated_leaves_path, notice: "Leave Information has been Created Successfully!!"
     else
       render 'new'
     end
@@ -32,20 +33,22 @@ class AllocatedLeavesController < ApplicationController
 
   def show
     @allocated_leave = AllocatedLeafe.find(params[:id])
+    @allocated_personal = Leafe.where(user_id: @allocated_leave.user_id, leave_type: Leafe::PL, status: Leafe::APPROVED).count
+    @allocated_training = Leafe.where(user_id: @allocated_leave.user_id, leave_type: Leafe::TL, status: Leafe::APPROVED).count
+    @allocated_vacation = Leafe.where(user_id: @allocated_leave.user_id, leave_type: Leafe::VL, status: Leafe::APPROVED).count
+    @allocated_medical  = Leafe.where(user_id: @allocated_leave.user_id, leave_type: Leafe::ML, status: Leafe::APPROVED).count
   end
 
   def update
     @allocated_leave = AllocatedLeafe.find(params[:id])
     @allocated_leave.update(allocated_leafe_params)
-    flash[:notice] = "Your Information Has Been Updated"
-    redirect_to allocated_leaves_path
+    redirect_to allocated_leaves_path, notice: "Your Information has been Updated Successfully!!"
   end
 
   def destroy
     @allocated_leave = AllocatedLeafe.find(params[:id])
     @allocated_leave.destroy
-    flash[:notice] = "Information Has Destroyed"
-    redirect_to allocated_leaves_path
+    redirect_to allocated_leaves_path, alert: "Information has been Removed!!"
   end
 
   def show_all
@@ -58,7 +61,7 @@ class AllocatedLeavesController < ApplicationController
 
   private
   def allocated_leafe_params
-    params.require(:allocated_leafe).permit(:user_id, :total_leave )
+    params.require(:allocated_leafe).permit(:user_id, :total_leave, :year )
   end
 
 

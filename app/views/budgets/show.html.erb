@@ -1,54 +1,67 @@
 <div class="row">
-  <div class="col-sm">
-    <div class="card" style="width: 28rem;">
+  <div class="col">
+    <div class="card" style="width: 25rem;">
       <div class="card-body">
         <h3 class="card-title">Expense List for <%= @budget.month %></h3>
-      </div><hr>
+      </div>
+      <hr>
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><b>Total Budget : </b><%= taka(@budget.amount) %> </li>
         <li class="list-group-item"><b>Expense : </b><%= taka(@budget.expense) %></li>
-        <li class="list-group-item"><b>Remaining : </b><%=taka(@budget.amount- @budget.expense)%></li>
+        <li class="list-group-item"><b>Remaining : </b><%= taka(@budget.amount- @budget.expense) %></li>
       </ul>
     </div>
   </div>
-  <div class="col-sm">
-    <%= form_tag(budget_path, :method => "get",class: "form-inline") do %>
-        <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month",class:"form-control" %>
-        &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
-        <%= link_to 'Reset', budget_path , class: "btn btn-secondary" %>
-    <% end %>
-    <br>
 
-    <%= form_tag(search_by_date_budget_path, :method => "get", class: "form-inline", style: "float:left") do %>
-        <%= date_field_tag :from, params[:from], class: "form-control" %> &nbsp
-        <%= date_field_tag :to, params[:to], class: "form-control" %> &nbsp
-        <%= submit_tag 'Search', class: 'btn btn-dark' %> &nbsp
-        <%= link_to 'Reset', budget_path , class: "btn btn-secondary" %>
+  <div class="col">
+    <%= form_tag(budget_path, :method => "get") do %>
+        <div class="row">
+          <div class="col-sm-10">
+            <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-sm-5">
+            <%= text_field_tag :from, params[:from], class: "form-control",id: "datepicker", placeholder: "yyyy-mm-yy" %> <br>
+          </div>
+          <div class="col-sm-5">
+            <%= text_field_tag :to, params[:to], class: "form-control",id: "datepicker2" , placeholder: "yyyy-mm-yy"%> <br>
+          </div>
+        </div>
+
+        <div class="row container">
+          <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
+          <%= link_to 'Reset', budget_path, class: "btn btn-secondary" %>
+        </div>
     <% end %>
   </div>
 </div>
 
-
-<br>
-<br>
 <br>
 
-<button class="accordion btn btn-warning">Pending (<%= @pending_expenses.count %>) </button>
-  <%= render partial: 'table', locals: {expenses: @pending_expenses} %>
+
+<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">Pending (<%= @pending_expenses.count %>)</button>
+<div  class="collapse show in" id="demo">
+<%= render partial: 'table', locals: {expenses: @pending_expenses} %>
+</div>
+<br>
 <br>
 
-<button class="accordion btn btn-success">Approved (<%= @approved_expenses.count %>)</button>
-  <%= render partial: 'table', locals: {expenses: @approved_expenses} %>
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">Approved (<%= @approved_expenses.count %>)</button>
+<div  class="collapse in" id="demo1">
+<%= render partial: 'table', locals: {expenses: @approved_expenses} %>
+</div>
+<br>
 <br>
 
-<button class="accordion btn btn-danger">Rejected (<%= @rejected_expenses.count %>)</button>
-  <%= render partial: 'table', locals: {expenses: @rejected_expenses} %>
 
+<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">Rejected (<%= @rejected_expenses.count %>)</button>
+<div  class="collapse in" id="demo2">
+<%= render partial: 'table', locals: {expenses: @rejected_expenses} %>
+</div>
 
 <div class="form-group">
   <br>
   <%= link_to "Back", budgets_path, class: "btn btn-dark" %>
 </div>
-
-
-<%= javascript_pack_tag :accordion %>

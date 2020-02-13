@@ -1,7 +1,7 @@
-<h2>Create a new User</h2>
+<h2>Create a New User</h2>
 
-<div>
-  <%= form_for @user, url: manage_users_path(@user) do |f| %>
+<div class="col-sm-5">
+  <%= form_for(@user, url: manage_users_path(@user), html: {autocomplete: 'off'}) do |f| %>
 
       <% if @user.errors.full_messages.any? %>
           <% @user.errors.full_messages.each do |error_message| %>
@@ -39,13 +39,28 @@
       </div>
 
       <div class="form-group">
+        <%= f.label :target_amount,'Target Amount', class: "control-label" %>
+        <%= f.text_field :target_amount, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :bonus_percentage,'Bonus Percentage', class: "control-label" %>
+        <%= f.text_field :bonus_percentage, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
         <%= f.label :image, 'Image', class: "control-label" %>
         <%= f.file_field :image, class: "form-control" %>
       </div>
 
       <div class="form-group">
         <%= f.label :role %>
-        <%= f.select(:role, User::ROLE_LIST) %>
+        <%= f.select(:role, User::ROLE_LIST,{}, {class: "form-control"}) %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :designation %>
+        <%= f.select(:designation, User::DESIGNATION_LIST,{}, {class: "form-control"}) %>
       </div>
 
       <div class="form-group">
