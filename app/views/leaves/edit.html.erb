@@ -1,12 +1,12 @@
 <h1>Edit</h1>
-<h3>User : <%= @leave.user.name %> </h3>
+<h3>User : <%= @leafe.user.name %> </h3>
 
-<div style="padding-right:600px; ">
-  <%= form_for(@leave) do |form| %>
+<div class="col-sm-5" >
+  <%= form_for(@leafe) do |form| %>
 
-      <% if @leave.errors.full_messages.any? %>
-          <% @leave.errors.full_messages.each do |error_message| %>
-              <p class="alert alert-danger"> <%= error_message if @leave.errors.full_messages.first == error_message %> </p>
+      <% if @leafe.errors.full_messages.any? %>
+          <% @leafe.errors.full_messages.each do |error_message| %>
+              <p class="alert alert-danger"> <%= error_message if @leafe.errors.full_messages.first == error_message %> </p>
           <% break end %>
       <% end %>
 
@@ -27,7 +27,7 @@
 
       <div class="form-group">
         <%= form.label :leave_type, class: "control-label" %>
-        <%= form.select(:leave_type, Leafe::LEAVE_TYPES) %>
+        <%= form.select(:leave_type, Leafe::LEAVE_TYPES, {}, {class: "form-control"}) %>
       </div>
 
       <div class="form-group">

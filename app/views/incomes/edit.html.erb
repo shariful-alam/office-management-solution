@@ -1,7 +1,7 @@
 <h1>Edit</h1>
 <h3>User : <%= @income.user.name %> </h3>
 
-<div style="padding-right:600px; ">
+<div class="col-md-5">
   <%= form_for(@income) do |l| %>
 
     <% if @income.errors.full_messages.any? %>
@@ -29,19 +29,5 @@
       <%= l.submit 'Update', class: "btn btn-success" %> |
       <%= link_to "Back", :back, class: "btn btn-dark" %>
     </div>
-      <div>
-        <%= l.label :amount, class: 'control-label' %> <br/>
-        <%= l.number_field :amount, class: 'form-control' %>
-      </div>
-      <br/>
-      <div>
-        <%= l.label :income_date, class: 'control-label' %> <br/>
-        <%= l.text_field :income_date, class: 'form-control',id: "datepicker", placeholder: "yyyy-mm-yy" %>
-      </div>
-      <br/>
-      <div class="form-group">
-        <%= l.submit 'Update', class: "btn btn-success" %> |
-        <%= link_to "Back", :back, class: "btn btn-dark" %>
-      </div>
   <% end %>
 </div>
