@@ -4,9 +4,11 @@ class LeavesController < ApplicationController
 
 
   def index
+
+    @leaves=@leaves.joins(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
-      @leaves = @leaves.joins(:user).where("users.name ilike :search OR leave_type ilike :search", {search: search})
+      @leaves = @leaves.where("users.name ilike :search OR leave_type ilike :search", {search: search})
     end
 
     @leaves = @leaves.where(':from <= end_date ', {from: params[:from]}) if params[:from].present?

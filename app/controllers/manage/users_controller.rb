@@ -9,11 +9,9 @@ class Manage::UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
   end
 
   def create
-    @user = User.new(user_params)
     if @user.save
       redirect_to manage_users_path, notice: "User has been created successfully"
     else
@@ -22,11 +20,11 @@ class Manage::UsersController < ApplicationController
   end
 
   def index
-    if params[:search]
-      @users = User.search(params[:search]).order('users.id ASC').paginate(:page => params[:page], :per_page => 2)
-    else
-      @users = User.order('users.id ASC').paginate(:page => params[:page], :per_page => 2)
+    if params[:search].present?
+      search = "%#{params[:search]}%"
+      @users = @users.joins(:user).where('name ilike :search OR email ilike :search OR phone ilike :search OR role ilike :search', {search: search})
     end
+    @users = @users.order('id ASC').paginate(:page => params[:page], :per_page => 3)
     #raise @users.to_sql
   end
 
@@ -35,17 +33,14 @@ class Manage::UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     redirect_to manage_users_path, notice: "User has been removed successfully"
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to manage_user_path, notice: "User data has been updated successfully"
     else
@@ -54,11 +49,17 @@ class Manage::UsersController < ApplicationController
   end
 
   def show_all
-    #raise "dd"
-    @expense_for_user=Expense.where(user_id: params[:id], status: 'Approved').sum(:cost)
-    @approved_expenses = Expense.user_expenses(params[:from], params[:to],params[:search], params[:page], params[:id], params[:status]='Approved')
-    @pending_expenses = Expense.user_expenses(params[:from], params[:to],params[:search], params[:page], params[:id], params[:status]='Pending')
-    @rejected_expenses = Expense.user_expenses(params[:from], params[:to],params[:search], params[:page], params[:id], params[:status]='Rejected')
+    @expenses = Expense.where(user_id: params[:id])
+    @expense_for_user = Expense.where(status: 'Approved').sum(:cost)
+    if params[:search].present?
+      search = "%#{params[:search]}%"
+      @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
+    end
+    @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
+    @expenses = @expenses.order('id ASC')
+    @pending_expenses = @expenses.with_status(Expense::PENDING).paginate(:page => params[:page], :per_page => 20)
+    @approved_expenses = @expenses.with_status(Expense::APPROVED).paginate(:page => params[:page], :per_page => 20)
+    @rejected_expenses = @expenses.with_status(Expense::REJECTED).paginate(:page => params[:page], :per_page => 20)
   end
 
   private

@@ -4,20 +4,19 @@ class BudgetsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if params[:search]
-      @budgets = Budget.search(params[:search]).order('budgets.id ASC').paginate(:page => params[:page], :per_page => 12) #raise @budgets.to_sql
-    else
-      @budgets = Budget.order('budgets.id ASC').paginate(:page => params[:page], :per_page => 12)
+    @budgets = @budgets.joins(:user)
+    if params[:search].present?
+      search = "%#{params[:search]}%"
+      @budgets = @budgets.where('users.name ilike :search OR month ilike :search', {search: search})
     end
+    @budgets = @budgets.order('id ASC').paginate(:page => params[:page], :per_page => 20)
   end
 
   def new
-    @budget=Budget.new
   end
 
   def create
-    @budget = Budget.new(budget_params)
-    @budget.user_id = current_user.id
+    @budget = current_user.budgets.new(budget_params)
     if @budget.save
       redirect_to budgets_path, notice: "Budget has been Created Successfully!!"
     else
@@ -26,13 +25,21 @@ class BudgetsController < ApplicationController
   end
 
   def show
-    @approved_expenses = Expense.budget_expenses(params[:from], params[:to],params[:search], params[:page], params[:id],params[:status]='Approved')
-    @pending_expenses = Expense.budget_expenses(params[:from], params[:to],params[:search], params[:page], params[:id],params[:status]='Pending')
-    @rejected_expenses = Expense.budget_expenses(params[:from], params[:to],params[:search], params[:page], params[:id],params[:status]='Rejected')
+    @expenses = Expense.where(budget_id: params[:id])
+
+    if params[:search].present?
+      search = "%#{params[:search]}%"
+      @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
+    end
+    @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
+    @expenses = @expenses.order('id ASC')
+
+    @pending_expenses = @expenses.with_status(Expense::PENDING).paginate(:page => params[:page], :per_page => 20)
+    @approved_expenses = @expenses.with_status(Expense::APPROVED).paginate(:page => params[:page], :per_page => 20)
+    @rejected_expenses = @expenses.with_status(Expense::REJECTED).paginate(:page => params[:page], :per_page => 20)
   end
 
   def destroy
-    @budget = Budget.find(params[:id])
     @budget.destroy
     redirect_to budgets_path, alert: "Budget has been Removed!!"
   end
@@ -44,7 +51,6 @@ class BudgetsController < ApplicationController
   end
 
   def update
-    @budget = Budget.find(params[:id])
     if @budget.update(budget_params)
       redirect_to budget_path, notice: "Budget has been Updated Successfully!!"
     else

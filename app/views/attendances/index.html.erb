@@ -1,7 +1,7 @@
 <h1>Availability of All Users</h1>
 
-<button class="accordion btn btn-success">Available Employees (<%= @attendances_available.count %>)</button>
-<div class="panel">
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo">Available Employees (<%= @attendances_available.count %>)</button>
+<div  class="collapse show in" id="demo">
   <div class="table-responsive-sm">
     <table class="table table-bordered">
       <tr>
@@ -23,10 +23,12 @@
   <div>
     <%= will_paginate @attendances_available, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
   </div>
-</div>
 
-<button class="accordion btn btn-secondary">Unavailable Employees (<%= @attendances_unavailable.count %>)</button>
-<div class="panel">
+</div>
+<br>
+<br>
+<button class="accordion btn btn-secondary" data-toggle="collapse" data-target="#demo1">Unavailable Employees (<%= @attendances_unavailable.count %>)</button>
+<div  class="collapse in" id="demo1">
   <div class="table-responsive-sm">
 
     <table class="table table-bordered">
@@ -62,8 +64,8 @@
 
 <br/>
 <div class="form-group">
+  <br>
   <%= link_to "Back", allocated_leaves_path, class: "btn btn-dark" %>
 </div>
 
 
-<%= javascript_pack_tag :accordion %>

@@ -4,7 +4,6 @@ class IncomesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    #raise params.inspect
     @users = User.all.order('id ASC').paginate(:page => params[:page], :per_page => 10)
     @monthly_totals = Array.new(13,0)
   end

@@ -13,10 +13,6 @@ class Budget < ApplicationRecord
   before_update :define_month_year
 
   private
-  def self.search(search)
-    @key = "%#{search}%"
-    self.joins(:user).where('users.name ilike :search OR month ilike :search', search: @key)
-  end
 
   def define_month_year
 

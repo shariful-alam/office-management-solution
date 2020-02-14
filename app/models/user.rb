@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :leaves
   has_one :allocated_leafe
   has_many :attendances
+
   has_attached_file :image
   validates_attachment :image,
                        content_type: {content_type: /\Aimage\/.*\z/},
@@ -22,7 +23,7 @@ class User < ApplicationRecord
   ADMIN = "Admin"
   SUPER_ADMIN = "Super Admin"
   EMPLOYEE = "Employee"
-  DESIGNATION_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief technical Officer']
+  DESIGNATION_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief Technical Officer']
   ROLE_LIST = ['Super Admin', 'Admin', 'Employee']
 
 

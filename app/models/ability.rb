@@ -6,25 +6,23 @@ class Ability
     if user.present?
       if user.role == User::ADMIN or user.role == User::SUPER_ADMIN
         can :manage, :all
-        cannot :reject, Expense, {status: 'Rejected'}
-        cannot :approve, Expense, {status: 'Rejected'}
-        cannot :reject, Expense, {status: 'Approved'}
-        cannot :update, Expense, {status: 'Approved'}
-        cannot :update, Expense, {status: 'Rejected'}
+        cannot :reject, Expense, {status: Leafe::REJECTED}
+        cannot :approve, Expense, {status: Leafe::REJECTED}
+        cannot :reject, Expense, {status: Leafe::APPROVED}
+        cannot :update, Expense, {status: Leafe::APPROVED}
+        cannot :update, Expense, {status: Leafe::REJECTED}
 
         can :manage, AllocatedLeafe, :all
-
         can :manage, Attendance, :all
-
         can :manage, Leafe, :all
-
         can :manage, Income, :all
+
       else
         can :update, User, {user_id: user.id}
 
         can :manage, Expense, {user_id: user.id}
-        cannot :manage, Expense, {status: 'Rejected'}
-        cannot :manage, Expense, {status: 'Approved'}
+        cannot :manage, Expense, {status: Leafe::REJECTED}
+        cannot :manage, Expense, {status: Leafe::APPROVED}
         cannot :approve, Expense, {user_id: user.id}
         cannot :reject, Expense, {user_id: user.id}
         can :read, Expense, {user_id: user.id}
@@ -43,9 +41,9 @@ class Ability
         cannot :approve, Leafe, :all
 
         can :create, Income
-        can :manage, Income, {user_id: user.id, status: 'Pending'}
-        can :read, Income, {user_id: user.id, status: 'Approved'}
-        can :read, Income, {user_id: user.id, status: 'Rejected'}
+        can :manage, Income, {user_id: user.id, status: Leafe::PENDING}
+        can :read, Income, {user_id: user.id, status: Leafe::APPROVED}
+        can :read, Income, {user_id: user.id, status: Leafe::REJECTED}
         cannot :approve, Income, :all
         cannot :reject, Income, :all
       end

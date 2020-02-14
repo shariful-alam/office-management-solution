@@ -4,10 +4,6 @@ class Income < ApplicationRecord
   validates :income_date, :presence => true
   validates :source, :presence => true
 
-  APPROVED = "Approved"
-  PENDING = "Pending"
-  REJECTED = "Rejected"
-
   MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ,11, 12]
   SOURCE = ['Employee', 'Service']
 

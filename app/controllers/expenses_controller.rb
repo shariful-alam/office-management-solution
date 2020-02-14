@@ -4,10 +4,10 @@ class ExpensesController < ApplicationController
   load_and_authorize_resource
 
   def index
-
+    @expenses = @expenses.joins(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
-      @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
+      @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
 
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
@@ -20,7 +20,6 @@ class ExpensesController < ApplicationController
   end
 
   def new
-    @expense = current_user.expenses.new
   end
 
   def create

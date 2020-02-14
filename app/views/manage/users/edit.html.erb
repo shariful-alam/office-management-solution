@@ -35,10 +35,10 @@
         <%= f.text_field :bonus_percentage, class: "form-control" %>
       </div>
 
-      <div class="form-group" id="cancel_show">
-        <%= image_tag(@user.image.url, :size => "100x100") if @user.image.exists? %>
-        <%= f.check_box :remove_image, style: "margin-left : 10px; position: absolute;", id: "cancel_image", onclick: "myFunction()" if @user.image.exists? %>
-      </div>
+      <!--<div class="form-group" id="cancel_show">-->
+        <!--<%= image_tag(@user.image.url, :size => "100x100") if @user.image.exists? %>-->
+        <!--<%= f.check_box :remove_image, style: "margin-left : 10px; position: absolute;", id: "cancel_image", onclick: "myFunction()" if @user.image.exists? %>-->
+      <!--</div>-->
 
       <div class="form-group">
         <%= f.label :image, 'Image', class: "control-label" %>

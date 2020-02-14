@@ -5,8 +5,8 @@ class AttendancesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @attendances_available = Attendance.where(status: true).order('id ASC').paginate(:page => params[:page], :per_page => 3)
-    @attendances_unavailable = Attendance.where(status: false).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    @attendances_available = @attendances.where(status: true).order('id ASC').paginate(:page => params[:page], :per_page => 20)
+    @attendances_unavailable = @attendances.where(status: false).order('id ASC').paginate(:page => params[:page], :per_page => 20)
   end
 
   def show

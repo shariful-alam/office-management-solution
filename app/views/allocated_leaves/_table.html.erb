@@ -1,21 +1,19 @@
-<div class="panel">
-  <div class="table-responsive-sm">
-    <table class="table table-bordered">
+<div class="table-responsive-sm">
+  <table class="table table-bordered">
+    <tr>
+      <th>Starting Date</th>
+      <th>Ending Date</th>
+      <th>Leave Type</th>
+      <th>Status</th>
+      <th style="text-align: center;">Action</th>
+    </tr>
+    <% leaves.each do |l| %>
       <tr>
-        <th>Starting Date</th>
-        <th>Ending Date</th>
-        <th>Leave Type</th>
-        <th>Status</th>
-        <th style="text-align: center;">Action</th>
+        <%= render partial: 'action', locals: {l: l} %>
       </tr>
-      <% leaves.each do |l| %>
-          <tr>
-            <%= render partial: 'action', locals: {l: l} %>
-          </tr>
-      <% end %>
-    </table>
-  </div>
-  <div>
-    <%= will_paginate leaves, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-  </div>
+    <% end %>
+  </table>
+</div>
+<div>
+  <%= will_paginate leaves, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 </div>
