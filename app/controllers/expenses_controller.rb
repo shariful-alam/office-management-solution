@@ -4,17 +4,27 @@ class ExpensesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @approved_expenses = Expense.search(params[:from], params[:to], params[:search], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Approved')
-    @pending_expenses = Expense.search(params[:from], params[:to], params[:search], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Pending')
-    @rejected_expenses = Expense.search(params[:from], params[:to], params[:search], params[:page], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]='Rejected')
+
+    if params[:search].present?
+      search = "%#{params[:search]}%"
+      @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
+    end
+
+    @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
+    @expenses = @expenses.order('id ASC')
+
+    @pending_expenses = @expenses.with_status(Expense::PENDING).paginate(:page => params[:page], :per_page => 20)
+    @approved_expenses = @expenses.with_status(Expense::APPROVED).paginate(:page => params[:page], :per_page => 20)
+    @rejected_expenses = @expenses.with_status(Expense::REJECTED).paginate(:page => params[:page], :per_page => 20)
+
   end
 
   def new
-
+    @expense = current_user.expenses.new
   end
 
   def create
-    @expense.user_id = current_user.id
+    @expense = current_user.expenses.new(expense_params)
     month=@expense.expense_date.strftime("%B")+', '+@expense.expense_date.strftime("%Y")
     @budget=Budget.find_by(month: month)
     if @budget
@@ -38,7 +48,6 @@ class ExpensesController < ApplicationController
   end
 
   def edit
-
   end
 
   def update
@@ -47,6 +56,8 @@ class ExpensesController < ApplicationController
       @budget=Budget.find_by(month: month)
       if @budget
         @expense.budget_id=@budget.id
+      else
+        redirect_to expenses_path, alert: "The budget for this month is not submitted yet!!"
       end
       @expense.save
       redirect_to expenses_path, success: "Expense has been Updated Successfully!!"
@@ -56,9 +67,7 @@ class ExpensesController < ApplicationController
   end
 
   def reject
-    if @expense.status != Expense::REJECTED
-      @expense.status = Expense::REJECTED
-    end
+    @expense.status = Expense::REJECTED
     @expense.save
     flash[:alert] = "Expense has been Rejected!!"
     redirect_back(fallback_location: expenses_path)
@@ -81,7 +90,6 @@ class ExpensesController < ApplicationController
     @expense.save
     redirect_back(fallback_location: expenses_path)
   end
-
 
 
   private

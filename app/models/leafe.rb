@@ -8,14 +8,10 @@ class Leafe < ApplicationRecord
   validates :leave_type, presence: true
 
   LEAVE_TYPES = ["Personal Leave", "Training", "Vacation", "Medical Leave"]
-  APPROVED = "Approved"
-  PENDING = "Pending"
-  REJECTED = "Rejected"
+
   PL = "Personal Leave"
   TL = "Training"
   VL = "Vacation"
   ML = "Medical Leave"
-
-  scope :with_status, -> (status) { where(status: status) }
 
 end
