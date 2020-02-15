@@ -41,19 +41,16 @@ class LeavesController < ApplicationController
   end
 
   def edit
-    @leave = Leafe.find(params[:id])
+
   end
 
   def show
-    @leave = Leafe.find(params[:id])
-    #@user = User.find(@leave.user_id)
+
   end
 
   def update
-    #raise params.inspect
-    @leave = Leafe.find(params[:id])
-    if @leave.update(leafe_params)
-      redirect_to show_all_allocated_leafe_path(@leave.user_id), notice: "Your Information Has Been Updated"
+    if @leafe.update(leafe_params)
+      redirect_to show_all_allocated_leafe_path(@leafe.user_id), notice: "Your Information Has Been Updated"
     else
       render 'edit'
     end
