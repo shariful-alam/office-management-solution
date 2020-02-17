@@ -3,12 +3,12 @@
     <h1>Details</h1>
     <p class="text-success"><%= flash[:notices] %></p>
     <ul class="list-group">
-      <li class="list-group-item"><b>Employee : </b><%= @allocated_leave.user.name %></li>
-      <li class="list-group-item"><b>Leave for Year : </b><%= @allocated_leave.year %></li>
-      <li class="list-group-item"><b>Total Leave : </b><%= @allocated_leave.total_leave %></li>
-      <li class="list-group-item"><b>Used Leave : </b><%= @allocated_leave.used_leave %></li>
+      <li class="list-group-item"><b>Employee : </b><%= @allocated_leafe.user.name %></li>
+      <li class="list-group-item"><b>Leave for Year : </b><%= @allocated_leafe.year %></li>
+      <li class="list-group-item"><b>Total Leave : </b><%= @allocated_leafe.total_leave %></li>
+      <li class="list-group-item"><b>Used Leave : </b><%= @allocated_leafe.used_leave %></li>
       <li class="list-group-item">
-        <b>Remaining Leaves : </b><%= @allocated_leave.total_leave - @allocated_leave.used_leave %></li>
+        <b>Remaining Leaves : </b><%= @allocated_leafe.total_leave - @allocated_leafe.used_leave %></li>
     </ul>
 
   </div>

@@ -1,12 +1,12 @@
 <h1>Edit</h1>
-<h3>User : <%= @allocated_leave.user.name %> </h3>
+<h3>User : <%= @allocated_leafe.user.name %> </h3>
 
 <div style="padding-right:600px; ">
-  <%= form_for(@allocated_leave) do |form| %>
+  <%= form_for(@allocated_leafe) do |form| %>
 
-      <% if @allocated_leave.errors.full_messages.any? %>
-          <% @allocated_leave.errors.full_messages.each do |error_message| %>
-              <p class="alert alert-danger"> <%= error_message if @allocated_leave.errors.full_messages.first == error_message %> </p>
+      <% if @allocated_leafe.errors.full_messages.any? %>
+          <% @allocated_leafe.errors.full_messages.each do |error_message| %>
+              <p class="alert alert-danger"> <%= error_message if @allocated_leafe.errors.full_messages.first == error_message %> </p>
           <% break end %>
       <% end %>
       <div class="form-group">
