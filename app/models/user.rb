@@ -42,9 +42,5 @@ class User < ApplicationRecord
     self.image = nil
   end
 
-  def self.search(search)
-    @key="%#{search}%"
-    where('name ilike :search OR email ilike :search OR phone ilike :search OR role ilike :search', search: @key)
-  end
 
 end

@@ -1,14 +1,23 @@
 module ApplicationHelper
+
+  def convert_to_dhaka(datetime)
+     datetime=datetime.in_time_zone("Dhaka")
+     return datetime
+  end
+
   def full_date(datetime)
+    datetime=convert_to_dhaka(datetime)
     datetime.strftime('%d %B, %Y')
   end
 
   def full_date_with_time(datetime)
-    datetime.strftime('%d %B, %Y at %I:%M%p')
+    datetime=convert_to_dhaka(datetime)
+    datetime.strftime('%d %B, %Y at %I:%M %p')
   end
 
   def only_time(datetime)
-    datetime.strftime('%I:%M%p')
+    datetime=convert_to_dhaka(datetime)
+    datetime.strftime('%I:%M %p')
   end
 
   def taka(amount)

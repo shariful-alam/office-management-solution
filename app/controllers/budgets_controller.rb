@@ -45,14 +45,13 @@ class BudgetsController < ApplicationController
   end
 
   def edit
-    @budget = Budget.find(params[:id])
     @budget.year=@budget.month.chars.last(4).join
     @budget.month=@budget.month[0...-6]
   end
 
   def update
     if @budget.update(budget_params)
-      redirect_to budget_path, notice: "Budget has been Updated Successfully!!"
+      redirect_to budgets_path, notice: "Budget has been Updated Successfully!!"
     else
       render 'edit'
     end

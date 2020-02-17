@@ -23,7 +23,6 @@ class AttendancesController < ApplicationController
   end
 
   def create
-    @attendance = Attendance.new
     @attendance.info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
     @attendance.user_id = current_user.id
     @attendance.status = true
@@ -44,7 +43,8 @@ class AttendancesController < ApplicationController
   end
 
   def whitelisted?(ip)
-    return true if ['27.147.206.53'].include?(ip)
+    #return true if ['27.147.206.53'].include?(ip)
+    return true if ['::1'].include?(ip)
     false
   end
 

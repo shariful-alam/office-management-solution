@@ -24,11 +24,8 @@ class ExpensesController < ApplicationController
 
   def create
     @expense = current_user.expenses.new(expense_params)
-    month=@expense.expense_date.strftime("%B")+', '+@expense.expense_date.strftime("%Y")
-    @budget=Budget.find_by(month: month)
-    if @budget
-      @expense.budget_id=@budget.id
-    end
+    @budget=Budget.find_by(month: @expense.formatted_month)
+    @expense.budget_id=@budget.id if @budget
     if @expense.save
       redirect_to expenses_path, notice: "Expense has been Created Successfully!!"
     else

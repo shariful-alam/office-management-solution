@@ -50,7 +50,7 @@ class LeavesController < ApplicationController
 
   def update
     if @leafe.update(leafe_params)
-      redirect_to leaves_path, notice: "Your Information Has Been Updated"
+      redirect_to show_all_allocated_leafe_path(@leafe.user_id), notice: "Your Information Has Been Updated"
     else
       render 'edit'
     end
