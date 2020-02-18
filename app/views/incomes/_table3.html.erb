@@ -8,14 +8,14 @@
       <% end %>
     </tr>
 
-    <% users.each do |l| %>
+    <% users.each do |user| %>
       <tr>
         <td>
-          <%= link_to l.name, show_individual_incomes_path(user_id: l.id, year: params[:search]) %>
+          <%= link_to user.name, show_individual_incomes_path(user_id: user.id, year: params[:search]) %>
         </td>
-        <% Income::MONTHS.each do |m| %>
+        <% Income::MONTHS.each do |month| %>
           <td>
-            <%= bonus_amount(m, params[:search], l) %>
+            <%= @all_bonuses[user.id][month] >0 ? @all_bonuses[user.id][month] : 0 %>
           </td>
         <% end %>
       </tr>

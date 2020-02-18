@@ -57,40 +57,9 @@ module ApplicationHelper
     end
   end
 
-  def find_by_month(month, user, search)
+  def find_class(income,target)
 
-    i = Income.where(user_id: user.id, status: Income::APPROVED)
-    if search.nil?
-      @year = Date.today.year
-      i = i.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, @year).sum(:amount)
-    else
-      #raise @year.to_i.inspect
-      i = i.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, search).sum(:amount)
-    end
-    return i.to_i
-  end
-
-  def find_total(user, search)
-    i = Income.where(user_id: user.id, status: Income::APPROVED)
-    if search.nil?
-      @year = Date.today.year
-      i = i.where('extract(year from income_date) = ?', @year).sum(:amount)
-    else
-      i = i.where('extract(year from income_date) = ?', search).sum(:amount)
-    end
-    return i.to_i
-  end
-
-  def find_class(month, user, search)
-    i = Income.where(user_id: user.id, status: Income::APPROVED)
-    if search.nil?
-      @year = Date.today.year
-      i = i.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, @year).sum(:amount)
-    else
-      i = i.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, search).sum(:amount)
-    end
-    #raise i.inspect
-    if i > user.target_amount.to_i
+    if income > target
       return "bonusable"
     else
       return "not-bonusable"
