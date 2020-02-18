@@ -16,10 +16,10 @@ class Budget < ApplicationRecord
 
   def define_month_year
 
-      self.month = month+', '+year  if year.present?
-      self.expense = 0  if expense == nil
-      self.amount += add.to_i if add.present?
-      validate validate! _validators
+    self.month = month+', '+year if year.present?
+    self.expense = 0 if expense.nil?
+    self.amount += add.to_i if add.present?
+    validate validate! _validators
 
   end
 
