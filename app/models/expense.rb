@@ -20,4 +20,8 @@ class Expense < ApplicationRecord
 
   CATEGORY_LIST = ["Fixed", "Regular"]
 
+  def formatted_month
+    self.expense_date.strftime("%B")+', '+self.expense_date.strftime("%Y")
+  end
+
 end

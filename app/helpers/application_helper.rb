@@ -1,14 +1,23 @@
 module ApplicationHelper
+
+  def convert_to_dhaka(datetime)
+     datetime=datetime.in_time_zone("Dhaka")
+     return datetime
+  end
+
   def full_date(datetime)
+    datetime=convert_to_dhaka(datetime)
     datetime.strftime('%d %B, %Y')
   end
 
   def full_date_with_time(datetime)
-    datetime.strftime('%d %B, %Y at %I:%M%p')
+    datetime=convert_to_dhaka(datetime)
+    datetime.strftime('%d %B, %Y at %I:%M %p')
   end
 
   def only_time(datetime)
-    datetime.strftime('%I:%M%p')
+    datetime=convert_to_dhaka(datetime)
+    datetime.strftime('%I:%M %p')
   end
 
   def taka(amount)
@@ -24,7 +33,7 @@ module ApplicationHelper
     date = Date.today
     month = date.strftime("%B")+', '+date.strftime("%Y")
     present_budget=Budget.find_by(month: month)
-    if present_budget == nil
+    if present_budget.nil?
       "The budget is not added yet !".html_safe
     else
       "Budget for  #{present_budget.month}
@@ -46,7 +55,7 @@ module ApplicationHelper
   def check_in_out
     info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
     attendance = Attendance.where(info: info).last
-    if attendance != nil
+    if attendance.present?
       if attendance.status == true
         link_to ("Check Out <span class='status green'></span>").html_safe, attendance_path(attendance), method: :put, class: "dropdown-item", data: {confirm: "Are You Sure?"}
       else

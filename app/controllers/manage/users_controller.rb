@@ -3,9 +3,9 @@ class Manage::UsersController < ApplicationController
   load_and_authorize_resource
 
   def show_all_pending
-    @all_pending_expenses =  Expense.where(status: 'Pending').order('expenses.id ASC').paginate(:page => params[:page], :per_page => 20)
-    @all_pending_leaves =  Leafe.where(status: 'Pending').order('leaves.id ASC').paginate(:page => params[:page], :per_page => 20)
-    @all_pending_incomes =  Income.where(status: 'Pending').order('incomes.id ASC').paginate(:page => params[:page], :per_page => 20)
+    @all_pending_expenses =  Expense.with_status(Expense::PENDING).order('expenses.id ASC').paginate(:page => params[:page], :per_page => 20)
+    @all_pending_leaves =  Leafe.with_status(Expense::PENDING).order('leaves.id ASC').paginate(:page => params[:page], :per_page => 20)
+    @all_pending_incomes =  Income.with_status(Expense::PENDING).order('incomes.id ASC').paginate(:page => params[:page], :per_page => 20)
   end
 
   def new
@@ -22,19 +22,18 @@ class Manage::UsersController < ApplicationController
   def index
     if params[:search].present?
       search = "%#{params[:search]}%"
-      @users = @users.joins(:user).where('name ilike :search OR email ilike :search OR phone ilike :search OR role ilike :search', {search: search})
+      @users = @users.where('name ilike :search OR email ilike :search OR phone ilike :search OR role ilike :search', {search: search})
     end
-    @users = @users.order('id ASC').paginate(:page => params[:page], :per_page => 3)
+    @users = @users.order('id ASC').paginate(:page => params[:page], :per_page => 20)
     #raise @users.to_sql
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def destroy
     @user.destroy
-    redirect_to manage_users_path, notice: "User has been removed successfully"
+    redirect_to manage_users_path, alert: "User has been removed successfully"
   end
 
   def edit
