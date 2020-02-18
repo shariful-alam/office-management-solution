@@ -60,7 +60,7 @@ class AllocatedLeavesController < ApplicationController
   end
 
   def show_all
-    @leaves = params[:user_id].present? ? Leafe.where(user_id: current_user.id) : Leafe.where(user_id: @allocated_leafe.user_id)
+    @leaves = params[:user_id].present? ? current_user.leaves : @allocated_leafe.user.leaves
     @leaves = @leaves.order('id ASC')
 
     @leaves_pending = @leaves.with_status(Leafe::PENDING).paginate(:page => params[:page], :per_page => 20)
