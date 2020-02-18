@@ -7,4 +7,5 @@ class ApplicationRecord < ActiveRecord::Base
   REJECTED = "Rejected"
 
   scope :with_status, -> (status) { where(status: status) }
+  scope :with_leafe_type, -> (type) { where(leave_type: type) }
 end

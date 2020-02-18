@@ -6,15 +6,36 @@ class IncomesController < ApplicationController
   def index
     @users = User.all.order('id ASC').paginate(:page => params[:page], :per_page => 10)
     @monthly_totals = Array.new(13,0)
+    @all_incomes = Array.new(15){Array.new(15) { 0 } }
+
+    @users.each do |user|
+      Income::MONTHS.each do |month|
+        income = Income.find_incomes_by_months(user,month,params[:search])
+        @all_incomes[user.id][month] = income
+        #raise @all_incomes[user.id][month].inspect
+      end
+    end
+
+
+
+    @monthly = Income.group(:user_id)
+                 .group('(extract(month from income_date))::integer')
+                 .order(:user_id)
+                 .order('(extract(month from income_date))::integer')
+                 .sum(:amount)
+    #@monthly = @monthly.map(&:flatten)
+    Income::MONTHS.each do |month|
+
+    end
+    #raise @monthly.inspect
   end
 
   def new
-    @income = Income.new
+
   end
 
   def create
-    @income = Income.new(income_params)
-    @income.user_id = current_user.id
+    @income = current_user.incomes.new(income_params)
     if @income.save
       flash[:notice] = "Your Income has been Queued for Pending!!"
       if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN
@@ -29,11 +50,10 @@ class IncomesController < ApplicationController
   end
 
   def edit
-    @income = Income.find(params[:id])
+
   end
 
   def update
-    @income = Income.find(params[:id])
     @month = @income.income_date.month
     if @income.update(income_params)
       flash[:notice] = "Your Income Information has been Updated!!!"
@@ -44,19 +64,17 @@ class IncomesController < ApplicationController
   end
 
   def show
-    @income = Income.find(params[:id])
+
   end
 
 
   def destroy
-    @income = Income.find(params[:id])
     @income.destroy
     flash[:notice] = "Your Income information has been Destroyed!!"
     redirect_back(fallback_location: incomes_path)
   end
 
   def approve
-    @income = Income.find(params[:id])
     if @income.status == Leafe::APPROVED
       @income.status = Leafe::PENDING
       flash[:notice] = "The Income Information has been Changed Successfully!!!"
@@ -72,7 +90,6 @@ class IncomesController < ApplicationController
   end
 
   def reject
-    @income = Income.find(params[:id])
     @income.status = Leafe::REJECTED
     flash[:notice] = "Income has been Rejected!!!"
     @income.save
@@ -81,15 +98,13 @@ class IncomesController < ApplicationController
   end
 
   def show_individual
-    #raise params[:year].inspect
-    @user = User.find(params[:user_id])
-    @incomes_approved = Income.search(params[:user_id], params[:month], params[:year], Income::APPROVED)
-    @incomes_pending = Income.search(params[:user_id], params[:month], params[:year], Income::PENDING)
-    @incomes_rejected = Income.search(params[:user_id], params[:month], params[:year], Income::REJECTED)
+    @incomes = Income.joins(:user)
+    @incomes = @incomes.where('extract(month from income_date) = ?', params[:month]) if params[:month].present?
+    @incomes = @incomes.where('extract(year from income_date) = ?', params[:year].present? ? params[:year] : Date.today.year) if params[:year].present?
 
-    @incomes_pending = @incomes_pending.paginate(:page => params[:page], :per_page => 10)
-    @incomes_approved = @incomes_approved.paginate(:page => params[:page], :per_page => 10)
-    @incomes_rejected = @incomes_rejected.paginate(:page => params[:page], :per_page => 10)
+    @incomes_approved = @incomes.with_status(Income::APPROVED).paginate(:page => params[:page], :per_page => 10)
+    @incomes_pending = @incomes.with_status(Income::PENDING).paginate(:page => params[:page], :per_page => 10)
+    @incomes_rejected = @incomes.with_status(Income::REJECTED).paginate(:page => params[:page], :per_page => 10)
   end
 
 

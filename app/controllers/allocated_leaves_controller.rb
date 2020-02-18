@@ -6,64 +6,72 @@ class AllocatedLeavesController < ApplicationController
 
   def index
     if params[:search]
-      @allocated_leaves = AllocatedLeafe.where(year: params[:search]).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+      @allocated_leaves = @allocated_leaves.where(year: params[:search])
     else
-      @allocated_leaves = AllocatedLeafe.where(year: Date.today.year.to_s).order('id ASC').paginate(:page => params[:page], :per_page => 3)
+      @allocated_leaves = @allocated_leaves.where(year: Date.today.year.to_s)
     end
-    #raise @attendance.inspect
+    @allocated_leaves = @allocated_leaves.order('id ASC').paginate(:page => params[:page], :per_page => 20)
   end
 
+
   def new
-    @allocated_leafe = AllocatedLeafe.new
+
   end
 
   def create
     @allocated_leafe = AllocatedLeafe.new(allocated_leafe_params)
     @allocated_leafe.used_leave = 0
     if @allocated_leafe.save
-    redirect_to allocated_leaves_path, notice: "Leave Information has been Created Successfully!!"
+      redirect_to allocated_leaves_path, notice: "Leave Information has been Created Successfully!!"
     else
       render 'new'
     end
   end
 
   def edit
-    @allocated_leafe = AllocatedLeafe.find(params[:id])
+
   end
 
   def show
-    @allocated_leafe = AllocatedLeafe.find(params[:id])
-    @allocated_personal = Leafe.where(user_id: @allocated_leafe.user_id, leave_type: Leafe::PL, status: Leafe::APPROVED).count
-    @allocated_training = Leafe.where(user_id: @allocated_leafe.user_id, leave_type: Leafe::TL, status: Leafe::APPROVED).count
-    @allocated_vacation = Leafe.where(user_id: @allocated_leafe.user_id, leave_type: Leafe::VL, status: Leafe::APPROVED).count
-    @allocated_medical  = Leafe.where(user_id: @allocated_leafe.user_id, leave_type: Leafe::ML, status: Leafe::APPROVED).count
+    @leaves = Leafe.where(user_id: @allocated_leafe.user_id)
+
+    @allocated_personal = @leaves.with_leafe_type(Leafe::PL)
+    @allocated_training = @leaves.with_leafe_type(Leafe::TL)
+    @allocated_vacation = @leaves.with_leafe_type(Leafe::VL)
+    @allocated_medical = @leaves.with_leafe_type(Leafe::ML)
+
+    @allocated_personal = @allocated_personal.with_status(Leafe::APPROVED).count
+    @allocated_training = @allocated_training.with_status(Leafe::APPROVED).count
+    @allocated_vacation = @allocated_vacation.with_status(Leafe::APPROVED).count
+    @allocated_medical = @allocated_medical.with_status(Leafe::APPROVED).count
   end
 
   def update
-    @allocated_leafe = AllocatedLeafe.find(params[:id])
-    @allocated_leafe.update(allocated_leafe_params)
-    redirect_to allocated_leaves_path, notice: "Your Information has been Updated Successfully!!"
+    if @allocated_leafe.update(allocated_leafe_params)
+      redirect_to allocated_leaves_path, notice: "Your Information has been Updated Successfully!!"
+    else
+      render :edit
+    end
   end
 
   def destroy
-    @allocated_leafe = AllocatedLeafe.find(params[:id])
     @allocated_leafe.destroy
     redirect_to allocated_leaves_path, alert: "Information has been Removed!!"
   end
 
   def show_all
-    @allocated_leafe = AllocatedLeafe.find(params[:id])
-    @leaves_pending = Leafe.where(user_id: @allocated_leafe.user_id, status: 'Pending').order('id ASC').paginate(:page => params[:page], :per_page => 3)
-    @leaves_approved = Leafe.where(user_id: @allocated_leafe.user_id, status: 'Approved').order('id ASC').paginate(:page => params[:page], :per_page => 3)
-    @leaves_rejected = Leafe.where(user_id: @allocated_leafe.user_id, status: 'Rejected').order('id ASC').paginate(:page => params[:page], :per_page => 3)
-    #raise @leaves.inspect
+    @leaves = params[:user_id].present? ? Leafe.where(user_id: current_user.id) : Leafe.where(user_id: @allocated_leafe.user_id)
+    @leaves = @leaves.order('id ASC')
+
+    @leaves_pending = @leaves.with_status(Leafe::PENDING).paginate(:page => params[:page], :per_page => 20)
+    @leaves_approved = @leaves.with_status(Leafe::APPROVED).paginate(:page => params[:page], :per_page => 20)
+    @leaves_rejected = @leaves.with_status(Leafe::REJECTED).paginate(:page => params[:page], :per_page => 20)
   end
 
   private
   def allocated_leafe_params
-    params.require(:allocated_leafe).permit(:user_id, :total_leave, :year )
+    params.require(:allocated_leafe).permit(:user_id, :total_leave, :year)
   end
-
 
 
 end
