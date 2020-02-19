@@ -1,6 +1,7 @@
 class Attendance < ApplicationRecord
 
   belongs_to :user
-  validates :info, presence: true, uniqueness: true
+
+  validates :date, uniqueness: {scope: :user_id}
 
 end

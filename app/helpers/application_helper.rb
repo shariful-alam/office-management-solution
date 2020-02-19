@@ -51,10 +51,9 @@ module ApplicationHelper
   end
 
   def check_in_out
-    info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
-    attendance = Attendance.where(info: info).last
+    attendance = Attendance.where(user_id: current_user.id, date: Date.today.to_date).last
     if attendance.present?
-      if attendance.status == true
+      if attendance.status
         link_to ("Check Out <span class='status green'></span>").html_safe, attendance_path(attendance), method: :put, class: "dropdown-item", data: {confirm: "Are You Sure?"}
       else
         link_to ("Check In <span class='status red'></span>").html_safe, attendances_path, method: :post, class: "dropdown-item"
@@ -65,30 +64,11 @@ module ApplicationHelper
   end
 
   def find_class(income,target)
-
     if income > target
       return "bonusable"
     else
       return "not-bonusable"
     end
   end
-
-
-  def bonus_amount(month, year, user)
-    @income = Income.where(user_id: user.id, status: Income::APPROVED)
-    if year.nil?
-      @income = @income.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, Date.today.year).sum(:amount)
-    else
-      @income = @income.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, year).sum(:amount)
-    end
-    @bonus = 0
-    if @income > user.target_amount
-      @bonus = (@income - user.target_amount) * (user.bonus_percentage / 100.0)
-    end
-
-    return @bonus
-  end
-
-
 end
 

@@ -60,13 +60,13 @@
                 <div class="dropdown">
                   <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <strong> <%= current_user.name %> </strong>
-                    <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
+                    <% if current_user.admin? %>
                         <%= see_pending_request %>
                     <% end %>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <%= check_in_out %>
-                    <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
+                    <% if current_user.admin? %>
                         <%= link_to show_all_pending_manage_users_path, class: 'dropdown-item' do %>
                             <div>Pending Request &nbsp <%= see_pending_request %></div>
                         <% end %>

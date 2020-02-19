@@ -5,14 +5,9 @@ class AllocatedLeavesController < ApplicationController
 
 
   def index
-    if params[:search]
-      @allocated_leaves = @allocated_leaves.where(year: params[:search])
-    else
-      @allocated_leaves = @allocated_leaves.where(year: Date.today.year.to_s)
-    end
+    @allocated_leaves = @allocated_leaves.where(year: params[:search].present? ? params[:search] : Date.today.year.to_s)
     @allocated_leaves = @allocated_leaves.order('id ASC').paginate(:page => params[:page], :per_page => 20)
   end
-
 
   def new
 
@@ -22,9 +17,9 @@ class AllocatedLeavesController < ApplicationController
     @allocated_leafe = AllocatedLeafe.new(allocated_leafe_params)
     @allocated_leafe.used_leave = 0
     if @allocated_leafe.save
-      redirect_to allocated_leaves_path, notice: "Leave Information has been Created Successfully!!"
+      redirect_to allocated_leaves_path, notice: 'Leave has been allocated successfully'
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -33,7 +28,7 @@ class AllocatedLeavesController < ApplicationController
   end
 
   def show
-    @leaves = Leafe.where(user_id: @allocated_leafe.user_id)
+    @leaves = @allocated_leafe.user.leaves
 
     @allocated_personal = @leaves.with_leafe_type(Leafe::PL)
     @allocated_training = @leaves.with_leafe_type(Leafe::TL)
@@ -48,7 +43,7 @@ class AllocatedLeavesController < ApplicationController
 
   def update
     if @allocated_leafe.update(allocated_leafe_params)
-      redirect_to allocated_leaves_path, notice: "Your Information has been Updated Successfully!!"
+      redirect_to allocated_leaves_path, notice: 'Your information has been updated successfully'
     else
       render :edit
     end
@@ -56,7 +51,7 @@ class AllocatedLeavesController < ApplicationController
 
   def destroy
     @allocated_leafe.destroy
-    redirect_to allocated_leaves_path, alert: "Information has been Removed!!"
+    redirect_to allocated_leaves_path, alert: 'Information has been removed'
   end
 
   def show_all

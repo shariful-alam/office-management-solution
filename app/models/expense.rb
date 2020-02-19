@@ -20,6 +20,13 @@ class Expense < ApplicationRecord
 
   #before_save :delete_image, if: -> {remove_image == '1'}
 
+  CATEGORY_LIST = ["Fixed", "Regular"]
+
+  scope :with_status, -> (status) { where(status: status) }
+
+  def formatted_month
+    self.expense_date.strftime("%B")+', '+self.expense_date.strftime("%Y")
+  end
   CATEGORY_LIST = ['Fixed', 'Regular']
 
 end

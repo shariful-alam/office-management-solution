@@ -14,4 +14,8 @@ class Leafe < ApplicationRecord
   VL = "Vacation"
   ML = "Medical Leave"
 
+  scope :with_status, -> (status) { where(status: status) }
+  scope :with_leafe_type, -> (type) { where(leave_type: type) }
+
+
 end

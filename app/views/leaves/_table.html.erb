@@ -9,12 +9,12 @@
       <th style="text-align: center;">Action</th>
     </tr>
 
-    <% leaves.each do |l| %>
+    <% leaves.each do |leave| %>
       <tr>
         <td>
-          <%= l.user.name %>
+          <%= leave.user.name %>
         </td>
-        <%= render partial: 'allocated_leaves/action', locals: {l: l} %>
+        <%= render partial: 'action', locals: {leave: leave} %>
       </tr>
     <% end %>
   </table>

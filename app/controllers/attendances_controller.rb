@@ -5,12 +5,10 @@ class AttendancesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @attendances_available = @attendances.where(status: true).
-      where(created_at: Date.current.beginning_of_day-6.hours..Date.current.end_of_day-6.hours).
+    @attendances_available = @attendances.where(status: true, date: Date.today.to_date).
       order('id ASC').paginate(:page => params[:page], :per_page => 20)
 
-    @attendances_unavailable = @attendances.where(status: false).
-      where(created_at: Date.current.beginning_of_day-6.hours..Date.current.end_of_day-6.hours).
+    @attendances_unavailable = @attendances.where(status: false, date: Date.today.to_date).
       order('id ASC').paginate(:page => params[:page], :per_page => 20)
   end
 
@@ -24,12 +22,11 @@ class AttendancesController < ApplicationController
   end
 
   def new
-    @attendance = Attendance.new
   end
 
   def create
-    @attendance.info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
-    @attendance.user_id = current_user.id
+    @attendance.user = current_user
+    @attendance.date = Date.today.to_date
     @attendance.status = true
     if @attendance.save
       flash[:notice] = "You have Checked In Successfully!!"
@@ -41,8 +38,7 @@ class AttendancesController < ApplicationController
   end
 
   def update
-    @attendance = Attendance.find(params[:id])
-    @attendance.update(status: false)
+    @attendance.update_attribute(:status, false)
     flash[:notice] = "You have checked Out Successfully!!"
     redirect_back(fallback_location: root_path)
   end
