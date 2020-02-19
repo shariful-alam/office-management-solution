@@ -4,8 +4,9 @@ class Expense < ApplicationRecord
   belongs_to :budget
   attr_accessor :remove_image
 
-  validates :product_name, :presence => true
-  validates :cost, :presence => true, numericality: {integer: true}
+  validates :product_name, presence: true
+  validates :expense_date, presence: true
+  validates :cost, presence: true, numericality: {integer: true}
 
   has_attached_file :image
   validates_attachment :image,
@@ -16,12 +17,8 @@ class Expense < ApplicationRecord
                        convert_options: {regular: "-posterize 3"}
 
 
-  before_save :delete_image, if: -> {remove_image == '1'}
+  #before_save :delete_image, if: -> {remove_image == '1'}
 
-  CATEGORY_LIST = ["Fixed", "Regular"]
-
-  def formatted_month
-    self.expense_date.strftime("%B")+', '+self.expense_date.strftime("%Y")
-  end
+  CATEGORY_LIST = ['Fixed', 'Regular']
 
 end

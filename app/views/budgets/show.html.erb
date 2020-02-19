@@ -2,7 +2,7 @@
   <div class="col">
     <div class="card" style="width: 25rem;">
       <div class="card-body">
-        <h3 class="card-title">Expense List for <%= @budget.month %></h3>
+        <h3 class="card-title">Expenses of <%= "#{Date::MONTHNAMES[@budget.month]}, #{@budget.year}" %></h3>
       </div>
       <hr>
       <ul class="list-group list-group-flush">

@@ -7,9 +7,10 @@ class BudgetsController < ApplicationController
     @budgets = @budgets.joins(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
-      @budgets = @budgets.where('users.name ilike :search OR month ilike :search', {search: search})
+      @budgets = @budgets.where('users.name ilike :search', {search: search})
     end
-    @budgets = @budgets.order('id ASC').paginate(:page => params[:page], :per_page => 20)
+    @budgets = @budgets.order(:id).paginate(:page => params[:page], :per_page => 12)
+
   end
 
   def new
@@ -18,21 +19,20 @@ class BudgetsController < ApplicationController
   def create
     @budget = current_user.budgets.new(budget_params)
     if @budget.save
-      redirect_to budgets_path, notice: "Budget has been Created Successfully!!"
+      redirect_to budgets_path, notice: 'Budget has been created successfully!!'
     else
       render 'new'
     end
   end
 
   def show
-    @expenses = Expense.where(budget_id: params[:id])
-
+    @expenses = @budget.expenses
     if params[:search].present?
-      search = "%#{params[:search]}%"
+      search = '%#{params[:search]}%'
       @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
-    @expenses = @expenses.order('id ASC')
+    @expenses = @expenses.order(:id)
 
     @pending_expenses = @expenses.with_status(Expense::PENDING).paginate(:page => params[:page], :per_page => 20)
     @approved_expenses = @expenses.with_status(Expense::APPROVED).paginate(:page => params[:page], :per_page => 20)
@@ -41,17 +41,15 @@ class BudgetsController < ApplicationController
 
   def destroy
     @budget.destroy
-    redirect_to budgets_path, alert: "Budget has been Removed!!"
+    redirect_to budgets_path, alert: 'Budget has been removed successfully!!'
   end
 
   def edit
-    @budget.year=@budget.month.chars.last(4).join
-    @budget.month=@budget.month[0...-6]
   end
 
   def update
     if @budget.update(budget_params)
-      redirect_to budgets_path, notice: "Budget has been Updated Successfully!!"
+      redirect_to budgets_path, notice: 'Budget has been updated successfully!!'
     else
       render 'edit'
     end

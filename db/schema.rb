@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_12_100020) do
+ActiveRecord::Schema.define(version: 2020_02_19_120233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,12 +33,14 @@ ActiveRecord::Schema.define(version: 2020_02_12_100020) do
   end
 
   create_table "budgets", force: :cascade do |t|
-    t.string "month"
     t.decimal "amount"
-    t.decimal "expense"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+    t.integer "month"
+    t.integer "year"
+    t.decimal "expense", default: "0.0"
+    t.index ["month", "year"], name: "index_budgets_on_month_and_year"
   end
 
   create_table "expenses", force: :cascade do |t|

@@ -9,9 +9,8 @@ class ExpensesController < ApplicationController
       search = "%#{params[:search]}%"
       @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
-
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
-    @expenses = @expenses.order('id ASC')
+    @expenses = @expenses.order(:id)
 
     @pending_expenses = @expenses.with_status(Expense::PENDING).paginate(:page => params[:page], :per_page => 20)
     @approved_expenses = @expenses.with_status(Expense::APPROVED).paginate(:page => params[:page], :per_page => 20)
@@ -20,16 +19,22 @@ class ExpensesController < ApplicationController
   end
 
   def new
+
   end
 
   def create
+
     @expense = current_user.expenses.new(expense_params)
-    @budget=Budget.find_by(month: @expense.formatted_month)
-    @expense.budget_id=@budget.id if @budget
+    @budget = Budget.find_by(month: @expense.expense_date.month, year: @expense.expense_date.year) if @expense.expense_date.present?
+    @expense.budget = @budget if @budget.present?
     if @expense.save
-      redirect_to expenses_path, notice: "Expense has been Created Successfully!!"
+      redirect_to expenses_path, success: 'Expense has been created successfully!!'
     else
-      render 'new'
+      if @expense.expense_date.nil?
+        render :new
+      else
+        redirect_to expenses_path, alert: "Budget for #{Date::MONTHNAMES[@expense.expense_date.month]} is not submitted yet!!"
+      end
     end
   end
 
@@ -39,7 +44,7 @@ class ExpensesController < ApplicationController
 
   def destroy
     @expense.destroy
-    flash[:alert] = "Expense has been Removed!!"
+    flash[:alert] = 'Expense has been removed successfully!!'
     redirect_back(fallback_location: expenses_path)
   end
 
@@ -48,41 +53,38 @@ class ExpensesController < ApplicationController
 
   def update
     if @expense.update(expense_params)
-      month=@expense.expense_date.strftime("%B")+', '+@expense.expense_date.strftime("%Y")
-      @budget=Budget.find_by(month: month)
-      if @budget
-        @expense.budget_id=@budget.id
+      @budget = Budget.find_by(month: @expense.expense_date.month, year: @expense.expense_date.year) if @expense.expense_date.present?
+      @expense.budget = @budget if @budget.present?
+      if @expense.save
+        redirect_to expenses_path, success: 'Expense has been updated successfully!!'
       else
-        redirect_to expenses_path, alert: "The budget for this month is not submitted yet!!"
+        render :edit, alert: 'The budget for this month is not submitted yet!!'
       end
-      @expense.save
-      redirect_to expenses_path, success: "Expense has been Updated Successfully!!"
     else
-      render 'edit'
+      render :edit
     end
   end
 
   def reject
     @expense.status = Expense::REJECTED
     @expense.save
-    flash[:alert] = "Expense has been Rejected!!"
+    flash[:alert] = 'Expense has been rejected successfully!!'
     redirect_back(fallback_location: expenses_path)
   end
 
   def approve
-    @budget = Budget.find(@expense.budget_id)
     if @expense.status == Expense::APPROVED
       @expense.status = Expense::PENDING
-      @budget.expense = @budget.expense - @expense.cost
+      @expense.budget.expense = @expense.budget.expense - @expense.cost
       @expense.approve_time = nil
-      flash[:warning] = "The Expense has been Queued for Pending!!"
+      flash[:warning] = 'The Expense has been queued for pending!!'
     else
       @expense.status = Expense::APPROVED
       @expense.approve_time = @expense.updated_at
-      @budget.expense = @budget.expense + @expense.cost
-      flash[:notice] = "Expense has been Approved Successfully!!"
+      @expense.budget.expense = @expense.budget.expense + @expense.cost
+      flash[:notice] = 'Expense has been approved successfully!!'
     end
-    @budget.save
+    @expense.budget.save
     @expense.save
     redirect_back(fallback_location: expenses_path)
   end

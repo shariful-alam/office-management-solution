@@ -6,7 +6,7 @@
     <%= form_tag(budgets_path, :method => "get") do %>
       <div class="row">
         <div class="col-sm-6">
-          <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control", autocomplete: :off %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search by Name", class: "form-control", autocomplete: :off %>
         </div>
       </div>
       <br>
@@ -19,14 +19,13 @@
 </div>
 <br>
 
-
 <% @number=@budgets.offset + 1 %>
 <div class="table-responsive-sm">
   <table class="table table-bordered">
     <thead>
     <tr>
       <th>Sl</th>
-      <th>Year - Month</th>
+      <th>Month / Year</th>
       <th>Amount</th>
       <th>Expense</th>
       <th>Remaining</th>
@@ -39,10 +38,10 @@
       <tr>
         <td><%= @number %> </td>
         <% @number+=1 %>
-        <td><%= budget.month %></td>
+        <td><%= "#{Date::MONTHNAMES[budget.month]}, #{budget.year}" %></td>
         <td><%= taka(budget.amount) %></td>
         <td><%= taka(budget.expense) %></td>
-        <td><%= taka(budget.amount-budget.expense) %></td>
+        <td><%= taka(budget.amount - budget.expense) %></td>
         <td><%= budget.user.name %></td>
         <td>
           <%= link_to budget_path(budget) do %>
@@ -61,7 +60,9 @@
     <% end %>
   </table>
 </div>
+
 <%= will_paginate @budgets, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+
 <div class="form-group">
   <%= link_to "Back", root_path, class: "btn btn-dark" %>
 </div>

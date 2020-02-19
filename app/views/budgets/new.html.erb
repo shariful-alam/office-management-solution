@@ -15,7 +15,7 @@
 
       <div class="form-group">
         <%= form.label :month %>
-        <%= form.select :month, Date::MONTHNAMES[1..12], {}, {class: "form-control"} %>
+        <%= form.select :month, Date::MONTHNAMES.compact.zip([*1..12]).to_h, {}, {class: "form-control"} %>
       </div>
 
       <div class="form-group">

@@ -1,8 +1,7 @@
 module ApplicationHelper
 
   def convert_to_dhaka(datetime)
-     datetime=datetime.in_time_zone("Dhaka")
-     return datetime
+     datetime=datetime.in_time_zone('Dhaka')
   end
 
   def full_date(datetime)
@@ -31,15 +30,14 @@ module ApplicationHelper
 
   def budget_hint
     date = Date.today
-    month = date.strftime("%B")+', '+date.strftime("%Y")
-    present_budget=Budget.find_by(month: month)
+    present_budget= Budget.find_by(month: date.month, year: date.year)
     if present_budget.nil?
       "The budget is not added yet !".html_safe
     else
-      "Budget for  #{present_budget.month}
-     Total :   #{taka(present_budget.amount)}
-     Expense :   #{taka(present_budget.expense)}
-     Remaining :  #{taka(present_budget.amount - present_budget.expense)}".html_safe
+      "Budget for  #{Date::MONTHNAMES[present_budget.month]}, #{present_budget.year}
+      Total :   #{taka(present_budget.amount)}
+      Expense :   #{taka(present_budget.expense)}
+      Remaining :  #{taka(present_budget.amount - present_budget.expense)}".html_safe
     end
   end
 
