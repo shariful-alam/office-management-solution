@@ -1,20 +1,19 @@
-<% if current_user.role==User::ADMIN %>
-    <%= link_to "Add User information", new_manage_user_path, class: "btn btn-dark", style: "float:right" %>
-<% end %>
+<%= link_to "Add User", new_manage_user_path, class: "btn btn-dark", style: "float:right" %>
+
 <h1>Employee List</h1>
 <div class="row">
   <div class="col-sm">
     <%= form_tag(manage_users_path, :method => "get") do %>
-        <div class="row">
-          <div class="col-sm-6">
-            <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control", autocomplete: :off %>
-          </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control", autocomplete: :off %>
         </div>
-        <br>
-        <div class="row container">
-          <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
-          <%= link_to 'Reset', manage_users_path, class: "btn btn-secondary" %>
-        </div>
+      </div>
+      <br>
+      <div class="row container">
+        <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
+        <%= link_to 'Reset', manage_users_path, class: "btn btn-secondary" %>
+      </div>
     <% end %>
   </div>
 </div>
@@ -37,39 +36,39 @@
     </thead>
 
     <% @users.each do |user| %>
-        <tr>
-          <td><%= @number %> </td>
-          <% @number+=1 %>
-          <td><%= user.name %></td>
-          <td><%= user.email %></td>
-          <td><%= user.phone %></td>
-          <td><%= user.role %></td>
-          <!--<td><%= image_tag(user.image.url, :size => "50x50") if user.image.exists? %> </td>-->
+      <tr>
+        <td><%= @number %> </td>
+        <% @number+=1 %>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.phone %></td>
+        <td><%= user.role %></td>
+        <!--<td><%= image_tag(user.image.url, :size => "50x50") if user.image.exists? %> </td>-->
 
-          <% if current_user.role==User::ADMIN %>
-              <td>
-                <%= link_to manage_user_path(user) do %>
-                  <i class="fa fa-eye" title="Show Details"></i>
-                <% end %>
-                |
-                <%= link_to show_all_manage_user_path(user) do %>
-                  <i class="fa fa-money" title="Show All Expenses"></i>
-                <% end %>
-                |
-                <%= link_to edit_manage_user_path(user) do %>
-                  <i class="fa fa-edit" title="Edit"></i>
-                <% end %>
-                |
-                <%= link_to manage_user_path(user), method: :delete, data: {confirm: "Are you sure?"} do %>
-                  <i class="fa fa-trash" title="Drop"></i>
-                <% end %>
-              </td>
-          <% else %>
+        <% if current_user.role==User::ADMIN %>
+          <td>
             <%= link_to manage_user_path(user) do %>
               <i class="fa fa-eye" title="Show Details"></i>
             <% end %>
+            |
+            <%= link_to show_all_manage_user_path(user) do %>
+              <i class="fa fa-money" title="Show All Expenses"></i>
+            <% end %>
+            |
+            <%= link_to edit_manage_user_path(user) do %>
+              <i class="fa fa-edit" title="Edit"></i>
+            <% end %>
+            |
+            <%= link_to manage_user_path(user), method: :delete, data: {confirm: "Are you sure?"} do %>
+              <i class="fa fa-trash" title="Drop"></i>
+            <% end %>
+          </td>
+        <% else %>
+          <%= link_to manage_user_path(user) do %>
+            <i class="fa fa-eye" title="Show Details"></i>
           <% end %>
-        </tr>
+        <% end %>
+      </tr>
     <% end %>
   </table>
 </div>

@@ -13,7 +13,7 @@ class Manage::UsersController < ApplicationController
 
   def create
     if @user.save
-      redirect_to manage_users_path, notice: "User has been created successfully"
+      redirect_to manage_users_path, notice: 'User has been created successfully'
     else
       render 'new'
     end
@@ -33,7 +33,7 @@ class Manage::UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to manage_users_path, alert: "User has been removed successfully"
+    redirect_to manage_users_path, alert: 'User has been removed successfully'
   end
 
   def edit
@@ -41,14 +41,14 @@ class Manage::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to manage_user_path, notice: "User data has been updated successfully"
+      redirect_to manage_user_path, notice: 'User data has been updated successfully'
     else
       render 'edit'
     end
   end
 
   def show_all
-    @expenses = Expense.where(user_id: params[:id])
+    @expenses = @user.expenses
     @expense_for_user = Expense.where(status: 'Approved').sum(:cost)
     if params[:search].present?
       search = "%#{params[:search]}%"

@@ -8,6 +8,7 @@ class Expense < ApplicationRecord
   validates :expense_date, presence: true
   validates :cost, presence: true, numericality: {integer: true}
 
+
   has_attached_file :image
   validates_attachment :image,
                        content_type: {content_type: /\Aimage\/.*\z/},

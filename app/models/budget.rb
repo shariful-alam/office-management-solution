@@ -15,7 +15,7 @@ class Budget < ApplicationRecord
   private
 
   def define_month_year
-    self.amount += add.to_i if add.present?
+    self.amount += self.add.to_i if self.add.present?
   end
 
 end

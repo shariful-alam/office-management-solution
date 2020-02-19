@@ -40,7 +40,7 @@
       <% end %>
     <% end %>
     <% if can? :delete, expense %>
-      |<%= link_to expense_path(expense), method: :delete, data: {confirm: "Are you sure?"} do %>
+      |<%= link_to expense_path(expense), method: :delete, data: {confirm: 'Are you sure?'} do %>
         <i class="fa fa-trash" title="Drop"></i>
       <% end %>
     <% end %>
