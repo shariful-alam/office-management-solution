@@ -46,6 +46,7 @@ class Ability
         can :read, Income, {user_id: user.id, status: Leafe::REJECTED}
         cannot :approve, Income, :all
         cannot :reject, Income, :all
+        can :show_individual, Income, {user_id: user.id}
       end
     else
       cannot :manage, :all

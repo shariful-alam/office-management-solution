@@ -32,6 +32,10 @@ class User < ApplicationRecord
   after_create :send_message
   before_save :delete_image, if: -> {remove_image == '1'}
 
+  def admin?
+    self.role == ADMIN
+  end
+
   private
 
   def send_message
@@ -39,7 +43,7 @@ class User < ApplicationRecord
   end
 
   def delete_image
-    self.image = nil
+     self.image = nil
   end
 
 

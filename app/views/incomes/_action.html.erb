@@ -8,7 +8,7 @@
   <%= l.source %>
 </td>
 <td style="text-align: center;">
-  <% if current_user.role == User::ADMIN %>
+  <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
     <% if l.status == Income::APPROVED %>
       <%= link_to approve_income_path(l), method: :put, data: {confirm: 'Are you sure?'} do %>
         <i class="fa fa-undo" title="Undo"></i>

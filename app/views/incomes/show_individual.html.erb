@@ -3,11 +3,11 @@
 
 <% if params[:month] %>
   <% if params[:year] %>
-    <h1>Income List of <%= @incomes.last.user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>
+    <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>
       , <%= params[:year] %> </h1>
     <br/>
   <% else %>
-    <h1>Income List of <%= @incomes.last.user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>
+    <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>
       , <%= Date.today.year %> </h1>
     <br/>
   <% end %>
@@ -16,9 +16,9 @@
   <% end %>
 <% else %>
   <% if params[:year] %>
-    <h1>All Income List of <%= @incomes.last.user.name %> of year <%= params[:year] %> </h1> <br/>
+    <h1>All Income List of <%= @user.name %> of year <%= params[:year] %> </h1> <br/>
   <% else %>
-    <h1>All Income List of <%= @incomes.last.user.name %> of year <%= Date.today.year %> </h1> <br/>
+    <h1>All Income List of <%= @user.name %> of year <%= Date.today.year %> </h1> <br/>
   <% end %>
 <% end %>
 

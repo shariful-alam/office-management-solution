@@ -90,7 +90,9 @@ class IncomesController < ApplicationController
   end
 
   def show_individual
-    @incomes = Income.where(user_id: params[:user_id])
+    @user = current_user.admin? ? User.find(params[:user_id]) : current_user
+    @incomes = @user.incomes
+
     @incomes = @incomes.where('extract(month from income_date) = ?', params[:month]) if params[:month].present?
     @incomes = @incomes.where('extract(year from income_date) = ?', params[:year].present? ? params[:year] : Date.today.year) if params[:year].present?
 

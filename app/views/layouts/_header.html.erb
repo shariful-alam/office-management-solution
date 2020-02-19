@@ -66,12 +66,12 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <%= check_in_out %>
-                    <% if current_user.role == User::ADMIN %>
+                    <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
                         <%= link_to show_all_pending_manage_users_path, class: 'dropdown-item' do %>
                             <div>Pending Request &nbsp <%= see_pending_request %></div>
                         <% end %>
-                    <% end %>
-                    <%= link_to "Availability", attendances_path, class: 'dropdown-item' %>
+                      <%= link_to "Availability", attendances_path, class: 'dropdown-item' %>
+                  <% end %>
                     <%= link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item' %>
                     <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
                   </div>
