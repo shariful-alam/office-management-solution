@@ -2,7 +2,7 @@
 <h3>User : <%= @allocated_leafe.user.name %> </h3>
 
 <div style="padding-right:600px; ">
-  <%= form_for(@allocated_leafe) do |form| %>
+  <%= form_for(@allocated_leafe) do |allocated_leafe| %>
 
       <% if @allocated_leafe.errors.full_messages.any? %>
           <% @allocated_leafe.errors.full_messages.each do |error_message| %>
@@ -10,16 +10,16 @@
           <% break end %>
       <% end %>
       <div class="form-group">
-        <%= form.label :year, class: "control-label" %>
-        <%= form.select :year, Date.today.year.. 10.years.from_now.year, {}, {:multiple => false, class: "form-control"} %>
+        <%= allocated_leafe.label :year, class: "control-label" %>
+        <%= allocated_leafe.select :year, Date.today.year.. 10.years.from_now.year, {}, {:multiple => false, class: "form-control"} %>
       </div>
       <br/>
       <div class="form-group">
-        <%= form.label :total_leave, class: "control-label" %>
-        <%= form.number_field :total_leave, class: "form-control" %>
+        <%= allocated_leafe.label :total_leave, class: "control-label" %>
+        <%= allocated_leafe.number_field :total_leave, class: "form-control" %>
       </div>
       <div class="form-group">
-        <%= form.submit 'Update', class: "btn btn-success" %> |
+        <%= allocated_leafe.submit 'Update', class: "btn btn-success" %> |
         <%= link_to "Back", allocated_leaves_path, class: "btn btn-dark" %>
       </div>
   <% end %>

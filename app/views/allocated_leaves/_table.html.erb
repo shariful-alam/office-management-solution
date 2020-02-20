@@ -7,9 +7,9 @@
       <th>Status</th>
       <th style="text-align: center;">Action</th>
     </tr>
-    <% leaves.each do |l| %>
+    <% leaves.each do |leafe| %>
       <tr>
-        <%= render partial: 'action', locals: {l: l} %>
+        <%= render partial: 'leaves/action', locals: {leave: leafe} %>
       </tr>
     <% end %>
   </table>

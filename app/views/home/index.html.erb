@@ -2,7 +2,7 @@
     <h3 class="justify-content-center">User Dashboard </h3>
 <% end %>
 
-<% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
+<% if current_user.admin? %>
   <br>
   <div class="row">
     <div class="container col-sm-6">

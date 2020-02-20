@@ -21,7 +21,7 @@ class BudgetsController < ApplicationController
     if @budget.save
       redirect_to budgets_path, notice: 'Budget has been created successfully!!'
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -51,7 +51,7 @@ class BudgetsController < ApplicationController
     if @budget.update(budget_params)
       redirect_to budgets_path, notice: 'Budget has been updated successfully!!'
     else
-      render 'edit'
+      render :edit
     end
   end
 

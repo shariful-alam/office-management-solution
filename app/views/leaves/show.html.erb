@@ -8,7 +8,7 @@
     <li class="list-group-item"><b>Leave Type : </b><%= @leafe.leave_type %></li>
     <li class="list-group-item"><b>Reason : </b><%= @leafe.reason %></li>
     <li class="list-group-item"><b>Status : </b><%= @leafe.status %></li>
-    <% if @leafe.status == Leafe::APPROVED %>
+    <% if @leafe.Approved? %>
         <li class="list-group-item"><b>Approved at : </b><%= full_date_with_time(@leafe.approve_time) %></li>
     <% end %>
   </ul>

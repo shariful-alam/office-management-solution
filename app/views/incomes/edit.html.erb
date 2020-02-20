@@ -2,7 +2,7 @@
 <h3>User : <%= @income.user.name %> </h3>
 
 <div class="col-md-5">
-  <%= form_for(@income) do |l| %>
+  <%= form_for(@income) do |income| %>
 
     <% if @income.errors.full_messages.any? %>
       <% @income.errors.full_messages.each do |error_message| %>
@@ -11,22 +11,22 @@
     <% end %>
 
     <div>
-      <%= l.label :amount, class: 'control-label' %> <br/>
-      <%= l.number_field :amount, class: 'form-control' %>
+      <%= income.label :amount, class: 'control-label' %> <br/>
+      <%= income.number_field :amount, class: 'form-control' %>
     </div>
     <br/>
     <div>
-      <%= l.label :income_date, class: 'control-label' %> <br/>
-      <%= l.text_field :income_date, class: 'form-control', id: "datepicker" , placeholder: "yyyy-mm-yy" %>
+      <%= income.label :income_date, class: 'control-label' %> <br/>
+      <%= income.text_field :income_date, class: 'form-control', id: "datepicker" , placeholder: "yyyy-mm-yy" %>
     </div>
     <br/>
     <div class="form-group">
-      <%= l.label :source, class: "control-label" %> <br/>
-      <%= l.select(:source, Income::SOURCE, {}, {class: "form-control"}) %>
+      <%= income.label :source, class: "control-label" %> <br/>
+      <%= income.select(:source, Income::SOURCE, {}, {class: "form-control"}) %>
     </div>
     <br/>
     <div class="form-group">
-      <%= l.submit 'Update', class: "btn btn-success" %> |
+      <%= income.submit 'Update', class: "btn btn-success" %> |
       <%= link_to "Back", :back, class: "btn btn-dark" %>
     </div>
   <% end %>

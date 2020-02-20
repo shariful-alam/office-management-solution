@@ -8,13 +8,13 @@
         <th>Employee</th>
         <th>Check In Time</th>
       </tr>
-      <% @attendances_available.each do |l| %>
+      <% @attendances_available.each do |attendance| %>
           <tr>
             <td>
-              <%= l.user.name %>
+              <%= attendance.user.name %>
             </td>
             <td>
-              <%= only_time(l.created_at) %>
+              <%= only_time(attendance.created_at) %>
             </td>
           </tr>
       <% end %>
@@ -38,19 +38,19 @@
         <th>Check Out Time</th>
         <th>Total Time Spent</th>
       </tr>
-      <% @attendances_unavailable.each do |l| %>
+      <% @attendances_unavailable.each do |attendance| %>
           <tr>
             <td>
-              <%= l.user.name %>
+              <%= attendance.user.name %>
             </td>
             <td>
-              <%= only_time(l.created_at) %>
+              <%= only_time(attendance.created_at) %>
             </td>
             <td>
-              <%= only_time(l.updated_at) %>
+              <%= only_time(attendance.updated_at) %>
             </td>
             <td>
-              <%= distance_of_time_in_words(l.updated_at - l.created_at) %>
+              <%= distance_of_time_in_words(attendance.updated_at - attendance.created_at) %>
             </td>
           </tr>
       <% end %>

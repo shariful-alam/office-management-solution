@@ -8,7 +8,7 @@
   <td>
 
     <% if can? :approve, expense %>
-      <% if expense.status==Expense::APPROVED %>
+      <% if expense.Approved? %>
         <%= link_to approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure?'} do %>
           <i class="fa fa-undo" title="Undo"></i>
         <% end %>

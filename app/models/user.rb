@@ -36,6 +36,10 @@ class User < ApplicationRecord
     self.role == ADMIN or self.role == SUPER_ADMIN
   end
 
+  def employee?
+    self.role == EMPLOYEE
+  end
+
   private
 
   def send_message

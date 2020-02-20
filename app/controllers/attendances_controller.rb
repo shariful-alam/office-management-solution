@@ -12,18 +12,6 @@ class AttendancesController < ApplicationController
       order('id ASC').paginate(:page => params[:page], :per_page => 20)
   end
 
-  def show
-  end
-
-  def edit
-  end
-
-  def destroy
-  end
-
-  def new
-  end
-
   def create
     @attendance.user = current_user
     @attendance.date = Date.today.to_date

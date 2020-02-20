@@ -1,6 +1,6 @@
 <div class="col-sm-5" >
   <h1>Apply for Leave</h1>
-  <%= form_for(@leafe, html: {autocomplete: 'off'}) do |l| %>
+  <%= form_for(@leafe, html: {autocomplete: 'off'}) do |leafe| %>
 
       <% if @leafe.errors.full_messages.any? %>
           <% @leafe.errors.full_messages.each do |error_message| %>
@@ -13,27 +13,27 @@
       </div>
       <br/>
       <div>
-        <%= l.label :start_date, class: 'control-label' %> <br/>
-        <%= l.text_field :start_date, class: 'form-control',id: "datepicker" , placeholder: "yyyy-mm-yy" %>
+        <%= leafe.label :start_date, class: 'control-label' %> <br/>
+        <%= leafe.text_field :start_date, class: 'form-control', id: "datepicker" , placeholder: "yyyy-mm-yy" %>
       </div>
       <br/>
       <div>
-        <%= l.label :end_date, class: 'control-label' %> <br/>
-        <%= l.text_field :end_date, class: 'form-control',id: "datepicker2", placeholder: "yyyy-mm-yy" %>
+        <%= leafe.label :end_date, class: 'control-label' %> <br/>
+        <%= leafe.text_field :end_date, class: 'form-control', id: "datepicker2", placeholder: "yyyy-mm-yy" %>
       </div>
       <br/>
       <div>
-        <%= l.label :reason, class: 'control-label' %> <br/>
-        <%= l.text_area :reason, class: 'form-control' %>
+        <%= leafe.label :reason, class: 'control-label' %> <br/>
+        <%= leafe.text_area :reason, class: 'form-control' %>
       </div>
       <br/>
       <div>
-        <%= l.label :Leave_type %> <br/>
-        <%= l.select(:leave_type, Leafe::LEAVE_TYPES, {}, {class: "form-control"}) %>
+        <%= leafe.label :Leave_type %> <br/>
+        <%= leafe.select(:leave_type, Leafe::LEAVE_TYPES, {}, {class: "form-control"}) %>
       </div>
       <br/>
       <div class="form-group">
-        <%= l.submit 'Save', class: "btn btn-success" %> |
+        <%= leafe.submit 'Save', class: "btn btn-success" %> |
         <%= link_to "Back", :back, class: "btn btn-dark" %>
       </div>
 

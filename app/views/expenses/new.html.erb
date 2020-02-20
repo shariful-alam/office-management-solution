@@ -1,50 +1,50 @@
 <h1>Insert Expense Information</h1>
 
 <div class="col-sm-5">
-  <%= form_for(@expense, html: {autocomplete: 'off'} ) do |form| %>
+  <%= form_for(@expense, html: {autocomplete: 'off'}) do |expense| %>
 
-      <% if @expense.errors.full_messages.any? %>
-          <% @expense.errors.full_messages.each do |error_message| %>
-              <p class="alert alert-danger"> <%= error_message if @expense.errors.full_messages.first == error_message %> </p>
-          <% break end %>
-      <% end %>
+    <% if @expense.errors.full_messages.any? %>
+      <% @expense.errors.full_messages.each do |error_message| %>
+        <p class="alert alert-danger"> <%= error_message if @expense.errors.full_messages.first == error_message %> </p>
+      <% break end %>
+    <% end %>
 
-      <div class="form-group">
-        <%= form.label :product_name, class: "control-label" %>
-        <%= form.text_field :product_name, class: "form-control" %>
-      </div>
+    <div class="form-group">
+      <%= expense.label :product_name, class: "control-label" %>
+      <%= expense.text_field :product_name, class: "form-control" %>
+    </div>
 
-      <div class="form-group">
-        <%= form.label :category %>
-        <%= form.select(:category, Expense::CATEGORY_LIST,{}, {class: "form-control"}) %>
-      </div>
+    <div class="form-group">
+      <%= expense.label :category %>
+      <%= expense.select(:category, Expense::CATEGORY_LIST, {}, {class: "form-control"}) %>
+    </div>
 
-      <div class="form-group">
-        <%= form.label :cost, class: "control-label" %>
-        <%= form.text_field :cost, class: "form-control" %>
-      </div>
+    <div class="form-group">
+      <%= expense.label :cost, class: "control-label" %>
+      <%= expense.text_field :cost, class: "form-control" %>
+    </div>
 
-      <div class="form-group">
-        <%= form.label :image, 'Image', class: "control-label" %>
-        <%= form.file_field :image, class: "form-control" %>
-      </div>
+    <div class="form-group">
+      <%= expense.label :image, 'Image', class: "control-label" %>
+      <%= expense.file_field :image, class: "form-control" %>
+    </div>
 
-      <div class="form-group">
-        <%= form.label :details, class: "control-label" %>
-        <%= form.text_area :details, class: "form-control" %>
-      </div>
-
-
-      <div class="form-group">
-        <%= form.label :expense_date, 'Date', class: "control-label" %>
-        <%= form.text_field :expense_date, class: "form-control",id: "datepicker", placeholder: "yyyy-mm-yy" %>
-      </div>
+    <div class="form-group">
+      <%= expense.label :details, class: "control-label" %>
+      <%= expense.text_area :details, class: "form-control" %>
+    </div>
 
 
-      <div class="form-group">
-        <%= form.submit 'Submit', class: "btn btn-success" %> |
-        <%= link_to "Back", expenses_path, class: "btn btn-dark" %>
-      </div>
+    <div class="form-group">
+      <%= expense.label :expense_date, 'Date', class: "control-label" %>
+      <%= expense.text_field :expense_date, class: "form-control", id: "datepicker", placeholder: "yyyy-mm-yy" %>
+    </div>
+
+
+    <div class="form-group">
+      <%= expense.submit 'Submit', class: "btn btn-success" %> |
+      <%= link_to "Back", expenses_path, class: "btn btn-dark" %>
+    </div>
   <% end %>
 
 </div>
