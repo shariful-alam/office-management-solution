@@ -2,7 +2,6 @@ class LeavesController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
-
   def index
     @leaves = @leaves.joins(:user)
     if params[:search].present?

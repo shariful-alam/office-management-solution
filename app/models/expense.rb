@@ -4,6 +4,8 @@ class Expense < ApplicationRecord
   belongs_to :budget
   attr_accessor :remove_image
 
+  enum status: { Pending: 0, Approved: 1, Rejected: 2 }
+
   validates :product_name, presence: true
   validates :expense_date, presence: true
   validates :cost, presence: true, numericality: {integer: true}
