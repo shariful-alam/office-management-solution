@@ -10,11 +10,11 @@ class Budget < ApplicationRecord
   validates :amount, presence: true, numericality: {integer: true}
   validates :add, numericality: {integer: true, message: 'Please Give a value', :allow_blank => true, :allow_nil => true}
 
-  before_update :define_month_year
+  before_update :add_amount
 
   private
 
-  def define_month_year
+  def add_amount
     self.amount += self.add.to_i if self.add.present?
   end
 

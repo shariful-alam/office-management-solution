@@ -4,7 +4,7 @@ class Expense < ApplicationRecord
   belongs_to :budget
   attr_accessor :remove_image
 
-  enum status: { Pending: 0, Approved: 1, Rejected: 2 }
+  enum status: {Pending: 0, Approved: 1, Rejected: 2}
 
   validates :product_name, presence: true
   validates :expense_date, presence: true
@@ -22,13 +22,6 @@ class Expense < ApplicationRecord
 
   #before_save :delete_image, if: -> {remove_image == '1'}
 
-  CATEGORY_LIST = ["Fixed", "Regular"]
-
-  scope :with_status, -> (status) { where(status: status) }
-
-  def formatted_month
-    self.expense_date.strftime("%B")+', '+self.expense_date.strftime("%Y")
-  end
   CATEGORY_LIST = ['Fixed', 'Regular']
 
 end

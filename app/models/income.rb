@@ -7,13 +7,12 @@ class Income < ApplicationRecord
   MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   SOURCE = ['Employee', 'Service']
 
-  scope :with_status, -> (status) { where(status: status) }
-
+  enum status: {Pending: 0, Approved: 1, Rejected: 2}
 
 
   private
 
-  def self.find_incomes_by_months(user, month,search)
+  def self.find_incomes_by_months(user, month, search)
     income = user.incomes
     income = income.with_status(Income::APPROVED)
     income = income.where('extract(month from income_date) = ?', month)
@@ -36,7 +35,7 @@ class Income < ApplicationRecord
     income = income.sum(:amount)
   end
 
-  def self.bonus_amount(user,month,year)
+  def self.bonus_amount(user, month, year)
     income = user.incomes
     income = income.with_status(Income::APPROVED)
     income = income.where('extract(month from income_date) = ?', month) if month.present?
