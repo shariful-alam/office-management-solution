@@ -90,9 +90,15 @@ class IncomesController < ApplicationController
   end
 
   def show_individual
-    @user = current_user.admin? ? User.find(params[:user_id]) : current_user
-    @incomes = @user.incomes
 
+    if current_user.admin?
+      @user =  User.find(params[:user_id])
+    else
+      flash[:alert] = "Access Denied" if params[:user_id].to_i != current_user.id
+      @user = current_user
+    end
+
+    @incomes = @user.incomes
     @incomes = @incomes.where('extract(month from income_date) = ?', params[:month]) if params[:month].present?
     @incomes = @incomes.where('extract(year from income_date) = ?', params[:year].present? ? params[:year] : Date.today.year) if params[:year].present?
 
