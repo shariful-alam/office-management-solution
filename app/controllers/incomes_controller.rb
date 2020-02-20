@@ -4,7 +4,7 @@ class IncomesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users_income = User.order('id ASC').paginate(:page => params[:users_incomes], :per_page => 10)
+    @users_income = User.order(:id).paginate(:page => params[:users_incomes], :per_page => 10)
     @users_bonus = @users_income.paginate(:page => params[:users_bonuses], :per_page => 10)
 
     @monthly_totals = Array.new(13,0)
@@ -96,9 +96,9 @@ class IncomesController < ApplicationController
     @incomes = @incomes.where('extract(month from income_date) = ?', params[:month]) if params[:month].present?
     @incomes = @incomes.where('extract(year from income_date) = ?', params[:year].present? ? params[:year] : Date.today.year) if params[:year].present?
 
-    @incomes_approved = @incomes.Approved.paginate(:page => params[:approved_incomes], :per_page => 10)
-    @incomes_pending = @incomes.Pending.paginate(:page => params[:pending_incomes], :per_page => 10)
-    @incomes_rejected = @incomes.Rejected.paginate(:page => params[:rejected_incomes], :per_page => 10)
+    @incomes_approved = @incomes.Approved.paginate(:page => params[:page], :per_page => 10)
+    @incomes_pending = @incomes.Pending.paginate(:page => params[:page], :per_page => 10)
+    @incomes_rejected = @incomes.Rejected.paginate(:page => params[:page], :per_page => 10)
 
     #raise @user.inspect
 
