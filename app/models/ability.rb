@@ -11,6 +11,7 @@ class Ability
         cannot :reject, Expense, {status: Leafe::APPROVED}
         cannot :update, Expense, {status: Leafe::APPROVED}
         cannot :update, Expense, {status: Leafe::REJECTED}
+        cannot :destroy, Expense, {status: Leafe::APPROVED}
 
         can :manage, AllocatedLeafe, :all
 
@@ -29,7 +30,6 @@ class Ability
         cannot :manage, Expense, {status: Leafe::APPROVED}
         cannot :approve, Expense, {user_id: user.id}
         cannot :reject, Expense, {user_id: user.id}
-        can :read, Expense, {user_id: user.id}
         cannot :show_all_pending, User, :all
         cannot :approve, Expense, :all
 

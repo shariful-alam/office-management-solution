@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def convert_to_dhaka(datetime)
-     datetime=datetime.in_time_zone('Dhaka')
+     datetime.in_time_zone('Dhaka')
   end
 
   def full_date(datetime)
@@ -42,7 +42,7 @@ module ApplicationHelper
   end
 
   def see_pending_request
-    pending =Expense.where(status: 'Pending').count + Leafe.where(status: 'Pending').count + Income.where(status: 'Pending').count
+    pending =Expense.Pending.count + Leafe.Pending.count + Income.Pending.count
     if pending > 0
       "<span class='badge'>
           #{pending}

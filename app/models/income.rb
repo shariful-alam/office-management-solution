@@ -14,7 +14,7 @@ class Income < ApplicationRecord
 
   def self.find_incomes_by_months(user, month, search)
     income = user.incomes
-    income = income.with_status(Income::APPROVED)
+    income = income.Approved
     income = income.where('extract(month from income_date) = ?', month)
     if search.present?
       income = income.where('extract(year from income_date) = ?', search)
@@ -26,7 +26,7 @@ class Income < ApplicationRecord
 
   def self.find_total(user, search)
     income = user.incomes
-    income = income.with_status(Income::APPROVED)
+    income = income.Approved
     if search.nil?
       income = income.where('extract(year from income_date) = ?', Date.today.year)
     else
@@ -37,7 +37,7 @@ class Income < ApplicationRecord
 
   def self.bonus_amount(user, month, year)
     income = user.incomes
-    income = income.with_status(Income::APPROVED)
+    income = income.Approved
     income = income.where('extract(month from income_date) = ?', month) if month.present?
     income = income.where('extract(year from income_date) = ?', year.present? ? year : Date.today.year) if year.present?
     income = income.sum(:amount)
