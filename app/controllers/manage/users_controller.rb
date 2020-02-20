@@ -3,9 +3,9 @@ class Manage::UsersController < ApplicationController
   load_and_authorize_resource
 
   def show_all_pending
-    @all_pending_expenses =  Expense.with_status(Expense::PENDING).order('expenses.id ASC').paginate(:page => params[:page], :per_page => 20)
-    @all_pending_leaves =  Leafe.with_status(Expense::PENDING).order('leaves.id ASC').paginate(:page => params[:page], :per_page => 20)
-    @all_pending_incomes =  Income.with_status(Expense::PENDING).order('incomes.id ASC').paginate(:page => params[:page], :per_page => 20)
+    @all_pending_expenses =  Expense.Pending.order('expenses.id ASC').paginate(:page => params[:page], :per_page => 20)
+    @all_pending_leaves =  Leafe.Pending.order('leaves.id ASC').paginate(:page => params[:page], :per_page => 20)
+    @all_pending_incomes =  Income.Pending.order('incomes.id ASC').paginate(:page => params[:page], :per_page => 20)
   end
 
   def new
@@ -56,9 +56,9 @@ class Manage::UsersController < ApplicationController
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
     @expenses = @expenses.order('id ASC')
-    @pending_expenses = @expenses.with_status(Expense::PENDING).paginate(:page => params[:page], :per_page => 20)
-    @approved_expenses = @expenses.with_status(Expense::APPROVED).paginate(:page => params[:page], :per_page => 20)
-    @rejected_expenses = @expenses.with_status(Expense::REJECTED).paginate(:page => params[:page], :per_page => 20)
+    @pending_expenses = @expenses.Pending.paginate(:page => params[:page], :per_page => 20)
+    @approved_expenses = @expenses.Approved.paginate(:page => params[:page], :per_page => 20)
+    @rejected_expenses = @expenses.Rejected.paginate(:page => params[:page], :per_page => 20)
   end
 
   private

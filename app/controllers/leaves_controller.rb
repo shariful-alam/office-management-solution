@@ -13,9 +13,9 @@ class LeavesController < ApplicationController
     @leaves = @leaves.where(':to >= start_date ', {to: params[:to]}) if params[:to].present?
     @leaves = @leaves.order('id ASC')
 
-    @leaves_pending = @leaves.with_status(Leafe::PENDING).paginate(:page => params[:page], :per_page => 20)
-    @leaves_approved = @leaves.with_status(Leafe::APPROVED).paginate(:page => params[:page], :per_page => 20)
-    @leaves_rejected = @leaves.with_status(Leafe::REJECTED).paginate(:page => params[:page], :per_page => 20)
+    @leaves_pending = @leaves.Pending.paginate(:page => params[:page], :per_page => 20)
+    @leaves_approved = @leaves.Approved.paginate(:page => params[:page], :per_page => 20)
+    @leaves_rejected = @leaves.Rejected.paginate(:page => params[:page], :per_page => 20)
   end
 
   def new
@@ -64,12 +64,12 @@ class LeavesController < ApplicationController
   def approve
     @allocated_leafe = @leafe.user.allocated_leafe
     @count = (@leafe.start_date..@leafe.end_date).select {|a| a.wday < 6 && a.wday > 0}.count
-    if @leafe.status == Leafe::APPROVED
-      @leafe.status = Leafe::PENDING
+    if @leafe.Approved?
+      @leafe.Pending!
       @allocated_leafe.used_leave -= @count
       flash[:notice] = 'Leave information has been changed successfully'
     else
-      @leafe.status = Leafe::APPROVED
+      @leafe.Approved!
       @leafe.approve_time = @leafe.updated_at
       @allocated_leafe.used_leave += @count
       #LeafeMailer.approved(@leafe).deliver_now
@@ -81,7 +81,7 @@ class LeavesController < ApplicationController
   end
 
   def reject
-    @leafe.status = Leafe::REJECTED
+    @leafe.Rejected!
     flash[:notice] = 'The leave has been changed successfully'
     @leafe.save
     #LeafeMailer.rejected(@leafe).deliver_now

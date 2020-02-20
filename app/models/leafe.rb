@@ -15,6 +15,7 @@ class Leafe < ApplicationRecord
   ML = "Medical Leave"
 
   enum status: { Pending: 0, Approved: 1, Rejected: 2 }
+
   scope :with_leafe_type, -> (type) { where(leave_type: type) }
 
 

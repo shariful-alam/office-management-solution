@@ -63,20 +63,20 @@ class ExpensesController < ApplicationController
   end
 
   def reject
-    @expense.status = Expense::REJECTED
+    @expense.Rejected!
     @expense.save
     flash[:alert] = 'Expense has been rejected successfully!!'
     redirect_back(fallback_location: expenses_path)
   end
 
   def approve
-    if @expense.status == Expense::APPROVED
-      @expense.status = Expense::PENDING
+    if @expense.Approved?
+      @expense.Pending!
       @expense.budget.expense = @expense.budget.expense - @expense.cost
       @expense.approve_time = nil
       flash[:warning] = 'The Expense has been queued for pending!!'
     else
-      @expense.status = Expense::APPROVED
+      @expense.Approved!
       @expense.approve_time = @expense.updated_at
       @expense.budget.expense = @expense.budget.expense + @expense.cost
       flash[:notice] = 'Expense has been approved successfully!!'

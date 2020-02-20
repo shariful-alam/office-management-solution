@@ -65,11 +65,11 @@ class IncomesController < ApplicationController
   end
 
   def approve
-    if @income.status == Leafe::APPROVED
-      @income.status = Leafe::PENDING
+    if @income.Approved?
+      @income.Pending!
       flash[:notice] = 'The income status has been changed successfully'
     else
-      @income.status = Leafe::APPROVED
+      @income.Approved!
       @income.approve_time = @income.updated_at
       #LeafeMailer.approved(@leave).deliver_now
       #raise @allocated_leave.inspect
@@ -80,7 +80,7 @@ class IncomesController < ApplicationController
   end
 
   def reject
-    @income.status = Leafe::REJECTED
+    @income.Rejected!
     flash[:notice] = 'Income has been rejected'
     @income.save
     #LeafeMailer.rejected(@leave).deliver_now
@@ -94,9 +94,9 @@ class IncomesController < ApplicationController
     @incomes = @incomes.where('extract(month from income_date) = ?', params[:month]) if params[:month].present?
     @incomes = @incomes.where('extract(year from income_date) = ?', params[:year].present? ? params[:year] : Date.today.year) if params[:year].present?
 
-    @incomes_approved = @incomes.with_status(Income::APPROVED).paginate(:page => params[:page], :per_page => 10)
-    @incomes_pending = @incomes.with_status(Income::PENDING).paginate(:page => params[:page], :per_page => 10)
-    @incomes_rejected = @incomes.with_status(Income::REJECTED).paginate(:page => params[:page], :per_page => 10)
+    @incomes_approved = @incomes.Approved.paginate(:page => params[:page], :per_page => 10)
+    @incomes_pending = @incomes.Pending.paginate(:page => params[:page], :per_page => 10)
+    @incomes_rejected = @incomes.Rejected.paginate(:page => params[:page], :per_page => 10)
 
     #raise @user.inspect
 

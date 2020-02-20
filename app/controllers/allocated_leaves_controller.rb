@@ -35,10 +35,10 @@ class AllocatedLeavesController < ApplicationController
     @allocated_vacation = @leaves.with_leafe_type(Leafe::VL)
     @allocated_medical = @leaves.with_leafe_type(Leafe::ML)
 
-    @allocated_personal = @allocated_personal.with_status(Leafe::APPROVED).count
-    @allocated_training = @allocated_training.with_status(Leafe::APPROVED).count
-    @allocated_vacation = @allocated_vacation.with_status(Leafe::APPROVED).count
-    @allocated_medical = @allocated_medical.with_status(Leafe::APPROVED).count
+    @allocated_personal = @allocated_personal.Approved.count
+    @allocated_training = @allocated_training.Approved.count
+    @allocated_vacation = @allocated_vacation.Approved.count
+    @allocated_medical = @allocated_medical.Approved.count
   end
 
   def update
@@ -58,9 +58,9 @@ class AllocatedLeavesController < ApplicationController
     @leaves = params[:user_id].present? ? current_user.leaves : @allocated_leafe.user.leaves
     @leaves = @leaves.order('id ASC')
 
-    @leaves_pending = @leaves.with_status(Leafe::PENDING).paginate(:page => params[:page], :per_page => 20)
-    @leaves_approved = @leaves.with_status(Leafe::APPROVED).paginate(:page => params[:page], :per_page => 20)
-    @leaves_rejected = @leaves.with_status(Leafe::REJECTED).paginate(:page => params[:page], :per_page => 20)
+    @leaves_pending = @leaves.Pending.paginate(:page => params[:page], :per_page => 20)
+    @leaves_approved = @leaves.Approved.paginate(:page => params[:page], :per_page => 20)
+    @leaves_rejected = @leaves.Rejected.paginate(:page => params[:page], :per_page => 20)
   end
 
   private
