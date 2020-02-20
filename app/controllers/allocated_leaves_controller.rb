@@ -35,10 +35,12 @@ class AllocatedLeavesController < ApplicationController
     @allocated_vacation = @leaves.with_leafe_type(Leafe::VL)
     @allocated_medical = @leaves.with_leafe_type(Leafe::ML)
 
-    @allocated_personal = @allocated_personal.Approved.count
-    @allocated_training = @allocated_training.Approved.count
-    @allocated_vacation = @allocated_vacation.Approved.count
-    @allocated_medical = @allocated_medical.Approved.count
+    @allocated = {
+      "personal" => @allocated_personal.Approved.count,
+      "training" => @allocated_training.Approved.count,
+      "vacation" => @allocated_vacation.Approved.count,
+      "medical" => @allocated_medical.Approved.count
+    }
   end
 
   def update
