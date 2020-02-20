@@ -91,6 +91,7 @@ class IncomesController < ApplicationController
 
   def show_individual
 
+    #TODO: Replace this code with cancan
     if current_user.admin?
       @user =  User.find(params[:user_id])
     else
@@ -102,9 +103,9 @@ class IncomesController < ApplicationController
     @incomes = @incomes.where('extract(month from income_date) = ?', params[:month]) if params[:month].present?
     @incomes = @incomes.where('extract(year from income_date) = ?', params[:year].present? ? params[:year] : Date.today.year) if params[:year].present?
 
-    @incomes_approved = @incomes.Approved.paginate(:page => params[:page], :per_page => 20)
-    @incomes_pending = @incomes.Pending.paginate(:page => params[:page], :per_page => 20)
-    @incomes_rejected = @incomes.Rejected.paginate(:page => params[:page], :per_page => 20)
+    @incomes_approved = @incomes.Approved.paginate(:page => params[:approved_incomes], :per_page => 20)
+    @incomes_pending = @incomes.Pending.paginate(:page => params[:pending_incomes], :per_page => 20)
+    @incomes_rejected = @incomes.Rejected.paginate(:page => params[:rejected_incomes], :per_page => 20)
 
     #raise @user.inspect
 
