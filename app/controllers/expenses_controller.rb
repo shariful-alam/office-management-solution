@@ -4,7 +4,7 @@ class ExpensesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @expenses = @expenses.joins(:user)
+    @expenses = @expenses.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
       @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})

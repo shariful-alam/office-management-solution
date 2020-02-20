@@ -3,9 +3,9 @@ class Manage::UsersController < ApplicationController
   load_and_authorize_resource
 
   def show_all_pending
-    @all_pending_expenses =  Expense.Pending.order(:id).paginate(:page => params[:pending_expenses], :per_page => 20)
-    @all_pending_leaves =  Leafe.Pending.order(:id).paginate(:page => params[:pending_leaves], :per_page => 20)
-    @all_pending_incomes =  Income.Pending.order(:id).paginate(:page => params[:pending_incomes], :per_page => 20)
+    @all_pending_expenses =  Expense.Pending.includes(:user).order(:id).paginate(:page => params[:pending_expenses], :per_page => 20)
+    @all_pending_leaves =  Leafe.Pending.includes(:user).order(:id).paginate(:page => params[:pending_leaves], :per_page => 20)
+    @all_pending_incomes =  Income.Pending.includes(:user).order(:id).paginate(:page => params[:pending_incomes], :per_page => 20)
   end
 
   def new

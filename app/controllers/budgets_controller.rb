@@ -4,7 +4,7 @@ class BudgetsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @budgets = @budgets.joins(:user)
+    @budgets = @budgets.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
       @budgets = @budgets.where('users.name ilike :search', {search: search})
@@ -27,9 +27,10 @@ class BudgetsController < ApplicationController
 
   def show
     @expenses = @budget.expenses
+    @expenses = @expenses.includes(:user)
     if params[:search].present?
       search = '%#{params[:search]}%'
-      @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
+      @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
     @expenses = @expenses.order(:id)

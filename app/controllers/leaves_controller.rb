@@ -3,7 +3,7 @@ class LeavesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @leaves = @leaves.joins(:user)
+    @leaves = @leaves.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
       @leaves = @leaves.where('users.name ilike :search OR leave_type ilike :search', {search: search})

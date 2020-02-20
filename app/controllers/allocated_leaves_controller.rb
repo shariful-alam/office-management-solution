@@ -5,8 +5,8 @@ class AllocatedLeavesController < ApplicationController
 
 
   def index
-    @allocated_leaves = @allocated_leaves.where(year: params[:search].present? ? params[:search] : Date.today.year.to_s)
-    @allocated_leaves = @allocated_leaves.order('id ASC').paginate(:page => params[:page], :per_page => 20)
+    @allocated_leaves = @allocated_leaves.includes(:user).where(year: params[:search].present? ? params[:search] : Date.today.year.to_s)
+    @allocated_leaves = @allocated_leaves.order(:id).paginate(:page => params[:page], :per_page => 20)
   end
 
   def new
