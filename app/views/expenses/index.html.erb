@@ -35,6 +35,9 @@
 </button>
 <div class="collapse show in" id="demo">
   <%= render partial: 'table', locals: {expenses: @pending_expenses} %>
+  <div>
+    <%= will_paginate @pending_expenses, :param_name => 'pending_expenses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 
 <br>
@@ -45,6 +48,9 @@
 </button>
 <div class="collapse in" id="demo2">
   <%= render partial: 'table', locals: {expenses: @approved_expenses} %>
+  <div>
+    <%= will_paginate @approved_expenses, :param_name => 'approved_expenses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 <br>
 <br>
@@ -54,6 +60,9 @@
 </button>
 <div class="collapse in" id="demo3">
   <%= render partial: 'table', locals: {expenses: @rejected_expenses} %>
+  <div>
+    <%= will_paginate @rejected_expenses, :param_name => 'rejected_expenses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 
 

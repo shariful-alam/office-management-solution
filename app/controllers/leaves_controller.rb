@@ -13,9 +13,9 @@ class LeavesController < ApplicationController
     @leaves = @leaves.where(':to >= start_date ', {to: params[:to]}) if params[:to].present?
     @leaves = @leaves.order('id ASC')
 
-    @leaves_pending = @leaves.Pending.paginate(:page => params[:page], :per_page => 20)
-    @leaves_approved = @leaves.Approved.paginate(:page => params[:page], :per_page => 20)
-    @leaves_rejected = @leaves.Rejected.paginate(:page => params[:page], :per_page => 20)
+    @leaves_pending = @leaves.Pending.paginate(:page => params[:pending_leaves], :per_page => 2)
+    @leaves_approved = @leaves.Approved.paginate(:page => params[:approved_leaves], :per_page => 2)
+    @leaves_rejected = @leaves.Rejected.paginate(:page => params[:rejected_leaves], :per_page => 2)
   end
 
   def new

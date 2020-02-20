@@ -11,9 +11,9 @@ class ExpensesController < ApplicationController
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
     @expenses = @expenses.order(:id)
-    @pending_expenses = @expenses.Pending.paginate(:page => params[:page], :per_page => 20)
-    @approved_expenses = @expenses.Approved.paginate(:page => params[:page], :per_page => 20)
-    @rejected_expenses = @expenses.Rejected.paginate(:page => params[:page], :per_page => 20)
+    @pending_expenses = @expenses.Pending.paginate(:page => params[:pending_expenses], :per_page => 20)
+    @approved_expenses = @expenses.Approved.paginate(:page => params[:approved_expenses], :per_page => 20)
+    @rejected_expenses = @expenses.Rejected.paginate(:page => params[:rejected_expenses], :per_page => 20)
   end
 
   def new

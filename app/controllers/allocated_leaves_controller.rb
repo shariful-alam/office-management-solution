@@ -58,9 +58,9 @@ class AllocatedLeavesController < ApplicationController
     @leaves = params[:user_id].present? ? current_user.leaves : @allocated_leafe.user.leaves
     @leaves = @leaves.order('id ASC')
 
-    @leaves_pending = @leaves.Pending.paginate(:page => params[:page], :per_page => 20)
-    @leaves_approved = @leaves.Approved.paginate(:page => params[:page], :per_page => 20)
-    @leaves_rejected = @leaves.Rejected.paginate(:page => params[:page], :per_page => 20)
+    @leaves_pending = @leaves.Pending.paginate(:page => params[:pending_leaves], :per_page => 20)
+    @leaves_approved = @leaves.Approved.paginate(:page => params[:approved_leaves], :per_page => 20)
+    @leaves_rejected = @leaves.Rejected.paginate(:page => params[:rejected_leaves], :per_page => 20)
   end
 
   private

@@ -9,6 +9,9 @@
 </button>
 <div class="collapse show in" id="demo">
   <%= render partial: 'table', locals: {leaves: @leaves_pending} %>
+  <div>
+    <%= will_paginate @leaves_pending, :param_name => 'pending_leaves', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 <br><br>
 
@@ -17,6 +20,9 @@
 </button>
 <div class="collapse in" id="demo1">
   <%= render partial: 'table', locals: {leaves: @leaves_approved} %>
+  <div>
+    <%= will_paginate @leaves_approved, :param_name => 'approved_leaves', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 <br><br>
 
@@ -25,6 +31,9 @@
 </button>
 <div class="collapse in" id="demo2">
   <%= render partial: 'table', locals: {leaves: @leaves_rejected} %>
+  <div>
+    <%= will_paginate @leaves_rejected, :param_name => 'rejected_leaves', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 
 <div class="form-group">

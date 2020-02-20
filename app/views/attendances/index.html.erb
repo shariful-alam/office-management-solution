@@ -21,7 +21,7 @@
     </table>
   </div>
   <div>
-    <%= will_paginate @attendances_available, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    <%= will_paginate @attendances_available, :param_name => 'available', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
   </div>
 
 </div>
@@ -58,7 +58,7 @@
   </div>
 
   <div>
-    <%= will_paginate @attendances_unavailable, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    <%= will_paginate @attendances_unavailable, :param_name => 'unavailable', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
   </div>
 </div>
 

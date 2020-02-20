@@ -6,10 +6,10 @@ class AttendancesController < ApplicationController
 
   def index
     @attendances_available = @attendances.where(status: true, date: Date.today.to_date).
-      order('id ASC').paginate(:page => params[:page], :per_page => 20)
+      order('id ASC').paginate(:page => params[:available], :per_page => 20)
 
     @attendances_unavailable = @attendances.where(status: false, date: Date.today.to_date).
-      order('id ASC').paginate(:page => params[:page], :per_page => 20)
+      order('id ASC').paginate(:page => params[:unavailable], :per_page => 20)
   end
 
   def create

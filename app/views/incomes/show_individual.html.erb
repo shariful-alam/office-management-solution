@@ -27,6 +27,9 @@
 </button>
 <div class="collapse show in" id="demo">
   <%= render partial: 'table', locals: {incomes: @incomes_pending} %>
+  <div>
+    <%= will_paginate @incomes_pending, :param_name => 'pending_incomes', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 <br>
 <br>
@@ -36,6 +39,9 @@
 </button>
 <div class="collapse in" id="demo1">
   <%= render partial: 'table', locals: {incomes: @incomes_approved} %>
+  <div>
+    <%= will_paginate @incomes_approved, :param_name => 'approved_incomes', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 <br>
 <br>
@@ -45,6 +51,9 @@
 </button>
 <div class="collapse in" id="demo2">
   <%= render partial: 'table', locals: {incomes: @incomes_rejected} %>
+  <div>
+    <%= will_paginate @incomes_rejected, :param_name => 'rejected_incomes', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 
 <div class="form-group">
