@@ -33,7 +33,11 @@ class User < ApplicationRecord
   before_save :delete_image, if: -> {remove_image == '1'}
 
   def admin?
-    self.role == ADMIN or self.role == SUPER_ADMIN
+    self.role == ADMIN
+  end
+
+  def super_admin?
+    self.role == SUPER_ADMIN
   end
 
   def employee?

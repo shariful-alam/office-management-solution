@@ -31,7 +31,7 @@ class IncomesController < ApplicationController
     @income = current_user.incomes.new(income_params)
     if @income.save
       flash[:notice] = 'Your income has been submitted for approval'
-      if current_user.admin?
+      if current_user.admin? or current_user.super_admin?
         redirect_to incomes_path
       else
         redirect_to show_individual_incomes_path
@@ -69,12 +69,12 @@ class IncomesController < ApplicationController
   def approve
     if @income.Approved?
       @income.Pending!
+      @income.approve_time = nil
       flash[:notice] = 'The income status has been changed successfully'
     else
       @income.Approved!
-      @income.approve_time = @income.updated_at
+      @income.approve_time = DateTime.now
       #LeafeMailer.approved(@leave).deliver_now
-      #raise @allocated_leave.inspect
       flash[:notice] = 'Income has been approved'
     end
     @income.save
@@ -90,9 +90,8 @@ class IncomesController < ApplicationController
   end
 
   def show_individual
-
     #TODO: Replace this code with cancan
-    if current_user.admin?
+    if current_user.admin? or current_user.super_admin?
       @user =  User.find(params[:user_id])
     else
       flash[:alert] = "Access Denied" if params[:user_id].to_i != current_user.id
@@ -100,6 +99,7 @@ class IncomesController < ApplicationController
     end
 
     @incomes = @user.incomes
+    #used pg specific query to reduce complexity
     @incomes = @incomes.where('extract(month from income_date) = ?', params[:month]) if params[:month].present?
     @incomes = @incomes.where('extract(year from income_date) = ?', params[:year].present? ? params[:year] : Date.today.year) if params[:year].present?
 
@@ -107,12 +107,8 @@ class IncomesController < ApplicationController
     @incomes_pending = @incomes.Pending.paginate(:page => params[:pending_incomes], :per_page => 20)
     @incomes_rejected = @incomes.Rejected.paginate(:page => params[:rejected_incomes], :per_page => 20)
 
-    #raise @user.inspect
-
     @bonus_amount = Income.bonus_amount(@user,params[:month],params[:year]) if params[:month].present?
-    #raise @bonus_amount.inspect
   end
-
 
   private
   def income_params

@@ -11,7 +11,7 @@
   <%= leave.status %>
 </td>
 <td style="text-align: center;">
-  <% if current_user.admin? %>
+  <% if current_user.admin? or current_user.super_admin? %>
     <% if leave.Approved? %>
       <%= link_to approve_leafe_path(leave), method: :put, data: {confirm: 'Are you sure?'} do %>
         <i class="fa fa-undo" title="Undo"></i>

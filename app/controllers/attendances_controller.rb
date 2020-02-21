@@ -26,12 +26,13 @@ class AttendancesController < ApplicationController
   end
 
   def update
-    @attendance.update_attribute(:status, false)
+    @attendance.update({status: false})
     flash[:notice] = "You have checked Out Successfully!!"
     redirect_back(fallback_location: root_path)
   end
 
   def whitelisted?(ip)
+    #TODO: make the ip address variable
     #return true if ['27.147.206.53'].include?(ip)
     return true if ['::1'].include?(ip)
     false

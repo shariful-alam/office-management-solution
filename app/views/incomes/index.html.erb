@@ -1,6 +1,6 @@
 <%= link_to "Add Income", new_income_path, class: "btn btn-dark", style: "float:right" %>
 
-<% if current_user.admin? %>
+<% if current_user.admin? or current_user.super_admin? %>
   <% if params[:search].nil? %>
     <h1>All Income List of <%= Date.today.year %> </h1>
     <% @year = Date.today.year %>

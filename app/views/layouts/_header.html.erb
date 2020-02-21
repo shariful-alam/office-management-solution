@@ -29,7 +29,7 @@
             </li>
 
             <li class="nav-item">
-              <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
+              <% if current_user.admin? or current_user.super_admin? %>
                   <%= link_to "Incomes", incomes_path, class: "nav-link" %>
               <% else %>
                   <%= link_to "Incomes", show_individual_incomes_path(user_id: current_user.id), class: "nav-link" %>
@@ -37,7 +37,7 @@
             </li>
 
             <li class="nav-item">
-              <% if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN %>
+              <% if current_user.admin? or current_user.super_admin? %>
                   <div>
                     <div class="dropdown">
                       <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,7 +47,6 @@
                         <%= link_to "Apply for Leave", new_leafe_path, class: 'dropdown-item' %>
                         <%= link_to "Appointed Leaves", allocated_leaves_path, class: 'dropdown-item' %>
                         <%= link_to "Leave Requests", leaves_path, class: 'dropdown-item' %>
-                        <%= link_to "Appoint Leave", new_allocated_leafe_path, class: 'dropdown-item' %>
                       </div>
                     </div>
                   </div>
@@ -60,13 +59,13 @@
                 <div class="dropdown">
                   <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <strong> <%= current_user.name %> </strong>
-                    <% if current_user.admin? %>
+                    <% if current_user.admin? || current_user.super_admin? %>
                         <%= see_pending_request %>
                     <% end %>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <%= check_in_out %>
-                    <% if current_user.admin? %>
+                    <% if current_user.admin? or current_user.super_admin? %>
                         <%= link_to show_all_pending_manage_users_path, class: 'dropdown-item' do %>
                             <div>Pending Request &nbsp <%= see_pending_request %></div>
                         <% end %>

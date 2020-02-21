@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def convert_to_dhaka(datetime)
-     datetime.in_time_zone('Dhaka')
+    datetime.in_time_zone('Dhaka')
   end
 
   def full_date(datetime)
@@ -51,19 +51,16 @@ module ApplicationHelper
   end
 
   def check_in_out
-    attendance = Attendance.where(user_id: current_user.id, date: Date.today.to_date).last
-    if attendance.present?
-      if attendance.status
-        link_to ("Check Out <span class='status green'></span>").html_safe, attendance_path(attendance), method: :put, class: "dropdown-item", data: {confirm: "Are You Sure?"}
-      else
-        link_to ("Check In <span class='status red'></span>").html_safe, attendances_path, method: :post, class: "dropdown-item"
-      end
+    attendance = current_user.attendances
+    attendance = attendance.where(date: Date.today.to_date).last
+    if attendance.present? && attendance.status
+      link_to ("Check Out <span class='status green'></span>").html_safe, attendance_path(attendance), method: :put, class: "dropdown-item", data: {confirm: "Are You Sure?"}
     else
       link_to ("Check In <span class='status red'></span>").html_safe, attendances_path, method: :post, class: "dropdown-item"
     end
   end
 
-  def find_class(income,target)
+  def find_klass(income, target)
     if income > target
       return "bonusable"
     else

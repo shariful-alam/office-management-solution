@@ -15,7 +15,6 @@ class AllocatedLeavesController < ApplicationController
 
   def create
     @allocated_leafe = AllocatedLeafe.new(allocated_leafe_params)
-    @allocated_leafe.used_leave = 0
     if @allocated_leafe.save
       redirect_to allocated_leaves_path, notice: 'Leave has been allocated successfully'
     else
@@ -52,13 +51,15 @@ class AllocatedLeavesController < ApplicationController
   end
 
   def destroy
-    @allocated_leafe.destroy
-    redirect_to allocated_leaves_path, alert: 'Information has been removed'
+    if @allocated_leafe.destroy
+      redirect_to allocated_leaves_path, alert: 'Information has been removed'
+    else
+      render :index
+    end
   end
 
   def show_all
-    @leaves = params[:user_id].present? ? current_user.leaves : @allocated_leafe.user.leaves
-    @leaves = @leaves.order(:id)
+    @leaves = @allocated_leafe.user.leaves.order(:id)
 
     @leaves_pending = @leaves.Pending.paginate(:page => params[:pending_leaves], :per_page => 20)
     @leaves_approved = @leaves.Approved.paginate(:page => params[:approved_leaves], :per_page => 20)
@@ -69,6 +70,5 @@ class AllocatedLeavesController < ApplicationController
   def allocated_leafe_params
     params.require(:allocated_leafe).permit(:user_id, :total_leave, :year)
   end
-
 
 end
