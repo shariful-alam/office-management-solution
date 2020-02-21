@@ -84,7 +84,7 @@
 </nav>
 
 <br>
-<div class="container-fluid">
+<div class="container-fluid" id="flash_msg">
   <% flash.each do |key, value| %>
       <% if key=="alert" %>
           <%= content_tag(:div, value, class: "alert alert-danger") %>
@@ -100,5 +100,9 @@
 <script type="text/javascript" charset="utf-8">
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-    })
+    });
+
+    setTimeout(function() {
+      $('#flash_msg').fadeOut('fast');
+    }, 5000);
 </script>
