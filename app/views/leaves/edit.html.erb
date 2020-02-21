@@ -4,13 +4,10 @@
 <div class="col-sm-5" >
   <%= form_for(@leafe) do |leafe| %>
 
-      <% if @leafe.errors.full_messages.any? %>
-          <% @leafe.errors.full_messages.each do |error_message| %>
-              <p class="alert alert-danger"> <%= error_message if @leafe.errors.full_messages.first == error_message %> </p>
-          <% break end %>
-      <% end %>
+    <%= render partial: 'layouts/error_message', locals: {object: @leafe} %>
 
-      <div class="form-group">
+
+    <div class="form-group">
         <%= leafe.label :start_date, class: "control-label" %>
         <%= leafe.text_field :start_date, class: "form-control", id: "datepicker" , placeholder: "yyyy-mm-yy"%>
       </div>

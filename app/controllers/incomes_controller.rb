@@ -4,7 +4,7 @@ class IncomesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users_income = User.order(:id).paginate(:page => params[:users_incomes], :per_page => 20)
+    @users_income = User.paginate(:page => params[:users_incomes], :per_page => 20)
     @users_bonus = @users_income.paginate(:page => params[:users_bonuses], :per_page => 20)
 
     @monthly_totals = Array.new(13,0)

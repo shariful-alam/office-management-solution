@@ -3,7 +3,7 @@ class LeavesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @leaves = @leaves.includes(:user).order(:id)
+    @leaves = @leaves.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
       @leaves = @leaves.where('users.name ilike :search OR leave_type ilike :search', {search: search})
@@ -23,7 +23,7 @@ class LeavesController < ApplicationController
 
   def create
     @leafe = current_user.leaves.new(leafe_params)
-    if @leafe.count_days > 0
+    if Leafe.count_days(@leafe.start_date,@leafe.end_date) > 0
       if @leafe.save
         redirect_to leaves_path, notice: 'Your leave application has been submitted for approval'
       else
@@ -59,7 +59,7 @@ class LeavesController < ApplicationController
 
   def approve
     @allocated_leafe = @leafe.user.allocated_leafe
-    @count = @leafe.count_days
+    @count = Leafe.count_days(@leafe.start_date,@leafe.end_date)
     if @leafe.Approved?
       @leafe.Pending!
       @leafe.approve_time = nil

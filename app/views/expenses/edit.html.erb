@@ -3,11 +3,8 @@
 <div class="col-sm-5">
   <%= form_for(@expense) do |expense| %>
 
-    <% if @expense.errors.full_messages.any? %>
-      <% @expense.errors.full_messages.each do |error_message| %>
-        <p class="alert alert-danger"> <%= error_message if @expense.errors.full_messages.first == error_message %> </p>
-      <% break end %>
-    <% end %>
+    <%= render partial: 'layouts/error_message', locals: {object: @expense} %>
+
 
     <div class="form-group">
       <%= expense.label :product_name, class: "control-label" %>

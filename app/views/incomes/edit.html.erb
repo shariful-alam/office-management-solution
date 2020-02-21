@@ -4,11 +4,8 @@
 <div class="col-md-5">
   <%= form_for(@income) do |income| %>
 
-    <% if @income.errors.full_messages.any? %>
-      <% @income.errors.full_messages.each do |error_message| %>
-        <p class="alert alert-danger"> <%= error_message if @income.errors.full_messages.first == error_message %> </p>
-      <% break end %>
-    <% end %>
+    <%= render partial: 'layouts/error_message', locals: {object: @income} %>
+
 
     <div>
       <%= income.label :amount, class: 'control-label' %> <br/>

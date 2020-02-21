@@ -2,11 +2,8 @@
 <div class="col-sm-5">
   <%= form_for(@budget) do |budget| %>
 
-    <% if @budget.errors.full_messages.any? %>
-      <% @budget.errors.full_messages.each do |error_message| %>
-        <p class="alert alert-danger"> <%= error_message if @budget.errors.full_messages.first == error_message %> </p>
-      <% break end %>
-    <% end %>
+    <%= render partial: 'layouts/error_message', locals: {object: @budget} %>
+
 
     <div class="form-group">
       <%= budget.label :year, class: "control-label" %>

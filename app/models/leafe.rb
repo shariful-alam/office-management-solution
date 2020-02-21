@@ -19,8 +19,14 @@ class Leafe < ApplicationRecord
   scope :with_leafe_type, -> (type) { where(leave_type: type) }
 
 
-  def self.count_days
-    (self.start_date..self.end_date).select {|a| a.wday < 6 && a.wday > 0}.count
+  private
+
+  def self.count_days(start_date,end_date)
+    if start_date.present? and end_date.present?
+      (start_date..end_date).select {|a| a.wday < 6 && a.wday > 0}.count
+    else
+      0
+    end
   end
 
 
