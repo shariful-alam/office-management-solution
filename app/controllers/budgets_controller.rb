@@ -5,12 +5,8 @@ class BudgetsController < ApplicationController
 
   def index
     @budgets = @budgets.includes(:user)
-    if params[:search].present?
-      search = "%#{params[:search]}%"
-      @budgets = @budgets.where('users.name ilike :search', {search: search})
-    end
-    @budgets = @budgets.order(:year, :month).paginate(:page => params[:page], :per_page => 12)
-
+    @year = params[:search].present? ? "#{params[:search]}" : Date.today.year
+    @budgets = @budgets.where(year: @year).order(:year, :month).paginate(:page => params[:page], :per_page => 12)
   end
 
   def new
