@@ -1,5 +1,5 @@
 <%= link_to "Add Budget", new_budget_path, class: "btn btn-dark", style: "float:right" %>
-<h1>Budget List</h1>
+<h1>Budget List for <%= @year %></h1>
 
 <%= form_tag(budgets_path, :method => "get", class: "form-inline") do %>
   <%= select_tag "search", options_for_select(Date.today.years_ago(4).year.. 4.years.from_now.year, :selected => @year), class: "form-control" %>
