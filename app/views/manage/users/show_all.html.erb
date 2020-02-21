@@ -7,9 +7,9 @@
       <hr>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Total Expense : <b><%= taka(@expense_for_user) %> </b></li>
-        <li class="list-group-item">Total Approved : <b><%= @approved_expenses.count %></b></li>
-        <li class="list-group-item">Total Pending : <b><%= @pending_expenses.count %></b></li>
-        <li class="list-group-item">Total Rejected : <b><%= @rejected_expenses.count %></b></li>
+        <li class="list-group-item">Total approved : <b><%= @approved_expenses.count %></b></li>
+        <li class="list-group-item">Total pending : <b><%= @pending_expenses.count %></b></li>
+        <li class="list-group-item">Total rejected : <b><%= @rejected_expenses.count %></b></li>
       </ul>
     </div>
   </div>
@@ -42,7 +42,7 @@
 <br>
 <br>
 
-<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">Pending (<%= @pending_expenses.count %>)</button>
+<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">pending (<%= @pending_expenses.count %>)</button>
 <div  class="collapse show in" id="demo">
   <%= render partial: 'table', locals: {expenses: @pending_expenses} %>
   <div>
@@ -52,7 +52,7 @@
 <br>
 <br>
 
-<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">Approved (<%= @approved_expenses.count %>)</button>
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">approved (<%= @approved_expenses.count %>)</button>
 <div  class="collapse in" id="demo1">
   <%= render partial: 'table', locals: {expenses: @approved_expenses} %>
   <div>
@@ -63,7 +63,7 @@
 <br>
 
 
-<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">Rejected (<%= @rejected_expenses.count %>)</button>
+<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">rejected (<%= @rejected_expenses.count %>)</button>
 <div  class="collapse in" id="demo2">
   <%= render partial: 'table', locals: {expenses: @rejected_expenses} %>
   <div>

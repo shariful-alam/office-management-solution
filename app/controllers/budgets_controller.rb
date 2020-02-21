@@ -9,7 +9,7 @@ class BudgetsController < ApplicationController
       search = "%#{params[:search]}%"
       @budgets = @budgets.where('users.name ilike :search', {search: search})
     end
-    @budgets = @budgets.order(:id).paginate(:page => params[:page], :per_page => 12)
+    @budgets = @budgets.order(:year, :month).paginate(:page => params[:page], :per_page => 12)
 
   end
 
@@ -33,16 +33,16 @@ class BudgetsController < ApplicationController
       @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
-    @expenses = @expenses.order(:id)
+    @expenses = @expenses.sort_by_expense_date
 
-    @pending_expenses = @expenses.Pending.paginate(:page => params[:pending_expenses], :per_page => 20)
-    @approved_expenses = @expenses.Approved.paginate(:page => params[:approved_expenses], :per_page => 20)
-    @rejected_expenses = @expenses.Rejected.paginate(:page => params[:rejected_expenses], :per_page => 20)
+    @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => 20)
+    @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => 20)
+    @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => 20)
   end
 
   def destroy
-    @budget.destroy
-    redirect_to budgets_path, alert: 'Budget has been removed successfully!!'
+    flash[:alert] = 'Budget has been removed successfully!!' if @budget.destroy
+    redirect_to budgets_path
   end
 
   def edit

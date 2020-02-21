@@ -18,4 +18,5 @@ class Budget < ApplicationRecord
     self.amount += self.add.to_i if self.add.present?
   end
 
+
 end

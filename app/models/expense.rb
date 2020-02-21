@@ -4,7 +4,7 @@ class Expense < ApplicationRecord
   belongs_to :budget
   attr_accessor :remove_image
 
-  enum status: {Pending: 0, Approved: 1, Rejected: 2}
+  enum status: {pending: 0, approved: 1, rejected: 2}
 
   validates :product_name, presence: true
   validates :expense_date, presence: true
@@ -21,7 +21,20 @@ class Expense < ApplicationRecord
 
 
   #before_save :delete_image, if: -> {remove_image == '1'}
+  after_update :update_budget
 
   CATEGORY_LIST = ['Fixed', 'Regular']
+
+  scope :sort_by_expense_date, -> {order(:expense_date)}
+
+  private
+
+  def update_budget
+    if self.approved?
+      self.budget.update({expense: self.budget.expense + self.cost})
+    elsif self.pending?
+      self.budget.update({expense: self.budget.expense - self.cost})
+    end
+  end
 
 end

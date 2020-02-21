@@ -29,7 +29,7 @@
 </div>
 <br>
 
-<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">Pending(<%= @leaves_pending.count %>)</button>
+<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">pending(<%= @leaves_pending.count %>)</button>
 <div class="collapse show in" id="demo">
   <%= render partial: 'table', locals: {leaves: @leaves_pending} %>
   <div>
@@ -39,7 +39,7 @@
 <br>
 <br>
 
-<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">Approved(<%= @leaves_approved.count %>)</button>
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">approved(<%= @leaves_approved.count %>)</button>
 <div class="collapse in" id="demo1">
   <%= render partial: 'table', locals: {leaves: @leaves_approved} %>
   <div>
@@ -49,7 +49,7 @@
 <br>
 <br>
 
-<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">Rejected(<%= @leaves_rejected.count %>)</button>
+<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">rejected(<%= @leaves_rejected.count %>)</button>
 <div class="collapse in" id="demo2">
   <%= render partial: 'table', locals: {leaves: @leaves_rejected} %>
   <div>

@@ -7,13 +7,13 @@ class Income < ApplicationRecord
   MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   SOURCE = ['Employee', 'Service']
 
-  enum status: {Pending: 0, Approved: 1, Rejected: 2}
+  enum status: {pending: 0, approved: 1, rejected: 2}
 
 
   private
 
   def self.find_incomes_by_months(user, month, search)
-    income = user.incomes.Approved
+    income = user.incomes.approved
     income = income.where('extract(month from income_date) = ?', month)
     if search.present?
       income = income.where('extract(year from income_date) = ?', search)
@@ -24,7 +24,7 @@ class Income < ApplicationRecord
   end
 
   def self.find_total(user, search)
-    income = user.incomes.Approved
+    income = user.incomes.approved
     if search.nil?
       income = income.where('extract(year from income_date) = ?', Date.today.year)
     else
@@ -34,7 +34,7 @@ class Income < ApplicationRecord
   end
 
   def self.bonus_amount(user, month, year)
-    income = user.incomes.Approved
+    income = user.incomes.approved
     income = income.where('extract(month from income_date) = ?', month) if month.present?
     income = income.where('extract(year from income_date) = ?', year.present? ? year : Date.today.year) if year.present?
     income = income.sum(:amount)

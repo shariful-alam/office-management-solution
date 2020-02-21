@@ -10,19 +10,19 @@ class Ability
         cannot :edit, User, {role: User::SUPER_ADMIN}
         cannot :destroy, User, {role: User::SUPER_ADMIN}
 
-        cannot :reject, Expense, {status: Expense.statuses[:Rejected]}
-        cannot :approve, Expense, {status: Expense.statuses[:Rejected]}
-        cannot :reject, Expense, {status: Expense.statuses[:Approved]}
-        cannot :update, Expense, {status: Expense.statuses[:Approved]}
-        cannot :update, Expense, {status: Expense.statuses[:Rejected]}
-        cannot :destroy, Expense, {status: Expense.statuses[:Approved]}
+        cannot :reject, Expense, {status: Expense.statuses[:rejected]}
+        cannot :approve, Expense, {status: Expense.statuses[:rejected]}
+        cannot :reject, Expense, {status: Expense.statuses[:approved]}
+        cannot :update, Expense, {status: Expense.statuses[:approved]}
+        cannot :update, Expense, {status: Expense.statuses[:rejected]}
+        cannot :destroy, Expense, {status: Expense.statuses[:approved]}
 
         can :manage, AllocatedLeafe, :all
 
         can :manage, Attendance, :all
 
         can :manage, Leafe, :all
-        cannot :destroy, Leafe, {status: Leafe.statuses[:Approved]}
+        cannot :destroy, Leafe, {status: Leafe.statuses[:approved]}
 
         can :manage, Income, :all
 
@@ -30,8 +30,8 @@ class Ability
         can :update, User, {user_id: user.id}
 
         can :manage, Expense, {user_id: user.id}
-        cannot :manage, Expense, {status: Expense.statuses[:Rejected]}
-        cannot :manage, Expense, {status: Expense.statuses[:Approved]}
+        cannot :manage, Expense, {status: Expense.statuses[:rejected]}
+        cannot :manage, Expense, {status: Expense.statuses[:approved]}
         cannot :approve, Expense, {user_id: user.id}
         cannot :reject, Expense, {user_id: user.id}
         cannot :show_all_pending, User, :all
@@ -43,20 +43,20 @@ class Ability
         can :create, Attendance, {user_id: user.id}
         can :update, Attendance, {user_id: user.id}
 
-        can :manage, Leafe, {user_id: user.id, status: Leafe.statuses[:Pending]}
-        can :read, Leafe, {user_id: user.id, status: Leafe.statuses[:Approved]}
-        can :read, Leafe, {user_id: user.id, status: Leafe.statuses[:Rejected]}
-        cannot :edit, Leafe, {status: Leafe.statuses[:Approved]}
-        cannot :edit, Leafe, {status: Leafe.statuses[:Rejected]}
-        cannot :destroy, Leafe, {status: Leafe.statuses[:Approved]}
-        cannot :destroy, Leafe, {status: Leafe.statuses[:Rejected]}
+        can :manage, Leafe, {user_id: user.id, status: Leafe.statuses[:pending]}
+        can :read, Leafe, {user_id: user.id, status: Leafe.statuses[:approved]}
+        can :read, Leafe, {user_id: user.id, status: Leafe.statuses[:rejected]}
+        cannot :edit, Leafe, {status: Leafe.statuses[:approved]}
+        cannot :edit, Leafe, {status: Leafe.statuses[:rejected]}
+        cannot :destroy, Leafe, {status: Leafe.statuses[:approved]}
+        cannot :destroy, Leafe, {status: Leafe.statuses[:rejected]}
         cannot :approve, Leafe, :all
         cannot :reject, Leafe, :all
 
         can :create, Income
-        can :manage, Income, {user_id: user.id, status: Income.statuses[:Pending]}
-        can :read, Income, {user_id: user.id, status: Income.statuses[:Approved]}
-        can :read, Income, {user_id: user.id, status: Income.statuses[:Rejected]}
+        can :manage, Income, {user_id: user.id, status: Income.statuses[:pending]}
+        can :read, Income, {user_id: user.id, status: Income.statuses[:approved]}
+        can :read, Income, {user_id: user.id, status: Income.statuses[:rejected]}
         cannot :approve, Income, :all
         cannot :reject, Income, :all
         can :show_individual, Income, {user_id: user.id}

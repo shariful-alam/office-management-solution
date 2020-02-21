@@ -3,7 +3,6 @@ class AllocatedLeavesController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
-
   def index
     @allocated_leaves = @allocated_leaves.includes(:user).where(year: params[:search].present? ? params[:search] : Date.today.year.to_s)
     @allocated_leaves = @allocated_leaves.paginate(:page => params[:page], :per_page => 20)
@@ -35,10 +34,10 @@ class AllocatedLeavesController < ApplicationController
     @allocated_medical = @leaves.with_leafe_type(Leafe::ML)
 
     @allocated = {
-      "personal" => @allocated_personal.Approved.count,
-      "training" => @allocated_training.Approved.count,
-      "vacation" => @allocated_vacation.Approved.count,
-      "medical" => @allocated_medical.Approved.count
+      "personal" => @allocated_personal.approved.count,
+      "training" => @allocated_training.approved.count,
+      "vacation" => @allocated_vacation.approved.count,
+      "medical" => @allocated_medical.approved.count
     }
   end
 
@@ -61,9 +60,9 @@ class AllocatedLeavesController < ApplicationController
   def show_all
     @leaves = @allocated_leafe.user.leaves
 
-    @leaves_pending = @leaves.Pending.paginate(:page => params[:pending_leaves], :per_page => 20)
-    @leaves_approved = @leaves.Approved.paginate(:page => params[:approved_leaves], :per_page => 20)
-    @leaves_rejected = @leaves.Rejected.paginate(:page => params[:rejected_leaves], :per_page => 20)
+    @leaves_pending = @leaves.pending.paginate(:page => params[:pending_leaves], :per_page => 20)
+    @leaves_approved = @leaves.approved.paginate(:page => params[:approved_leaves], :per_page => 20)
+    @leaves_rejected = @leaves.rejected.paginate(:page => params[:rejected_leaves], :per_page => 20)
   end
 
   private

@@ -4,7 +4,7 @@
 
 <h1>List of Leaves of <strong><%= @allocated_leafe.user.name %></strong></h1>
 
-<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">Pending
+<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">pending
   (<%= @leaves_pending.count %>)
 </button>
 <div class="collapse show in" id="demo">
@@ -15,7 +15,7 @@
 </div>
 <br><br>
 
-<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">Approved
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">approved
   (<%= @leaves_approved.count %>)
 </button>
 <div class="collapse in" id="demo1">
@@ -26,7 +26,7 @@
 </div>
 <br><br>
 
-<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">Rejected
+<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">rejected
   (<%= @leaves_rejected.count %>)
 </button>
 <div class="collapse in" id="demo2">

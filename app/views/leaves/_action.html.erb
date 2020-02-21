@@ -12,7 +12,7 @@
 </td>
 <td style="text-align: center;">
   <% if current_user.admin? or current_user.super_admin? %>
-    <% if leave.Approved? %>
+    <% if leave.approved? %>
       <%= link_to approve_leafe_path(leave), method: :put, data: {confirm: 'Are you sure?'} do %>
         <i class="fa fa-undo" title="Undo"></i>
       <% end %>
@@ -20,7 +20,7 @@
       <%= link_to leafe_path(leave) do %>
         <i class="fa fa-eye" title="Show Details"></i>
       <% end %>
-    <% elsif leave.Rejected? %>
+    <% elsif leave.rejected? %>
       <%= link_to leafe_path(leave) do %>
         <i class="fa fa-eye" title="Show Details"></i>
       <% end %>
@@ -52,7 +52,7 @@
     <%= link_to leafe_path(leave) do %>
       <i class="fa fa-eye" title="Show Details"></i>
     <% end %>
-    <% if leave.Pending? and leave.user == current_user %>
+    <% if leave.pending? and leave.user == current_user %>
       |
       <%= link_to edit_leafe_path(leave) do %>
         <i class="fa fa-edit" title="Edit"></i>

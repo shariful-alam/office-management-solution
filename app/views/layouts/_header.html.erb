@@ -67,7 +67,7 @@
                     <%= check_in_out %>
                     <% if current_user.admin? or current_user.super_admin? %>
                         <%= link_to show_all_pending_manage_users_path, class: 'dropdown-item' do %>
-                            <div>Pending Request &nbsp <%= see_pending_request %></div>
+                            <div>pending Request &nbsp <%= see_pending_request %></div>
                         <% end %>
                       <%= link_to "Availability", attendances_path, class: 'dropdown-item' %>
                   <% end %>

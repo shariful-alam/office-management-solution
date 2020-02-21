@@ -5,17 +5,17 @@ module ApplicationHelper
   end
 
   def full_date(datetime)
-    datetime=convert_to_dhaka(datetime)
+    datetime = convert_to_dhaka(datetime)
     datetime.strftime('%d %B, %Y')
   end
 
   def full_date_with_time(datetime)
-    datetime=convert_to_dhaka(datetime)
+    datetime = convert_to_dhaka(datetime)
     datetime.strftime('%d %B, %Y at %I:%M %p')
   end
 
   def only_time(datetime)
-    datetime=convert_to_dhaka(datetime)
+    datetime = convert_to_dhaka(datetime)
     datetime.strftime('%I:%M %p')
   end
 
@@ -42,7 +42,7 @@ module ApplicationHelper
   end
 
   def see_pending_request
-    pending =Expense.Pending.count + Leafe.Pending.count + Income.Pending.count
+    pending =Expense.pending.count + Leafe.pending.count + Income.pending.count
     if pending > 0
       "<span class='badge'>
           #{pending}

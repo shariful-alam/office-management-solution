@@ -3,9 +3,9 @@ class Manage::UsersController < ApplicationController
   load_and_authorize_resource
 
   def show_all_pending
-    @all_pending_expenses =  Expense.Pending.includes(:user).order(:id).paginate(:page => params[:pending_expenses], :per_page => 20)
-    @all_pending_leaves =  Leafe.Pending.includes(:user).order(:id).paginate(:page => params[:pending_leaves], :per_page => 20)
-    @all_pending_incomes =  Income.Pending.includes(:user).order(:id).paginate(:page => params[:pending_incomes], :per_page => 20)
+    @all_pending_expenses =  Expense.pending.includes(:user).order(:id).paginate(:page => params[:pending_expenses], :per_page => 20)
+    @all_pending_leaves =  Leafe.pending.includes(:user).order(:id).paginate(:page => params[:pending_leaves], :per_page => 20)
+    @all_pending_incomes =  Income.pending.includes(:user).order(:id).paginate(:page => params[:pending_incomes], :per_page => 20)
   end
 
   def new
@@ -32,8 +32,8 @@ class Manage::UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    redirect_to manage_users_path, alert: 'User has been removed successfully'
+    flash[:alert] = 'User has been removed successfully!!' if @user.destroy
+    redirect_to manage_users_path
   end
 
   def edit
@@ -49,16 +49,16 @@ class Manage::UsersController < ApplicationController
 
   def show_all
     @expenses = @user.expenses
-    @expense_for_user = Expense.Approved.sum(:cost)
+    @expense_for_user = @expenses.approved.sum(:cost)
     if params[:search].present?
       search = "%#{params[:search]}%"
       @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
-    @expenses = @expenses.order(:id)
-    @pending_expenses = @expenses.Pending.paginate(:page => params[:pending_expenses], :per_page => 20)
-    @approved_expenses = @expenses.Approved.paginate(:page => params[:approved_expenses], :per_page => 20)
-    @rejected_expenses = @expenses.Rejected.paginate(:page => params[:rejected_expenses], :per_page => 20)
+    @expenses = @expenses.sort_by_expense_date
+    @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => 20)
+    @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => 20)
+    @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => 20)
   end
 
   private

@@ -7,8 +7,8 @@
     <li class="list-group-item"><b>Income Date : </b><%= full_date(@income.income_date) %></li>
     <li class="list-group-item"><b>Income Source : </b><%= @income.source %></li>
     <li class="list-group-item"><b>Status : </b><%= @income.status %></li>
-    <% if @income.Approved? %>
-        <li class="list-group-item"><b>Approved at : </b><%= full_date_with_time(@income.approve_time) %></li>
+    <% if @income.approved? %>
+        <li class="list-group-item"><b>approved at : </b><%= full_date_with_time(@income.approve_time) %></li>
     <% end %>
   </ul>
   <br>

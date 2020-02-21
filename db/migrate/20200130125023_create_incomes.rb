@@ -5,7 +5,7 @@ class CreateIncomes < ActiveRecord::Migration[6.0]
       t.decimal :amount
       t.date :income_date
       t.string :year_month
-      t.string :status, default: "Pending"
+      t.string :status, default: "pending"
       t.datetime :approve_time
       t.timestamps
     end
