@@ -5,11 +5,13 @@ class AttendancesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @attendances_available = @attendances.includes(:user).where(status: true, date: Date.today.to_date).
-      paginate(:page => params[:available], :per_page => 20)
+    @attendances_available = @attendances.includes(:user)
+                               .where(status: true, date: Date.today.to_date)
+                               .paginate(:page => params[:available], :per_page => 20)
 
-    @attendances_unavailable = @attendances.includes(:user).where(status: false, date: Date.today.to_date).
-      paginate(:page => params[:unavailable], :per_page => 20)
+    @attendances_unavailable = @attendances.includes(:user)
+                                 .where(status: false, date: Date.today.to_date)
+                                 .paginate(:page => params[:unavailable], :per_page => 20)
   end
 
   def create
@@ -32,10 +34,8 @@ class AttendancesController < ApplicationController
   end
 
   def whitelisted?(ip)
-    #TODO: make the ip address variable
-    #return true if ['27.147.206.53'].include?(ip)
-    return true if ['::1'].include?(ip)
-    false
+    ip_address = Rails.env.development? ? Attendance::LOCALHOST_IP_ADDRESS : Attendance::OFFICE_IP_ADDRESSES
+    ip_address.include?(ip) ? true : false
   end
 
   def block_foreign_hosts

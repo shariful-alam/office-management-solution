@@ -19,4 +19,6 @@ class Budget < ApplicationRecord
   end
 
 
+
+
 end

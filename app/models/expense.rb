@@ -21,11 +21,12 @@ class Expense < ApplicationRecord
 
 
   #before_save :delete_image, if: -> {remove_image == '1'}
+  before_validation :check_budget
   after_update :update_budget
 
   CATEGORY_LIST = ['Fixed', 'Regular']
 
-  scope :sort_by_expense_date, -> {order(:expense_date)}
+  scope :sort_by_attr, -> (attr) { order(attr) }
 
   private
 
@@ -36,5 +37,16 @@ class Expense < ApplicationRecord
       self.budget.update({expense: self.budget.expense - self.cost})
     end
   end
+
+ def check_budget
+   if self.expense_date.blank?
+     self.errors.add(:expense_date)
+   else
+     self.budget = Budget.find_by(month: self.expense_date.month, year: self.expense_date.year)
+     if self.budget.blank?
+       self.errors.add(:budget, :not_specified, message: " for #{Date::MONTHNAMES[self.expense_date.month]} is not submitted yet!!")
+     end
+   end
+ end
 
 end

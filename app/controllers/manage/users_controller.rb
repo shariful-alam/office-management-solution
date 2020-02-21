@@ -3,9 +3,9 @@ class Manage::UsersController < ApplicationController
   load_and_authorize_resource
 
   def show_all_pending
-    @all_pending_expenses =  Expense.pending.includes(:user).order(:id).paginate(:page => params[:pending_expenses], :per_page => 20)
-    @all_pending_leaves =  Leafe.pending.includes(:user).order(:id).paginate(:page => params[:pending_leaves], :per_page => 20)
-    @all_pending_incomes =  Income.pending.includes(:user).order(:id).paginate(:page => params[:pending_incomes], :per_page => 20)
+    @all_pending_expenses = Expense.pending.includes(:user).order(:id).paginate(:page => params[:pending_expenses], :per_page => 20)
+    @all_pending_leaves = Leafe.pending.includes(:user).order(:id).paginate(:page => params[:pending_leaves], :per_page => 20)
+    @all_pending_incomes = Income.pending.includes(:user).order(:id).paginate(:page => params[:pending_incomes], :per_page => 20)
   end
 
   def new
@@ -55,7 +55,7 @@ class Manage::UsersController < ApplicationController
       @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
-    @expenses = @expenses.sort_by_expense_date
+    @expenses = @expenses.sort_by_attr(:expense_date)
     @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => 20)
     @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => 20)
     @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => 20)

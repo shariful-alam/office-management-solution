@@ -4,4 +4,7 @@ class Attendance < ApplicationRecord
 
   validates :date, uniqueness: {scope: :user_id}
 
+  OFFICE_IP_ADDRESSES = ["27.147.206.53"]
+  LOCALHOST_IP_ADDRESS = ['::1']
+
 end

@@ -10,7 +10,7 @@ class ExpensesController < ApplicationController
       @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
-    @expenses = @expenses.sort_by_expense_date
+    @expenses = @expenses.sort_by_attr(:expense_date)
     @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => 20)
     @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => 20)
     @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => 20)
@@ -22,24 +22,11 @@ class ExpensesController < ApplicationController
 
   def create
     @expense = current_user.expenses.new(expense_params)
-    if @expense.expense_date.present?
-      @budget = Budget.find_by(month: @expense.expense_date.month, year: @expense.expense_date.year)
-      if @budget.nil?
-        @expense.errors.add(:budget, :not_specified, message: " for #{Date::MONTHNAMES[@expense.expense_date.month]} is not submitted yet!!")
-        render :new
-      else
-        @expense.budget = @budget
-        if @expense.save
-          redirect_to expenses_path, success: 'Expense has been created successfully!!'
-        else
-          render :new
-        end
-      end
+    if @expense.save
+      redirect_to expenses_path, success: 'Expense has been created successfully!!'
     else
-      @expense.errors.add(:expense_date)
-      render :edit
+      render :new
     end
-
   end
 
   def show
@@ -55,25 +42,11 @@ class ExpensesController < ApplicationController
   end
 
   def update
-    @expense.expense_date = expense_params[:expense_date]
-    if @expense.expense_date.present?
-      @budget = Budget.find_by(month: @expense.expense_date.month, year: @expense.expense_date.year)
-      if @budget.nil?
-        @expense.errors.add(:budget, :not_specified, message: " for #{Date::MONTHNAMES[@expense.expense_date.month]} is not submitted yet!!")
-        render :edit
-      else
-        @expense.budget = @budget
-        if @expense.update(expense_params)
-          redirect_to expenses_path, success: 'Expense has been updated successfully!!'
-        else
-          render :edit
-        end
-      end
+    if @expense.update(expense_params)
+      redirect_to expenses_path, success: 'Expense has been updated successfully!!'
     else
-      @expense.errors.add(:expense_date)
       render :edit
     end
-
   end
 
   def reject

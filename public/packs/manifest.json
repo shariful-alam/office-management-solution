@@ -19,6 +19,16 @@
       "js.map": [
         "/packs/js/edit_image-97b354c3882d7f7d71cd.js.map"
       ]
+    },
+    "test": {
+      "js": [
+        "/packs/js/test-11ff7a288eee47fcaf3a.js"
+      ],
+      "js.map": [
+        "/packs/js/test-11ff7a288eee47fcaf3a.js.map"
+      ]
     }
-  }
+  },
+  "test.js": "/packs/js/test-11ff7a288eee47fcaf3a.js",
+  "test.js.map": "/packs/js/test-11ff7a288eee47fcaf3a.js.map"
 }
