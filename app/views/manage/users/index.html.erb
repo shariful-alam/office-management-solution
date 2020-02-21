@@ -30,7 +30,7 @@
       <th>Phone</th>
       <th>Role</th>
       <!--<th>Image</th>-->
-      <th>Action</th>
+      <th style="text-align: center;">Action</th>
 
     </tr>
     </thead>
@@ -38,15 +38,14 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= @number %> </td>
-        <% @number+=1 %>
+        <% @number += 1 %>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= user.phone %></td>
         <td><%= user.role %></td>
-        <!--<td><%= image_tag(user.image.url, :size => "50x50") if user.image.exists? %> </td>-->
 
-        <% if current_user.role==User::ADMIN %>
-          <td>
+        <% if current_user.admin? or current_user.super_admin? %>
+          <td style="text-align: center;">
             <%= link_to manage_user_path(user) do %>
               <i class="fa fa-eye" title="Show Details"></i>
             <% end %>

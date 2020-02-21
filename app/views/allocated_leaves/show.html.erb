@@ -3,22 +3,22 @@
     <h1>Details</h1>
     <p class="text-success"><%= flash[:notices] %></p>
     <ul class="list-group">
-      <li class="list-group-item"><b>Employee : </b><%= @allocated_leafe.user.name %></li>
-      <li class="list-group-item"><b>Leave for Year : </b><%= @allocated_leafe.year %></li>
-      <li class="list-group-item"><b>Total Leave : </b><%= @allocated_leafe.total_leave %></li>
-      <li class="list-group-item"><b>Used Leave : </b><%= @allocated_leafe.used_leave %></li>
+      <li class="list-group-item"><b>Employee: </b><%= @allocated_leafe.user.name %> </li>
+      <li class="list-group-item"><b>Leave for Year: </b><%= @allocated_leafe.year %> </li>
+      <li class="list-group-item"><b>Total Leave: </b><%= @allocated_leafe.total_leave %> </li>
+      <li class="list-group-item"><b>Used Leave: </b><%= @allocated_leafe.used_leave %> </li>
       <li class="list-group-item">
-        <b>Remaining Leaves : </b><%= @allocated_leafe.total_leave - @allocated_leafe.used_leave %></li>
+        <b>Remaining Leaves: </b><%= @allocated_leafe.total_leave - @allocated_leafe.used_leave %></li>
     </ul>
 
   </div>
   <div class="col-sm-6" style="margin-top: 15px;">
     <br> <br>
     <ul class="list-group">
-      <li class="list-group-item"><b>Personal Leaves : </b><%= @allocated["personal"] %></li>
-      <li class="list-group-item"><b>Training Leaves : </b><%= @allocated["training"] %></li>
+      <li class="list-group-item"><b>Personal Leaves: </b><%= @allocated["personal"] %></li>
+      <li class="list-group-item"><b>Training Leaves: </b><%= @allocated["training"] %></li>
       <li class="list-group-item"><b>Vacation Leaves: </b><%= @allocated["vacation"] %></li>
-      <li class="list-group-item"><b>Medical Leaves : </b><%= @allocated["medical"] %></li>
+      <li class="list-group-item"><b>Medical Leaves: </b><%= @allocated["medical"] %></li>
     </ul>
     <br>
   </div>

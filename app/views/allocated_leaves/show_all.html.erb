@@ -4,10 +4,10 @@
 
 <h1>List of Leaves of <strong><%= @allocated_leafe.user.name %></strong></h1>
 
-<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">pending
+<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#pending">Pending
   (<%= @leaves_pending.count %>)
 </button>
-<div class="collapse show in" id="demo">
+<div class="collapse show in" id="pending">
   <%= render partial: 'table', locals: {leaves: @leaves_pending} %>
   <div>
     <%= will_paginate @leaves_pending, :param_name => 'pending_leaves', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
@@ -15,10 +15,10 @@
 </div>
 <br><br>
 
-<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">approved
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#approved">Approved
   (<%= @leaves_approved.count %>)
 </button>
-<div class="collapse in" id="demo1">
+<div class="collapse in" id="approved">
   <%= render partial: 'table', locals: {leaves: @leaves_approved} %>
   <div>
     <%= will_paginate @leaves_approved, :param_name => 'approved_leaves', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
@@ -26,10 +26,10 @@
 </div>
 <br><br>
 
-<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">rejected
+<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#rejected">Rejected
   (<%= @leaves_rejected.count %>)
 </button>
-<div class="collapse in" id="demo2">
+<div class="collapse in" id="rejected">
   <%= render partial: 'table', locals: {leaves: @leaves_rejected} %>
   <div>
     <%= will_paginate @leaves_rejected, :param_name => 'rejected_leaves', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

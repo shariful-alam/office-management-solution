@@ -1,5 +1,5 @@
 <div class="table-responsive-sm">
-  <% @number=expenses.offset + 1 %>
+  <% @number = expenses.offset + 1 %>
   <table class="table table-bordered">
     <thead>
     <tr>
@@ -8,7 +8,7 @@
       <th>Employee</th>
       <th>Cost</th>
       <th>Status</th>
-      <th>Action</th>
+      <th style="text-align: center;">Action</th>
     </tr>
     </thead>
     <% expenses.each do |expense| %>

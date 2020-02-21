@@ -30,7 +30,7 @@
       <th>Expense</th>
       <th>Remaining</th>
       <th>Admin</th>
-      <th>Action</th>
+      <th style="text-align: center;">Action</th>
     </tr>
     </thead>
 
@@ -43,7 +43,7 @@
         <td><%= taka(budget.expense) %></td>
         <td><%= taka(budget.amount - budget.expense) %></td>
         <td><%= budget.user.name %></td>
-        <td>
+        <td style="text-align: center;">
           <%= link_to budget_path(budget) do %>
             <i class="fa fa-money" title="Show Expenses"></i>
           <% end %>

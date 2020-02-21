@@ -21,11 +21,6 @@
       <%= expense.text_field :cost, class: "form-control" %>
     </div>
 
-    <!--<div class="form-group" id="cancel_show">-->
-    <!--<%= image_tag(@expense.image.url, :size => "100x100") if @expense.image.exists? %>-->
-    <!--<%= expense.check_box :remove_image, style: "margin-left : 10px; position: absolute;", id: "cancel_image", onclick: "myFunction()" if @expense.image.exists? %>-->
-    <!--</div>-->
-
     <div class="form-group">
       <%= expense.label :image, 'Image', class: "control-label" %>
       <%= expense.file_field :image, class: "form-control" %>

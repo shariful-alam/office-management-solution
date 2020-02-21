@@ -1,6 +1,6 @@
 <tr>
   <td><%= @number %> </td>
-  <% @number+=1 %>
+  <% @number += 1 %>
   <td><%= expense.product_name %></td>
   <td><%= expense.user.name %></td>
   <td><%= expense.cost %></td>
@@ -8,15 +8,15 @@
   <td>
 
     <% if can? :approve, expense %>
-        <% if expense.status==Expense::APPROVED %>
+      <% if expense.approved? %>
         <%= link_to approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure?'} do %>
           <i class="fa fa-undo" title="Undo"></i>
         <% end %> |
-        <% else %>
+      <% else %>
         <%= link_to approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure to Approve?'} do %>
           <i class="fa fa-check" title="Approve"></i>
         <% end %> |
-        <% end %>
+      <% end %>
     <% end %>
 
     <% if can? :reject, expense %>
@@ -32,7 +32,7 @@
     <% end %>
 
     <% if can? :update, expense %>
-        | <%= link_to edit_expense_path(expense) do %>
+      | <%= link_to edit_expense_path(expense) do %>
         <i class="fa fa-edit" title="Edit"></i>
       <% end %>
     <% end %>

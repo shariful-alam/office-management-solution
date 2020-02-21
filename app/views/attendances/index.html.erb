@@ -1,7 +1,9 @@
 <h1>Availability of All Users</h1>
 
-<button class="accordion btn btn-success" data-toggle="collapse" data-target="#available">Available Employees (<%= @attendances_available.count %>)</button>
-<div  class="collapse show in" id="available">
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#available">Available Employees
+  (<%= @attendances_available.count %>)
+</button>
+<div class="collapse show in" id="available">
   <div class="table-responsive-sm">
     <table class="table table-bordered">
       <tr>
@@ -9,14 +11,14 @@
         <th>Check In Time</th>
       </tr>
       <% @attendances_available.each do |attendance| %>
-          <tr>
-            <td>
-              <%= attendance.user.name %>
-            </td>
-            <td>
-              <%= only_time(attendance.created_at) %>
-            </td>
-          </tr>
+        <tr>
+          <td>
+            <%= attendance.user.name %>
+          </td>
+          <td>
+            <%= only_time(attendance.created_at) %>
+          </td>
+        </tr>
       <% end %>
     </table>
   </div>
@@ -27,8 +29,10 @@
 </div>
 <br>
 <br>
-<button class="accordion btn btn-secondary" data-toggle="collapse" data-target="#unavailable">Unavailable Employees (<%= @attendances_unavailable.count %>)</button>
-<div  class="collapse show in" id="unavailable">
+<button class="accordion btn btn-secondary" data-toggle="collapse" data-target="#unavailable">Unavailable Employees
+  (<%= @attendances_unavailable.count %>)
+</button>
+<div class="collapse show in" id="unavailable">
   <div class="table-responsive-sm">
 
     <table class="table table-bordered">
@@ -39,20 +43,20 @@
         <th>Total Time Spent</th>
       </tr>
       <% @attendances_unavailable.each do |attendance| %>
-          <tr>
-            <td>
-              <%= attendance.user.name %>
-            </td>
-            <td>
-              <%= only_time(attendance.created_at) %>
-            </td>
-            <td>
-              <%= only_time(attendance.updated_at) %>
-            </td>
-            <td>
-              <%= distance_of_time_in_words(attendance.updated_at - attendance.created_at) %>
-            </td>
-          </tr>
+        <tr>
+          <td>
+            <%= attendance.user.name %>
+          </td>
+          <td>
+            <%= only_time(attendance.created_at) %>
+          </td>
+          <td>
+            <%= only_time(attendance.updated_at) %>
+          </td>
+          <td>
+            <%= distance_of_time_in_words(attendance.updated_at - attendance.created_at) %>
+          </td>
+        </tr>
       <% end %>
     </table>
   </div>

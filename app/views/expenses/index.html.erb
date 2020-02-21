@@ -30,10 +30,10 @@
 
 <br>
 
-<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">pending
+<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#pending">Pending
   (<%= @pending_expenses.count %>)
 </button>
-<div class="collapse show in" id="demo">
+<div class="collapse show in" id="pending">
   <%= render partial: 'table', locals: {expenses: @pending_expenses} %>
   <div>
     <%= will_paginate @pending_expenses, :param_name => 'pending_expenses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
@@ -43,10 +43,10 @@
 <br>
 <br>
 
-<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo2">approved
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#approved">Approved
   (<%= @approved_expenses.count %>)
 </button>
-<div class="collapse in" id="demo2">
+<div class="collapse in" id="approved">
   <%= render partial: 'table', locals: {expenses: @approved_expenses} %>
   <div>
     <%= will_paginate @approved_expenses, :param_name => 'approved_expenses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
@@ -55,10 +55,10 @@
 <br>
 <br>
 
-<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo3">rejected
+<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#rejected">Rejected
   (<%= @rejected_expenses.count %>)
 </button>
-<div class="collapse in" id="demo3">
+<div class="collapse in" id="rejected">
   <%= render partial: 'table', locals: {expenses: @rejected_expenses} %>
   <div>
     <%= will_paginate @rejected_expenses, :param_name => 'rejected_expenses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

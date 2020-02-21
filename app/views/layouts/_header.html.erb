@@ -1,4 +1,3 @@
-<!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -12,71 +11,71 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>
-            <% if can? :show, User %>
-                <li class="nav-item">
-                  <%= link_to "Employees", manage_users_path, class: "nav-link" %>
-                </li>
+          <% if can? :show, User %>
+            <li class="nav-item">
+              <%= link_to "Employees", manage_users_path, class: "nav-link" %>
+            </li>
+          <% end %>
+
+          <% if can? :show, Budget %>
+            <li class="nav-item">
+              <%= link_to "Budgets", budgets_path, class: "nav-link", "data-toggle": "tooltips", "data-html": "true", "title": budget_hint %>
+            </li>
+          <% end %>
+
+          <li class="nav-item">
+            <%= link_to "Expenses", expenses_path, class: "nav-link" %>
+          </li>
+
+          <li class="nav-item">
+            <% if current_user.admin? or current_user.super_admin? %>
+              <%= link_to "Incomes", incomes_path, class: "nav-link" %>
+            <% else %>
+              <%= link_to "Incomes", show_individual_incomes_path(user_id: current_user.id), class: "nav-link" %>
             <% end %>
+          </li>
 
-            <% if can? :show, Budget %>
-                <li class="nav-item">
-                  <%= link_to "Budgets", budgets_path, class: "nav-link", "data-toggle": "tooltips", "data-html": "true", "title": budget_hint %>
-                </li>
-            <% end %>
-
-            <li class="nav-item">
-              <%= link_to "Expenses", expenses_path, class: "nav-link" %>
-            </li>
-
-            <li class="nav-item">
-              <% if current_user.admin? or current_user.super_admin? %>
-                  <%= link_to "Incomes", incomes_path, class: "nav-link" %>
-              <% else %>
-                  <%= link_to "Incomes", show_individual_incomes_path(user_id: current_user.id), class: "nav-link" %>
-              <% end %>
-            </li>
-
-            <li class="nav-item">
-              <% if current_user.admin? or current_user.super_admin? %>
-                  <div>
-                    <div class="dropdown">
-                      <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <strong> Leave </strong>
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <%= link_to "Apply for Leave", new_leafe_path, class: 'dropdown-item' %>
-                        <%= link_to "Appointed Leaves", allocated_leaves_path, class: 'dropdown-item' %>
-                        <%= link_to "Leave Requests", leaves_path, class: 'dropdown-item' %>
-                      </div>
-                    </div>
-                  </div>
-              <% else %>
-                  <%= link_to "Leaves", leaves_path, class: "nav-link" %>
-              <% end %>
-            </li>
-            <li class="nav-item">
+          <li class="nav-item">
+            <% if current_user.admin? or current_user.super_admin? %>
               <div>
                 <div class="dropdown">
                   <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <strong> <%= current_user.name %> </strong>
-                    <% if current_user.admin? || current_user.super_admin? %>
-                        <%= see_pending_request %>
-                    <% end %>
+                    <strong> Leave </strong>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <%= check_in_out %>
-                    <% if current_user.admin? or current_user.super_admin? %>
-                        <%= link_to show_all_pending_manage_users_path, class: 'dropdown-item' do %>
-                            <div>Pending Request &nbsp <%= see_pending_request %></div>
-                        <% end %>
-                      <%= link_to "Availability", attendances_path, class: 'dropdown-item' %>
-                  <% end %>
-                    <%= link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item' %>
-                    <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+                    <%= link_to "Apply for Leave", new_leafe_path, class: 'dropdown-item' %>
+                    <%= link_to "Appointed Leaves", allocated_leaves_path, class: 'dropdown-item' %>
+                    <%= link_to "Leave Requests", leaves_path, class: 'dropdown-item' %>
                   </div>
                 </div>
               </div>
-            </li>
+            <% else %>
+              <%= link_to "Leaves", leaves_path, class: "nav-link" %>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <div>
+              <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <strong> <%= current_user.name %> </strong>
+                  <% if current_user.admin? || current_user.super_admin? %>
+                    <%= see_pending_request %>
+                  <% end %>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <%= check_in_out %>
+                  <% if current_user.admin? or current_user.super_admin? %>
+                    <%= link_to show_all_pending_manage_users_path, class: 'dropdown-item' do %>
+                      <div>Pending Request &nbsp <%= see_pending_request %></div>
+                    <% end %>
+                    <%= link_to "Availability", attendances_path, class: 'dropdown-item' %>
+                  <% end %>
+                  <%= link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item' %>
+                  <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+                </div>
+              </div>
+            </div>
+          </li>
         <% end %>
       </ul>
     </div>
@@ -87,23 +86,23 @@
 <br>
 <div class="container-fluid" id="flash_msg">
   <% flash.each do |key, value| %>
-      <% if key=="alert" %>
-          <%= content_tag(:div, value, class: "alert alert-danger") %>
-      <% elsif key=="notice" %>
-          <%= content_tag(:div, value, class: "alert alert-success") %>
-      <% elsif key=="warning" %>
-          <%= content_tag(:div, value, class: "alert alert-warning") %>
-      <% end %>
+    <% if key=="alert" %>
+      <%= content_tag(:div, value, class: "alert alert-danger") %>
+    <% elsif key=="notice" %>
+      <%= content_tag(:div, value, class: "alert alert-success") %>
+    <% elsif key=="warning" %>
+      <%= content_tag(:div, value, class: "alert alert-warning") %>
+    <% end %>
   <% end %>
 </div>
 
 
 <script type="text/javascript" charset="utf-8">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  });
 
-    setTimeout(function() {
-      $('#flash_msg').fadeOut('fast');
-    }, 3000);
+  setTimeout(function () {
+    $('#flash_msg').fadeOut('fast');
+  }, 3000);
 </script>

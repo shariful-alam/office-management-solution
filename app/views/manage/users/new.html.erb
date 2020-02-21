@@ -1,72 +1,69 @@
 <h2>Create a New User</h2>
 
 <div class="col-sm-5">
-  <%= form_for(@user, url: manage_users_path(@user), html: {autocomplete: 'off'}) do |f| %>
+  <%= form_for(@user, url: manage_users_path(@user), html: {autocomplete: 'off'}) do |user| %>
 
-      <% if @user.errors.full_messages.any? %>
-          <% @user.errors.full_messages.each do |error_message| %>
-              <p class="alert alert-danger"> <%= error_message if @user.errors.full_messages.first == error_message %> </p>
-          <% break end %>
-      <% end %>
-
-      <div class="form-group">
-        <%= f.label :email, class: "control-label" %><br/>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :password, class: "control-label" %>
-        <% if @minimum_password_length %>
-            <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br/>
-        <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :password_confirmation, class: "control-label" %><br/>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :name, class: "control-label" %>
-        <%= f.text_field :name, class: "form-control" %>
-      </div>
+    <%= render partial: 'layouts/error_message', locals: {object: @user} %>
 
 
-      <div class="form-group">
-        <%= f.label :phone, class: "control-label" %>
-        <%= f.phone_field :phone, class: "form-control" %>
-      </div>
+    <div class="form-group">
+      <%= user.label :email, class: "control-label" %><br/>
+      <%= user.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+    </div>
 
-      <div class="form-group">
-        <%= f.label :target_amount,'Target Amount', class: "control-label" %>
-        <%= f.text_field :target_amount, class: "form-control" %>
-      </div>
+    <div class="form-group">
+      <%= user.label :password, class: "control-label" %>
+      <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br/>
+      <%= user.password_field :password, autocomplete: "new-password", class: "form-control" %>
+    </div>
 
-      <div class="form-group">
-        <%= f.label :bonus_percentage,'Bonus Percentage', class: "control-label" %>
-        <%= f.text_field :bonus_percentage, class: "form-control" %>
-      </div>
+    <div class="form-group">
+      <%= user.label :password_confirmation, class: "control-label" %><br/>
+      <%= user.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+    </div>
 
-      <div class="form-group">
-        <%= f.label :image, 'Image', class: "control-label" %>
-        <%= f.file_field :image, class: "form-control" %>
-      </div>
+    <div class="form-group">
+      <%= user.label :name, class: "control-label" %>
+      <%= user.text_field :name, class: "form-control" %>
+    </div>
 
-      <div class="form-group">
-        <%= f.label :role %>
-        <%= f.select(:role, User::ROLE_LIST,{}, {class: "form-control"}) %>
-      </div>
 
-      <div class="form-group">
-        <%= f.label :designation %>
-        <%= f.select(:designation, User::DESIGNATION_LIST,{}, {class: "form-control"}) %>
-      </div>
+    <div class="form-group">
+      <%= user.label :phone, class: "control-label" %>
+      <%= user.phone_field :phone, class: "form-control" %>
+    </div>
 
-      <div class="form-group">
-        <%= f.submit 'Create new user', class: "btn btn-success" %> |
-        <%= link_to "Back", manage_users_path, class: "btn btn-dark" %>
-      </div>
+    <div class="form-group">
+      <%= user.label :target_amount, 'Target Amount', class: "control-label" %>
+      <%= user.text_field :target_amount, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= user.label :bonus_percentage, 'Bonus Percentage', class: "control-label" %>
+      <%= user.text_field :bonus_percentage, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= user.label :image, 'Image', class: "control-label" %>
+      <%= user.file_field :image, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= user.label :role %>
+      <%= user.select(:role, User::ROLE_LIST, {}, {class: "form-control"}) %>
+    </div>
+
+    <div class="form-group">
+      <%= user.label :designation %>
+      <%= user.select(:designation, User::DESIGNATION_LIST, {}, {class: "form-control"}) %>
+    </div>
+
+    <div class="form-group">
+      <%= user.submit 'Create new user', class: "btn btn-success" %> |
+      <%= link_to "Back", manage_users_path, class: "btn btn-dark" %>
+    </div>
 
   <% end %>
 </div>

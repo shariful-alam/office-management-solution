@@ -2,21 +2,21 @@
   <%= image_tag(@expense.image.url, :class => "card-img-top") if @expense.image.exists? %>
   <hr>
   <div class="card-body">
-    <h4 class="card-title"><b>Employee : </b><%= @expense.user.name %></h4>
-    <h4 class="card-title"><b>Product : </b><%= @expense.product_name %></h4>
-    <h5 class="card-text"><b>Details : </b><%= @expense.details %></h5>
+    <h4 class="card-title"><b>Employee: </b><%= @expense.user.name %></h4>
+    <h4 class="card-title"><b>Product: </b><%= @expense.product_name %></h4>
+    <h5 class="card-text"><b>Details: </b><%= @expense.details %></h5>
   </div>
   <hr>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item"><b>Cost : </b><%= taka(@expense.cost) %> </li>
-    <li class="list-group-item"><b>Category : </b><%= @expense.category %></li>
+    <li class="list-group-item"><b>Cost: </b><%= taka(@expense.cost) %> </li>
+    <li class="list-group-item"><b>Category: </b><%= @expense.category %></li>
   </ul>
 
   <ul class="list-group list-group-flush">
-    <li class="list-group-item"><b>Status : </b><%= @expense.status %></li>
+    <li class="list-group-item"><b>Status: </b><%= @expense.status %></li>
 
     <% if @expense.approve_time.present? %>
-      <li class="list-group-item"><b>Approve Time : </b><%= full_date_with_time(@expense.approve_time) %></li>
+      <li class="list-group-item"><b>Approve Time: </b><%= full_date_with_time(@expense.approve_time) %></li>
     <% end %>
 
   </ul>

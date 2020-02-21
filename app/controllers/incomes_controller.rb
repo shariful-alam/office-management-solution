@@ -73,7 +73,6 @@ class IncomesController < ApplicationController
     else
       @income.approved!
       @income.approve_time = DateTime.now
-      #LeafeMailer.approved(@leave).deliver_now
       flash[:notice] = 'Income has been approved'
     end
     @income.save
@@ -84,7 +83,6 @@ class IncomesController < ApplicationController
     @income.rejected!
     flash[:notice] = 'Income has been rejected'
     @income.save
-    #LeafeMailer.rejected(@leave).deliver_now
     redirect_back(fallback_location: incomes_path)
   end
 

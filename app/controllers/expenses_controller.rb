@@ -86,9 +86,11 @@ class ExpensesController < ApplicationController
   def approve
     if @expense.approved?
       @expense.pending!
+      @expense.approve_time = nil
       flash[:warning] = 'The Expense has been queued for pending!!'
     else
       @expense.approved!
+      @expense.approve_time = DateTime.now
       flash[:notice] = 'Expense has been approved successfully!!'
     end
     redirect_back(fallback_location: expenses_path)

@@ -1,5 +1,5 @@
 <h1>Edit</h1>
-<h3>User : <%= @income.user.name %> </h3>
+<h3>User: <%= @income.user.name %> </h3>
 
 <div class="col-md-5">
   <%= form_for(@income) do |income| %>
@@ -14,7 +14,7 @@
     <br/>
     <div>
       <%= income.label :income_date, class: 'control-label' %> <br/>
-      <%= income.text_field :income_date, class: 'form-control', id: "datepicker" , placeholder: "yyyy-mm-yy" %>
+      <%= income.text_field :income_date, class: 'form-control', id: "datepicker", placeholder: "yyyy-mm-yy" %>
     </div>
     <br/>
     <div class="form-group">
