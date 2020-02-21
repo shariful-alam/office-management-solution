@@ -25,7 +25,7 @@ class ExpensesController < ApplicationController
     if @expense.expense_date.present?
       @budget = Budget.find_by(month: @expense.expense_date.month, year: @expense.expense_date.year)
       if @budget.nil?
-        flash[:alert] = "Budget for #{Date::MONTHNAMES[@expense.expense_date.month]} is not submitted yet!!"
+        @expense.errors.add(:budget, :not_specified, message: " for #{Date::MONTHNAMES[@expense.expense_date.month]} is not submitted yet!!")
         render :new
       else
         @expense.budget = @budget
@@ -36,7 +36,7 @@ class ExpensesController < ApplicationController
         end
       end
     else
-      flash[:alert] = "Date can't be blank!!"
+      @expense.errors.add(:expense_date)
       render :edit
     end
 
@@ -59,7 +59,7 @@ class ExpensesController < ApplicationController
     if @expense.expense_date.present?
       @budget = Budget.find_by(month: @expense.expense_date.month, year: @expense.expense_date.year)
       if @budget.nil?
-        flash[:alert] = "Budget for #{Date::MONTHNAMES[@expense.expense_date.month]} is not submitted yet!!"
+        @expense.errors.add(:budget, :not_specified, message: " for #{Date::MONTHNAMES[@expense.expense_date.month]} is not submitted yet!!")
         render :edit
       else
         @expense.budget = @budget
@@ -70,7 +70,7 @@ class ExpensesController < ApplicationController
         end
       end
     else
-      flash[:alert] = "Date can't be blank!!"
+      @expense.errors.add(:expense_date)
       render :edit
     end
 
@@ -98,10 +98,6 @@ class ExpensesController < ApplicationController
   private
   def expense_params
     params.require(:expense).permit(:product_name, :category, :cost, :details, :image, :expense_date)
-  end
-
-  def find_budget
-
   end
 
 end
