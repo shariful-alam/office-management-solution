@@ -9,7 +9,7 @@
       <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#budget">Budget Statistics</button>
       <div class="collapse show in" id="budget">
         <br>
-        <%= line_chart Budget.group(:year).group(:month).sum(:expense), label: "Total Expense", min: 0,code: true, xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px", download: {background: "#ffffff"} , messages: {empty: "No data"} %>
+        <%= line_chart Budget.group(:year).group(:month).sum(:expense), xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px", download: {background: "#ffffff"} , messages: {empty: "No data"} %>
       </div>
     </div>
     <div class="container col-sm-6">

@@ -1,22 +1,11 @@
 <%= link_to "Add Budget", new_budget_path, class: "btn btn-dark", style: "float:right" %>
 <h1>Budget List</h1>
 
-<div class="row">
-  <div class="col-sm">
-    <%= form_tag(budgets_path, :method => "get") do %>
-      <div class="row">
-        <div class="col-sm-6">
-          <%= text_field_tag :search, params[:search], placeholder: "Search by Name", class: "form-control", autocomplete: :off %>
-        </div>
-      </div>
-      <br>
-      <div class="row container">
-        <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
-        <%= link_to 'Reset', budgets_path, class: "btn btn-secondary" %>
-      </div>
-    <% end %>
-  </div>
-</div>
+<%= form_tag(budgets_path, :method => "get", class: "form-inline") do %>
+  <%= select_tag "search", options_for_select(Date.today.years_ago(4).year.. 4.years.from_now.year, :selected => @year), class: "form-control" %>
+  &nbsp <%= submit_tag "Search", class: "btn btn-dark" %> &nbsp
+  <%= link_to 'Reset', budgets_path, class: "btn btn-secondary" %>  &nbsp
+<% end %>
 <br>
 
 <% @number=@budgets.offset + 1 %>
