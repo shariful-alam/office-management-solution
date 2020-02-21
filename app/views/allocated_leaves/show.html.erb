@@ -15,10 +15,10 @@
   <div class="col-sm-6" style="margin-top: 15px;">
     <br> <br>
     <ul class="list-group">
-      <li class="list-group-item"><b>Personal Leaves: </b><%= @allocated["personal"] %></li>
-      <li class="list-group-item"><b>Training Leaves: </b><%= @allocated["training"] %></li>
-      <li class="list-group-item"><b>Vacation Leaves: </b><%= @allocated["vacation"] %></li>
-      <li class="list-group-item"><b>Medical Leaves: </b><%= @allocated["medical"] %></li>
+      <li class="list-group-item"><b>Personal Leaves: </b><%= @allocated_leaves[:personal] %></li>
+      <li class="list-group-item"><b>Training Leaves: </b><%= @allocated_leaves[:training] %></li>
+      <li class="list-group-item"><b>Vacation Leaves: </b><%= @allocated_leaves[:vacation] %></li>
+      <li class="list-group-item"><b>Medical Leaves: </b><%= @allocated_leaves[:medical] %></li>
     </ul>
     <br>
   </div>

@@ -26,19 +26,7 @@ class AllocatedLeavesController < ApplicationController
   end
 
   def show
-    @leaves = @allocated_leafe.user.leaves
-
-    @allocated_personal = @leaves.with_leafe_type(Leafe::PL)
-    @allocated_training = @leaves.with_leafe_type(Leafe::TL)
-    @allocated_vacation = @leaves.with_leafe_type(Leafe::VL)
-    @allocated_medical = @leaves.with_leafe_type(Leafe::ML)
-
-    @allocated = {
-      "personal" => @allocated_personal.approved.count,
-      "training" => @allocated_training.approved.count,
-      "vacation" => @allocated_vacation.approved.count,
-      "medical" => @allocated_medical.approved.count
-    }
+    @allocated_leaves = @allocated_leafe.allocated_leaves_count_for(@allocated_leafe.user)
   end
 
   def update
