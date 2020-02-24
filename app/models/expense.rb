@@ -20,7 +20,6 @@ class Expense < ApplicationRecord
                        convert_options: {regular: "-posterize 3"}
 
 
-  #before_save :delete_image, if: -> {remove_image == '1'}
   before_validation :check_budget
   after_update :update_budget
 
@@ -33,8 +32,10 @@ class Expense < ApplicationRecord
   def update_budget
     if self.approved?
       self.budget.update({expense: self.budget.expense + self.cost})
+      self.approve_time = DateTime.now
     elsif self.pending?
       self.budget.update({expense: self.budget.expense - self.cost})
+      self.approve_time = nil
     end
   end
 

@@ -6,28 +6,23 @@ class AttendancesController < ApplicationController
 
   def index
     @attendances = @attendances.includes(:user).where(date: Date.today.to_date)
-
     @attendances_available = @attendances.where(status: true).paginate(:page => params[:available], :per_page => 20)
     @attendances_unavailable = @attendances.where(status: false).paginate(:page => params[:unavailable], :per_page => 20)
   end
 
   def create
-    @attendance.user = current_user
-    @attendance.date = Date.today.to_date
-    @attendance.status = true
+    @attendance = current_user.attendances.new({date: Date.today.to_date ,status: true})
     if @attendance.save
       flash[:notice] = "You have Checked In Successfully!!"
-      redirect_back(fallback_location: root_path)
     else
       flash[:alert] = "You have Already Checked In Today!!"
-      redirect_back(fallback_location: root_path)
     end
+    redirect_back(fallback_location: root_path)
   end
 
   def update
     @attendance.update({status: false})
-    flash[:notice] = "You have checked Out Successfully!!"
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: root_path , notice: "You have checked Out Successfully!!")
   end
 
   def whitelisted?(ip)
@@ -37,8 +32,7 @@ class AttendancesController < ApplicationController
 
   def block_foreign_hosts
     return false if whitelisted?(request.remote_ip)
-    flash[:alert] = "You can not access this from outside !!"
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: root_path , alert: "You can not access this from outside !!")
   end
 
 

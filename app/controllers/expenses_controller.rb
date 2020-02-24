@@ -34,7 +34,11 @@ class ExpensesController < ApplicationController
   end
 
   def destroy
-    flash[:alert] = 'Expense has been removed successfully!!' if @expense.destroy
+    if @expense && @expense.destroy
+      flash[:alert] = 'Expense has been removed successfully!!'
+    else
+      flash[:alert] = 'Expense could not be deleted!!'
+    end
     redirect_back(fallback_location: expenses_path)
   end
 
@@ -51,19 +55,15 @@ class ExpensesController < ApplicationController
 
   def reject
     @expense.rejected!
-    @expense.save
-    flash[:alert] = 'Expense has been rejected successfully!!'
-    redirect_back(fallback_location: expenses_path)
+    redirect_back(fallback_location: expenses_path, alert: 'Expense has been rejected successfully!!')
   end
 
   def approve
     if @expense.approved?
       @expense.pending!
-      @expense.approve_time = nil
       flash[:warning] = 'The Expense has been queued for pending!!'
     else
       @expense.approved!
-      @expense.approve_time = DateTime.now
       flash[:notice] = 'Expense has been approved successfully!!'
     end
     redirect_back(fallback_location: expenses_path)
