@@ -72,11 +72,12 @@ class IncomesController < ApplicationController
 
   def approve
     if @income.approved?
+      @income.approve_time = nil
       @income.pending!
       flash[:notice] = 'The income status has been changed successfully'
     else
-      @income.approved!
       @income.approve_time = DateTime.now
+      @income.approved!
       flash[:notice] = 'Income has been approved'
     end
     redirect_back(fallback_location: incomes_path)
