@@ -32,10 +32,8 @@ class Expense < ApplicationRecord
   def update_budget
     if self.approved?
       self.budget.update({expense: self.budget.expense + self.cost})
-      self.approve_time = DateTime.now
     elsif self.pending?
       self.budget.update({expense: self.budget.expense - self.cost})
-      self.approve_time = nil
     end
   end
 

@@ -1,21 +1,25 @@
-<div class="card">
-  <div class="col-sm-5">
-    <%= image_tag(@user.image.url, :class => "card-img-top") if @user.image.exists? %>
+<div class="card col-md-6">
+  <% if @user.image.exists? %>
+    <br>
+    <%= image_tag(@user.image.url, :class => "card-img-top") %>
     <hr>
-    <div class="card-body">
-      <h4 class="card-title"><b>Employee: </b><%= @user.name %></h4>
-      <h5 class="card-title"><b>Email: </b><%= @user.email %></h5>
-    </div>
-    <ul class="list-group">
-      <li class="list-group-item"><b>Phone: </b> <%= @user.phone %> </li>
-      <li class="list-group-item"><b>Designation: </b> <%= @user.role %> </li>
-      <li class="list-group-item"><b>Target Amount: </b> <%= taka(@user.target_amount) %> </li>
-      <li class="list-group-item"><b>Bonus Percentage: </b> <%= @user.bonus_percentage %> %</li>
-      <li class="list-group-item"><b>Registration Date: </b> <%= full_date_with_time(@user.created_at) %> </li>
-    </ul>
+  <% end %>
+  <div class="card-body">
+    <h4 class="card-title"><b>Employee: </b><%= @user.name %></h4>
+    <h5 class="card-title"><b>Email: </b><%= @user.email %></h5>
   </div>
+  <ul class="list-group">
+    <li class="list-group-item"><b>Phone: </b> <%= @user.phone %> </li>
+    <li class="list-group-item"><b>Designation: </b> <%= @user.role %> </li>
+    <li class="list-group-item"><b>Target Amount: </b> <%= taka(@user.target_amount) %> </li>
+    <li class="list-group-item"><b>Bonus Percentage: </b> <%= @user.bonus_percentage %> %</li>
+    <li class="list-group-item"><b>Registration Date: </b> <%= full_date_with_time(@user.created_at) %> </li>
+  </ul>
+  <br>
 </div>
+
 <br>
+
 <div class="form-group">
   <%= link_to "Back", manage_users_path, class: "btn btn-dark" %>
 </div>

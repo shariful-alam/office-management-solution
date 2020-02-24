@@ -17,7 +17,6 @@ class IncomesController < ApplicationController
         income = Income.find_incomes_by_months(user,month,params[:search])
         @all_incomes[user.id][month] = income
         @all_bonuses[user.id][month] = Income.bonus_amount(user,month,params[:search])
-        #raise @all_incomes[user.id][month].inspect
       end
       @total_income_per_user[user.id] = Income.find_total(user,params[:search])
     end

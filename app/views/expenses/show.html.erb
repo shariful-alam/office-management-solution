@@ -1,6 +1,10 @@
-<div class="card" style="width: 22rem;">
-  <%= image_tag(@expense.image.url, :class => "card-img-top") if @expense.image.exists? %>
-  <hr>
+<div class="card col-md-6" >
+  <% if @expense.image.exists? %>
+    <br>
+    <%= image_tag(@expense.image.url, :class => "card-img-top") %>
+    <hr>
+  <% end %>
+
   <div class="card-body">
     <h4 class="card-title"><b>Employee: </b><%= @expense.user.name %></h4>
     <h4 class="card-title"><b>Product: </b><%= @expense.product_name %></h4>
@@ -14,11 +18,9 @@
 
   <ul class="list-group list-group-flush">
     <li class="list-group-item"><b>Status: </b><%= @expense.status %></li>
-
-    <% if @expense.approve_time.present? %>
-      <li class="list-group-item"><b>Approve Time: </b><%= full_date_with_time(@expense.approve_time) %></li>
+    <% if @expense.updated_at.present? %>
+      <li class="list-group-item"><b>Approve Time: </b><%= full_date_with_time(@expense.updated_at) %></li>
     <% end %>
-
   </ul>
 
 </div>
