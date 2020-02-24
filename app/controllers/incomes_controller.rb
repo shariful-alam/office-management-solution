@@ -61,9 +61,13 @@ class IncomesController < ApplicationController
 
 
   def destroy
-    @income.destroy
+    if @income && @income.destroy
     flash[:notice] = 'Your Income information has been destroyed'
     redirect_back(fallback_location: incomes_path)
+    else
+      flash[:alert] = 'Income could not be deleted!!'
+      render :index
+    end
   end
 
   def approve
@@ -75,14 +79,12 @@ class IncomesController < ApplicationController
       @income.approve_time = DateTime.now
       flash[:notice] = 'Income has been approved'
     end
-    @income.save
     redirect_back(fallback_location: incomes_path)
   end
 
   def reject
     @income.rejected!
     flash[:notice] = 'Income has been rejected'
-    @income.save
     redirect_back(fallback_location: incomes_path)
   end
 
@@ -97,8 +99,8 @@ class IncomesController < ApplicationController
 
     @incomes = @user.incomes
     #used pg specific query to reduce complexity
-    @incomes = @incomes.where('extract(month from income_date) = ?', params[:month]) if params[:month].present?
-    @incomes = @incomes.where('extract(year from income_date) = ?', params[:year].present? ? params[:year] : Date.today.year) if params[:year].present?
+    @incomes = @incomes.find_in_income_date_by('month', params[:month]) if params[:month].present?
+    @incomes = @incomes.find_in_income_date_by('year', params[:year].present? ? params[:year] : Date.today.year)
 
     @incomes_approved = @incomes.approved.paginate(:page => params[:approved_incomes], :per_page => 20)
     @incomes_pending = @incomes.pending.paginate(:page => params[:pending_incomes], :per_page => 20)

@@ -53,33 +53,30 @@ class LeavesController < ApplicationController
   end
 
   def destroy
-    @leafe.destroy
-    redirect_to show_all_allocated_leafe_path(current_user.allocated_leafe), notice: 'Information has heen destroyed'
+    if @leafe && @leafe.destroy
+      redirect_to show_all_allocated_leafe_path(current_user.allocated_leafe), notice: 'Information has heen destroyed'
+    else
+      flash[:alert] = 'Leave could not be deleted!!'
+      render :index
+    end
   end
 
   def approve
-    @allocated_leafe = @leafe.user.allocated_leafe
-    @count = Leafe.count_days(@leafe.start_date,@leafe.end_date)
     if @leafe.approved?
-      @leafe.pending!
       @leafe.approve_time = nil
-      @allocated_leafe.used_leave -= @count
+      @leafe.pending!
       flash[:notice] = 'Leave information has been changed successfully'
     else
-      @leafe.approved!
       @leafe.approve_time = DateTime.now
-      @allocated_leafe.used_leave += @count
+      @leafe.approved!
       #LeafeMailer.approved(@leafe).deliver_now
       flash[:notice] = 'The leave has been approved successfully'
     end
-    @leafe.save
-    @allocated_leafe.save
-    redirect_to show_all_allocated_leafe_path(@allocated_leafe)
+    redirect_to show_all_allocated_leafe_path(@leafe.user.allocated_leafe)
   end
 
   def reject
     @leafe.rejected!
-    @leafe.save
     #LeafeMailer.rejected(@leafe).deliver_now
     redirect_to show_all_allocated_leafe_path(@leafe.user.allocated_leafe), notice: 'The leave has been changed successfully'
   end

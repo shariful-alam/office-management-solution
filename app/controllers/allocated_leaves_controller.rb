@@ -38,9 +38,10 @@ class AllocatedLeavesController < ApplicationController
   end
 
   def destroy
-    if @allocated_leafe.destroy
+    if @allocated_leafe && @allocated_leafe.destroy
       redirect_to allocated_leaves_path, alert: 'Information has been removed'
     else
+      flash[:alert] = 'Information could not be deleted!!'
       render :index
     end
   end
