@@ -5,7 +5,7 @@ class AttendancesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @attendance = @attendance.includes(:user).where(date: Date.today.to_date)
+    @attendances = @attendances.includes(:user).where(date: Date.today.to_date)
 
     @attendances_available = @attendances.where(status: true).paginate(:page => params[:available], :per_page => 20)
     @attendances_unavailable = @attendances.where(status: false).paginate(:page => params[:unavailable], :per_page => 20)
