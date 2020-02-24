@@ -24,16 +24,17 @@ class Leafe < ApplicationRecord
   private
 
   def update_allocated_leave
-    @count = count_days(self.start_date, self.end_date)
-    @allocated_leafe = self.user.allocated_leafe
+    count = Leafe.count_days(self.start_date, self.end_date)
+    used = self.user.allocated_leafe.used_leave
+    total = self.user.allocated_leafe.total_leave
     if self.pending?
-      @allocated_leafe.update({used_leave: @allocated_leafe.used_leave - @count})
+      self.user.allocated_leafe.update({used_leave: (used - count >= 0 ? used - count : 0) })
     elsif self.approved?
-      @allocated_leafe.update({used_leave: @allocated_leafe.used_leave + @count})
+      self.user.allocated_leafe.update({used_leave: (used + count <= total ? used + count : total) })
     end
   end
 
-  def count_days(start_date, end_date)
+  def self.count_days(start_date, end_date)
     if start_date.present? and end_date.present?
       (start_date..end_date).select {|a| a.wday < 6 && a.wday > 0}.count
     else

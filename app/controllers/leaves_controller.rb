@@ -54,7 +54,7 @@ class LeavesController < ApplicationController
 
   def destroy
     if @leafe && @leafe.destroy
-      redirect_to show_all_allocated_leafe_path(current_user.allocated_leafe), notice: 'Information has heen destroyed'
+    redirect_to show_all_allocated_leafe_path(current_user.allocated_leafe), notice: 'Information has heen destroyed'
     else
       flash[:alert] = 'Leave could not be deleted!!'
       render :index
