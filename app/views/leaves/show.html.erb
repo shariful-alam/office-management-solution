@@ -7,7 +7,7 @@
     <li class="list-group-item"><b>To: </b><%= @leafe.end_date %></li>
     <li class="list-group-item"><b>Leave Type: </b><%= @leafe.leave_type %></li>
     <li class="list-group-item"><b>Reason: </b><%= @leafe.reason %></li>
-    <li class="list-group-item"><b>Status: </b><%= @leafe.status %></li>
+    <li class="list-group-item"><b>Status: </b><%= @leafe.status.to_s.camelcase %></li>
     <% if @leafe.approved? %>
       <li class="list-group-item"><b>Approved at: </b><%= full_date_with_time(@leafe.updated_at) %></li>
     <% end %>
