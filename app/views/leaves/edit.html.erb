@@ -1,38 +1,35 @@
 <h1>Edit</h1>
-<h3>User : <%= @leafe.user.name %> </h3>
+<h3>User: <%= @leafe.user.name %> </h3>
 
-<div class="col-sm-5" >
-  <%= form_for(@leafe) do |form| %>
+<div class="col-sm-5">
+  <%= form_for(@leafe) do |leafe| %>
 
-      <% if @leafe.errors.full_messages.any? %>
-          <% @leafe.errors.full_messages.each do |error_message| %>
-              <p class="alert alert-danger"> <%= error_message if @leafe.errors.full_messages.first == error_message %> </p>
-          <% break end %>
-      <% end %>
+    <%= render partial: 'layouts/error_message', locals: {object: @leafe} %>
 
-      <div class="form-group">
-        <%= form.label :start_date, class: "control-label" %>
-        <%= form.text_field :start_date, class: "form-control",id: "datepicker" , placeholder: "yyyy-mm-yy"%>
-      </div>
 
-      <div class="form-group">
-        <%= form.label :end_date %>
-        <%= form.text_field :end_date, class: "form-control",id: "datepicker2", placeholder: "yyyy-mm-yy" %>
-      </div>
+    <div class="form-group">
+      <%= leafe.label :start_date, class: "control-label" %>
+      <%= leafe.text_field :start_date, class: "form-control", id: "datepicker", placeholder: "yyyy-mm-dd" %>
+    </div>
 
-      <div class="form-group">
-        <%= form.label :reason, class: "control-label" %>
-        <%= form.text_area :reason, class: "form-control" %>
-      </div>
+    <div class="form-group">
+      <%= leafe.label :end_date %>
+      <%= leafe.text_field :end_date, class: "form-control", id: "datepicker2", placeholder: "yyyy-mm-dd" %>
+    </div>
 
-      <div class="form-group">
-        <%= form.label :leave_type, class: "control-label" %>
-        <%= form.select(:leave_type, Leafe::LEAVE_TYPES, {}, {class: "form-control"}) %>
-      </div>
+    <div class="form-group">
+      <%= leafe.label :reason, class: "control-label" %>
+      <%= leafe.text_area :reason, class: "form-control" %>
+    </div>
 
-      <div class="form-group">
-        <%= form.submit 'Update', class: "btn btn-success" %> |
-        <%= link_to "Back", :back, class: "btn btn-dark" %>
-      </div>
+    <div class="form-group">
+      <%= leafe.label :leave_type, class: "control-label" %>
+      <%= leafe.select(:leave_type, Leafe::LEAVE_TYPES, {}, {class: "form-control"}) %>
+    </div>
+
+    <div class="form-group">
+      <%= leafe.submit 'Update', class: "btn btn-success" %> |
+      <%= link_to "Back", :back, class: "btn btn-dark" %>
+    </div>
   <% end %>
 </div>

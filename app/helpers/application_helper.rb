@@ -1,14 +1,22 @@
 module ApplicationHelper
+
+  def convert_to_dhaka(datetime)
+    datetime.in_time_zone('Dhaka')
+  end
+
   def full_date(datetime)
+    datetime = convert_to_dhaka(datetime)
     datetime.strftime('%d %B, %Y')
   end
 
   def full_date_with_time(datetime)
-    datetime.strftime('%d %B, %Y at %I:%M%p')
+    datetime = convert_to_dhaka(datetime)
+    datetime.strftime('%d %B, %Y at %I:%M %p')
   end
 
   def only_time(datetime)
-    datetime.strftime('%I:%M%p')
+    datetime = convert_to_dhaka(datetime)
+    datetime.strftime('%I:%M %p')
   end
 
   def taka(amount)
@@ -22,20 +30,19 @@ module ApplicationHelper
 
   def budget_hint
     date = Date.today
-    month = date.strftime("%B")+', '+date.strftime("%Y")
-    present_budget=Budget.find_by(month: month)
-    if present_budget == nil
+    present_budget= Budget.find_by(month: date.month, year: date.year)
+    if present_budget.nil?
       "The budget is not added yet !".html_safe
     else
-      "Budget for  #{present_budget.month}
-     Total :   #{taka(present_budget.amount)}
-     Expense :   #{taka(present_budget.expense)}
-     Remaining :  #{taka(present_budget.amount - present_budget.expense)}".html_safe
+      "Budget for  #{Date::MONTHNAMES[present_budget.month]}, #{present_budget.year}
+      Total :   #{taka(present_budget.amount)}
+      Expense :   #{taka(present_budget.expense)}
+      Remaining :  #{taka(present_budget.amount - present_budget.expense)}".html_safe
     end
   end
 
   def see_pending_request
-    pending =Expense.where(status: 'Pending').count + Leafe.where(status: 'Pending').count + Income.where(status: 'Pending').count
+    pending =Expense.pending.count + Leafe.pending.count + Income.pending.count
     if pending > 0
       "<span class='badge'>
           #{pending}
@@ -44,75 +51,21 @@ module ApplicationHelper
   end
 
   def check_in_out
-    info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
-    attendance = Attendance.where(info: info).last
-    if attendance != nil
-      if attendance.status == true
-        link_to ("Check Out <span class='status green'></span>").html_safe, attendance_path(attendance), method: :put, class: "dropdown-item", data: {confirm: "Are You Sure?"}
-      else
-        link_to ("Check In <span class='status red'></span>").html_safe, attendances_path, method: :post, class: "dropdown-item"
-      end
+    attendance = current_user.attendances
+    attendance = attendance.where(date: Date.today.to_date).last
+    if attendance.present? && attendance.status
+      link_to ("Check Out <span class='status green'></span>").html_safe, attendance_path(attendance), method: :put, class: "dropdown-item", data: {confirm: "Are You Sure?"}
     else
       link_to ("Check In <span class='status red'></span>").html_safe, attendances_path, method: :post, class: "dropdown-item"
     end
   end
 
-  def find_by_month(month, user, search)
-
-    i = Income.where(user_id: user.id, status: Income::APPROVED)
-    if search.nil?
-      @year = Date.today.year
-      i = i.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, @year).sum(:amount)
-    else
-      #raise @year.to_i.inspect
-      i = i.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, search).sum(:amount)
-    end
-    return i.to_i
-  end
-
-  def find_total(user, search)
-    i = Income.where(user_id: user.id, status: Income::APPROVED)
-    if search.nil?
-      @year = Date.today.year
-      i = i.where('extract(year from income_date) = ?', @year).sum(:amount)
-    else
-      i = i.where('extract(year from income_date) = ?', search).sum(:amount)
-    end
-    return i.to_i
-  end
-
-  def find_class(month, user, search)
-    i = Income.where(user_id: user.id, status: Income::APPROVED)
-    if search.nil?
-      @year = Date.today.year
-      i = i.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, @year).sum(:amount)
-    else
-      i = i.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, search).sum(:amount)
-    end
-    #raise i.inspect
-    if i > user.target_amount.to_i
+  def find_klass(income, target)
+    if income > target
       return "bonusable"
     else
       return "not-bonusable"
     end
   end
-
-
-  def bonus_amount(month, year, user)
-    @income = Income.where(user_id: user.id, status: Income::APPROVED)
-    if year.nil?
-      @income = @income.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, Date.today.year).sum(:amount)
-    else
-      @income = @income.where('extract(month from income_date) = ? AND extract(year from income_date) = ?', month, year).sum(:amount)
-    end
-    @bonus = 0
-    if @income > user.target_amount
-      @bonus = (@income - user.target_amount) * (user.bonus_percentage / 100.0)
-    end
-
-    return @bonus
-  end
-
-
 end
 

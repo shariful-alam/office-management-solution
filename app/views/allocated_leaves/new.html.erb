@@ -1,30 +1,27 @@
 <div class="col-sm-5">
   <h1>Ask for Leave</h1>
-  <%= form_for(@allocated_leave, html: {autocomplete: 'off'}) do |l| %>
-      <% if @allocated_leave.errors.full_messages.any? %>
-          <% @allocated_leave.errors.full_messages.each do |error_message| %>
-              <p class="alert alert-danger"> <%= error_message if @allocated_leave.errors.full_messages.first == error_message %> </p>
-          <% break end %>
-      <% end %>
-      <div>
-        <%= l.label :user_id %> <br/>
-        <%= collection_select(:allocated_leafe, :user_id, User.all, :id, :name, {}, {:multiple => false, class: "form-control"}) %>
-      </div>
-      <br/>
-      <div class="form-group">
-        <%= l.label :year, class: "control-label" %>
-        <%= l.select :year, Date.today.years_ago(5).year.. 5.years.from_now.year,{:selected=> Date.today.year}, {:multiple => false, class: "form-control"} %>
-      </div>
-      <br/>
-      <div>
-        <%= l.label :total_leave, class: 'control-label' %> <br/>
-        <%= l.number_field :total_leave, class: 'form-control' %>
-      </div>
-      <br/>
-      <div class="form-group">
-        <%= l.submit 'Save', class: "btn btn-success" %> |
-        <%= link_to "Back", allocated_leaves_path, class: "btn btn-dark" %>
-      </div>
+  <%= form_for(@allocated_leafe, html: {autocomplete: 'off'}) do |allocated_leafe| %>
+    <%= render partial: 'layouts/error_message', locals: {object: @allocated_leafe} %>
+
+    <div>
+      <%= allocated_leafe.label :user_id %> <br/>
+      <%= collection_select(:allocated_leafe, :user_id, User.all, :id, :name, {}, {:multiple => false, class: "form-control"}) %>
+    </div>
+    <br/>
+    <div class="form-group">
+      <%= allocated_leafe.label :year, class: "control-label" %>
+      <%= allocated_leafe.select :year, Date.today.years_ago(5).year.. 5.years.from_now.year, {:selected => Date.today.year}, {:multiple => false, class: "form-control"} %>
+    </div>
+    <br/>
+    <div>
+      <%= allocated_leafe.label :total_leave, class: 'control-label' %> <br/>
+      <%= allocated_leafe.number_field :total_leave, class: 'form-control' %>
+    </div>
+    <br/>
+    <div class="form-group">
+      <%= allocated_leafe.submit 'Save', class: "btn btn-success" %> |
+      <%= link_to "Back", allocated_leaves_path, class: "btn btn-dark" %>
+    </div>
 
   <% end %>
 </div>

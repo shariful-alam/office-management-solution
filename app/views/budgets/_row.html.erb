@@ -1,6 +1,6 @@
 <tr>
   <td><%= @number %> </td>
-  <% @number+=1 %>
+  <% @number += 1 %>
   <td><%= expense.product_name %></td>
   <td><%= expense.user.name %></td>
   <td><%= expense.cost %></td>
@@ -8,26 +8,38 @@
   <td>
 
     <% if can? :approve, expense %>
-        <% if expense.status==Expense::APPROVED %>
-            <%= link_to "Undo", approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure to approve?'} %> /
-        <% else %>
-            <%= link_to "Approve", approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure to do undo?'} %> /
-        <% end %>
+      <% if expense.approved? %>
+        <%= link_to approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure?'} do %>
+          <i class="fa fa-undo" title="Undo"></i>
+        <% end %> |
+      <% else %>
+        <%= link_to approve_expense_path(expense), method: :put, data: {confirm: 'Are you sure to Approve?'} do %>
+          <i class="fa fa-check" title="Approve"></i>
+        <% end %> |
+      <% end %>
     <% end %>
 
     <% if can? :reject, expense %>
-       <%= link_to "Reject", reject_expense_path(expense), method: :put, data: {confirm: 'Are you sure to reject?'} %> /
+      <%= link_to reject_expense_path(expense), method: :put, data: {confirm: 'Are you sure to Reject?'} do %>
+        <i class="fa fa-ban" title="Reject"></i>
+      <% end %> |
     <% end %>
 
     <% if can? :read, expense %>
-    <%= link_to "Show", expense_path(expense) %>
+      <%= link_to expense_path(expense) do %>
+        <i class="fa fa-eye" title="Show Details"></i>
+      <% end %>
     <% end %>
 
     <% if can? :update, expense %>
-        / <%= link_to "Edit", edit_expense_path(expense) %>
+      | <%= link_to edit_expense_path(expense) do %>
+        <i class="fa fa-edit" title="Edit"></i>
+      <% end %>
     <% end %>
     <% if can? :delete, expense %>
-        / <%= link_to "Delete", expense_path(expense), method: :delete, data: {confirm: "Are you sure?"} %>
+      |<%= link_to expense_path(expense), method: :delete, data: {confirm: "Are you sure?"} do %>
+        <i class="fa fa-trash" title="Drop"></i>
+      <% end %>
     <% end %>
 
   </td>

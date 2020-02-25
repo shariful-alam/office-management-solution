@@ -1,24 +1,39 @@
-<% if current_user.role == User::EMPLOYEE %>
-    <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
+<% if current_user.employee? %>
+  <%= link_to "Apply for Leave", new_leafe_path, class: "btn btn-dark", style: "float:right" %>
 <% end %>
 
-<h1>List of Leaves of <strong><%= @allocated_leave.user.name %></strong></h1>
+<h1>List of Leaves of <strong><%= @allocated_leafe.user.name %></strong></h1>
 
-<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#demo">Pending (<%= @leaves_pending.count %>)</button>
-<div  class="collapse show in" id="demo">
-<%= render partial: 'table', locals: {leaves: @leaves_pending} %>
+<button class="accordion btn btn-warning" data-toggle="collapse" data-target="#pending">Pending
+  (<%= @leaves_pending.count %>)
+</button>
+<div class="collapse show in" id="pending">
+  <%= render partial: 'table', locals: {leaves: @leaves_pending} %>
+  <div>
+    <%= will_paginate @leaves_pending, :param_name => 'pending_leaves', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 <br><br>
 
-<button class="accordion btn btn-success" data-toggle="collapse" data-target="#demo1">Approved (<%= @leaves_approved.count %>)</button>
-<div  class="collapse in" id="demo1">
-<%= render partial: 'table', locals: {leaves: @leaves_approved} %>
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#approved">Approved
+  (<%= @leaves_approved.count %>)
+</button>
+<div class="collapse in" id="approved">
+  <%= render partial: 'table', locals: {leaves: @leaves_approved} %>
+  <div>
+    <%= will_paginate @leaves_approved, :param_name => 'approved_leaves', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 <br><br>
 
-<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#demo2">Rejected (<%= @leaves_rejected.count %>)</button>
-<div  class="collapse in" id="demo2">
-<%= render partial: 'table', locals: {leaves: @leaves_rejected} %>
+<button class="accordion btn btn-danger" data-toggle="collapse" data-target="#rejected">Rejected
+  (<%= @leaves_rejected.count %>)
+</button>
+<div class="collapse in" id="rejected">
+  <%= render partial: 'table', locals: {leaves: @leaves_rejected} %>
+  <div>
+    <%= will_paginate @leaves_rejected, :param_name => 'rejected_leaves', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
 </div>
 
 <div class="form-group">

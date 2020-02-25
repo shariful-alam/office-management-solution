@@ -4,35 +4,28 @@ class ExpensesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @expenses = @expenses.joins(:user)
+    @expenses = @expenses.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
       @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
-
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
-    @expenses = @expenses.order('id ASC')
-
-    @pending_expenses = @expenses.with_status(Expense::PENDING).paginate(:page => params[:page], :per_page => 20)
-    @approved_expenses = @expenses.with_status(Expense::APPROVED).paginate(:page => params[:page], :per_page => 20)
-    @rejected_expenses = @expenses.with_status(Expense::REJECTED).paginate(:page => params[:page], :per_page => 20)
-
+    @expenses = @expenses.sort_by_attr(:expense_date)
+    @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => 20)
+    @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => 20)
+    @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => 20)
   end
 
   def new
+
   end
 
   def create
     @expense = current_user.expenses.new(expense_params)
-    month=@expense.expense_date.strftime("%B")+', '+@expense.expense_date.strftime("%Y")
-    @budget=Budget.find_by(month: month)
-    if @budget
-      @expense.budget_id=@budget.id
-    end
     if @expense.save
-      redirect_to expenses_path, notice: "Expense has been Created Successfully!!"
+      redirect_to expenses_path, success: 'Expense has been created successfully!!'
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -41,8 +34,11 @@ class ExpensesController < ApplicationController
   end
 
   def destroy
-    @expense.destroy
-    flash[:alert] = "Expense has been Removed!!"
+    if @expense && @expense.destroy
+      flash[:alert] = 'Expense has been removed successfully!!'
+    else
+      flash[:alert] = 'Expense could not be deleted!!'
+    end
     redirect_back(fallback_location: expenses_path)
   end
 
@@ -51,42 +47,26 @@ class ExpensesController < ApplicationController
 
   def update
     if @expense.update(expense_params)
-      month=@expense.expense_date.strftime("%B")+', '+@expense.expense_date.strftime("%Y")
-      @budget=Budget.find_by(month: month)
-      if @budget
-        @expense.budget_id=@budget.id
-      else
-        redirect_to expenses_path, alert: "The budget for this month is not submitted yet!!"
-      end
-      @expense.save
-      redirect_to expenses_path, success: "Expense has been Updated Successfully!!"
+      redirect_to expenses_path, success: 'Expense has been updated successfully!!'
     else
-      render 'edit'
+      render :edit
     end
   end
 
   def reject
-    @expense.status = Expense::REJECTED
-    @expense.save
-    flash[:alert] = "Expense has been Rejected!!"
-    redirect_back(fallback_location: expenses_path)
+    @expense.rejected!
+    redirect_back(fallback_location: expenses_path, alert: 'Expense has been rejected successfully!!')
   end
 
   def approve
-    @budget = Budget.find(@expense.budget_id)
-    if @expense.status == Expense::APPROVED
-      @expense.status = Expense::PENDING
-      @budget.expense = @budget.expense - @expense.cost
-      @expense.approve_time = nil
-      flash[:warning] = "The Expense has been Queued for Pending!!"
+    if @expense.approved?
+      @expense.pending!
+      flash[:warning] = 'The Expense has been queued for pending!!'
     else
-      @expense.status = Expense::APPROVED
-      @expense.approve_time = @expense.updated_at
-      @budget.expense = @budget.expense + @expense.cost
-      flash[:notice] = "Expense has been Approved Successfully!!"
+      @expense.approved!
+      flash[:notice] = 'Expense has been approved successfully!!'
     end
-    @budget.save
-    @expense.save
+    @expense.update_budget
     redirect_back(fallback_location: expenses_path)
   end
 

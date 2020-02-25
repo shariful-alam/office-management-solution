@@ -1,36 +1,33 @@
 <h1>Edit Budget Information</h1>
-<div>
-  <%= form_for(@budget) do |form| %>
+<div class="col-sm-5">
+  <%= form_for(@budget) do |budget| %>
 
-      <% if @budget.errors.full_messages.any? %>
-          <% @budget.errors.full_messages.each do |error_message| %>
-              <p class="alert alert-danger"> <%= error_message if @budget.errors.full_messages.first == error_message %> </p>
-          <% break end %>
-      <% end %>
+    <%= render partial: 'layouts/error_message', locals: {object: @budget} %>
 
-      <div class="form-group">
-        <%= form.label :year, class: "control-label" %>
-        <%= form.select :year, Date.today.year.. 10.years.from_now.year %>
-      </div>
 
-      <div class="form-group">
-        <%= form.label :month %>
-        <%= form.select :month, Date::MONTHNAMES[1..12]%>
-      </div>
+    <div class="form-group">
+      <%= budget.label :year, class: "control-label" %>
+      <%= budget.select :year, Date.today.year.. 10.years.from_now.year, {}, {class: "form-control"} %>
+    </div>
 
-      <div class="form-group">
-        <%= form.label :amount, class: "control-label" %>
-        <%= form.text_field :amount, class: "form-control" %>
-      </div>
+    <div class="form-group">
+      <%= budget.label :month %>
+      <%= budget.select :month, Date::MONTHNAMES.compact.zip([*1..12]).to_h, {}, {class: "form-control"} %>
+    </div>
 
-      <div class="form-group">
-        <%= form.label :add,'Add More Budget', class: "control-label" %>
-        <%= form.text_field :add, class: "form-control" %>
-      </div>
+    <div class="form-group">
+      <%= budget.label :amount, class: "control-label" %>
+      <%= budget.text_field :amount, class: "form-control" %>
+    </div>
 
-      <div class="form-group">
-        <%= form.submit 'Submit', class: "btn btn-success" %> |
-        <%= link_to "Back", budgets_path, class: "btn btn-secondary" %>
-      </div>
+    <div class="form-group">
+      <%= budget.label :add, 'Add More Budget', class: "control-label" %>
+      <%= budget.text_field :add, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= budget.submit 'Submit', class: "btn btn-success" %> |
+      <%= link_to "Back", budgets_path, class: "btn btn-secondary" %>
+    </div>
   <% end %>
 </div>

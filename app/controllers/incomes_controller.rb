@@ -4,20 +4,33 @@ class IncomesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.all.order('id ASC').paginate(:page => params[:page], :per_page => 10)
+    @users_income = User.paginate(:page => params[:users_incomes], :per_page => 20)
+    @users_bonus = @users_income.paginate(:page => params[:users_bonuses], :per_page => 20)
+
     @monthly_totals = Array.new(13,0)
+    @all_incomes = Array.new(15){Array.new(15) { 0 } }
+    @all_bonuses = Array.new(15){Array.new(15) { 0 } }
+    @total_income_per_user = Array.new
+
+    @users_income.each do |user|
+      Income::MONTHS.each do |month|
+        income = Income.find_incomes_by_months(user,month,params[:search])
+        @all_incomes[user.id][month] = income
+        @all_bonuses[user.id][month] = Income.bonus_amount(user,month,params[:search])
+      end
+      @total_income_per_user[user.id] = Income.find_total(user,params[:search])
+    end
   end
 
   def new
-    @income = Income.new
+
   end
 
   def create
-    @income = Income.new(income_params)
-    @income.user_id = current_user.id
+    @income = current_user.incomes.new(income_params)
     if @income.save
-      flash[:notice] = "Your Income has been Queued for Pending!!"
-      if current_user.role == User::ADMIN or current_user.role == User::SUPER_ADMIN
+      flash[:notice] = 'Your income has been submitted for approval'
+      if current_user.admin? or current_user.super_admin?
         redirect_to incomes_path
       else
         redirect_to show_individual_incomes_path
@@ -29,69 +42,72 @@ class IncomesController < ApplicationController
   end
 
   def edit
-    @income = Income.find(params[:id])
+
   end
 
   def update
-    @income = Income.find(params[:id])
-    @month = @income.income_date.month
     if @income.update(income_params)
-      flash[:notice] = "Your Income Information has been Updated!!!"
-      redirect_to show_individual_incomes_path(user_id: current_user.id, month: @month, year: params[:search])
+      flash[:notice] = 'Your income information has been updated'
+      redirect_to show_individual_incomes_path(user_id: current_user.id, month: @income.income_date.month, year: params[:search])
     else
       render :edit
     end
   end
 
   def show
-    @income = Income.find(params[:id])
+
   end
 
 
   def destroy
-    @income = Income.find(params[:id])
-    @income.destroy
-    flash[:notice] = "Your Income information has been Destroyed!!"
+    if @income && @income.destroy
+    flash[:notice] = 'Your Income information has been destroyed'
     redirect_back(fallback_location: incomes_path)
+    else
+      flash[:alert] = 'Income could not be deleted!!'
+      render :index
+    end
   end
 
   def approve
-    @income = Income.find(params[:id])
-    if @income.status == Leafe::APPROVED
-      @income.status = Leafe::PENDING
-      flash[:notice] = "The Income Information has been Changed Successfully!!!"
+    if @income.approved?
+      @income.approve_time = nil
+      @income.pending!
+      flash[:notice] = 'The income status has been changed successfully'
     else
-      @income.status = Leafe::APPROVED
-      @income.approve_time = @income.updated_at
-      #LeafeMailer.approved(@leave).deliver_now
-      #raise @allocated_leave.inspect
-      flash[:notice] = "Income has been Approved!!!"
+      @income.approve_time = DateTime.now
+      @income.approved!
+      flash[:notice] = 'Income has been approved'
     end
-    @income.save
     redirect_back(fallback_location: incomes_path)
   end
 
   def reject
-    @income = Income.find(params[:id])
-    @income.status = Leafe::REJECTED
-    flash[:notice] = "Income has been Rejected!!!"
-    @income.save
-    #LeafeMailer.rejected(@leave).deliver_now
+    @income.rejected!
+    flash[:notice] = 'Income has been rejected'
     redirect_back(fallback_location: incomes_path)
   end
 
   def show_individual
-    #raise params[:year].inspect
-    @user = User.find(params[:user_id])
-    @incomes_approved = Income.search(params[:user_id], params[:month], params[:year], Income::APPROVED)
-    @incomes_pending = Income.search(params[:user_id], params[:month], params[:year], Income::PENDING)
-    @incomes_rejected = Income.search(params[:user_id], params[:month], params[:year], Income::REJECTED)
+    #TODO: Replace this code with cancan
+    if current_user.admin? or current_user.super_admin?
+      @user =  User.find(params[:user_id])
+    else
+      flash[:alert] = "Access Denied" if params[:user_id].to_i != current_user.id
+      @user = current_user
+    end
 
-    @incomes_pending = @incomes_pending.paginate(:page => params[:page], :per_page => 10)
-    @incomes_approved = @incomes_approved.paginate(:page => params[:page], :per_page => 10)
-    @incomes_rejected = @incomes_rejected.paginate(:page => params[:page], :per_page => 10)
+    @incomes = @user.incomes
+    #used pg specific query to reduce complexity
+    @incomes = @incomes.find_in_income_date_by('month', params[:month]) if params[:month].present?
+    @incomes = @incomes.find_in_income_date_by('year', params[:year].present? ? params[:year] : Date.today.year)
+
+    @incomes_approved = @incomes.approved.paginate(:page => params[:approved_incomes], :per_page => 20)
+    @incomes_pending = @incomes.pending.paginate(:page => params[:pending_incomes], :per_page => 20)
+    @incomes_rejected = @incomes.rejected.paginate(:page => params[:rejected_incomes], :per_page => 20)
+
+    @bonus_amount = Income.bonus_amount(@user,params[:month],params[:year]) if params[:month].present?
   end
-
 
   private
   def income_params

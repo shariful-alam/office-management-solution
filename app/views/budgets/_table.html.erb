@@ -1,4 +1,4 @@
-<% @number=expenses.offset + 1 %>
+<% @number = expenses.offset + 1 %>
 <table class="table table-bordered">
   <thead>
   <tr>
@@ -14,4 +14,3 @@
     <%= render partial: 'row', locals: {expense: expense} %>
   <% end %>
 </table>
-<%= will_paginate expenses, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

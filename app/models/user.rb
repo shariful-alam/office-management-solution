@@ -32,6 +32,18 @@ class User < ApplicationRecord
   after_create :send_message
   before_save :delete_image, if: -> {remove_image == '1'}
 
+  def admin?
+    self.role == ADMIN
+  end
+
+  def super_admin?
+    self.role == SUPER_ADMIN
+  end
+
+  def employee?
+    self.role == EMPLOYEE
+  end
+
   private
 
   def send_message
@@ -39,12 +51,8 @@ class User < ApplicationRecord
   end
 
   def delete_image
-    self.image = nil
+     self.image = nil
   end
 
-  def self.search(search)
-    @key="%#{search}%"
-    where('name ilike :search OR email ilike :search OR phone ilike :search OR role ilike :search', search: @key)
-  end
 
 end
