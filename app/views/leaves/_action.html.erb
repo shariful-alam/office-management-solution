@@ -7,9 +7,6 @@
 <td>
   <%= leave.leave_type %>
 </td>
-<td>
-  <%= leave.status.to_s.camelcase %>
-</td>
 <td style="text-align: center;">
   <% if current_user.admin? or current_user.super_admin? %>
     <% if leave.approved? %>

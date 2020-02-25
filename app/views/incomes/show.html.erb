@@ -6,7 +6,7 @@
     <li class="list-group-item"><b>Income Amount: </b><%= taka(@income.amount) %></li>
     <li class="list-group-item"><b>Income Date: </b><%= full_date(@income.income_date) %></li>
     <li class="list-group-item"><b>Income Source: </b><%= @income.source %></li>
-    <li class="list-group-item"><b>Status: </b><%= @income.status %></li>
+    <li class="list-group-item"><b>Status: </b><%= @income.status.to_s.camelcase %></li>
     <% if @income.approved? %>
         <li class="list-group-item"><b>Approved at: </b><%= full_date_with_time(@income.updated_at) %></li>
     <% end %>

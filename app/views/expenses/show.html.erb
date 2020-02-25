@@ -17,7 +17,7 @@
   </ul>
 
   <ul class="list-group list-group-flush">
-    <li class="list-group-item"><b>Status: </b><%= @expense.status %></li>
+    <li class="list-group-item"><b>Status: </b><%= @expense.status.to_s.camelcase %></li>
     <% if @expense.updated_at.present? %>
       <li class="list-group-item"><b>Approve Time: </b><%= full_date_with_time(@expense.updated_at) %></li>
     <% end %>
