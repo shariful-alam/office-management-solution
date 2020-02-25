@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_19_161209) do
+ActiveRecord::Schema.define(version: 2020_02_25_124745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,7 +57,6 @@ ActiveRecord::Schema.define(version: 2020_02_19_161209) do
     t.integer "image_file_size"
     t.datetime "image_updated_at"
     t.integer "budget_id"
-    t.datetime "approve_time"
     t.date "expense_date"
     t.integer "status", default: 0
   end
@@ -66,7 +65,6 @@ ActiveRecord::Schema.define(version: 2020_02_19_161209) do
     t.integer "user_id"
     t.decimal "amount"
     t.date "income_date"
-    t.datetime "approve_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "source"
@@ -81,7 +79,6 @@ ActiveRecord::Schema.define(version: 2020_02_19_161209) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.datetime "approve_time"
     t.integer "status", default: 0
   end
 

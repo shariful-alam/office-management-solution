@@ -49,7 +49,9 @@
       <% end %>
     <% end %>
   <% else %>
-    <%= link_to "Show", income_path(income) %>
+    <%= link_to income_path(income) do %>
+      <i class="fa fa-eye" title="Show Details"></i>
+    <% end %>
     <% if income.pending? and current_user == income.user %>
       | <%= link_to edit_income_path(income) do %>
         <i class="fa fa-edit" title="Edit"></i>

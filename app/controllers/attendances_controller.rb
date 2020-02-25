@@ -6,8 +6,8 @@ class AttendancesController < ApplicationController
 
   def index
     @attendances = @attendances.includes(:user).where(date: Date.today.to_date)
-    @attendances_available = @attendances.where(status: true).paginate(:page => params[:available], :per_page => 20)
-    @attendances_unavailable = @attendances.where(status: false).paginate(:page => params[:unavailable], :per_page => 20)
+    @attendances_available = @attendances.where(status: true).paginate(:page => params[:available], :per_page => Attendance::PER_PAGE)
+    @attendances_unavailable = @attendances.where(status: false).paginate(:page => params[:unavailable], :per_page => Attendance::PER_PAGE)
   end
 
   def create
