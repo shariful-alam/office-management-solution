@@ -54,7 +54,9 @@ class Manage::UsersController < ApplicationController
       search = "%#{params[:search]}%"
       @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
-    @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
+    if params[:from].present? and params[:to].present?
+      @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]})
+    end
     @expenses = @expenses.sort_by_attr(:expense_date)
     @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => 20)
     @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => 20)
@@ -63,7 +65,9 @@ class Manage::UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :designation, :role, :password, :password_confirmation, :image, :remove_image, :target_amount, :bonus_percentage)
+    params.require(:user).permit(:name, :email, :phone, :designation, :role, :password,
+                                 :password_confirmation, :image, :remove_image, :target_amount,
+                                 :bonus_percentage)
   end
 
 

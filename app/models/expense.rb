@@ -28,20 +28,18 @@ class Expense < ApplicationRecord
 
 
   def update_budget
-
     if self.approved?
       self.budget.update({expense: self.budget.expense + self.cost})
     elsif self.pending?
       self.budget.update({expense: self.budget.expense - self.cost})
     end
-
   end
 
   private
 
   def check_budget
     if self.expense_date.blank?
-      self.errors.add(:expense_date)
+      self.errors.add(:expense_date,' can not be blank.')
     else
       self.budget = Budget.find_by(month: self.expense_date.month, year: self.expense_date.year)
       if self.budget.blank?

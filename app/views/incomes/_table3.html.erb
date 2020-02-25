@@ -15,7 +15,7 @@
         </td>
         <% Income::MONTHS.each do |month| %>
           <td>
-            <%= @all_bonuses[user.id][month] >0 ? @all_bonuses[user.id][month] : 0 %>
+            <%= @all_bonuses[user.id][month] > 0 ? @all_bonuses[user.id][month] : 0 %>
           </td>
         <% end %>
       </tr>
