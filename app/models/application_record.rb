@@ -2,8 +2,6 @@ class ApplicationRecord < ActiveRecord::Base
 
   self.abstract_class = true
 
-  APPROVED = "approved"
-  PENDING = "pending"
-  REJECTED = "rejected"
+  PER_PAGE = 20
 
 end
