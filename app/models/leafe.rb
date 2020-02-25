@@ -1,69 +1,45 @@
 class Leafe < ApplicationRecord
-  LEAVE_TYPE = ["Personal Leave", "Training", "Vacation", "Medical Leave"]
+
+  belongs_to :user
+
   validates :start_date, presence: true
   validates :end_date, presence: true
   validates :reason, presence: true
   validates :leave_type, presence: true
-  APPROVED = "Approved"
-  PENDING = "Pending"
-  REJECTED = "Rejected"
-  belongs_to :user
+
+
+  LEAVE_TYPES = ["Personal Leave", "Training", "Vacation", "Medical Leave"]
+
   PL = "Personal Leave"
   TL = "Training"
   VL = "Vacation"
   ML = "Medical Leave"
 
-  private
-  def self.search_in_date_range(date_from, date_to)
-    raise self.where(:start_date => date_from..date_to).inspect
+  enum status: {pending: 0, approved: 1, rejected: 2}
+
+  scope :with_leafe_type, -> (type) {where(leave_type: type)}
+
+
+
+
+  def update_allocated_leave
+    count = Leafe.count_days(self.start_date, self.end_date)
+    used = self.user.allocated_leafe.used_leave
+    total = self.user.allocated_leafe.total_leave
+    if self.pending?
+      self.user.allocated_leafe.update({used_leave: (used - count >= 0 ? used - count : 0) })
+    elsif self.approved?
+      self.user.allocated_leafe.update({used_leave: (used + count <= total ? used + count : total) })
+    end
   end
 
-  def self.search(from, to, search, user_id, role, status, page)
+  private
 
-    if role == User::ADMIN or role == User::SUPER_ADMIN
-      if search != "" and search !=nil
-        @key = "%#{search}%"
-        if from != "" and from != nil and to != "" and to != nil
-          @from="#{from}"
-          @to="#{to}"
-          self.joins(:user).where(status: status).where('users.name ilike :search OR leave_type ilike :search', search: @key).where(':from <= end_date AND :to >= start_date', from: @from, to: @to).order('id ASC').paginate(:page => page, :per_page => 20)
-        else
-          self.joins(:user).where(status: status).where('users.name ilike :search OR leave_type ilike :search', search: @key).order('id ASC').paginate(:page => page, :per_page => 20)
-        end
-      elsif from != "" and from != nil and to != "" and to != nil
-        @from="#{from}"
-        @to="#{to}"
-        if search!= "" and search !=nil
-          @key = "%#{search}%"
-          self.joins(:user).where(status: status).where('users.name ilike :search OR leave_type ilike :search', search: @key).where(':from <= end_date AND :to >= start_date', from: @from, to: @to).order('id ASC').paginate(:page => page, :per_page => 20)
-        else
-          self.joins(:user).where(status: status).where(':from <= end_date AND :to >= start_date', from: @from, to: @to).order('id ASC').paginate(:page => page, :per_page => 20)
-        end
-      else
-        self.joins(:user).where(status: status).order('id ASC').paginate(:page => page, :per_page => 20)
-      end
+  def self.count_days(start_date, end_date)
+    if start_date.present? and end_date.present?
+      (start_date..end_date).select {|a| a.wday < 6 && a.wday > 0}.count
     else
-      if search != "" and search !=nil
-        @key = "%#{search}%"
-        if from != "" and from != nil and to != "" and to != nil
-          @from="#{from}"
-          @to="#{to}"
-          self.joins(:user).where(status: status, user_id: user_id).where('users.name ilike :search OR leave_type ilike :search', search: @key).where(':from <= end_date AND :to >= start_date', from: @from, to: @to).order('id ASC').paginate(:page => page, :per_page => 20)
-        else
-          self.joins(:user).where(status: status, user_id: user_id).where('users.name ilike :search OR leave_type ilike :search', search: @key).order('id ASC').paginate(:page => page, :per_page => 20)
-        end
-      elsif from != "" and from != nil and to != "" and to != nil
-        @from="#{from}"
-        @to="#{to}"
-        if search!= "" and search !=nil
-          @key = "%#{search}%"
-          self.joins(:user).where(status: status, user_id: user_id).where('users.name ilike :search OR leave_type ilike :search', search: @key).where(':from <= end_date AND :to >= start_date', from: @from, to: @to).order('id ASC').paginate(:page => page, :per_page => 20)
-        else
-          self.joins(:user).where(status: status, user_id: user_id).where(':from <= end_date AND :to >= start_date', from: @from, to: @to).order('id ASC').paginate(:page => page, :per_page => 20)
-        end
-      else
-        self.joins(:user).where(status: status, user_id: user_id).order('id ASC').paginate(:page => page, :per_page => 20)
-      end
+      0
     end
   end
 

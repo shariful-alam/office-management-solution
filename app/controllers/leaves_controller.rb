@@ -2,91 +2,82 @@ class LeavesController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
-
   def index
-    @leaves_pending = Leafe.search(params[:from], params[:to], params[:search], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]= Leafe::PENDING, params[:page])
-    @leaves_approved = Leafe.search(params[:from], params[:to], params[:search], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]=Leafe::APPROVED, params[:page])
-    @leaves_rejected = Leafe.search(params[:from], params[:to], params[:search], params[:user_id] = current_user.id, params[:role] = current_user.role, params[:status]=Leafe::REJECTED, params[:page])
-    @info = current_user.id.to_s + '=>' + Date.today.to_date.to_s
-    @attendance = Attendance.where(info: @info).last
+    @leaves = @leaves.includes(:user)
+    if params[:search].present?
+      search = "%#{params[:search]}%"
+      @leaves = @leaves.where('users.name ilike :search OR leave_type ilike :search', {search: search})
+    end
+
+    @leaves = @leaves.where(':from <= end_date ', {from: params[:from]}) if params[:from].present?
+    @leaves = @leaves.where(':to >= start_date ', {to: params[:to]}) if params[:to].present?
+
+    @leaves_pending = @leaves.pending.paginate(:page => params[:pending_leaves], :per_page => 20)
+    @leaves_approved = @leaves.approved.paginate(:page => params[:approved_leaves], :per_page => 20)
+    @leaves_rejected = @leaves.rejected.paginate(:page => params[:rejected_leaves], :per_page => 20)
   end
 
   def new
-    @leave = Leafe.new
+    @leafe = current_user.leaves.new
   end
 
   def create
-    @leave = Leafe.new(leafe_params)
-    @leave.user_id = current_user.id
-    @count = (@leave.start_date..@leave.end_date).select{|a| a.wday < 6 && a.wday > 0}.count
-    if @count > 0
-      if @leave.save
-        redirect_to show_all_allocated_leafe_path(@leave.user_id), notice: "Your Application Has Bees Submitted for Approval"
+    @leafe = current_user.leaves.new(leafe_params)
+    if Leafe.count_days(@leafe.start_date,@leafe.end_date) > 0
+      if @leafe.save
+        redirect_to leaves_path, notice: 'Your leave application has been submitted for approval'
       else
         render :new
       end
     else
-      flash[:warning] = "Please Select a Valid Date Range!!"
+      flash[:warning] = 'Please select a valid date range!!'
       render :new
     end
 
   end
 
   def edit
-    @leave = Leafe.find(params[:id])
+
   end
 
   def show
-    @leave = Leafe.find(params[:id])
-    #@user = User.find(@leave.user_id)
+
   end
 
   def update
-    #raise params.inspect
-    @leave = Leafe.find(params[:id])
-    if @leave.update(leafe_params)
-      redirect_to show_all_allocated_leafe_path(@leave.user_id), notice: "Your Information Has Been Updated"
+    if @leafe.update(leafe_params)
+      redirect_to show_all_allocated_leafe_path(current_user.allocated_leafe), notice: 'Leave information has been updated'
     else
-      render 'edit'
+      render :edit
     end
   end
 
   def destroy
-    @leave = Leafe.find(params[:id])
-    @leave.destroy
-    flash[:notice] = "Information Has Destroyed"
-    redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id))
+    if @leafe && @leafe.destroy
+    redirect_to show_all_allocated_leafe_path(current_user.allocated_leafe), notice: 'Information has heen destroyed'
+    else
+      flash[:alert] = 'Leave could not be deleted!!'
+      render :index
+    end
   end
 
   def approve
-    @leave = Leafe.find(params[:id])
-    @count = (@leave.start_date..@leave.end_date).select{|a| a.wday < 6 && a.wday > 0}.count
-    if @leave.status == Leafe::APPROVED
-      @leave.status = Leafe::PENDING
-      @allocated_leave = AllocatedLeafe.where(user_id: @leave.user_id).last
-      @allocated_leave.used_leave -= @count
-      @allocated_leave.save
-      flash[:notice] = "The Leave information has been changed successfully"
+    if @leafe.approved?
+      @leafe.pending!
+      flash[:notice] = 'Leave information has been changed successfully'
     else
-      @leave.status = Leafe::APPROVED
-      @leave.approve_time = @leave.updated_at
-      @allocated_leave = AllocatedLeafe.find_by(user_id: @leave.user_id)
-      @allocated_leave.used_leave += @count
-      @allocated_leave.save
-      LeafeMailer.approved(@leave).deliver_now
-      flash[:notice] = "Leave has been approved successfully"
+      @leafe.approved!
+      #LeafeMailer.approved(@leafe).deliver_now
+      flash[:notice] = 'The leave has been approved successfully'
     end
-    @leave.save
-    redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id))
+    @leafe.update_allocated_leave
+    redirect_to show_all_allocated_leafe_path(@leafe.user.allocated_leafe)
   end
 
   def reject
-    @leave = Leafe.find(params[:id])
-    @leave.status = Leafe::REJECTED
-    flash[:notice] = "The Leave information has been changed successfully"
-    @leave.save
-    LeafeMailer.rejected(@leave).deliver_now
-    redirect_back(fallback_location: show_all_allocated_leafe_path(@leave.user_id))
+    @leafe.rejected!
+    #LeafeMailer.rejected(@leafe).deliver_now
+    redirect_to show_all_allocated_leafe_path(@leafe.user.allocated_leafe), notice: 'The leave has been changed successfully'
   end
 
   private

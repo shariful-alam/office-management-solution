@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_12_100020) do
+ActiveRecord::Schema.define(version: 2020_02_19_161209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_02_12_100020) do
   create_table "allocated_leaves", force: :cascade do |t|
     t.integer "user_id"
     t.integer "total_leave"
-    t.integer "used_leave"
+    t.integer "used_leave", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "year"
@@ -26,19 +26,22 @@ ActiveRecord::Schema.define(version: 2020_02_12_100020) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id"
-    t.string "info"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "status", default: false
+    t.date "date"
+    t.index ["user_id", "date"], name: "index_attendances_on_user_id_and_date"
   end
 
   create_table "budgets", force: :cascade do |t|
-    t.string "month"
     t.decimal "amount"
-    t.decimal "expense"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+    t.integer "month"
+    t.integer "year"
+    t.decimal "expense", default: "0.0"
+    t.index ["month", "year"], name: "index_budgets_on_month_and_year"
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -49,7 +52,6 @@ ActiveRecord::Schema.define(version: 2020_02_12_100020) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
-    t.string "status", default: "Pending"
     t.string "image_file_name"
     t.string "image_content_type"
     t.integer "image_file_size"
@@ -57,17 +59,18 @@ ActiveRecord::Schema.define(version: 2020_02_12_100020) do
     t.integer "budget_id"
     t.datetime "approve_time"
     t.date "expense_date"
+    t.integer "status", default: 0
   end
 
   create_table "incomes", force: :cascade do |t|
     t.integer "user_id"
     t.decimal "amount"
     t.date "income_date"
-    t.string "status", default: "Pending"
     t.datetime "approve_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "source"
+    t.integer "status", default: 0
   end
 
   create_table "leaves", force: :cascade do |t|
@@ -75,11 +78,11 @@ ActiveRecord::Schema.define(version: 2020_02_12_100020) do
     t.date "end_date"
     t.text "reason"
     t.string "leave_type"
-    t.string "status", default: "Pending"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "approve_time"
+    t.integer "status", default: 0
   end
 
   create_table "users", force: :cascade do |t|

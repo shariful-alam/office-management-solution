@@ -2,37 +2,23 @@ class Budget < ApplicationRecord
 
   belongs_to :user
   has_many :expenses
-  attr_accessor :year, :add
+  attr_accessor :add
 
-  validates :month, :presence => true
-  validates :month, :uniqueness => true
-  validates :amount, :presence => true, numericality: {integer: true}
+  validates :month, presence: true
+  validates :year, presence: true
+  validates :month, uniqueness: {scope: :year}
+  validates :amount, presence: true, numericality: {integer: true}
   validates :add, numericality: {integer: true, message: 'Please Give a value', :allow_blank => true, :allow_nil => true}
 
-  before_create :define_month_year
-  before_update :define_month_year
+  before_update :add_amount
 
   private
-  def self.search(search)
-    @key = "%#{search}%"
-    self.joins(:user).where('users.name ilike :search OR month ilike :search', search: @key)
+
+  def add_amount
+    self.amount += self.add.to_i if self.add.present?
   end
 
-  def define_month_year
 
-    if year != nil
-      self.month = month+', '+year
 
-      if expense == nil
-        self.expense = 0
-      end
-
-      if add != nil
-        self.amount += add.to_i
-      end
-
-      validate validate! _validators
-    end
-  end
 
 end

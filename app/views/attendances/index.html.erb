@@ -1,32 +1,38 @@
 <h1>Availability of All Users</h1>
 
-<button class="accordion btn btn-success">Available Employees (<%= @attendances_available.count %>)</button>
-<div class="panel">
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#available">Available Employees
+  (<%= @attendances_available.count %>)
+</button>
+<div class="collapse show in" id="available">
   <div class="table-responsive-sm">
     <table class="table table-bordered">
       <tr>
         <th>Employee</th>
         <th>Check In Time</th>
       </tr>
-      <% @attendances_available.each do |l| %>
-          <tr>
-            <td>
-              <%= l.user.name %>
-            </td>
-            <td>
-              <%= only_time(l.created_at) %>
-            </td>
-          </tr>
+      <% @attendances_available.each do |attendance| %>
+        <tr>
+          <td>
+            <%= attendance.user.name %>
+          </td>
+          <td>
+            <%= only_time(attendance.created_at) %>
+          </td>
+        </tr>
       <% end %>
     </table>
   </div>
   <div>
-    <%= will_paginate @attendances_available, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    <%= will_paginate @attendances_available, :param_name => 'available', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
   </div>
-</div>
 
-<button class="accordion btn btn-secondary">Unavailable Employees (<%= @attendances_unavailable.count %>)</button>
-<div class="panel">
+</div>
+<br>
+<br>
+<button class="accordion btn btn-secondary" data-toggle="collapse" data-target="#unavailable">Unavailable Employees
+  (<%= @attendances_unavailable.count %>)
+</button>
+<div class="collapse show in" id="unavailable">
   <div class="table-responsive-sm">
 
     <table class="table table-bordered">
@@ -36,34 +42,34 @@
         <th>Check Out Time</th>
         <th>Total Time Spent</th>
       </tr>
-      <% @attendances_unavailable.each do |l| %>
-          <tr>
-            <td>
-              <%= l.user.name %>
-            </td>
-            <td>
-              <%= only_time(l.created_at) %>
-            </td>
-            <td>
-              <%= only_time(l.updated_at) %>
-            </td>
-            <td>
-              <%= distance_of_time_in_words(l.updated_at - l.created_at) %>
-            </td>
-          </tr>
+      <% @attendances_unavailable.each do |attendance| %>
+        <tr>
+          <td>
+            <%= attendance.user.name %>
+          </td>
+          <td>
+            <%= only_time(attendance.created_at) %>
+          </td>
+          <td>
+            <%= only_time(attendance.updated_at) %>
+          </td>
+          <td>
+            <%= distance_of_time_in_words(attendance.updated_at - attendance.created_at) %>
+          </td>
+        </tr>
       <% end %>
     </table>
   </div>
 
   <div>
-    <%= will_paginate @attendances_unavailable, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    <%= will_paginate @attendances_unavailable, :param_name => 'unavailable', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
   </div>
 </div>
 
 <br/>
 <div class="form-group">
+  <br>
   <%= link_to "Back", allocated_leaves_path, class: "btn btn-dark" %>
 </div>
 
 
-<%= javascript_pack_tag :accordion %>

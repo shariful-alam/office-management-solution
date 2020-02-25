@@ -1,4 +1,4 @@
-<% @number=expenses.offset + 1 %>
+<% @number = expenses.offset + 1 %>
 <div class="table-responsive-sm">
   <table class="table table-bordered">
     <thead>
@@ -8,7 +8,7 @@
       <th>Employee</th>
       <th>Cost</th>
       <th>Status</th>
-      <th>Action</th>
+      <th style="text-align: center;">Action</th>
     </tr>
     </thead>
     <% expenses.each do |expense| %>
@@ -16,4 +16,3 @@
     <% end %>
   </table>
 </div>
-<%= will_paginate expenses, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

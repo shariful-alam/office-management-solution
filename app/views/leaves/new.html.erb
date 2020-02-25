@@ -1,41 +1,34 @@
-<div class="col-sm-5" >
+<div class="col-sm-5">
   <h1>Apply for Leave</h1>
-  <%= form_for(@leave, html: {autocomplete: 'off'}) do |l| %>
+  <%= form_for(@leafe, html: {autocomplete: 'off'}) do |leafe| %>
 
-      <% if @leave.errors.full_messages.any? %>
-          <% @leave.errors.full_messages.each do |error_message| %>
-              <p class="alert alert-danger"> <%= error_message if @leave.errors.full_messages.first == error_message %> </p>
-          <% break end %>
-      <% end %>
+    <%= render partial: 'layouts/error_message', locals: {object: @leafe} %>
 
-      <div>
-        <h3>User : <%= current_user.name %></h3>
-      </div>
-      <br/>
-      <div>
-        <%= l.label :start_date, class: 'control-label' %> <br/>
-        <%= l.text_field :start_date, class: 'form-control',id: "datepicker" , placeholder: "yyyy-mm-yy" %>
-      </div>
-      <br/>
-      <div>
-        <%= l.label :end_date, class: 'control-label' %> <br/>
-        <%= l.text_field :end_date, class: 'form-control',id: "datepicker2", placeholder: "yyyy-mm-yy" %>
-      </div>
-      <br/>
-      <div>
-        <%= l.label :reason, class: 'control-label' %> <br/>
-        <%= l.text_area :reason, class: 'form-control' %>
-      </div>
-      <br/>
-      <div>
-        <%= l.label :Leave_type %> <br/>
-        <%= l.select(:leave_type, Leafe::LEAVE_TYPE, {}, {class: "form-control"}) %>
-      </div>
-      <br/>
-      <div class="form-group">
-        <%= l.submit 'Save', class: "btn btn-success" %> |
-        <%= link_to "Back", :back, class: "btn btn-dark" %>
-      </div>
+    <br>
+    <div>
+      <%= leafe.label :start_date, class: 'control-label' %> <br/>
+      <%= leafe.text_field :start_date, class: 'form-control', id: "datepicker", placeholder: "yyyy-mm-dd" %>
+    </div>
+    <br/>
+    <div>
+      <%= leafe.label :end_date, class: 'control-label' %> <br/>
+      <%= leafe.text_field :end_date, class: 'form-control', id: "datepicker2", placeholder: "yyyy-mm-dd" %>
+    </div>
+    <br/>
+    <div>
+      <%= leafe.label :reason, class: 'control-label' %> <br/>
+      <%= leafe.text_area :reason, class: 'form-control' %>
+    </div>
+    <br/>
+    <div>
+      <%= leafe.label :Leave_type %> <br/>
+      <%= leafe.select(:leave_type, Leafe::LEAVE_TYPES, {}, {class: "form-control"}) %>
+    </div>
+    <br/>
+    <div class="form-group">
+      <%= leafe.submit 'Save', class: "btn btn-success" %> |
+      <%= link_to "Back", :back, class: "btn btn-dark" %>
+    </div>
 
-<% end %>
+  <% end %>
 </div>
