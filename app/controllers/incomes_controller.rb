@@ -4,8 +4,8 @@ class IncomesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users_income = User.paginate(:page => params[:users_incomes], :per_page => 20)
-    @users_bonus = @users_income.paginate(:page => params[:users_bonuses], :per_page => 20)
+    @users_income = User.paginate(:page => params[:users_incomes], :per_page => Income::PER_PAGE)
+    @users_bonus = @users_income.paginate(:page => params[:users_bonuses], :per_page => Income::PER_PAGE)
 
     @monthly_totals = Array.new(13,0)
     @all_incomes = Array.new(15){Array.new(15) { 0 } }
@@ -33,7 +33,7 @@ class IncomesController < ApplicationController
       if current_user.admin? or current_user.super_admin?
         redirect_to incomes_path
       else
-        redirect_to show_individual_incomes_path
+        redirect_to show_individual_incomes_path(user_id: @income.user.id)
       end
     else
       render :new
@@ -71,11 +71,9 @@ class IncomesController < ApplicationController
 
   def approve
     if @income.approved?
-      @income.approve_time = nil
       @income.pending!
       flash[:notice] = 'The income status has been changed successfully'
     else
-      @income.approve_time = DateTime.now
       @income.approved!
       flash[:notice] = 'Income has been approved'
     end
@@ -92,19 +90,23 @@ class IncomesController < ApplicationController
     #TODO: Replace this code with cancan
     if current_user.admin? or current_user.super_admin?
       @user =  User.find(params[:user_id])
+      @incomes = @user.incomes
+      #used pg specific query to reduce complexity
+      @incomes = @incomes.find_in_income_date_by('month', params[:month]) if params[:month].present?
+      @incomes = @incomes.find_in_income_date_by('year', params[:year].present? ? params[:year] : Date.today.year)
     else
-      flash[:alert] = "Access Denied" if params[:user_id].to_i != current_user.id
+      if params[:user_id].to_i != current_user.id
+        flash[:alert] = "Access Denied"
+      end
       @user = current_user
+      @incomes = @user.incomes
     end
 
-    @incomes = @user.incomes
-    #used pg specific query to reduce complexity
-    @incomes = @incomes.find_in_income_date_by('month', params[:month]) if params[:month].present?
-    @incomes = @incomes.find_in_income_date_by('year', params[:year].present? ? params[:year] : Date.today.year)
+    @incomes = @incomes.order(income_date: :desc)
 
-    @incomes_approved = @incomes.approved.paginate(:page => params[:approved_incomes], :per_page => 20)
-    @incomes_pending = @incomes.pending.paginate(:page => params[:pending_incomes], :per_page => 20)
-    @incomes_rejected = @incomes.rejected.paginate(:page => params[:rejected_incomes], :per_page => 20)
+    @incomes_approved = @incomes.approved.paginate(:page => params[:approved_incomes], :per_page => Income::PER_PAGE)
+    @incomes_pending = @incomes.pending.paginate(:page => params[:pending_incomes], :per_page => Income::PER_PAGE)
+    @incomes_rejected = @incomes.rejected.paginate(:page => params[:rejected_incomes], :per_page => Income::PER_PAGE)
 
     @bonus_amount = Income.bonus_amount(@user,params[:month],params[:year]) if params[:month].present?
   end

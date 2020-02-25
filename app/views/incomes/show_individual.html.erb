@@ -2,24 +2,14 @@
 
 
 <% if params[:month] %>
-  <% if params[:year] %>
     <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>
-      , <%= params[:year] %> </h1>
+      , <%= params[:year].present? ? params[:year] : Date.today.year %> </h1>
     <br/>
-  <% else %>
-    <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>
-      , <%= Date.today.year %> </h1>
-    <br/>
-  <% end %>
   <% if @bonus_amount > 0 %>
     <h2>Hurrah!! You are getting <%= taka(@bonus_amount) %> BONUS!! </h2>
   <% end %>
 <% else %>
-  <% if params[:year] %>
-    <h1>All Income List of <%= @user.name %> of year <%= params[:year] %> </h1> <br/>
-  <% else %>
-    <h1>All Income List of <%= @user.name %> of year <%= Date.today.year %> </h1> <br/>
-  <% end %>
+    <h1>All Income List of <%= @user.name %> of year <%= params[:year].present? ? params[:year] : Date.today.year %> </h1> <br/>
 <% end %>
 
 <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#pending">Pending

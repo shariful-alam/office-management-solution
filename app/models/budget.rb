@@ -4,6 +4,8 @@ class Budget < ApplicationRecord
   has_many :expenses
   attr_accessor :add
 
+  PER_PAGE = 12
+
   validates :month, presence: true
   validates :year, presence: true
   validates :month, uniqueness: {scope: :year}
