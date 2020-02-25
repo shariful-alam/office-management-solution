@@ -4,11 +4,7 @@
 
     <%= render partial: 'layouts/error_message', locals: {object: @leafe} %>
 
-
-    <div>
-      <h3>User: <%= @leafe.user.name %></h3>
-    </div>
-    <br/>
+    <br>
     <div>
       <%= leafe.label :start_date, class: 'control-label' %> <br/>
       <%= leafe.text_field :start_date, class: 'form-control', id: "datepicker", placeholder: "yyyy-mm-yy" %>

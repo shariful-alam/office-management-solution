@@ -21,31 +21,33 @@ class Expense < ApplicationRecord
 
 
   before_validation :check_budget
-  after_update :update_budget
 
   CATEGORY_LIST = ['Fixed', 'Regular']
 
-  scope :sort_by_attr, -> (attr) { order(attr) }
+  scope :sort_by_attr, -> (attr) {order(attr)}
 
-  private
 
   def update_budget
+
     if self.approved?
       self.budget.update({expense: self.budget.expense + self.cost})
     elsif self.pending?
       self.budget.update({expense: self.budget.expense - self.cost})
     end
+
   end
 
- def check_budget
-   if self.expense_date.blank?
-     self.errors.add(:expense_date)
-   else
-     self.budget = Budget.find_by(month: self.expense_date.month, year: self.expense_date.year)
-     if self.budget.blank?
-       self.errors.add(:budget, :not_specified, message: " for #{Date::MONTHNAMES[self.expense_date.month]} is not submitted yet!!")
-     end
-   end
- end
+  private
+
+  def check_budget
+    if self.expense_date.blank?
+      self.errors.add(:expense_date)
+    else
+      self.budget = Budget.find_by(month: self.expense_date.month, year: self.expense_date.year)
+      if self.budget.blank?
+        self.errors.add(:budget, :not_specified, message: " for #{Date::MONTHNAMES[self.expense_date.month]} is not submitted yet!!")
+      end
+    end
+  end
 
 end

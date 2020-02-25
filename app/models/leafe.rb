@@ -7,7 +7,6 @@ class Leafe < ApplicationRecord
   validates :reason, presence: true
   validates :leave_type, presence: true
 
-  after_update :update_allocated_leave
 
   LEAVE_TYPES = ["Personal Leave", "Training", "Vacation", "Medical Leave"]
 
@@ -21,7 +20,7 @@ class Leafe < ApplicationRecord
   scope :with_leafe_type, -> (type) {where(leave_type: type)}
 
 
-  private
+
 
   def update_allocated_leave
     count = Leafe.count_days(self.start_date, self.end_date)
@@ -33,6 +32,8 @@ class Leafe < ApplicationRecord
       self.user.allocated_leafe.update({used_leave: (used + count <= total ? used + count : total) })
     end
   end
+
+  private
 
   def self.count_days(start_date, end_date)
     if start_date.present? and end_date.present?

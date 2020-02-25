@@ -66,6 +66,7 @@ class ExpensesController < ApplicationController
       @expense.approved!
       flash[:notice] = 'Expense has been approved successfully!!'
     end
+    @expense.update_budget
     redirect_back(fallback_location: expenses_path)
   end
 

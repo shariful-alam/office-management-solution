@@ -63,15 +63,14 @@ class LeavesController < ApplicationController
 
   def approve
     if @leafe.approved?
-      @leafe.approve_time = nil
       @leafe.pending!
       flash[:notice] = 'Leave information has been changed successfully'
     else
-      @leafe.approve_time = DateTime.now
       @leafe.approved!
       #LeafeMailer.approved(@leafe).deliver_now
       flash[:notice] = 'The leave has been approved successfully'
     end
+    @leafe.update_allocated_leave
     redirect_to show_all_allocated_leafe_path(@leafe.user.allocated_leafe)
   end
 
