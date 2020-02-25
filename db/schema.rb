@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_02_25_124745) do
   create_table "allocated_leaves", force: :cascade do |t|
     t.integer "user_id"
     t.integer "total_leave"
-    t.integer "used_leave", default: 0
+    t.integer "used_leave"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "year"
