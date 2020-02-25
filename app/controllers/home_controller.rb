@@ -6,15 +6,14 @@ class HomeController < ApplicationController
     end
 
     @budgets = Budget.group(:year).order(:year).group(:month).order(:month).sum(:expense)
+
     @updated_budget = {}
     @budgets.each do |budget|
-      arr = Array.new
-      arr.push(budget.first.first)
-      arr.push(Date::MONTHNAMES[budget.first.second])
+      arr = []
+      arr << budget.first.first
+      arr << Date::MONTHNAMES[budget.first.second]
       @updated_budget[arr] = budget.second
     end
-
-
 
     @months = Date::MONTHNAMES.slice(1, 12)
     @income_arr = Array.new(13, 0)
