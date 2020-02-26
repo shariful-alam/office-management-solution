@@ -1,4 +1,4 @@
-<div class="card col-md-6" >
+<div class="card col-md-6">
   <% if @expense.image.exists? %>
     <br>
     <%= image_tag(@expense.image.url, :class => "card-img-top") %>
@@ -6,20 +6,22 @@
   <% end %>
 
   <div class="card-body">
-    <h4 class="card-title"><b>Employee: </b><%= @expense.user.name %></h4>
-    <h4 class="card-title"><b>Product: </b><%= @expense.product_name %></h4>
-    <h5 class="card-text"><b>Details: </b><%= @expense.details %></h5>
+    <h4 class="card-title">Employee: <b> <%= @expense.user.name %> </b> </h4>
+    <h4 class="card-title">Product: <b> <%= @expense.product_name %> </b> </h4>
+    <% if @expense.details.present? %>
+      <h5 class="card-text"><b>Details: </b> <%= @expense.details %></h5>
+    <% end %>
   </div>
   <hr>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item"><b>Cost: </b><%= taka(@expense.cost) %> </li>
-    <li class="list-group-item"><b>Category: </b><%= @expense.category %></li>
+    <li class="list-group-item">Cost: </b> <%= taka(@expense.cost) %> </li>
+    <li class="list-group-item"><b>Category: </b> <%= @expense.category %></li>
   </ul>
 
   <ul class="list-group list-group-flush">
-    <li class="list-group-item"><b>Status: </b><%= @expense.status.to_s.camelcase %></li>
-    <% if @expense.updated_at.present? %>
-      <li class="list-group-item"><b>Approve Time: </b><%= full_date_with_time(@expense.updated_at) %></li>
+    <li class="list-group-item"><b>Status: </b> <%= @expense.status.to_s.camelcase %></li>
+    <% if @expense.approved? %>
+      <li class="list-group-item"><b>Approve Time: </b> <%= full_date_with_time(@expense.updated_at) %></li>
     <% end %>
   </ul>
 

@@ -23,7 +23,7 @@ class ExpensesController < ApplicationController
   def create
     @expense = current_user.expenses.new(expense_params)
     if @expense.save
-      redirect_to expenses_path, success: 'Expense has been created successfully!!'
+      redirect_to expenses_path, notice: 'Expense has been created successfully!!'
     else
       render :new
     end
@@ -47,7 +47,7 @@ class ExpensesController < ApplicationController
 
   def update
     if @expense.update(expense_params)
-      redirect_to expenses_path, success: 'Expense has been updated successfully!!'
+      redirect_to expenses_path, notice: 'Expense has been updated successfully!!'
     else
       render :edit
     end

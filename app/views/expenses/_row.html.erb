@@ -38,7 +38,7 @@
         <i class="fa fa-edit" title="Edit"></i>
       <% end %>
     <% end %>
-    <% if can? :delete, expense %>
+    <% if can? :destroy, expense %>
       |<%= link_to expense_path(expense), method: :delete, data: {confirm: 'Are you sure?'} do %>
         <i class="fa fa-trash" title="Drop"></i>
       <% end %>

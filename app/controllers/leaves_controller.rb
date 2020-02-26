@@ -46,15 +46,16 @@ class LeavesController < ApplicationController
 
   def update
     if @leafe.update(leafe_params)
-      redirect_to show_all_allocated_leafe_path(current_user.allocated_leafe), notice: 'Leave information has been updated'
+      redirect_to show_all_allocated_leafe_path(@leafe.user.allocated_leafe), notice: 'Leave information has been updated'
     else
       render :edit
     end
   end
 
   def destroy
+    user = @leafe.user
     if @leafe && @leafe.destroy
-    redirect_to show_all_allocated_leafe_path(current_user.allocated_leafe), notice: 'Information has heen destroyed'
+    redirect_to show_all_allocated_leafe_path(user.allocated_leafe), notice: 'Information has heen destroyed'
     else
       flash[:alert] = 'Leave could not be deleted!!'
       render :index

@@ -37,7 +37,7 @@
       <%= user.file_field :image, class: "form-control" %>
     </div>
 
-    <% if current_user.admin? or current_user.super_admin? %>
+    <% if current_user.super_admin? %>
       <div class="form-group">
         <%= user.label :role %>
         <%= user.select(:role, User::ROLE_LIST, {}, {class: "form-control"}) %>

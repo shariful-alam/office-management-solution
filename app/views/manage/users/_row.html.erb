@@ -33,15 +33,13 @@
       <% end %>
     <% end %>
 
-    <% if can? :update, expense %>
-      |
+    <% if can? :update, expense %>|
       <%= link_to edit_expense_path(expense) do %>
         <i class="fa fa-edit" title="Edit"></i>
       <% end %>
     <% end %>
-    <% if can? :delete, expense %>
-      |
-      <%= link_to expense_path(expense), method: :delete, data: {confirm: "Are you sure?"} do %>
+    <% if can? :destroy, expense %>
+      |<%= link_to expense_path(expense), method: :delete, data: {confirm: 'Are you sure?'} do %>
         <i class="fa fa-trash" title="Drop"></i>
       <% end %>
     <% end %>
