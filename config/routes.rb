@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       end
       member do
         get :show_all_expenses
+        get :show_all_incomes
       end
     end
   end

@@ -48,6 +48,7 @@ class Manage::UsersController < ApplicationController
   end
 
   def show_all_expenses
+
     @expenses = @user.expenses
     @expense_for_user = @expenses.approved.sum(:cost)
     if params[:search].present?
@@ -58,26 +59,17 @@ class Manage::UsersController < ApplicationController
       @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]})
     end
     @expenses = @expenses.sort_by_attr(:expense_date)
-    @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => 20)
-    @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => 20)
-    @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => 20)
+    @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => Expense::PER_PAGE)
+    @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => Expense::PER_PAGE)
+    @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => Expense::PER_PAGE)
   end
 
   def show_all_incomes
-    #TODO: Replace this code with cancan
-    if current_user.admin? or current_user.super_admin?
-      @user =  User.find(params[:user_id])
-      @incomes = @user.incomes
-      #used pg specific query to reduce complexity
-      @incomes = @incomes.find_in_income_date_by('month', params[:month]) if params[:month].present?
-      @incomes = @incomes.find_in_income_date_by('year', params[:year].present? ? params[:year] : Date.today.year)
-    else
-      if params[:user_id].to_i != current_user.id
-        flash[:alert] = "Access Denied"
-      end
-      @user = current_user
-      @incomes = @user.incomes
-    end
+
+    @incomes = @user.incomes
+    #used pg specific query to reduce complexity
+    @incomes = @incomes.find_in_income_date_by('month', params[:month]) if params[:month].present?
+    @incomes = @incomes.find_in_income_date_by('year', params[:year].present? ? params[:year] : Date.today.year)
 
     @incomes = @incomes.order(income_date: :desc)
 

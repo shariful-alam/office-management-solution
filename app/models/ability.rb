@@ -74,7 +74,8 @@ class Ability
         cannot :destroy, Income, {status: Income.statuses[:approved]}
 
       else
-        can :update, User, {user_id: user.id}
+        can :update, User, {id: user.id}
+        can :show_all_incomes, User,{id: user.id}
 
         can :manage, Expense, {user_id: user.id}
         cannot :approve, Expense, {user_id: user.id}

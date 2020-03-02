@@ -3,7 +3,8 @@
     <a class="navbar-brand" href="/">
       <%= image_tag "rc.png", :class => 'keep-logo', :size => "80x50" %>
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -31,7 +32,7 @@
             <% if current_user.admin? or current_user.super_admin? %>
               <%= link_to "Incomes", incomes_path, class: "nav-link" %>
             <% else %>
-              <%= link_to "Incomes", show_individual_incomes_path(user_id: current_user.id), class: "nav-link" %>
+              <%= link_to "Incomes", show_all_incomes_manage_user_path(id: current_user.id), class: "nav-link" %>
             <% end %>
           </li>
 

@@ -12,7 +12,7 @@
     <% users.each do |user| %>
       <tr>
         <td>
-          <%= link_to user.name, show_individual_incomes_path(user_id: user.id, year: params[:search]) %>
+          <%= link_to user.name, show_all_incomes_manage_user_path(id: user.id, year: params[:search]) %>
         </td>
         <% Income::MONTHS.each do |month| %>
           <td>
