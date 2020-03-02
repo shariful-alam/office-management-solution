@@ -47,7 +47,7 @@ class Manage::UsersController < ApplicationController
     end
   end
 
-  def show_all
+  def show_all_expenses
     @expenses = @user.expenses
     @expense_for_user = @expenses.approved.sum(:cost)
     if params[:search].present?
@@ -61,6 +61,31 @@ class Manage::UsersController < ApplicationController
     @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => 20)
     @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => 20)
     @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => 20)
+  end
+
+  def show_all_incomes
+    #TODO: Replace this code with cancan
+    if current_user.admin? or current_user.super_admin?
+      @user =  User.find(params[:user_id])
+      @incomes = @user.incomes
+      #used pg specific query to reduce complexity
+      @incomes = @incomes.find_in_income_date_by('month', params[:month]) if params[:month].present?
+      @incomes = @incomes.find_in_income_date_by('year', params[:year].present? ? params[:year] : Date.today.year)
+    else
+      if params[:user_id].to_i != current_user.id
+        flash[:alert] = "Access Denied"
+      end
+      @user = current_user
+      @incomes = @user.incomes
+    end
+
+    @incomes = @incomes.order(income_date: :desc)
+
+    @incomes_approved = @incomes.approved.paginate(:page => params[:approved_incomes], :per_page => Income::PER_PAGE)
+    @incomes_pending = @incomes.pending.paginate(:page => params[:pending_incomes], :per_page => Income::PER_PAGE)
+    @incomes_rejected = @incomes.rejected.paginate(:page => params[:rejected_incomes], :per_page => Income::PER_PAGE)
+
+    @bonus_amount = Income.bonus_amount(@user,params[:month],params[:year]) if params[:month].present?
   end
 
   private

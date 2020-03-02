@@ -33,15 +33,6 @@ class ExpensesController < ApplicationController
 
   end
 
-  def destroy
-    if @expense && @expense.destroy
-      flash[:alert] = 'Expense has been removed successfully!!'
-    else
-      flash[:alert] = 'Expense could not be deleted!!'
-    end
-    redirect_back(fallback_location: expenses_path)
-  end
-
   def edit
   end
 
@@ -53,10 +44,16 @@ class ExpensesController < ApplicationController
     end
   end
 
-  def reject
-    @expense.rejected!
-    redirect_back(fallback_location: expenses_path, alert: 'Expense has been rejected successfully!!')
+  def destroy
+    if @expense && @expense.destroy
+      flash[:alert] = 'Expense has been removed successfully!!'
+    else
+      flash[:alert] = 'Expense could not be deleted!!'
+    end
+    redirect_back(fallback_location: expenses_path)
   end
+
+
 
   def approve
     if @expense.approved?
@@ -70,6 +67,10 @@ class ExpensesController < ApplicationController
     redirect_back(fallback_location: expenses_path)
   end
 
+  def reject
+    @expense.rejected!
+    redirect_back(fallback_location: expenses_path, alert: 'Expense has been rejected successfully!!')
+  end
 
   private
   def expense_params

@@ -21,7 +21,27 @@ class BudgetsController < ApplicationController
     end
   end
 
-  def show
+  def edit
+  end
+
+  def update
+    if @budget.update(budget_params)
+      redirect_to budgets_path, notice: 'Budget has been updated successfully!!'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    if @budget && @budget.destroy
+      flash[:alert] = 'Budget has been removed successfully!!'
+    else
+      flash[:alert] = 'Budget could not be deleted!!'
+    end
+    redirect_to budgets_path
+  end
+
+  def show_all_expenses
     @expenses = @budget.expenses.includes(:user)
     if params[:search].present?
       search = '%#{params[:search]}%'
@@ -33,26 +53,6 @@ class BudgetsController < ApplicationController
     @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => Expense::PER_PAGE)
     @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => Expense::PER_PAGE)
     @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => Expense::PER_PAGE)
-  end
-
-  def destroy
-     if @budget && @budget.destroy
-       flash[:alert] = 'Budget has been removed successfully!!'
-     else
-       flash[:alert] = 'Budget could not be deleted!!'
-     end
-    redirect_to budgets_path
-  end
-
-  def edit
-  end
-
-  def update
-    if @budget.update(budget_params)
-      redirect_to budgets_path, notice: 'Budget has been updated successfully!!'
-    else
-      render :edit
-    end
   end
 
   private

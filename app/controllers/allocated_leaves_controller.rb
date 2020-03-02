@@ -21,12 +21,12 @@ class AllocatedLeavesController < ApplicationController
     end
   end
 
-  def edit
-
-  end
-
   def show
     @allocated_leaves = @allocated_leafe.allocated_leaves_count_for(@allocated_leafe.user)
+  end
+
+  def edit
+
   end
 
   def update
@@ -48,7 +48,6 @@ class AllocatedLeavesController < ApplicationController
 
   def show_all
     @leaves = @allocated_leafe.user.leaves
-
     @leaves_pending = @leaves.pending.paginate(:page => params[:pending_leaves], :per_page => Leafe::PER_PAGE)
     @leaves_approved = @leaves.approved.paginate(:page => params[:approved_leaves], :per_page => Leafe::PER_PAGE)
     @leaves_rejected = @leaves.rejected.paginate(:page => params[:rejected_leaves], :per_page => Leafe::PER_PAGE)

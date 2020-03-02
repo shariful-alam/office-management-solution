@@ -106,7 +106,7 @@ class Ability
         cannot :manage, Income, {status: Income.statuses[:rejected]}
         cannot :manage, Income, {status: Income.statuses[:approved]}
         can :read, Income, {user_id: user.id}
-        can :destroy, Income, {user_id: user.id, status: Expense.statuses[:rejected]}
+        can :destroy, Income, {user_id: user.id, status: Income.statuses[:rejected]}
         can :show_individual, Income, {user_id: user.id}
       end
     else
