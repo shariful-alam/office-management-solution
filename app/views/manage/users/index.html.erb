@@ -47,11 +47,15 @@
         <% if current_user.admin? or current_user.super_admin? %>
           <td style="text-align: center;">
             <%= link_to manage_user_path(user) do %>
-              <i class="fa fa-eye" title="Show Details"></i>
+              <i class="fa fa-eye" title="Details"></i>
             <% end %>
             |
-            <%= link_to show_all_manage_user_path(user) do %>
-              <i class="fa fa-money" title="Show All Expenses"></i>
+            <%= link_to show_all_expenses_manage_user_path(user) do %>
+              <i class="fa fa-shopping-cart" title="All Expenses"></i>
+            <% end %>
+            |
+            <%= link_to show_all_incomes_manage_user_path(user) do %>
+              <i class="fa fa-money" title="All Incomes"></i>
             <% end %>
             |
             <%= link_to edit_manage_user_path(user) do %>
@@ -64,7 +68,7 @@
           </td>
         <% else %>
           <%= link_to manage_user_path(user) do %>
-            <i class="fa fa-eye" title="Show Details"></i>
+            <i class="fa fa-eye" title="Details"></i>
           <% end %>
         <% end %>
       </tr>

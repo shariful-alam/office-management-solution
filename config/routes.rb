@@ -6,13 +6,12 @@ Rails.application.routes.draw do
     member do
       put :approve
       put :reject
-      get :search_by_date
     end
   end
 
   resources :budgets do
     member do
-      get :search_by_date
+      get :show_all_expenses
     end
   end
 
@@ -22,9 +21,8 @@ Rails.application.routes.draw do
         get :show_all_pending
       end
       member do
-        get :show_all
-        get :search_by_date
-        put :check
+        get :show_all_expenses
+        get :show_all_incomes
       end
     end
   end
@@ -45,10 +43,8 @@ Rails.application.routes.draw do
   end
 
   resources :attendances
+
   resources :incomes do
-    collection do
-      get :show_individual
-    end
     member do
       put :approve
       put :reject

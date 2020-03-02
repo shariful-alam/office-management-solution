@@ -46,7 +46,7 @@
         <%= f.label :phone, class: "control-label" %>
         <%= f.phone_field :phone, class: "form-control" %>
       </div>
-      <% if current_user.role==User::ADMIN %>
+      <% if current_user.super_admin? %>
           <div class="form-group">
             <%= f.label :role %>
             <%= f.select(:role, User::ROLE_LIST, {}, {class: "form-control"}) %>

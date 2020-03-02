@@ -1,13 +1,10 @@
-<h1>Add Income</h1>
 <div class="col-sm-5">
+
+  <h1>Add Income</h1>
   <%= form_for(@income, html: {autocomplete: 'off'}) do |income| %>
 
     <%= render partial: 'layouts/error_message', locals: {object: @income} %>
 
-
-    <div class="form-group">
-      <h3>User: <%= current_user.name %></h3>
-    </div>
     <br/>
     <div class="form-group">
       <%= income.label :amount, class: "control-label" %> <br/>

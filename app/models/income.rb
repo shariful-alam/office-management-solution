@@ -12,6 +12,8 @@ class Income < ApplicationRecord
 
   scope :find_in_income_date_by, -> (value,search) { where('extract(? from income_date) = ?', value, search) }
 
+  after_create :admin_approval
+
   private
 
   def self.find_incomes_by_months(user, month, search)
@@ -37,6 +39,12 @@ class Income < ApplicationRecord
       bonus = (income - user.target_amount) * (user.bonus_percentage / 100.0)
     end
     bonus
+  end
+
+  def admin_approval
+    if self.user.admin? or self.user.super_admin?
+      self.approved!
+    end
   end
 
 end

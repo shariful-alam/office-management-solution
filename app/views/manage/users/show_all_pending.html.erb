@@ -4,7 +4,7 @@
 <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#Expenses">Pending Expenses
   <strong>(<%= @all_pending_expenses.count %>)</strong></button>
 <div class="collapse show in" id="Expenses">
-  <%= render partial: 'table', locals: {expenses: @all_pending_expenses} %>
+  <%= render partial: 'expenses/table', locals: {expenses: @all_pending_expenses} %>
   <div>
     <%= will_paginate @all_pending_expenses, :param_name => 'pending_expenses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
   </div>
@@ -14,7 +14,7 @@
 
 <button class="accordion btn btn-success" data-toggle="collapse" data-target="#Leaves">Pending Leaves
   <strong>(<%= @all_pending_leaves.count %>)</strong></button>
-<div class="collapse in" id="Leaves">
+<div class="collapse show in" id="Leaves">
   <%= render partial: 'leaves/table', locals: {leaves: @all_pending_leaves} %>
   <div>
     <%= will_paginate @all_pending_leaves, :param_name => 'pending_leaves', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
@@ -26,7 +26,7 @@
 
 <button class="accordion btn btn-danger" data-toggle="collapse" data-target="#Incomes">Pending Incomes
   <strong>(<%= @all_pending_incomes.count %>)</strong></button>
-<div class="collapse in" id="Incomes">
+<div class="collapse show in" id="Incomes">
   <%= render partial: 'incomes/table', locals: {incomes: @all_pending_incomes} %>
   <div>
     <%= will_paginate @all_pending_incomes, :param_name => 'pending_incomes', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

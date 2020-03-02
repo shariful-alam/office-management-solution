@@ -12,13 +12,13 @@
     <% users.each do |user| %>
       <tr>
         <td>
-          <%= link_to user.name, show_individual_incomes_path(user_id: user.id, year: params[:search]) %>
+          <%= link_to user.name, show_all_incomes_manage_user_path(id: user.id, year: params[:search]) %>
         </td>
         <% Income::MONTHS.each do |month| %>
           <td>
             <% income = @all_incomes[user.id][month] %>
             <% if income > 0 %>
-              <%= link_to income, show_individual_incomes_path(user_id: user.id, month: month, year: params[:search]), class: find_klass(income, user.target_amount) %>
+              <%= link_to income, show_all_incomes_manage_user_path(id: user.id, month: month, year: params[:search]), class: find_klass(income, user.target_amount) %>
               <% @monthly_totals[month] += income.to_i %>
             <% else %>
               <%= income %>

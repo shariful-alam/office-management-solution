@@ -26,6 +26,7 @@ class Expense < ApplicationRecord
 
   scope :sort_by_attr, -> (attr) {order(attr)}
 
+  after_create :admin_approval
 
   def update_budget
     if self.approved?
@@ -45,6 +46,12 @@ class Expense < ApplicationRecord
       if self.budget.blank?
         self.errors.add(:budget, :not_specified, message: " for #{Date::MONTHNAMES[self.expense_date.month]} is not submitted yet!!")
       end
+    end
+  end
+
+  def admin_approval
+    if self.user.admin? or self.user.super_admin?
+      self.approved!
     end
   end
 

@@ -6,7 +6,6 @@ class HomeController < ApplicationController
     end
 
     @budgets = Budget.group(:year).order(:year).group(:month).order(:month).sum(:expense)
-
     @updated_budget = {}
     @budgets.each do |budget|
       arr = []
