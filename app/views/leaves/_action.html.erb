@@ -8,56 +8,43 @@
   <%= leave.leave_type %>
 </td>
 <td style="text-align: center;">
-  <% if current_user.admin? or current_user.super_admin? %>
+  <% if can? :approve, leave %>
     <% if leave.approved? %>
       <%= link_to approve_leafe_path(leave), method: :put, data: {confirm: 'Are you sure?'} do %>
         <i class="fa fa-undo" title="Undo"></i>
       <% end %>
       |
-      <%= link_to leafe_path(leave) do %>
-        <i class="fa fa-eye" title="Show Details"></i>
-      <% end %>
-    <% elsif leave.rejected? %>
-      <%= link_to leafe_path(leave) do %>
-        <i class="fa fa-eye" title="Show Details"></i>
-      <% end %>
-      |
-      <%= link_to leafe_path(leave), method: :delete, data: {confirm: "Are you sure?"} do %>
-        <i class="fa fa-trash" title="Drop"></i>
-      <% end %>
     <% else %>
       <%= link_to approve_leafe_path(leave), method: :put, data: {confirm: 'Are you sure to Approve?'} do %>
         <i class="fa fa-check" title="Approve"></i>
       <% end %>
       |
-      <%= link_to reject_leafe_path(leave), method: :put, data: {confirm: 'Are you sure to Reject?'} do %>
-        <i class="fa fa-ban" title="Reject"></i>
-      <% end %>
-      |
-      <%= link_to leafe_path(leave) do %>
-        <i class="fa fa-eye" title="Show Details"></i>
-      <% end %>
-      | <%= link_to edit_leafe_path(leave) do %>
-        <i class="fa fa-edit" title="Edit"></i>
-      <% end %>
-      |
-      <%= link_to leafe_path(leave), method: :delete, data: {confirm: "Are you sure?"} do %>
-        <i class="fa fa-trash" title="Drop"></i>
-      <% end %>
-    <% end %>
-  <% else %>
-    <%= link_to leafe_path(leave) do %>
-      <i class="fa fa-eye" title="Show Details"></i>
-    <% end %>
-    <% if leave.pending? and leave.user == current_user %>
-      |
-      <%= link_to edit_leafe_path(leave) do %>
-        <i class="fa fa-edit" title="Edit"></i>
-      <% end %>
-      |
-      <%= link_to leafe_path(leave), method: :delete, data: {confirm: "Are you sure?"} do %>
-        <i class="fa fa-trash" title="Drop"></i>
-      <% end %>
     <% end %>
   <% end %>
+
+  <% if can? :reject, leave %>
+    <%= link_to reject_leafe_path(leave), method: :put, data: {confirm: 'Are you sure to Reject?'} do %>
+      <i class="fa fa-ban" title="Reject"></i>
+    <% end %>
+    |
+  <% end %>
+
+  <% if can? :read, leave %>
+    <%= link_to leafe_path(leave) do %>
+      <i class="fa fa-eye" title="Details"></i>
+    <% end %>
+  <% end %>
+
+  <% if can? :update, leave %>|
+    <%= link_to edit_leafe_path(leave) do %>
+      <i class="fa fa-edit" title="Edit"></i>
+    <% end %>
+  <% end %>
+
+  <% if can? :destroy, leave %>
+    |<%= link_to leafe_path(leave), method: :delete, data: {confirm: 'Are you sure?'} do %>
+      <i class="fa fa-trash" title="Drop"></i>
+    <% end %>
+  <% end %>
+
 </td>

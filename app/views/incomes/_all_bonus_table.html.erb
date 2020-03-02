@@ -11,7 +11,7 @@
     <% users.each do |user| %>
       <tr>
         <td>
-          <%= link_to user.name, show_individual_incomes_path(user_id: user.id, year: params[:search]) %>
+          <%= link_to user.name, show_all_pending_manage_users_path(id: user.id, year: params[:search]) %>
         </td>
         <% Income::MONTHS.each do |month| %>
           <td>

@@ -45,9 +45,6 @@ Rails.application.routes.draw do
   resources :attendances
 
   resources :incomes do
-    collection do
-      get :show_individual
-    end
     member do
       put :approve
       put :reject

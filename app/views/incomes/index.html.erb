@@ -21,7 +21,7 @@
 
 <button class="accordion btn btn-info" data-toggle="collapse" data-target="#income">All Incomes</button>
 <div class="collapse show in" id="income">
-  <%= render partial: 'table2', locals: {users: @users_income} %>
+  <%= render partial: 'all_income_table', locals: {users: @users_income} %>
   <div>
     <%= will_paginate @users_income, :param_name => 'users_incomes', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
   </div>
@@ -30,7 +30,7 @@
 <br>
 <button class="accordion btn btn-info" data-toggle="collapse" data-target="#bonus">All Bonuses</button>
 <div class="collapse in" id="bonus">
-  <%= render partial: 'table3', locals: {users: @users_bonus} %>
+  <%= render partial: 'all_bonus_table', locals: {users: @users_bonus} %>
   <div>
     <%= will_paginate @users_bonus, :param_name => 'users_bonuses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
   </div>

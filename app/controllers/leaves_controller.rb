@@ -23,7 +23,7 @@ class LeavesController < ApplicationController
 
   def create
     @leafe = current_user.leaves.new(leafe_params)
-    if Leafe.count_days(@leafe.start_date,@leafe.end_date) > 0
+    if Leafe.count_days(@leafe.start_date, @leafe.end_date) > 0
       if @leafe.save
         redirect_to leaves_path, notice: 'Your leave application has been submitted for approval'
       else
@@ -55,7 +55,7 @@ class LeavesController < ApplicationController
   def destroy
     user = @leafe.user
     if @leafe && @leafe.destroy
-    redirect_to show_all_allocated_leafe_path(user.allocated_leafe), notice: 'Information has heen destroyed'
+      redirect_to show_all_allocated_leafe_path(user.allocated_leafe), notice: 'Information has heen destroyed'
     else
       flash[:alert] = 'Leave could not be deleted!!'
       render :index
@@ -63,16 +63,20 @@ class LeavesController < ApplicationController
   end
 
   def approve
-    if @leafe.approved?
-      @leafe.pending!
-      flash[:notice] = 'Leave information has been changed successfully'
+    if @leafe.user.allocated_leafe
+      if @leafe.approved?
+        @leafe.pending!
+        flash[:notice] = 'Leave information has been changed successfully'
+      else
+        @leafe.approved!
+        #LeafeMailer.approved(@leafe).deliver_now
+        flash[:notice] = 'The leave has been approved successfully'
+      end
+      @leafe.update_allocated_leave
+      redirect_to show_all_allocated_leafe_path(@leafe.user.allocated_leafe)
     else
-      @leafe.approved!
-      #LeafeMailer.approved(@leafe).deliver_now
-      flash[:notice] = 'The leave has been approved successfully'
+      redirect_to leaves_path, alert: 'Leave for this user has not been allocated yet.'
     end
-    @leafe.update_allocated_leave
-    redirect_to show_all_allocated_leafe_path(@leafe.user.allocated_leafe)
   end
 
   def reject

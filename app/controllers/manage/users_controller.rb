@@ -71,6 +71,8 @@ class Manage::UsersController < ApplicationController
     @incomes = @incomes.find_in_income_date_by('month', params[:month]) if params[:month].present?
     @incomes = @incomes.find_in_income_date_by('year', params[:year].present? ? params[:year] : Date.today.year)
 
+    @incomes = @incomes.where('income_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
+
     @incomes = @incomes.order(income_date: :desc)
 
     @incomes_approved = @incomes.approved.paginate(:page => params[:approved_incomes], :per_page => Income::PER_PAGE)

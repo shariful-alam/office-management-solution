@@ -86,30 +86,6 @@ class IncomesController < ApplicationController
     redirect_back(fallback_location: incomes_path)
   end
 
-  def show_individual
-    #TODO: Replace this code with cancan
-    if current_user.admin? or current_user.super_admin?
-      @user =  User.find(params[:user_id])
-      @incomes = @user.incomes
-      #used pg specific query to reduce complexity
-      @incomes = @incomes.find_in_income_date_by('month', params[:month]) if params[:month].present?
-      @incomes = @incomes.find_in_income_date_by('year', params[:year].present? ? params[:year] : Date.today.year)
-    else
-      if params[:user_id].to_i != current_user.id
-        flash[:alert] = "Access Denied"
-      end
-      @user = current_user
-      @incomes = @user.incomes
-    end
-
-    @incomes = @incomes.order(income_date: :desc)
-
-    @incomes_approved = @incomes.approved.paginate(:page => params[:approved_incomes], :per_page => Income::PER_PAGE)
-    @incomes_pending = @incomes.pending.paginate(:page => params[:pending_incomes], :per_page => Income::PER_PAGE)
-    @incomes_rejected = @incomes.rejected.paginate(:page => params[:rejected_incomes], :per_page => Income::PER_PAGE)
-
-    @bonus_amount = Income.bonus_amount(@user,params[:month],params[:year]) if params[:month].present?
-  end
 
   private
   def income_params

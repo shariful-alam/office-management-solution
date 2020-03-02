@@ -1,16 +1,42 @@
 <%= link_to "Add Income", new_income_path, class: "btn btn-dark", style: "float:right" %>
 
-
-<% if params[:month] %>
-  <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>
-    , <%= params[:year].present? ? params[:year] : Date.today.year %> </h1>
-  <br/>
-  <% if @bonus_amount > 0 %>
-    <h2>Hurrah!! You are getting <%= taka(@bonus_amount) %> BONUS!! </h2>
+<% if current_user.admin? or current_user.super_admin? %>
+  <% if params[:month] %>
+    <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>
+      , <%= params[:year].present? ? params[:year] : Date.today.year %> </h1>
+    <% if @bonus_amount > 0 %>
+      <h2>Hurrah!! <%= @user.name %> is getting <%= taka(@bonus_amount) %> BONUS!! </h2>
+    <% end %>
+  <% else %>
+    <h1>All Income List of <%= @user.name %> of
+      year <%= params[:year].present? ? params[:year] : Date.today.year %> </h1> <br/>
   <% end %>
+  <br/>
 <% else %>
-  <h1>All Income List of <%= @user.name %> of year <%= params[:year].present? ? params[:year] : Date.today.year %> </h1> <br/>
+  <h1>All Income List of <%= @user.name %></h1> <br/>
 <% end %>
+
+<div class="row">
+  <div class="col-sm">
+    <%= form_tag(show_all_incomes_manage_user_path, :method => "get", autocomplete: :off) do %>
+      <div class="row">
+        <div class="col-sm-3">
+          <%= text_field_tag :from, params[:from], :selected => params[:from], class: "form-control", id: "datepicker", placeholder: "yyyy-mm-dd" %>
+          <br>
+        </div>
+        <div class="col-sm-3">
+          <%= text_field_tag :to, params[:to], :selected => params[:to], class: "form-control", id: "datepicker2", placeholder: "yyyy-mm-dd" %>
+          <br>
+        </div>
+      </div>
+      <div class="row container">
+        <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
+        <%= link_to 'Reset', show_all_incomes_manage_user_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<br>
 
 <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#pending">Pending
   (<%= @incomes_pending.count %>)

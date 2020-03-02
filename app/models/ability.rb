@@ -87,6 +87,7 @@ class Ability
 
 
         cannot :show_all_pending, User, :all
+
         can :show_all, AllocatedLeafe, {user_id: user.id}
         cannot :manage, AllocatedLeafe, :all
 

@@ -11,7 +11,7 @@
     </tr>
     </thead>
     <% expenses.each do |expense| %>
-      <%= render partial: 'expenses/row', locals: {expense: expense} %>
+      <%= render partial: 'expenses/action', locals: {expense: expense} %>
     <% end %>
   </table>
 </div>
