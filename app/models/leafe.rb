@@ -19,7 +19,7 @@ class Leafe < ApplicationRecord
 
   scope :with_leafe_type, -> (type) {where(leave_type: type)}
 
-
+  after_create :admin_approval
 
 
   def update_allocated_leave
@@ -40,6 +40,12 @@ class Leafe < ApplicationRecord
       (start_date..end_date).select {|a| a.wday < 6 && a.wday > 0}.count
     else
       0
+    end
+  end
+
+  def admin_approval
+    if self.user.admin? or self.user.super_admin?
+      self.approved!
     end
   end
 
