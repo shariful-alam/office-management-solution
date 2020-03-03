@@ -6,13 +6,18 @@ class BudgetsController < ApplicationController
   def index
     @budgets = @budgets.includes(:user)
     @year = params[:search].present? ? "#{params[:search]}" : Date.today.year
-    @budgets = @budgets.where(year: @year).order(:year, :month).paginate(:page => params[:page], :per_page => Budget::PER_PAGE)
+    @budgets = @budgets.where(year: @year)
+    @budget_amount = @budgets.group(:month).sum(:amount)
+    @budget_expense = @budgets.group(:month).sum(:expense)
+    #raise @budget_amount.inspect
+    @budgets = @budgets.order(:year, :month).paginate(:page => params[:page], :per_page => Budget::PER_PAGE)
   end
 
   def new
   end
 
   def create
+    #raise @budget.inspect
     @budget = current_user.budgets.new(budget_params)
     if @budget.save
       redirect_to budgets_path, notice: 'Budget has been created successfully!!'
@@ -42,7 +47,9 @@ class BudgetsController < ApplicationController
   end
 
   def show_all_expenses
-    @expenses = @budget.expenses.includes(:user)
+    @budgets = Budget.where(month: params[:month])
+    @budgets = @budgets.where(year: params[:year].present? ? params[:year] : Date.today.year)
+
     if params[:search].present?
       search = '%#{params[:search]}%'
       @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
@@ -55,9 +62,19 @@ class BudgetsController < ApplicationController
     @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => Expense::PER_PAGE)
   end
 
+  def show_all
+    @budgets = Budget.where(month: params[:month].to_i)
+    @budgets = @budgets.where(year: params[:year].present? ? params[:year] : Date.today.year)
+
+    @total_amount = @budgets.sum(:amount)
+    @total_expense = @budgets.sum(:expense)
+
+
+  end
+
   private
   def budget_params
-    params.require(:budget).permit(:category_id, :year, :month, :amount, :add)
+    params.require(:budget).permit(:year, :month, :amount, :add, :category_id)
   end
 
 end

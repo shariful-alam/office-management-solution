@@ -1,0 +1,36 @@
+<h1>All Budgets for <%= Date::MONTHNAMES[params[:month].to_i] %>, <%= params[:year].present? ? params[:year] : Date.today.year %></h1>
+
+<div class="table-responsive-sm">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Expense</th>
+      <th>Remaining</th>
+    </tr>
+    </thead>
+    <% @budgets.each do |budget| %>
+      <tr>
+        <td><%= budget.category.category_name %></td>
+
+        <td><%= budget.amount %></td>
+
+        <td><%= budget.expense %></td>
+
+        <td><%= budget.amount - budget.expense %></td>
+
+      </tr>
+    <% end %>
+    <tr style="font-weight: bold">
+      <td>Total</td>
+      <td><%= @total_amount %></td>
+      <td><%= @total_expense %></td>
+      <td><%= @total_amount - @total_expense %></td>
+    </tr>
+  </table>
+</div>
+
+<div class="form-group">
+  <%= link_to "Back", budgets_path, class: "btn btn-dark" %>
+</div>
