@@ -2,14 +2,13 @@ class BudgetsController < ApplicationController
 
   before_action :authenticate_user!
   load_and_authorize_resource
+  before_action :show_all, only: [:show_all_expenses]
 
   def index
-    @budgets = @budgets.includes(:user)
     @year = params[:search].present? ? "#{params[:search]}" : Date.today.year
     @budgets = @budgets.where(year: @year)
     @budget_amount = @budgets.group(:month).sum(:amount)
     @budget_expense = @budgets.group(:month).sum(:expense)
-    #raise @budget_amount.inspect
     @budgets = @budgets.order(:year, :month).paginate(:page => params[:page], :per_page => Budget::PER_PAGE)
   end
 
@@ -17,7 +16,6 @@ class BudgetsController < ApplicationController
   end
 
   def create
-    #raise @budget.inspect
     @budget = current_user.budgets.new(budget_params)
     if @budget.save
       redirect_to budgets_path, notice: 'Budget has been created successfully!!'
@@ -47,8 +45,8 @@ class BudgetsController < ApplicationController
   end
 
   def show_all_expenses
-    @budgets = Budget.where(month: params[:month])
-    @budgets = @budgets.where(year: params[:year].present? ? params[:year] : Date.today.year)
+    @expenses = Expense.where('extract(year from expense_date) = ?', @year)
+    @expenses = @expenses.where('extract(month from expense_date) = ?', @month)
 
     if params[:search].present?
       search = '%#{params[:search]}%'
@@ -63,13 +61,11 @@ class BudgetsController < ApplicationController
   end
 
   def show_all
-    @budgets = Budget.where(month: params[:month].to_i)
-    @budgets = @budgets.where(year: params[:year].present? ? params[:year] : Date.today.year)
-
+    @year = "#{params[:year]}".to_i
+    @month = "#{params[:month]}".to_i
+    @budgets = @budgets.search_with(@year, @month)
     @total_amount = @budgets.sum(:amount)
     @total_expense = @budgets.sum(:expense)
-
-
   end
 
   private

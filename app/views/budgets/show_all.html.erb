@@ -1,4 +1,4 @@
-<h1>All Budgets for <%= Date::MONTHNAMES[params[:month].to_i] %>, <%= params[:year].present? ? params[:year] : Date.today.year %></h1>
+<h1>All Budgets for <%= Date::MONTHNAMES[@month] %>, <%= @year %></h1>
 
 <div class="table-responsive-sm">
   <table class="table table-bordered">

@@ -1,6 +1,3 @@
-<%= link_to "Add Budget", new_budget_path, class: "btn btn-dark" %>
-<%= link_to "Add new Category", new_category_path, class: "btn btn-dark"%>
-
 <h1>Budget List for <%= @year %></h1>
 
 <%= form_tag(budgets_path, :method => "get", class: "form-inline") do %>
@@ -28,20 +25,12 @@
         <%#= raise budget.first.inspect %>
         <td><%= @number %> </td>
         <% @number += 1 %>
-        <td><%= link_to "#{Date::MONTHNAMES[budget.first]}", show_all_budgets_path(month: budget.first, year: params[:search]) %></td>
+        <td><%= link_to "#{Date::MONTHNAMES[budget.first]}", show_all_budgets_path(month: budget.first, year: @year) %></td>
         <td><%= taka(budget.second) %></td>
         <td><%= taka(budget.second - @budget_expense[budget.first].second) %></td>
         <td style="text-align: center;">
-          <%= link_to show_all_expenses_budgets_path(month: budget.first, year: params[:search]) do %>
+          <%= link_to show_all_expenses_budgets_path(month: budget.first, year: @year) do %>
             <i class="fa fa-money" title="Show Expenses"></i>
-          <% end %>
-          |
-          <%= link_to edit_budget_path(budget) do %>
-            <i class="fa fa-edit" title="Edit"></i>
-          <% end %>
-          |
-          <%= link_to budget_path(budget), method: :delete, data: {confirm: "Are you sure?"} do %>
-            <i class="fa fa-trash" title="Drop"></i>
           <% end %>
         </td>
       </tr>

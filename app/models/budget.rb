@@ -15,13 +15,12 @@ class Budget < ApplicationRecord
 
   before_update :add_amount
 
-  private
+  def self.search_with(year, month)
+    self.where(year: year,month: month)
+  end
 
   def add_amount
     self.amount += self.add.to_i if self.add.present?
   end
-
-
-
 
 end
