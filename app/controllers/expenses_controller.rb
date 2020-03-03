@@ -53,8 +53,6 @@ class ExpensesController < ApplicationController
     redirect_back(fallback_location: expenses_path)
   end
 
-
-
   def approve
     if @expense.approved?
       @expense.pending!
@@ -74,7 +72,7 @@ class ExpensesController < ApplicationController
 
   private
   def expense_params
-    params.require(:expense).permit(:product_name, :category, :cost, :details, :image, :expense_date)
+    params.require(:expense).permit(:product_name, :category_id, :cost, :details, :image, :expense_date)
   end
 
 end

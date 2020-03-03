@@ -46,6 +46,7 @@ class Leafe < ApplicationRecord
   def admin_approval
     if self.user.admin? or self.user.super_admin?
       self.approved!
+      self.update_allocated_leave
     end
   end
 

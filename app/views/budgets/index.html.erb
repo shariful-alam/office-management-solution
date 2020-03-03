@@ -1,4 +1,6 @@
-<%= link_to "Add Budget", new_budget_path, class: "btn btn-dark", style: "float:right" %>
+<%= link_to "Add Budget", new_budget_path, class: "btn btn-dark" %>
+<%= link_to "Add new Category", new_category_path, class: "btn btn-dark"%>
+
 <h1>Budget List for <%= @year %></h1>
 
 <%= form_tag(budgets_path, :method => "get", class: "form-inline") do %>
