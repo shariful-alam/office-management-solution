@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   end
 
   resources :attendances
+  resources :budget_categories
 
   resources :incomes do
     member do

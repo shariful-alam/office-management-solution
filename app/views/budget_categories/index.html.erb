@@ -1,0 +1,41 @@
+<%= link_to "Add new Category", new_budget_category_path, class: "btn btn-dark", style: "float : right" %>
+<br>
+<br>
+
+<% @number=@budgets_categories.offset + 1 %>
+<div class="table-responsive-sm">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Sl</th>
+      <th>Category Name</th>
+      <th style="text-align: center;">Action</th>
+    </tr>
+    </thead>
+
+    <% @budgets_categories.each do |budget_category| %>
+      <tr>
+        <td><%= @number %> </td>
+        <% @number+=1 %>
+        <td><%= budget_category.category_name %></td>
+
+        <td style="text-align: center;">
+
+          <%= link_to edit_budget_category_path(budget_category) do %>
+            <i class="fa fa-edit" title="Edit"></i>
+          <% end %>
+          |
+          <%= link_to budget_category_path(budget_category), method: :delete, data: {confirm: "Are you sure?"} do %>
+            <i class="fa fa-trash" title="Drop"></i>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= will_paginate @budgets_categories, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+
+<div class="form-group">
+  <%= link_to "Back", root_path, class: "btn btn-dark" %>
+</div>
