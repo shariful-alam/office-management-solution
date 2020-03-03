@@ -1,6 +1,7 @@
 class Budget < ApplicationRecord
 
   belongs_to :user
+  belongs_to :budget_category
   has_many :expenses
   attr_accessor :add
 
