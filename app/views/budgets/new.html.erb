@@ -16,6 +16,11 @@
     </div>
 
     <div class="form-group">
+      <%= budget.label :category_id %>
+      <%= collection_select(:budget, :category_id, Category.all, :id, :category_name, {}, {:multiple => false, class: "form-control"}) %>
+    </div>
+
+    <div class="form-group">
       <%= budget.label :amount, class: "control-label" %>
       <%= budget.text_field :amount, class: "form-control", autocomplete: :off %>
     </div>

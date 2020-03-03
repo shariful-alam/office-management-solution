@@ -8,9 +8,9 @@ class ModifyBudgetExpense < ActiveRecord::Migration[6.0]
   end
 
   def down
-    add_index :budgets, [:month, :year]
+    remove_index :budgets, [:month, :year , :category_id]
     remove_column :budgets, :category_id, :integer
     remove_column :expenses, :category_id, :integer
-    remove_index :budgets, [:month, :year , :category_id]
+    add_index :budgets, [:month, :year]
   end
 end

@@ -1,8 +1,8 @@
-<%= link_to "Add new Category", new_budget_category_path, class: "btn btn-dark", style: "float : right" %>
+<%= link_to "Add new Category", new_category_path, class: "btn btn-dark", style: "float : right" %>
 <br>
 <br>
 
-<% @number=@budgets_categories.offset + 1 %>
+<% @number=@categories.offset + 1 %>
 <div class="table-responsive-sm">
   <table class="table table-bordered">
     <thead>
@@ -13,19 +13,19 @@
     </tr>
     </thead>
 
-    <% @budgets_categories.each do |budget_category| %>
+    <% @categories.each do |category| %>
       <tr>
         <td><%= @number %> </td>
         <% @number+=1 %>
-        <td><%= budget_category.category_name %></td>
+        <td><%= category.category_name %></td>
 
         <td style="text-align: center;">
 
-          <%= link_to edit_budget_category_path(budget_category) do %>
+          <%= link_to edit_category_path(category) do %>
             <i class="fa fa-edit" title="Edit"></i>
           <% end %>
           |
-          <%= link_to budget_category_path(budget_category), method: :delete, data: {confirm: "Are you sure?"} do %>
+          <%= link_to category_path(category), method: :delete, data: {confirm: "Are you sure?"} do %>
             <i class="fa fa-trash" title="Drop"></i>
           <% end %>
         </td>
@@ -34,7 +34,7 @@
   </table>
 </div>
 
-<%= will_paginate @budgets_categories, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+<%= will_paginate @categories, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 
 <div class="form-group">
   <%= link_to "Back", root_path, class: "btn btn-dark" %>

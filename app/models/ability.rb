@@ -18,7 +18,7 @@ class Ability
         cannot :destroy, User, {role: User::SUPER_ADMIN}
 
         can :manage, Budget , :all
-        can :manage, BudgetCategory , :all
+        can :manage, Category , :all
 
         can :index, Expense , :all
         can :read, Expense , :all

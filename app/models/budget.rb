@@ -1,7 +1,7 @@
 class Budget < ApplicationRecord
 
   belongs_to :user
-  belongs_to :budget_category
+  belongs_to :category
   has_many :expenses
   attr_accessor :add
 
@@ -9,7 +9,7 @@ class Budget < ApplicationRecord
 
   validates :month, presence: true
   validates :year, presence: true
-  validates :month, uniqueness: {scope: :year}
+  validates :month, uniqueness: {scope: [:year, :category_id] }
   validates :amount, presence: true, numericality: {integer: true}
   validates :add, numericality: {integer: true, message: 'Please Give a value', :allow_blank => true, :allow_nil => true}
 

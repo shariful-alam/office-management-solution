@@ -1,8 +1,8 @@
 <h1>Insert Budget Category</h1>
 <div class="col-sm-5">
-  <%= form_for(@budget_category) do |budget_category| %>
+  <%= form_for(@category) do |budget_category| %>
 
-    <%= render partial: 'layouts/error_message', locals: {object: @budget_category} %>
+    <%= render partial: 'layouts/error_message', locals: {object: @category} %>
 
     <div class="form-group">
       <%= budget_category.label :category_name, class: "control-label" %>
@@ -11,7 +11,7 @@
 
     <div class="form-group">
       <%= budget_category.submit 'Submit', class: "btn btn-success" %> |
-      <%= link_to "Back", budget_categories_path, class: "btn btn-dark" %>
+      <%= link_to "Back", categories_path, class: "btn btn-dark" %>
     </div>
   <% end %>
 </div>

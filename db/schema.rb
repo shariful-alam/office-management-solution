@@ -33,12 +33,6 @@ ActiveRecord::Schema.define(version: 2020_03_03_094114) do
     t.index ["user_id", "date"], name: "index_attendances_on_user_id_and_date"
   end
 
-  create_table "budget_categories", force: :cascade do |t|
-    t.string "category_name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "budgets", force: :cascade do |t|
     t.decimal "amount"
     t.datetime "created_at", precision: 6, null: false
@@ -49,6 +43,12 @@ ActiveRecord::Schema.define(version: 2020_03_03_094114) do
     t.decimal "expense", default: "0.0"
     t.integer "category_id"
     t.index ["month", "year", "category_id"], name: "index_budgets_on_month_and_year_and_category_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "category_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "expenses", force: :cascade do |t|

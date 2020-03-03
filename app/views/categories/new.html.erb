@@ -1,0 +1,17 @@
+<h1>Insert Budget Category</h1>
+<div class="col-sm-5">
+  <%= form_for(@category) do |category| %>
+
+    <%= render partial: 'layouts/error_message', locals: {object: @category} %>
+
+    <div class="form-group">
+      <%= category.label :category_name, class: "control-label" %>
+      <%= category.text_field :category_name, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= category.submit 'Submit', class: "btn btn-success" %> |
+      <%= link_to "Back", categories_path, class: "btn btn-dark" %>
+    </div>
+  <% end %>
+</div>

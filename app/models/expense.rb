@@ -2,7 +2,7 @@ class Expense < ApplicationRecord
 
   belongs_to :user
   belongs_to :budget
-  belongs_to :budget_category
+  belongs_to :category
   attr_accessor :remove_image
 
   enum status: {pending: 0, approved: 1, rejected: 2}
