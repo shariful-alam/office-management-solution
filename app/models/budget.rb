@@ -13,11 +13,9 @@ class Budget < ApplicationRecord
   validates :amount, presence: true, numericality: {integer: true}
   validates :add, numericality: {integer: true, message: 'Please Give a value', :allow_blank => true, :allow_nil => true}
 
-  before_update :add_amount
+  scope :search_with, -> (year, month) {where(year: year, month: month)}
 
-  def self.search_with(year, month)
-    self.where(year: year,month: month)
-  end
+  before_update :add_amount
 
   def add_amount
     self.amount += self.add.to_i if self.add.present?

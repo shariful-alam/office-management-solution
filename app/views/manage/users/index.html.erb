@@ -43,7 +43,7 @@
         <td><%= user.phone %></td>
         <td><%= user.role %></td>
 
-        <% if current_user.admin? or current_user.super_admin? %>
+        <% if current_user.admin? || current_user.super_admin? %>
           <td style="text-align: center;">
             <%= link_to manage_user_path(user) do %>
               <i class="fa fa-eye" title="Details"></i>

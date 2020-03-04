@@ -65,8 +65,8 @@ class BudgetsController < ApplicationController
   end
 
   def show_all
-    @year = "#{params[:year]}".to_i
-    @month = "#{params[:month]}".to_i
+    @year = params[:year].to_i
+    @month = params[:month].to_i
     @budgets = @budgets.search_with(@year, @month)
     @total_amount = @budgets.sum(:amount)
     @total_expense = @budgets.sum(:expense)

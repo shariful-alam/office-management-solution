@@ -24,9 +24,9 @@ class LeavesController < ApplicationController
   def create
     @leafe = current_user.leaves.new(leafe_params)
     days = Leafe.count_days(@leafe.start_date, @leafe.end_date)
-    if days > 0 and @leafe.check_allocated_leave(days)
+    if days > 0 && @leafe.check_allocated_leave(days)
       if @leafe.save
-        if current_user.admin? or current_user.super_admin?
+        if current_user.admin? || current_user.super_admin?
           flash[:notice] = 'Your leave application has been created successfully'
         else
           flash[:notice] = 'Your leave application has been submitted for approval'

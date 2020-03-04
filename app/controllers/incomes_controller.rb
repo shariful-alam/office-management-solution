@@ -29,7 +29,7 @@ class IncomesController < ApplicationController
   def create
     @income = current_user.incomes.new(income_params)
     if @income.save
-      if current_user.admin? or current_user.super_admin?
+      if current_user.admin? || current_user.super_admin?
         redirect_to incomes_path, notice: 'Your income has been created successfully'
       else
         redirect_to show_individual_incomes_path(user_id: @income.user.id), notice: 'Your income has been submitted for approval'

@@ -32,7 +32,7 @@
               <div>
                 <div class="dropdown">
                   <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <strong data-toggle="tooltips" data-html=true title="<%= budget_hint %>"> Budget </strong>
+                    <strong data-toggle="tooltips" data-html=true title="<%= budget_hint.html_safe %>"> Budget </strong>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <%= link_to "Add new budget", new_budget_path, class: 'dropdown-item' %>
@@ -70,7 +70,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <%= link_to "Add new income", new_income_path, class: 'dropdown-item' %>
-                    <% if current_user.admin? or current_user.super_admin? %>
+                    <% if current_user.admin? || current_user.super_admin? %>
                       <%= link_to "Incomes", incomes_path, class: 'dropdown-item' %>
                     <% else %>
                       <%= link_to "Incomes", show_all_incomes_manage_user_path(id: current_user.id), class: 'dropdown-item' %>
@@ -90,7 +90,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <%= link_to "Apply for Leave", new_leafe_path, class: 'dropdown-item' %>
-                    <% if current_user.admin? or current_user.super_admin? %>
+                    <% if current_user.admin? || current_user.super_admin? %>
                       <%= link_to "Appointed Leaves", allocated_leaves_path, class: 'dropdown-item' %>
                       <%= link_to "Leave Requests", leaves_path, class: 'dropdown-item' %>
                     <% else %>
@@ -113,7 +113,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <%= check_in_out %>
-                  <% if current_user.admin? or current_user.super_admin? %>
+                  <% if current_user.admin? || current_user.super_admin? %>
                     <%= link_to show_all_pending_manage_users_path, class: 'dropdown-item' do %>
                       <div>Pending Request &nbsp <%= see_pending_request %></div>
                     <% end %>

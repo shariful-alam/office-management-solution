@@ -31,13 +31,13 @@ module ApplicationHelper
   def budget_hint
     date = Date.today
     present_budget= Budget.where(month: date.month, year: date.year)
-    if present_budget.nil?
-      "The budget is not added yet !".html_safe
+    if present_budget.empty?
+      "The budget is not added yet !"
     else
       "Budget for  #{Date::MONTHNAMES[present_budget.first.month]}, #{present_budget.first.year}
       Total :   #{taka(present_budget.sum(:amount))}
       Expense :   #{taka(present_budget.sum(:expense))}
-      Remaining :  #{taka(present_budget.sum(:amount) - present_budget.sum(:expense))}".html_safe
+      Remaining :  #{taka(present_budget.sum(:amount) - present_budget.sum(:expense))}"
     end
   end
 

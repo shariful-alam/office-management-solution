@@ -13,7 +13,7 @@
     </thead>
     <% @budgets.each do |budget| %>
       <tr>
-        <td><%= budget.category.category_name %></td>
+        <td><%= budget.category.name %></td>
 
         <td><%= taka(budget.amount) %></td>
 

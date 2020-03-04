@@ -22,7 +22,6 @@
 
     <% @budget_amount.each do |budget| %>
       <tr>
-        <%#= raise budget.first.inspect %>
         <td><%= @number %> </td>
         <% @number += 1 %>
         <td><%= link_to "#{Date::MONTHNAMES[budget.first]}", show_all_budgets_path(month: budget.first, year: @year) %></td>

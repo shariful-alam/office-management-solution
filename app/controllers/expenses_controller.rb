@@ -23,7 +23,7 @@ class ExpensesController < ApplicationController
   def create
     @expense = current_user.expenses.new(expense_params)
     if @expense.save
-      if current_user.admin? or current_user.super_admin?
+      if current_user.admin? || current_user.super_admin?
         redirect_to expenses_path, notice: 'Expense has been created successfully!!'
       else
         redirect_to expenses_path, notice: 'Expense has been submitted for approval'

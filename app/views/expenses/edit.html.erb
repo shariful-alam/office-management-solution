@@ -13,7 +13,7 @@
 
     <div class="form-group">
       <%= expense.label :category_id %>
-      <%= collection_select(:expense, :category_id, Category.all, :id, :category_name, {}, {:multiple => false, class: "form-control"}) %>
+      <%= collection_select(:expense, :category_id, Category.all, :id, :name, {}, {:multiple => false, class: "form-control"}) %>
     </div>
 
     <div class="form-group">

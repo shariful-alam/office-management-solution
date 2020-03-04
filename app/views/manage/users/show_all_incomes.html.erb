@@ -1,5 +1,5 @@
 
-<% if current_user.admin? or current_user.super_admin? %>
+<% if current_user.admin? || current_user.super_admin? %>
   <% if params[:month] %>
     <h1>Income List of <%= @user.name %> of <%= Date::MONTHNAMES[params[:month].to_i] %>
       , <%= params[:year].present? ? params[:year] : Date.today.year %> </h1>
