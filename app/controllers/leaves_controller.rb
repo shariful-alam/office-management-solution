@@ -23,14 +23,25 @@ class LeavesController < ApplicationController
 
   def create
     @leafe = current_user.leaves.new(leafe_params)
-    if Leafe.count_days(@leafe.start_date, @leafe.end_date) > 0
-      if @leafe.save
-        redirect_to leaves_path, notice: 'Your leave application has been submitted for approval'
+    if @leafe.user.allocated_leafe.present?
+      days = Leafe.count_days(@leafe.start_date, @leafe.end_date)
+      if days > 0 && @leafe.check_validity_of_leave(days)
+        if @leafe.save
+          if current_user.admin? || current_user.super_admin?
+            flash[:notice] = 'Your leave application has been created successfully'
+          else
+            flash[:notice] = 'Your leave application has been submitted for approval'
+          end
+          redirect_to leaves_path
+        else
+          render :new
+        end
       else
+        flash[:warning] = 'Please select a valid date range!!'
         render :new
       end
     else
-      flash[:warning] = 'Please select a valid date range!!'
+      flash[:warning] = 'Your leave has not been allocated yet'
       render :new
     end
 

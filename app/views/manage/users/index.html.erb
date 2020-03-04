@@ -1,4 +1,3 @@
-<%= link_to "Add User", new_manage_user_path, class: "btn btn-dark", style: "float:right" %>
 
 <h1>Employee List</h1>
 <div class="row">
@@ -6,7 +5,7 @@
     <%= form_tag(manage_users_path, :method => "get") do %>
       <div class="row">
         <div class="col-sm-6">
-          <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control", autocomplete: :off %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search", class: "form-control", autocomplete: :off %>
         </div>
       </div>
       <br>
@@ -44,7 +43,7 @@
         <td><%= user.phone %></td>
         <td><%= user.role %></td>
 
-        <% if current_user.admin? or current_user.super_admin? %>
+        <% if current_user.admin? || current_user.super_admin? %>
           <td style="text-align: center;">
             <%= link_to manage_user_path(user) do %>
               <i class="fa fa-eye" title="Details"></i>

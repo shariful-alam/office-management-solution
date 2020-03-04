@@ -2,19 +2,19 @@
   <div class="col">
     <div class="card" style="width: 25rem;">
       <div class="card-body">
-        <h3 class="card-title">Expenses of <%= "#{Date::MONTHNAMES[@budget.month]}, #{@budget.year}" %></h3>
+        <h3 class="card-title">Expenses of <%= "#{Date::MONTHNAMES[@budgets.first.month]}, #{@budgets.first.year}" %></h3>
       </div>
       <hr>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item"><b>Total Budget: </b><%= taka(@budget.amount) %> </li>
-        <li class="list-group-item"><b>Expense: </b><%= taka(@budget.expense) %></li>
-        <li class="list-group-item"><b>Remaining: </b><%= taka(@budget.amount- @budget.expense) %></li>
+        <li class="list-group-item"><b>Total Budget: </b><%= taka(@total_amount) %> </li>
+        <li class="list-group-item"><b>Expense: </b><%= taka(@total_expense) %></li>
+        <li class="list-group-item"><b>Remaining: </b><%= taka(@total_amount - @total_expense) %></li>
       </ul>
     </div>
   </div>
 
   <div class="col">
-    <%= form_tag(show_all_expenses_budget_path, :method => "get") do %>
+    <%= form_tag(show_all_expenses_budgets_path, :method => "get") do %>
       <div class="row">
         <div class="col-sm-10">
           <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
@@ -34,7 +34,7 @@
 
       <div class="row container">
         <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
-        <%= link_to 'Reset', show_all_expenses_budget_path, class: "btn btn-secondary" %>
+        <%= link_to 'Reset', show_all_expenses_budgets_path, class: "btn btn-secondary" %>
       </div>
     <% end %>
   </div>

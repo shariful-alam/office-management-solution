@@ -1,5 +1,7 @@
 class Income < ApplicationRecord
+
   belongs_to :user
+
   validates :amount, :presence => true, numericality: {decimal: true}
   validates :income_date, :presence => true
   validates :source, :presence => true
@@ -8,7 +10,6 @@ class Income < ApplicationRecord
   SOURCE = ['Employee', 'Service']
 
   enum status: {pending: 0, approved: 1, rejected: 2}
-
 
   scope :find_in_income_date_by, -> (value,search) { where('extract(? from income_date) = ?', value, search) }
 
