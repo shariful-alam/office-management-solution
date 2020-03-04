@@ -28,20 +28,24 @@ class BudgetsController < ApplicationController
   end
 
   def update
+    month = @budget.month
+    year = @budget.year
     if @budget.update(budget_params)
-      redirect_to budgets_path, notice: 'Budget has been updated successfully!!'
+      redirect_to show_all_budgets_path(month: month, year: year), notice: 'Budget has been updated successfully!!'
     else
       render :edit
     end
   end
 
   def destroy
+    month = @budget.month
+    year = @budget.year
     if @budget && @budget.destroy
       flash[:alert] = 'Budget has been removed successfully!!'
     else
       flash[:alert] = 'Budget could not be deleted!!'
     end
-    redirect_to budgets_path
+    redirect_to show_all_budgets_path(month: month, year: year)
   end
 
   def show_all_expenses

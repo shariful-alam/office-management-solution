@@ -8,17 +8,28 @@
       <th>Amount</th>
       <th>Expense</th>
       <th>Remaining</th>
+      <th style="text-align: center;">Action</th>
     </tr>
     </thead>
     <% @budgets.each do |budget| %>
       <tr>
         <td><%= budget.category.category_name %></td>
 
-        <td><%= budget.amount %></td>
+        <td><%= taka(budget.amount) %></td>
 
-        <td><%= budget.expense %></td>
+        <td><%= taka(budget.expense) %></td>
 
-        <td><%= budget.amount - budget.expense %></td>
+        <td><%= taka(budget.amount - budget.expense) %></td>
+
+        <td style="text-align: center;">
+          <%= link_to edit_budget_path(budget) do %>
+            <i class="fa fa-edit" title="Edit"></i>
+          <% end %>
+          |
+          <%= link_to budget_path(budget), method: :delete, data: {confirm: 'Are you sure?'} do %>
+            <i class="fa fa-trash" title="Drop"></i>
+          <% end %>
+        </td>
 
       </tr>
     <% end %>
@@ -26,7 +37,7 @@
       <td>Total</td>
       <td><%= @total_amount %></td>
       <td><%= @total_expense %></td>
-      <td><%= @total_amount - @total_expense %></td>
+      <td colspan="2"><%= @total_amount - @total_expense %></td>
     </tr>
   </table>
 </div>
