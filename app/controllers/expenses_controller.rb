@@ -23,7 +23,11 @@ class ExpensesController < ApplicationController
   def create
     @expense = current_user.expenses.new(expense_params)
     if @expense.save
-      redirect_to expenses_path, notice: 'Expense has been created successfully!!'
+      if current_user.admin? || current_user.super_admin?
+        redirect_to expenses_path, notice: 'Expense has been created successfully!!'
+      else
+        redirect_to expenses_path, notice: 'Expense has been submitted for approval'
+      end
     else
       render :new
     end
@@ -53,8 +57,6 @@ class ExpensesController < ApplicationController
     redirect_back(fallback_location: expenses_path)
   end
 
-
-
   def approve
     if @expense.approved?
       @expense.pending!
@@ -74,7 +76,7 @@ class ExpensesController < ApplicationController
 
   private
   def expense_params
-    params.require(:expense).permit(:product_name, :category, :cost, :details, :image, :expense_date)
+    params.require(:expense).permit(:product_name, :category_id, :cost, :details, :image, :expense_date)
   end
 
 end

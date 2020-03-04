@@ -1,4 +1,3 @@
-<%= link_to "Add Budget", new_budget_path, class: "btn btn-dark", style: "float:right" %>
 <h1>Budget List for <%= @year %></h1>
 
 <%= form_tag(budgets_path, :method => "get", class: "form-inline") do %>
@@ -8,41 +7,29 @@
 <% end %>
 <br>
 
-<% @number=@budgets.offset + 1 %>
+<% @number = @budgets.offset + 1 %>
 <div class="table-responsive-sm">
   <table class="table table-bordered">
     <thead>
     <tr>
       <th>Sl</th>
-      <th>Month / Year</th>
+      <th>Month</th>
       <th>Amount</th>
-      <th>Expense</th>
       <th>Remaining</th>
-      <th>Admin</th>
       <th style="text-align: center;">Action</th>
     </tr>
     </thead>
 
-    <% @budgets.each do |budget| %>
+    <% @budget_amount.each do |budget| %>
       <tr>
         <td><%= @number %> </td>
-        <% @number+=1 %>
-        <td><%= "#{Date::MONTHNAMES[budget.month]}, #{budget.year}" %></td>
-        <td><%= taka(budget.amount) %></td>
-        <td><%= taka(budget.expense) %></td>
-        <td><%= taka(budget.amount - budget.expense) %></td>
-        <td><%= budget.user.name %></td>
+        <% @number += 1 %>
+        <td><%= link_to "#{Date::MONTHNAMES[budget.first]}", show_all_budgets_path(month: budget.first, year: @year) %></td>
+        <td><%= taka(budget.second) %></td>
+        <td><%= taka(budget.second - @budget_expense[budget.first].second) %></td>
         <td style="text-align: center;">
-          <%= link_to show_all_expenses_budget_path(budget) do %>
-            <i class="fa fa-money" title="Show Expenses"></i>
-          <% end %>
-          |
-          <%= link_to edit_budget_path(budget) do %>
-            <i class="fa fa-edit" title="Edit"></i>
-          <% end %>
-          |
-          <%= link_to budget_path(budget), method: :delete, data: {confirm: "Are you sure?"} do %>
-            <i class="fa fa-trash" title="Drop"></i>
+          <%= link_to show_all_expenses_budgets_path(month: budget.first, year: @year) do %>
+            <i class="fa fa-shopping-cart" title="Show Expenses"></i>
           <% end %>
         </td>
       </tr>
