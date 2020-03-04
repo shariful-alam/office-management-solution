@@ -7,9 +7,7 @@
       <div class="collapse show in" id="budget">
         <br>
         <br>
-        <%= line_chart @updated_budget, xtitle: "Month", ytitle: "Expense", width: :auto, height: "450px", download: {background: "#ffffff"} , messages: {empty: "No data"} do %>
-        <div responsive="true"></div>
-        <% end %>
+        <%= line_chart @updated_budget, xtitle: "Month", ytitle: "Expense", width: :auto, height: "400px", download: {background: "#ffffff"} , messages: {empty: "No data"} %>
       </div>
     </div>
     <div class="container col-md-6">

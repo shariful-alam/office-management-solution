@@ -21,7 +21,6 @@ class Leafe < ApplicationRecord
 
   after_create :admin_approval
 
-
   def update_allocated_leave
     count = Leafe.count_days(self.start_date, self.end_date)
     used = self.user.allocated_leafe.used_leave
@@ -33,7 +32,7 @@ class Leafe < ApplicationRecord
     end
   end
 
-  def check_allocated_leave(days)
+  def check_validity_of_leave(days)
     remaining_leave = self.user.allocated_leafe.total_leave - self.user.allocated_leafe.used_leave
     remaining_leave > days
   end

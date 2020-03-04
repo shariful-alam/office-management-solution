@@ -7,7 +7,7 @@ class BudgetsController < ApplicationController
   def index
     @year = params[:search].present? ? "#{params[:search]}" : Date.today.year
     @budgets = @budgets.where(year: @year)
-    @budget_amount = @budgets.group(:month).sum(:amount)
+    @budget_amount = @budgets.group(:month).order(:month).sum(:amount)
     @budget_expense = @budgets.group(:month).sum(:expense)
     @budgets = @budgets.order(:year, :month).paginate(:page => params[:page], :per_page => Budget::PER_PAGE)
   end

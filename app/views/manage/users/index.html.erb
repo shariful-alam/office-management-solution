@@ -5,7 +5,7 @@
     <%= form_tag(manage_users_path, :method => "get") do %>
       <div class="row">
         <div class="col-sm-6">
-          <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control", autocomplete: :off %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search", class: "form-control", autocomplete: :off %>
         </div>
       </div>
       <br>
