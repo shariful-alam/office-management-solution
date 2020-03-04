@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
-  <div class="container">
+  <div class="container-fluid">
     <a class="navbar-brand" href="/">
       <%= image_tag "rc.png", :class => 'keep-logo', :size => "80x50" %>
     </a>
@@ -14,7 +14,7 @@
           <% if can? :show, User %>
             <li class="nav-item">
               <div>
-                <div class="dropdown" data-toggle="tooltips" data-html=true title="<%= budget_hint %>">
+                <div class="dropdown" >
                   <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <strong> Employee </strong>
                   </button>
@@ -48,7 +48,7 @@
           <% if can? :show, Expense %>
             <li class="nav-item">
               <div>
-                <div class="dropdown" data-toggle="tooltips" data-html=true title="<%= budget_hint %>">
+                <div class="dropdown" >
                   <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <strong> Expense </strong>
                   </button>
@@ -64,7 +64,7 @@
           <% if can? :show, Income %>
             <li class="nav-item">
               <div>
-                <div class="dropdown" data-toggle="tooltips" data-html=true title="<%= budget_hint %>">
+                <div class="dropdown" >
                   <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <strong> Income </strong>
                   </button>

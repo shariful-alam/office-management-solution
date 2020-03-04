@@ -23,8 +23,6 @@ class Expense < ApplicationRecord
 
   before_validation :check_budget
 
-  CATEGORY_LIST = ['Fixed', 'Regular']
-
   scope :sort_by_attr, -> (attr) {order(attr)}
 
   after_create :admin_approval
