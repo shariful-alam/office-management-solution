@@ -1,18 +1,18 @@
-<% if user_signed_in? %>
-    <h3 class="justify-content-center">User Dashboard </h3>
-<% end %>
-
 <% if current_user.admin? || current_user.super_admin? %>
+  <h3 class="justify-content-center">User Dashboard </h3>
   <br>
   <div class="row">
-    <div class="container col-sm-6">
+    <div class="container col-md-6">
       <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#budget">Budget Statistics</button>
       <div class="collapse show in" id="budget">
         <br>
-        <%= line_chart @updated_budget, xtitle: "Month", ytitle: "Expense", width: "500px", height: "350px", download: {background: "#ffffff"} , messages: {empty: "No data"} %>
+        <br>
+        <%= line_chart @updated_budget, xtitle: "Month", ytitle: "Expense", width: :auto, height: "450px", download: {background: "#ffffff"} , messages: {empty: "No data"} do %>
+        <div responsive="true"></div>
+        <% end %>
       </div>
     </div>
-    <div class="container col-sm-6">
+    <div class="container col-md-6">
       <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#revenue">Revenue Graph</button>
       <div class="collapse show in" id="revenue">
         <br>
