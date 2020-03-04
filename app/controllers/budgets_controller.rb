@@ -2,11 +2,14 @@ class BudgetsController < ApplicationController
 
   before_action :authenticate_user!
   load_and_authorize_resource
+  before_action :show_all, only: [:show_all_expenses]
 
   def index
-    @budgets = @budgets.includes(:user)
     @year = params[:search].present? ? "#{params[:search]}" : Date.today.year
-    @budgets = @budgets.where(year: @year).order(:year, :month).paginate(:page => params[:page], :per_page => Budget::PER_PAGE)
+    @budgets = @budgets.where(year: @year)
+    @budget_amount = @budgets.group(:month).sum(:amount)
+    @budget_expense = @budgets.group(:month).sum(:expense)
+    @budgets = @budgets.order(:year, :month).paginate(:page => params[:page], :per_page => Budget::PER_PAGE)
   end
 
   def new
@@ -25,24 +28,30 @@ class BudgetsController < ApplicationController
   end
 
   def update
+    month = @budget.month
+    year = @budget.year
     if @budget.update(budget_params)
-      redirect_to budgets_path, notice: 'Budget has been updated successfully!!'
+      redirect_to show_all_budgets_path(month: month, year: year), notice: 'Budget has been updated successfully!!'
     else
       render :edit
     end
   end
 
   def destroy
+    month = @budget.month
+    year = @budget.year
     if @budget && @budget.destroy
       flash[:alert] = 'Budget has been removed successfully!!'
     else
       flash[:alert] = 'Budget could not be deleted!!'
     end
-    redirect_to budgets_path
+    redirect_to show_all_budgets_path(month: month, year: year)
   end
 
   def show_all_expenses
-    @expenses = @budget.expenses.includes(:user)
+    @expenses = Expense.where('extract(year from expense_date) = ?', @year)
+    @expenses = @expenses.where('extract(month from expense_date) = ?', @month)
+
     if params[:search].present?
       search = '%#{params[:search]}%'
       @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
@@ -55,9 +64,17 @@ class BudgetsController < ApplicationController
     @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => Expense::PER_PAGE)
   end
 
+  def show_all
+    @year = params[:year].to_i
+    @month = params[:month].to_i
+    @budgets = @budgets.search_with(@year, @month)
+    @total_amount = @budgets.sum(:amount)
+    @total_expense = @budgets.sum(:expense)
+  end
+
   private
   def budget_params
-    params.require(:budget).permit(:year, :month, :amount, :add)
+    params.require(:budget).permit(:year, :month, :amount, :add, :category_id)
   end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_124745) do
+ActiveRecord::Schema.define(version: 2020_03_04_131241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,12 +41,18 @@ ActiveRecord::Schema.define(version: 2020_02_25_124745) do
     t.integer "month"
     t.integer "year"
     t.decimal "expense", default: "0.0"
-    t.index ["month", "year"], name: "index_budgets_on_month_and_year"
+    t.integer "category_id"
+    t.index ["month", "year", "category_id"], name: "index_budgets_on_month_and_year_and_category_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
   end
 
   create_table "expenses", force: :cascade do |t|
     t.string "product_name"
-    t.string "category"
     t.decimal "cost"
     t.string "details"
     t.datetime "created_at", precision: 6, null: false
@@ -59,6 +65,7 @@ ActiveRecord::Schema.define(version: 2020_02_25_124745) do
     t.integer "budget_id"
     t.date "expense_date"
     t.integer "status", default: 0
+    t.integer "category_id"
   end
 
   create_table "incomes", force: :cascade do |t|

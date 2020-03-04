@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   end
 
   resources :budgets do
-    member do
+    collection do
       get :show_all_expenses
+      get :show_all
     end
   end
 
@@ -43,6 +44,7 @@ Rails.application.routes.draw do
   end
 
   resources :attendances
+  resources :categories
 
   resources :incomes do
     member do

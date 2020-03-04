@@ -2,6 +2,7 @@ class Expense < ApplicationRecord
 
   belongs_to :user
   belongs_to :budget
+  belongs_to :category
   attr_accessor :remove_image
 
   enum status: {pending: 0, approved: 1, rejected: 2}
@@ -42,9 +43,9 @@ class Expense < ApplicationRecord
     if self.expense_date.blank?
       self.errors.add(:expense_date,' can not be blank.')
     else
-      self.budget = Budget.find_by(month: self.expense_date.month, year: self.expense_date.year)
+      self.budget = Budget.find_by(month: self.expense_date.month, year: self.expense_date.year , category_id: self.category_id)
       if self.budget.blank?
-        self.errors.add(:budget, :not_specified, message: " for #{Date::MONTHNAMES[self.expense_date.month]} is not submitted yet!!")
+        self.errors.add(:budget, :not_specified, message: " for #{Date::MONTHNAMES[self.expense_date.month]}, #{self.expense_date.year} is not submitted yet!!")
       end
     end
   end
@@ -52,6 +53,7 @@ class Expense < ApplicationRecord
   def admin_approval
     if self.user.admin? or self.user.super_admin?
       self.approved!
+      self.budget.update({expense: self.budget.expense + self.cost})
     end
   end
 

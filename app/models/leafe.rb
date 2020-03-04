@@ -33,10 +33,15 @@ class Leafe < ApplicationRecord
     end
   end
 
+  def check_allocated_leave(days)
+    remaining_leave = self.user.allocated_leafe.total_leave - self.user.allocated_leafe.used_leave
+    remaining_leave > days
+  end
+
   private
 
   def self.count_days(start_date, end_date)
-    if start_date.present? and end_date.present?
+    if start_date.present? && end_date.present?
       (start_date..end_date).select {|a| a.wday < 6 && a.wday > 0}.count
     else
       0
@@ -46,6 +51,7 @@ class Leafe < ApplicationRecord
   def admin_approval
     if self.user.admin? or self.user.super_admin?
       self.approved!
+      self.update_allocated_leave
     end
   end
 

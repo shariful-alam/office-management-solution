@@ -8,36 +8,81 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>
           <% if can? :show, User %>
             <li class="nav-item">
-              <%= link_to "Employees", manage_users_path, class: "nav-link" %>
+              <div>
+                <div class="dropdown" data-toggle="tooltips" data-html=true title="<%= budget_hint %>">
+                  <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <strong> Employee </strong>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <%= link_to "Add new employee", new_manage_user_path, class: 'dropdown-item' %>
+                    <%= link_to "Employees", manage_users_path, class: 'dropdown-item' %>
+                  </div>
+                </div>
+              </div>
             </li>
           <% end %>
 
           <% if can? :show, Budget %>
             <li class="nav-item">
-              <%= link_to "Budgets", budgets_path, class: "nav-link", "data-toggle": "tooltips", "data-html": "true", "title": budget_hint %>
+              <div>
+                <div class="dropdown">
+                  <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <strong data-toggle="tooltips" data-html=true title="<%= budget_hint.html_safe %>"> Budget </strong>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <%= link_to "Add new budget", new_budget_path, class: 'dropdown-item' %>
+                    <%= link_to "Add new Category", new_category_path, class: 'dropdown-item' %>
+                    <%= link_to "Budget categories", categories_path, class: 'dropdown-item' %>
+                    <%= link_to "Budgets", budgets_path, class: 'dropdown-item' %>
+                  </div>
+                </div>
+              </div>
             </li>
           <% end %>
 
-          <li class="nav-item">
-            <%= link_to "Expenses", expenses_path, class: "nav-link" %>
-          </li>
+          <% if can? :show, Expense %>
+            <li class="nav-item">
+              <div>
+                <div class="dropdown" data-toggle="tooltips" data-html=true title="<%= budget_hint %>">
+                  <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <strong> Expense </strong>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <%= link_to "Add new expense", new_expense_path, class: 'dropdown-item' %>
+                    <%= link_to "Expenses", expenses_path, class: 'dropdown-item' %>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
 
-          <li class="nav-item">
-            <% if current_user.admin? or current_user.super_admin? %>
-              <%= link_to "Incomes", incomes_path, class: "nav-link" %>
-            <% else %>
-              <%= link_to "Incomes", show_all_incomes_manage_user_path(id: current_user.id), class: "nav-link" %>
-            <% end %>
-          </li>
+          <% if can? :show, Income %>
+            <li class="nav-item">
+              <div>
+                <div class="dropdown" data-toggle="tooltips" data-html=true title="<%= budget_hint %>">
+                  <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <strong> Income </strong>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <%= link_to "Add new income", new_income_path, class: 'dropdown-item' %>
+                    <% if current_user.admin? || current_user.super_admin? %>
+                      <%= link_to "Incomes", incomes_path, class: 'dropdown-item' %>
+                    <% else %>
+                      <%= link_to "Incomes", show_all_incomes_manage_user_path(id: current_user.id), class: 'dropdown-item' %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
 
-          <li class="nav-item">
-            <% if current_user.admin? or current_user.super_admin? %>
+          <% if can? :show, Leafe %>
+            <li class="nav-item">
               <div>
                 <div class="dropdown">
                   <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,15 +90,18 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <%= link_to "Apply for Leave", new_leafe_path, class: 'dropdown-item' %>
-                    <%= link_to "Appointed Leaves", allocated_leaves_path, class: 'dropdown-item' %>
-                    <%= link_to "Leave Requests", leaves_path, class: 'dropdown-item' %>
+                    <% if current_user.admin? || current_user.super_admin? %>
+                      <%= link_to "Appointed Leaves", allocated_leaves_path, class: 'dropdown-item' %>
+                      <%= link_to "Leave Requests", leaves_path, class: 'dropdown-item' %>
+                    <% else %>
+                      <%= link_to "Leaves", leaves_path, class: 'dropdown-item' %>
+                    <% end %>
                   </div>
                 </div>
               </div>
-            <% else %>
-              <%= link_to "Leaves", leaves_path, class: "nav-link" %>
-            <% end %>
-          </li>
+            </li>
+          <% end %>
+
           <li class="nav-item">
             <div>
               <div class="dropdown">
@@ -65,7 +113,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <%= check_in_out %>
-                  <% if current_user.admin? or current_user.super_admin? %>
+                  <% if current_user.admin? || current_user.super_admin? %>
                     <%= link_to show_all_pending_manage_users_path, class: 'dropdown-item' do %>
                       <div>Pending Request &nbsp <%= see_pending_request %></div>
                     <% end %>

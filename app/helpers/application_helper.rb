@@ -30,14 +30,14 @@ module ApplicationHelper
 
   def budget_hint
     date = Date.today
-    present_budget= Budget.find_by(month: date.month, year: date.year)
-    if present_budget.nil?
-      "The budget is not added yet !".html_safe
+    present_budget= Budget.where(month: date.month, year: date.year)
+    if present_budget.empty?
+      "The budget is not added yet !"
     else
-      "Budget for  #{Date::MONTHNAMES[present_budget.month]}, #{present_budget.year}
-      Total :   #{taka(present_budget.amount)}
-      Expense :   #{taka(present_budget.expense)}
-      Remaining :  #{taka(present_budget.amount - present_budget.expense)}".html_safe
+      "Budget for  #{Date::MONTHNAMES[present_budget.first.month]}, #{present_budget.first.year}
+      Total :   #{taka(present_budget.sum(:amount))}
+      Expense :   #{taka(present_budget.sum(:expense))}
+      Remaining :  #{taka(present_budget.sum(:amount) - present_budget.sum(:expense))}"
     end
   end
 
