@@ -33,6 +33,15 @@ class Leafe < ApplicationRecord
     end
   end
 
+  def check_allocated_leave(days)
+    remaining_leave = self.user.allocated_leafe.total_leave - self.user.allocated_leafe.used_leave
+    if remaining_leave < days
+      false
+    else
+      true
+    end
+  end
+
   private
 
   def self.count_days(start_date, end_date)
