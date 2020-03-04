@@ -20,6 +20,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :email, presence: true
+  validates :name, presence: true
+  validates :phone, presence: true
+  validates :target_amount, presence: true, numericality: {integer: true}
+  validates :bonus_percentage, presence: true, numericality: {integer: true}
+
   ADMIN = "Admin"
   SUPER_ADMIN = "Super Admin"
   EMPLOYEE = "Employee"
@@ -27,10 +33,8 @@ class User < ApplicationRecord
   ROLE_LIST = ['Super Admin', 'Admin', 'Employee']
 
 
-  attr_accessor :remove_image
-
   after_create :send_message
-  before_save :delete_image, if: -> {remove_image == '1'}
+
 
   def admin?
     self.role == ADMIN
@@ -50,9 +54,7 @@ class User < ApplicationRecord
     UserMailer.welcome(self).deliver_now
   end
 
-  def delete_image
-     self.image = nil
-  end
+
 
 
 end
