@@ -117,6 +117,3 @@ class Ability
     end
   end
 end
-
-
-# https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
