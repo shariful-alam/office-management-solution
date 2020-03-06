@@ -2,6 +2,18 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => "users/registrations"}
 
+  namespace :api do
+    resources :expenses do
+      member do
+        put :approve
+        put :reject
+      end
+    end
+    resources :sessions
+  end
+
+
+
   resources :expenses do
     member do
       put :approve
