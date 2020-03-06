@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       end
     end
     resources :sessions
+    resources :registrations
   end
 
 
