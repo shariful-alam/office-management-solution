@@ -18,7 +18,7 @@ class Api::RegistrationsController < ApplicationController
     if user.save
       render json: {message: "Created Successfully"}, status: 200
     else
-      render json: {message: "Email or password is invalid"}, status: 422
+      render json: {message: "Unsuccessful"}, status: 422
     end
   end
 
