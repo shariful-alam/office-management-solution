@@ -1,12 +1,10 @@
-class Api::ExpensesController < ApplicationController
+class Api::ExpensesController < Api::ApiController
 
-  include DeviseTokenAuth::Concerns::SetUserByToken
-  skip_before_action :verify_authenticity_token
-#  before_action :authenticate_user!
+  before_action :authenticate_user_from_token
   load_and_authorize_resource
 
   def index
-    @expenses = Expense.includes(:user)
+    @expenses = @expenses.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
       @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})

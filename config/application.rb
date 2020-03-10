@@ -18,20 +18,7 @@ module Ems
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     #config.active_record.raise_in_transactional_callbacks = true
-    config.middleware.use Rack::Cors do
-      allow do
-        origins '*'
-        resource '*',
-                 :headers => :any,
-                 :expose  => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
-                 :methods => [:get, :post, :options, :delete, :put]
-      end
-    end
-    #autoloads lib folder during production
-    config.eager_load_paths << Rails.root.join('lib')
 
-    #autoloads lib folder during development
-    config.autoload_paths << Rails.root.join('lib')
   end
 end
 

@@ -98,9 +98,7 @@ ActiveRecord::Schema.define(version: 2020_03_04_131241) do
     t.string "phone"
     t.string "name"
     t.string "role"
-    t.string "provider", default: "email", null: false
-    t.string "uid", default: "", null: false
-    t.json "tokens"
+    t.string "token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "image_file_name"
