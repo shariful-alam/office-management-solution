@@ -10,6 +10,12 @@ Rails.application.routes.draw do
         put :reject
       end
     end
+    resources :leaves do
+      member do
+        put :approve
+        put :reject
+      end
+    end
   end
 
   devise_for :users, :controllers => {:registrations => "users/registrations"}

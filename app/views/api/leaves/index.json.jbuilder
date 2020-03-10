@@ -1,0 +1,1 @@
+json.array! @leaves, partial: "api/leaves/leave", as: :leave
