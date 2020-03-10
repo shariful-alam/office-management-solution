@@ -1,21 +1,9 @@
-class Api::ExpensesController < ApplicationController
-
-  skip_before_action :verify_authenticity_token
-  before_action :authenticate_user_from_token
-  load_and_authorize_resource
+class Api::ExpensesController < Api::V1::ApplicationController
   respond_to :json
 
-  def authenticate_user_from_token
-    user = User.find_by(token: params[:token])
-    unless user.present?
-      render json: {message: "invalid token"},status: 422 and return
-    end
-    @current_user = user
-  end
+  before_action :authenticate_user!
+  load_and_authorize_resource
 
-  def current_user
-     @current_user
-  end
 
   def index
     @expenses = @expenses.includes(:user)
@@ -37,7 +25,7 @@ class Api::ExpensesController < ApplicationController
   def create
     @expense = current_user.expenses.new(expense_params)
     if @expense.save
-      render :show ,status: :created
+      render :show, status: :created
     else
       render json: @expense.errors, status: :unprocessable_entity
     end
@@ -86,7 +74,7 @@ class Api::ExpensesController < ApplicationController
 
   private
   def expense_params
-    params.require(:expense).permit(:product_name, :category_id, :cost, :details, :image, :expense_date,:user_id)
+    params.require(:expense).permit(:product_name, :category_id, :cost, :details, :image, :expense_date, :user_id)
   end
 
 end

@@ -1,19 +1,19 @@
 Rails.application.routes.draw do
 
-  devise_for :users, :controllers => {:registrations => "users/registrations"}
 
   namespace :api do
+    scope :v1 do
+      mount_devise_token_auth_for 'User', at: 'auth', defaults: {format: 'json'}
+    end
     resources :expenses do
       member do
         put :approve
         put :reject
       end
     end
-    resources :sessions
-    resources :registrations
   end
 
-
+  devise_for :users, :controllers => {:registrations => "users/registrations"}
 
   resources :expenses do
     member do

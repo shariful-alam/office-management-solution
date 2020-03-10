@@ -36,6 +36,10 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :role
 
+      t.string :provider, null: false, default: 'email'
+      t.string :uid, null: false, default: ''
+      t.json :tokens
+
       t.timestamps null: false
 
 

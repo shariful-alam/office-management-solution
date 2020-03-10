@@ -1,4 +1,4 @@
-class Api::RegistrationsController < ApplicationController
+class Api::RegistrationsController < BaseController
 
   skip_before_action :verify_authenticity_token
 

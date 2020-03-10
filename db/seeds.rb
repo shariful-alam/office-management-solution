@@ -7,4 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-User.create(name: "Bazlur Rashid", email: "admin@rightcodes.org", role: "Admin", password: "111111" , phone: "01521" ,target_amount: 10000, bonus_percentage: 10 )
+User.create!(name: "Bazlur Rashid", email: "admin@rightcodes.org", role: "Admin", password: "111111" , phone: "01521" ,target_amount: 10000, bonus_percentage: 10 )

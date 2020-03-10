@@ -1,16 +1,18 @@
 class ApplicationController < ActionController::Base
+  #include DeviseTokenAuth::Concerns::SetUserByToken
 
-  #before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  protect_from_forgery with: :null_session, if: -> {request.format.json?}
 
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:image,:name, :phone, :role , :designation])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:image,:name, :phone, :role, :designation])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:image, :name, :phone, :role, :designation])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:image, :name, :phone, :role, :designation])
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:alert] =  "Access Denied!!"
+    flash[:alert] = "Access Denied!!"
     redirect_back(fallback_location: root_path)
   end
 

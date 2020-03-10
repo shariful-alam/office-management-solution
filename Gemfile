@@ -66,3 +66,6 @@ gem 'cancancan'
 gem 'chartkick'
 gem 'groupdate'
 gem "font-awesome-rails"
+gem 'devise_token_auth'
+
+gem 'rack-cors'

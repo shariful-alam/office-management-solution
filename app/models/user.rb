@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
   has_many :expenses
   has_many :incomes
@@ -17,8 +15,11 @@ class User < ApplicationRecord
                        source_file_options: {regular: "-density 96 -depth 8 -quality 85"},
                        convert_options: {regular: "-posterize 3"}
 
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  extend Devise::Models
+  include DeviseTokenAuth::Concerns::User
 
   validates :email, presence: true
   validates :name, presence: true
@@ -32,8 +33,10 @@ class User < ApplicationRecord
   DESIGNATION_LIST = ['Junior Software Engineer', 'Senior Software Engineer', 'Office Admin', 'Chief Executive Officer', 'Chief Technical Officer']
   ROLE_LIST = ['Super Admin', 'Admin', 'Employee']
 
-
   after_create :send_message
+  before_validation do
+    self.uid = email if uid.blank?
+  end
 
 
   def admin?
@@ -53,8 +56,6 @@ class User < ApplicationRecord
   def send_message
     UserMailer.welcome(self).deliver_now
   end
-
-
 
 
 end
