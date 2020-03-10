@@ -99,10 +99,12 @@ GEM
       activesupport (>= 4.2.0)
     groupdate (4.3.0)
       activesupport (>= 5)
+    hashie (4.1.0)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
+    jwt (2.2.1)
     launchy (2.4.3)
       addressable (~> 2.3)
     letter_opener (1.7.0)
@@ -130,6 +132,9 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
+    omniauth (1.9.1)
+      hashie (>= 3.4.6)
+      rack (>= 1.6.2, < 3)
     orm_adapter (0.5.0)
     paperclip (5.3.0)
       activemodel (>= 4.2.0)
@@ -197,6 +202,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    simple_command (0.1.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -248,6 +254,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   bootstrap_form
   byebug
@@ -259,8 +266,10 @@ DEPENDENCIES
   font-awesome-rails
   groupdate
   jbuilder (~> 2.7)
+  jwt
   letter_opener
   listen (>= 3.0.5, < 3.2)
+  omniauth
   paperclip (~> 5.1)
   pg
   puma (~> 4.1)
@@ -268,6 +277,7 @@ DEPENDENCIES
   rails (~> 6.0.2, >= 6.0.2.1)
   sass-rails (>= 6)
   selenium-webdriver
+  simple_command
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3

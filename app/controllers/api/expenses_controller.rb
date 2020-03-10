@@ -1,12 +1,11 @@
 class Api::ExpensesController < ApplicationController
-  respond_to :json,:html
+
+  include DeviseTokenAuth::Concerns::SetUserByToken
   skip_before_action :verify_authenticity_token
-  before_action :authenticate_user!
+#  before_action :authenticate_user!
   load_and_authorize_resource
 
-
   def index
-    raise @expenses.inspect
     @expenses = Expense.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"

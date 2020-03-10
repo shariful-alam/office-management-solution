@@ -24,8 +24,14 @@ module Ems
         resource '*',
                  :headers => :any,
                  :expose  => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
-                 :methods => [:get, :post, :options, :delete, :put, :patch]
+                 :methods => [:get, :post, :options, :delete, :put]
       end
     end
+    #autoloads lib folder during production
+    config.eager_load_paths << Rails.root.join('lib')
+
+    #autoloads lib folder during development
+    config.autoload_paths << Rails.root.join('lib')
   end
 end
+

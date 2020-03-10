@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :leaves
   has_one :allocated_leafe
   has_many :attendances
+  #encrypt password
+  has_secure_password
 
   has_attached_file :image
   validates_attachment :image,
@@ -19,7 +21,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   extend Devise::Models
-  include DeviseTokenAuth::Concerns::SetUserByToken
   include DeviseTokenAuth::Concerns::User
 
   validates :email, presence: true
