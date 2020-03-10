@@ -19,6 +19,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   extend Devise::Models
+  include DeviseTokenAuth::Concerns::SetUserByToken
   include DeviseTokenAuth::Concerns::User
 
   validates :email, presence: true

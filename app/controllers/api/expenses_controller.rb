@@ -1,12 +1,13 @@
-class Api::ExpensesController < Api::V1::ApplicationController
-  respond_to :json
-
+class Api::ExpensesController < ApplicationController
+  respond_to :json,:html
+  skip_before_action :verify_authenticity_token
   before_action :authenticate_user!
   load_and_authorize_resource
 
 
   def index
-    @expenses = @expenses.includes(:user)
+    raise @expenses.inspect
+    @expenses = Expense.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
       @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
