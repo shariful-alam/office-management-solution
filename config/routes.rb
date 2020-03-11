@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :sessions
     resources :registrations
+    resources :categories
     resources :expenses do
       member do
         put :approve

@@ -1,7 +1,6 @@
 class Api::RegistrationsController < Api::ApiController
 
   before_action :authenticate_user_from_token
-  #load_and_authorize_resource
 
   def create
     user = User.find_by(email: params[:email])
