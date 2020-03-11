@@ -1,0 +1,1 @@
+json.array! @budgets, partial: "api/budgets/budget", as: :budget

@@ -7,15 +7,13 @@ class Api::ExpensesController < Api::ApiController
     @expenses = @expenses.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
-      @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
+      @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
     @expenses = @expenses.sort_by_attr(:expense_date)
     @pending_expenses = @expenses.pending
     @approved_expenses = @expenses.approved
     @rejected_expenses = @expenses.rejected
-    #render json: {pending: @pending_expenses, approved: @approved_expenses, rejected: @rejected_expenses}
-
   end
 
   def new
@@ -25,14 +23,13 @@ class Api::ExpensesController < Api::ApiController
   def create
     @expense = current_user.expenses.new(expense_params)
     if @expense.save
-      render :show, status: :created
+      render json: { message: "Expense has been created successfully!!" , url: api_expense_url(@expense, format: :json) }, status: 201
     else
-      render json: @expense.errors, status: :unprocessable_entity
+      render json: @expense.errors, status: 422
     end
   end
 
   def show
-
   end
 
   def edit
@@ -40,36 +37,34 @@ class Api::ExpensesController < Api::ApiController
 
   def update
     if @expense.update(expense_params)
-      redirect_to expenses_path, notice: 'Expense has been updated successfully!!'
+      render json: { message: "Expense has been updated successfully!!" , url: api_expense_url(@expense, format: :json) }, status: 202
     else
-      render :edit
+      render json: @expense.errors, status: 422
     end
   end
 
   def destroy
     if @expense && @expense.destroy
-      flash[:alert] = 'Expense has been removed successfully!!'
+      render json: { message: "Expense has been removed successfully!!", index_url: api_expenses_url(format: :json) }, status: 202
     else
-      flash[:alert] = 'Expense could not be deleted!!'
+      render json: { message: "Expense could not be deleted!!" }, status: 422
     end
-    redirect_back(fallback_location: expenses_path)
   end
 
   def approve
     if @expense.approved?
       @expense.pending!
-      flash[:warning] = 'The Expense has been queued for pending!!'
+      render json: { message: "The Expense has been queued for pending!!" , url: api_expense_url(@expense, format: :json) }, status: 202
     else
       @expense.approved!
-      flash[:notice] = 'Expense has been approved successfully!!'
+      render json: { message: "Expense has been approved successfully!!" , url: api_expense_url(@expense, format: :json)}, status: 202
     end
     @expense.update_budget
-    redirect_back(fallback_location: expenses_path)
   end
 
   def reject
     @expense.rejected!
-    redirect_back(fallback_location: expenses_path, alert: 'Expense has been rejected successfully!!')
+    render json: { message: "Expense has been rejected successfully!!" , url: api_expense_url(@expense, format: :json) }, status: 202
   end
 
   private

@@ -1,3 +1,4 @@
-json.extract! expense, :id, :product_name, :expense_date
-json.user expense.user ,:id, :name
-json.url expense_url(expense, format: :json)
+json.extract! expense, :id, :product_name, :expense_date,:status
+json.user expense.user, :id, :name
+json.url api_expense_url(expense, format: :json)
+

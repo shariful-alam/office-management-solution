@@ -16,4 +16,8 @@ class Api::ApiController < ApplicationController
     @current_user
   end
 
+  rescue_from CanCan::AccessDenied do |exception|
+    render json: {message: "Access Denied"}, status: 401
+  end
+
 end

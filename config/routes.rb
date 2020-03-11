@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   namespace :api do
     resources :sessions
     resources :registrations
@@ -14,6 +13,12 @@ Rails.application.routes.draw do
       member do
         put :approve
         put :reject
+      end
+    end
+    resources :budgets do
+      collection do
+        get :show_all_expenses
+        get :show_all
       end
     end
   end
