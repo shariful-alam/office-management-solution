@@ -14,6 +14,8 @@ class Api::ExpensesController < Api::ApiController
     @pending_expenses = @expenses.pending
     @approved_expenses = @expenses.approved
     @rejected_expenses = @expenses.rejected
+    #render json: {pending: @pending_expenses, approved: @approved_expenses, rejected: @rejected_expenses}
+
   end
 
   def new
