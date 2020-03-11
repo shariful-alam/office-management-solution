@@ -4,8 +4,7 @@ class Api::LeavesController < Api::ApiController
   load_and_authorize_resource
 
   def index
-    raise "fff"
-    @leaves = @leaves.all.includes(:user).order(id: :asc)
+    @leaves = @leaves.includes(:user).order(id: :asc)
     if params[:search].present?
       search = "%#{params[:search]}%"
       @leaves = @leaves.joins(:user).where('users.name ilike :search OR leave_type ilike :search', {search: search})
@@ -14,8 +13,7 @@ class Api::LeavesController < Api::ApiController
     @leaves = @leaves.where(':from <= end_date ', {from: params[:from]}) if params[:from].present?
     @leaves = @leaves.where(':to >= start_date ', {to: params[:to]}) if params[:to].present?
 
-    #render json: {pending: @leaves_pending, approved: @leaves_approved, rejected: @leaves_rejected}
-
+    @leaves = @leaves.paginate(:page => params[:rejected_leaves], :per_page => Leafe::PER_PAGE)
   end
 
   def create
@@ -24,64 +22,65 @@ class Api::LeavesController < Api::ApiController
       days = Leafe.count_days(@leafe.start_date, @leafe.end_date)
       if days > 0 && @leafe.check_validity_of_leave(days)
         if @leafe.save
-          render :show, status: :created, location: @leafe
+          if current_user.admin? || current_user.super_admin?
+            render json: {message: "Leave has been created", url: api_leafe_url(@leafe, format: :json)}, status: :created
+          else
+            render json: {message: "Leave has been submitted for approval", url: api_leafe_url(@leafe, format: :json)}, status: :created
+          end
         else
           render json: @leafe.errors, status: :unprocessable_entity
         end
       else
-        render json: { error: "Please select a valid date range" }, status: 422
+        render json: {error: "Please select a valid date range"}, status: 422
       end
     else
-      render json: { error: "Leave for this user has not been allocated yet" }, status: 422
+      render json: {error: "Leave for this user has not been allocated yet"}, status: 422
     end
   end
 
   def show
-    @leafe = Leafe.find(params[:id])
   end
 
   def update
-    @leafe = Leafe.find(params[:id])
-
     if @leafe.update(leafe_params)
-      render :show, status: :ok, location: @leafe
+      render json: {message: "Leave has been updated", url: api_leafe_url(@leafe, format: :json)}, status: :created
     else
-      render json: @leafe.errors, status: :unprocessable_entity
+      render json: @leafe.errors, status: 422
     end
   end
 
   def destroy
-
+    if @leafe && @leafe.destroy
+      render json: {message: "Leave has been destroyed"}, status: :ok
+    else
+      render json: {error: "Leave could not be deleted!!"}, status: 422
+    end
   end
 
   def approve
     if @leafe.user.allocated_leafe
       if @leafe.approved?
         @leafe.pending!
-        flash[:notice] = 'Leave information has been changed successfully'
+        render json: {message: "Leave information has been changed successfully"}, status: :ok
       else
         @leafe.approved!
-        #LeafeMailer.approved(@leafe).deliver_now
-        flash[:notice] = 'The leave has been approved successfully'
+        render json: {message: "The leave has been approved successfully"}, status: :ok
       end
       @leafe.update_allocated_leave
-      redirect_to show_all_allocated_leafe_path(@leafe.user.allocated_leafe)
     else
-      redirect_to leaves_path, alert: 'Leave for this user has not been allocated yet.'
+      render json: {message: "Leave for this user has not been allocated yet"}
     end
   end
 
   def reject
     @leafe.rejected!
-    #LeafeMailer.rejected(@leafe).deliver_now
-    redirect_to show_all_allocated_leafe_path(@leafe.user.allocated_leafe), notice: 'The leave has been changed successfully'
+    render json: {message: "Leave has been rejected"}, status: :ok
   end
 
   private
   def leafe_params
     params.require(:leafe).permit(:start_date, :end_date, :reason, :leave_type, :status, :user_id)
   end
-
 
 
 end

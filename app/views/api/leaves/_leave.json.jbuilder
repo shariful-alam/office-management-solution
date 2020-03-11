@@ -1,2 +1,3 @@
-json.extract! leave, :id, :start_date, :end_date, :reason, :leave_type, :user_id, :status
-json.url leafe_url(leave, format: :json)
+json.extract! leave, :id, :start_date, :end_date, :reason, :leave_type, :status
+json.user leave.user ,:id, :name
+json.url api_leafe_url(leave, format: :json)
