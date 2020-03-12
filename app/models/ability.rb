@@ -94,6 +94,7 @@ class Ability
 
         can :create, Attendance, {user_id: user.id}
         can :update, Attendance, {user_id: user.id}
+        can :check_out, Attendance, {user_id: user.id}
 
         can :manage, Leafe, {user_id: user.id}
         cannot :approve, Leafe, {user_id: user.id}

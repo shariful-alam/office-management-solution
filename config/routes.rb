@@ -1,11 +1,26 @@
 Rails.application.routes.draw do
 
   namespace :api do
+
     resources :sessions
 
     resources :registrations
 
     resources :categories
+
+    resources :allocated_leaves do
+      member do
+        get :show_all
+      end
+    end
+
+    resources :attendances do
+      collection do
+        put :check_out
+      end
+    end
+
+    get '/', to: 'home#index'
 
     resources :expenses do
       member do
