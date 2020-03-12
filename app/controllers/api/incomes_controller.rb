@@ -8,8 +8,8 @@ class Api::IncomesController < Api::ApiController
     @users_bonus = @users_income.paginate(:page => params[:users_bonuses], :per_page => Income::PER_PAGE)
 
     @monthly_totals = Array.new(13,0)
-    @all_incomes = Array.new(15){Array.new(15) { 0 } }
-    @all_bonuses = Array.new(15){Array.new(15) { 0 } }
+    @all_incomes = Array.new(150){Array.new(15) { 0 } }
+    @all_bonuses = Array.new(150){Array.new(15) { 0 } }
     @total_income_per_user = Array.new
 
     @users_income.each do |user|
@@ -22,20 +22,16 @@ class Api::IncomesController < Api::ApiController
     end
   end
 
-  def new
-
-  end
-
   def create
     @income = current_user.incomes.new(income_params)
     if @income.save
       if current_user.admin? || current_user.super_admin?
-        redirect_to incomes_path, notice: 'Your income has been created successfully'
+        render json: {message: "Income has been created successfully", url: api_income_url(@income, format: :json)}, status: :created
       else
-        redirect_to show_individual_incomes_path(user_id: @income.user.id), notice: 'Your income has been submitted for approval'
+        render json: {message: "Income has been submitted for approval", url: api_income_url(@income, format: :json)}, status: :created
       end
     else
-      render :new
+      render json: @income.errors, status: 422
     end
 
   end
@@ -45,11 +41,10 @@ class Api::IncomesController < Api::ApiController
   end
 
   def update
-    if @income.update(income_params)
-      flash[:notice] = 'Your income information has been updated'
-      redirect_to show_individual_incomes_path(user_id: current_user.id, month: @income.income_date.month, year: params[:search])
+    if @income && @income.update(income_params)
+      render json: {message: "Income information has been updated", url: api_income_url(@income, format: :json)}, status: :created
     else
-      render :edit
+      render json: @income.errors, status: 422
     end
   end
 
@@ -60,29 +55,25 @@ class Api::IncomesController < Api::ApiController
 
   def destroy
     if @income && @income.destroy
-      flash[:notice] = 'Your Income information has been destroyed'
-      redirect_back(fallback_location: incomes_path)
+      render json: {message: "Income information has been destroyed"}, status: :ok
     else
-      flash[:alert] = 'Income could not be deleted!!'
-      render :index
+      render json: {error: "Income could not be deleted!!"}, status: 422
     end
   end
 
   def approve
     if @income.approved?
       @income.pending!
-      flash[:notice] = 'The income status has been changed successfully'
+      render json: {message: "The income status has been changed successfully"}, status: :ok
     else
       @income.approved!
-      flash[:notice] = 'Income has been approved'
+      render json: {message: "Income has been approved"}, status: :ok
     end
-    redirect_back(fallback_location: incomes_path)
   end
 
   def reject
     @income.rejected!
-    flash[:notice] = 'Income has been rejected'
-    redirect_back(fallback_location: incomes_path)
+    render json: {message: "Income has been rejected"}, status: :ok
   end
 
 

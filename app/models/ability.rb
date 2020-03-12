@@ -104,6 +104,7 @@ class Ability
         can :destroy, Leafe, {user_id: user.id,status: Leafe.statuses[:rejected]}
 
         can :manage, Income, {user_id: user.id}
+        cannot :index, Income, :all
         cannot :approve, Income, {user_id: user.id}
         cannot :reject, Income, {user_id: user.id}
         cannot :manage, Income, {status: Income.statuses[:rejected]}
