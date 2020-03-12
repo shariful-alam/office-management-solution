@@ -1,5 +1,5 @@
 class Api::ApiController < ApplicationController
-
+  skip_before_action :verify_authenticity_token
   def authenticate_user_from_token
     if params[:token].present?
       user = User.find_by(token: params[:token])

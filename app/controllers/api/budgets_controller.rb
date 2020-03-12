@@ -6,7 +6,7 @@ class Api::BudgetsController < Api::ApiController
 
   def index
     @year = params[:search].present? ? "#{params[:search]}" : Date.today.year
-    @budgets = @budgets.where(year: @year).order(:month)
+    @budgets = @budgets.includes(:user).where(year: @year).order(:month)
     @budget_amount = @budgets.group(:month).sum(:amount)
     @budget_expense = @budgets.group(:month).sum(:expense)
   end
@@ -17,9 +17,9 @@ class Api::BudgetsController < Api::ApiController
   def create
     @budget = current_user.budgets.new(budget_params)
     if @budget.save
-      redirect_to budgets_path, notice: 'Budget has been created successfully!!'
+      render json: { message: "Budget has been created successfully!!" , url: api_budget_url(@budget, format: :json) }, status: 201
     else
-      render :new
+      render json: @budget.errors, status: 422
     end
   end
 
@@ -27,33 +27,30 @@ class Api::BudgetsController < Api::ApiController
   end
 
   def update
-    month = @budget.month
-    year = @budget.year
+    #raise params.inspect
     if @budget.update(budget_params)
-      redirect_to show_all_budgets_path(month: month, year: year), notice: 'Budget has been updated successfully!!'
+      render json: { message: "Budget has been updated successfully!!" , url: api_budget_url(@budget, format: :json) }, status: 202
     else
-      render :edit
+      render json: @budget.errors, status: 422
     end
   end
 
   def destroy
-    month = @budget.month
-    year = @budget.year
     if @budget && @budget.destroy
-      flash[:alert] = 'Budget has been removed successfully!!'
+      render json: { message: "Budget has been removed successfully!!", index_url: api_budgets_url(format: :json) }, status: 202
     else
-      flash[:alert] = 'Budget could not be deleted!!'
+      render json: { message: "Budget could not be deleted!!" }, status: 422
     end
-    redirect_to show_all_budgets_path(month: month, year: year)
   end
 
   def show_all_expenses
     @expenses = Expense.where('extract(year from expense_date) = ?', @year)
     @expenses = @expenses.where('extract(month from expense_date) = ?', @month)
+    @expenses = @expenses.includes(:user)
 
     if params[:search].present?
-      search = '%#{params[:search]}%'
-      @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
+      search = "%#{params[:search]}%"
+      @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
     @expenses = @expenses.sort_by_attr(:expense_date)
