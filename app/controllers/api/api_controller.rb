@@ -6,8 +6,7 @@ class Api::ApiController < ApplicationController
     render json: {message: "Record not found!!"}, status: 422
   end
 
-
-
+  skip_before_action :verify_authenticity_token
 
   def authenticate_user_from_token
     if params[:token].present?
