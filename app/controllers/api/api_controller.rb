@@ -1,5 +1,13 @@
 class Api::ApiController < ApplicationController
+
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+
+  def record_not_found
+    render json: {message: "Record not found!!"}, status: 422
+  end
+
   skip_before_action :verify_authenticity_token
+
   def authenticate_user_from_token
     if params[:token].present?
       user = User.find_by(token: params[:token])

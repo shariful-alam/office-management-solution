@@ -1,0 +1,1 @@
+json.partial! "api/leaves/leave", leave: @leafe
