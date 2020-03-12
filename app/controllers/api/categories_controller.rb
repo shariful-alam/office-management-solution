@@ -7,36 +7,36 @@ class Api::CategoriesController < Api::ApiController
     @categories = @categories.paginate(:page => params[:page], :per_page => Budget::PER_PAGE)
   end
 
-  def new
-
-  end
-
   def create
-    if @category.save
-      redirect_to categories_path, notice: 'Category for Budget has been created successfully!!'
+    if @category && @category.save
+      render json: {message: "Category for Budget has been created successfully!!", url: api_category_url(@category, format: :json)}, status: :created
     else
-      render :new
+      render json: @category.errors, status: 422
     end
   end
 
+  def show
+
+  end
+
   def edit
+
   end
 
   def update
-    if @category.update(category_params)
-      redirect_to categories_path, notice: 'Category for Budget has been updated successfully!!'
+    if @category && @category.update(category_params)
+      render json: {message: "Category for Budget has been updated successfully!!", url: api_category_url(@category, format: :json)}, status: :created
     else
-      render :edit
+      render json: @category.errors, status: 422
     end
   end
 
   def destroy
     if @category && @category.destroy
-      flash[:alert] = 'Category for Budget has been removed successfully!!'
+      render json: {message: "Category for Budget has been removed successfully!!"}, status: :ok
     else
-      flash[:alert] = 'Category for Budget could not be deleted!!'
+      render json: {error: "Category for Budget could not be deleted!!"}, status: 422
     end
-    redirect_back(fallback_location: categories_path)
   end
 
 

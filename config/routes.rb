@@ -22,6 +22,12 @@ Rails.application.routes.draw do
         get :show_all
       end
     end
+    resources :incomes do
+      member do
+        put :approve
+        put :reject
+      end
+    end
   end
 
   devise_for :users, :controllers => {:registrations => "users/registrations"}
