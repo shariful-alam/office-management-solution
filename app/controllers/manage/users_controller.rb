@@ -25,7 +25,6 @@ class Manage::UsersController < ApplicationController
       @users = @users.where('name ilike :search OR email ilike :search OR phone ilike :search OR role ilike :search', {search: search})
     end
     @users = @users.order(:id).paginate(:page => params[:page], :per_page => 20)
-    #raise @users.to_sql
   end
 
   def show

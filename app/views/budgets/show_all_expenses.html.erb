@@ -2,6 +2,7 @@
   <div class="col">
     <div class="card" style="width: 25rem;">
       <div class="card-body">
+        <%#= raise @budgets.inspect %>
         <h3 class="card-title">Expenses of <%= "#{Date::MONTHNAMES[@budgets.first.month]}, #{@budgets.first.year}" %></h3>
       </div>
       <hr>
@@ -15,6 +16,8 @@
 
   <div class="col">
     <%= form_tag(show_all_expenses_budgets_path, :method => "get") do %>
+      <%= hidden_field_tag :month, params[:month] %>
+      <%= hidden_field_tag :year, params[:year] %>
       <div class="row">
         <div class="col-sm-10">
           <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
@@ -34,7 +37,7 @@
 
       <div class="row container">
         <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
-        <%= link_to 'Reset', show_all_expenses_budgets_path, class: "btn btn-secondary" %>
+        <%= link_to 'Reset', show_all_expenses_budgets_path(month: params[:month], year: params[:year]), class: "btn btn-secondary" %>
       </div>
     <% end %>
   </div>

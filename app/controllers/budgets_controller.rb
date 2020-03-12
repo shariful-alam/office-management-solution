@@ -6,7 +6,7 @@ class BudgetsController < ApplicationController
 
   def index
     @year = params[:search].present? ? "#{params[:search]}" : Date.today.year
-    @budgets = @budgets.where(year: @year)
+    @budgets = @budgets.includes(:user).where(year: @year)
     @budget_amount = @budgets.group(:month).order(:month).sum(:amount)
     @budget_expense = @budgets.group(:month).sum(:expense)
     @budgets = @budgets.order(:year, :month).paginate(:page => params[:page], :per_page => Budget::PER_PAGE)
@@ -50,11 +50,11 @@ class BudgetsController < ApplicationController
 
   def show_all_expenses
     @expenses = Expense.where('extract(year from expense_date) = ?', @year)
-    @expenses = @expenses.where('extract(month from expense_date) = ?', @month)
+    @expenses = @expenses.includes(:user).where('extract(month from expense_date) = ?', @month)
 
     if params[:search].present?
-      search = '%#{params[:search]}%'
-      @expenses = @expenses.where('users.name ilike :search OR product_name ilike :search', {search: search})
+      search = "%#{params[:search]}%"
+      @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
     @expenses = @expenses.sort_by_attr(:expense_date)
@@ -62,6 +62,7 @@ class BudgetsController < ApplicationController
     @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => Expense::PER_PAGE)
     @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => Expense::PER_PAGE)
     @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => Expense::PER_PAGE)
+
   end
 
   def show_all

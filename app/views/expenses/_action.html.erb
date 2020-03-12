@@ -4,6 +4,7 @@
   <td><%= expense.product_name %></td>
   <td><%= expense.user.name %></td>
   <td><%= taka(expense.cost) %></td>
+  <td><%= expense.category.name %></td>
   <td style="text-align: center;">
 
     <% if can? :approve, expense %>
