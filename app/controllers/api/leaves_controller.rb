@@ -13,7 +13,9 @@ class Api::LeavesController < Api::ApiController
     @leaves = @leaves.where(':from <= end_date ', {from: params[:from]}) if params[:from].present?
     @leaves = @leaves.where(':to >= start_date ', {to: params[:to]}) if params[:to].present?
 
-    @leaves = @leaves.paginate(:page => params[:rejected_leaves], :per_page => Leafe::PER_PAGE)
+    @leaves_pending = @leaves.pending.paginate(:page => params[:pending_leaves], :per_page => Leafe::PER_PAGE)
+    @leaves_approved = @leaves.approved.paginate(:page => params[:approved_leaves], :per_page => Leafe::PER_PAGE)
+    @leaves_rejected = @leaves.rejected.paginate(:page => params[:rejected_leaves], :per_page => Leafe::PER_PAGE)
   end
 
   def create

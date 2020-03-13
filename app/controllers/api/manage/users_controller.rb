@@ -7,16 +7,15 @@ class Api::Manage::UsersController < Api::ApiController
     @all_pending_expenses = Expense.pending.includes(:user).order(:id).paginate(:page => params[:pending_expenses], :per_page => 20)
     @all_pending_leaves = Leafe.pending.includes(:user).order(:id).paginate(:page => params[:pending_leaves], :per_page => 20)
     @all_pending_incomes = Income.pending.includes(:user).order(:id).paginate(:page => params[:pending_incomes], :per_page => 20)
-  end
 
-  def new
+    #render json: {pending_expense: @all_pending_expenses, pending_leaves: @all_pending_leaves, pending_incomes: @all_pending_incomes}
   end
 
   def create
     if @user.save
-      redirect_to manage_users_path, notice: 'User has been created successfully'
+      render json: { message: "User has been created successfully" , url: api_manage_user_url(@user, format: :json) }, status: 201
     else
-      render 'new'
+      render json: @user.errors, status: 422
     end
   end
 
@@ -32,23 +31,25 @@ class Api::Manage::UsersController < Api::ApiController
   end
 
   def destroy
-    flash[:alert] = 'User has been removed successfully!!' if @user.destroy
-    redirect_to manage_users_path
+    if @user && @user.destroy
+      render json: {message: "User has been removed successfully!!"}, status: :ok
+    else
+      render json: {error: "User could not be deleted"}, status: 422
+    end
   end
 
   def edit
   end
 
   def update
-    if @user.update(user_params)
-      redirect_to manage_user_path, notice: 'User data has been updated successfully'
+    if @user && @user.update(user_params)
+      render json: { message: "User data has been updated successfully" , url: api_manage_user_url(@user, format: :json) }, status: 202
     else
-      render 'edit'
+      render json: @user.errors, status: 422
     end
   end
 
   def show_all_expenses
-
     @expenses = @user.expenses
     @expense_for_user = @expenses.approved.sum(:cost)
     if params[:search].present?
@@ -62,6 +63,9 @@ class Api::Manage::UsersController < Api::ApiController
     @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => Expense::PER_PAGE)
     @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => Expense::PER_PAGE)
     @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => Expense::PER_PAGE)
+
+
+    #render json: {expense_for_user: @expense_for_user, pending_expense: @pending_expenses, approved_expense: @approved_expenses, rejected_expense: @rejected_expenses}
   end
 
   def show_all_incomes

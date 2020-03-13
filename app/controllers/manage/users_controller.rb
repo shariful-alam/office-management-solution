@@ -31,8 +31,13 @@ class Manage::UsersController < ApplicationController
   end
 
   def destroy
-    flash[:alert] = 'User has been removed successfully!!' if @user.destroy
-    redirect_to manage_users_path
+    if @user && @user.destroy
+      flash[:alert] = 'User has been removed successfully!!'
+      redirect_to manage_users_path
+    else
+      flash[:alert] = 'User could not be deleted'
+      render :index
+    end
   end
 
   def edit
@@ -47,7 +52,6 @@ class Manage::UsersController < ApplicationController
   end
 
   def show_all_expenses
-
     @expenses = @user.expenses
     @expense_for_user = @expenses.approved.sum(:cost)
     if params[:search].present?

@@ -10,7 +10,7 @@
   </div>
   <ul class="list-group">
     <li class="list-group-item"><b>Phone: </b> <%= @user.phone %> </li>
-    <li class="list-group-item"><b>Designation: </b> <%= @user.role %> </li>
+    <li class="list-group-item"><b>Designation: </b> <%= @user.designation %> </li>
     <li class="list-group-item"><b>Target Amount: </b> <%= taka(@user.target_amount) %> </li>
     <li class="list-group-item"><b>Bonus Percentage: </b> <%= @user.bonus_percentage %> %</li>
     <li class="list-group-item"><b>Registration Date: </b> <%= full_date_with_time(@user.created_at) %> </li>
