@@ -3,9 +3,9 @@ class Manage::UsersController < ApplicationController
   load_and_authorize_resource
 
   def show_all_pending
-    @all_pending_expenses = Expense.pending.includes(:user).order(:id).paginate(:page => params[:pending_expenses], :per_page => 20)
-    @all_pending_leaves = Leafe.pending.includes(:user).order(:id).paginate(:page => params[:pending_leaves], :per_page => 20)
-    @all_pending_incomes = Income.pending.includes(:user).order(:id).paginate(:page => params[:pending_incomes], :per_page => 20)
+    @all_pending_expenses = Expense.pending.includes(:user).order(:id).paginate(:page => params[:pending_expenses], :per_page => User::PER_PAGE)
+    @all_pending_leaves = Leafe.pending.includes(:user).order(:id).paginate(:page => params[:pending_leaves], :per_page => User::PER_PAGE)
+    @all_pending_incomes = Income.pending.includes(:user).order(:id).paginate(:page => params[:pending_incomes], :per_page => User::PER_PAGE)
   end
 
   def new
@@ -31,8 +31,13 @@ class Manage::UsersController < ApplicationController
   end
 
   def destroy
-    flash[:alert] = 'User has been removed successfully!!' if @user.destroy
-    redirect_to manage_users_path
+    if @user && @user.destroy
+      flash[:alert] = 'User has been removed successfully!!'
+      redirect_to manage_users_path
+    else
+      flash[:alert] = 'User could not be deleted'
+      render :index
+    end
   end
 
   def edit

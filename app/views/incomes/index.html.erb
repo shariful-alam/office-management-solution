@@ -1,15 +1,11 @@
-
-<% if current_user.admin? || current_user.super_admin? %>
-  <% if params[:search].nil? %>
-    <h1>All Income List of <%= Date.today.year %> </h1>
-    <% @year = Date.today.year %>
-  <% else %>
-    <h1>All Income List of <%= params[:search] %> </h1>
-    <% @year = params[:search] %>
-  <% end %>
+<% if params[:search].nil? %>
+  <h1>All Income List of <%= Date.today.year %> </h1>
+  <% @year = Date.today.year %>
 <% else %>
-  <h1>Your Income List</h1>
+  <h1>All Income List of <%= params[:search] %> </h1>
+  <% @year = params[:search] %>
 <% end %>
+
 <br>
 <%= form_tag(incomes_path, :method => "get", class: "form-inline") do %>
   <%= select_tag "search", options_for_select(Date.today.years_ago(10).year.. Date.today.year, :selected => @year), class: "form-control" %>
