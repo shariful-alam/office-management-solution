@@ -32,7 +32,7 @@ class IncomesController < ApplicationController
       if current_user.admin? || current_user.super_admin?
         redirect_to incomes_path, notice: 'Your income has been created successfully'
       else
-        redirect_to show_individual_incomes_path(user_id: @income.user.id), notice: 'Your income has been submitted for approval'
+        redirect_to show_all_incomes_manage_user_path(@income.user), notice: 'Your income has been submitted for approval'
       end
     else
       render :new
@@ -47,7 +47,7 @@ class IncomesController < ApplicationController
   def update
     if @income.update(income_params)
       flash[:notice] = 'Your income information has been updated'
-      redirect_to show_individual_incomes_path(user_id: current_user.id, month: @income.income_date.month, year: params[:search])
+      redirect_to show_all_incomes_manage_user_path(@income.user)
     else
       render :edit
     end
