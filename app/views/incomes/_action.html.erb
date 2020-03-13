@@ -30,7 +30,7 @@
     |
   <% end %>
 
-  <% if can? :read, income %>
+  <% if can? :show, income %>
     <%= link_to income_path(income) do %>
       <i class="fa fa-eye" title="Details"></i>
     <% end %>

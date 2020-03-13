@@ -77,6 +77,9 @@ class Ability
       else
         can :update, User, {id: user.id}
         can :show_all_incomes, User,{id: user.id}
+        cannot :show_all_pending, User, :all
+        cannot :show_all_expenses, User, :all
+
 
         can :manage, Expense, {user_id: user.id}
         cannot :approve, Expense, {user_id: user.id}
@@ -87,9 +90,7 @@ class Ability
         can :destroy, Expense, {user_id: user.id,status: Expense.statuses[:rejected]}
 
 
-        cannot :show_all_pending, User, :all
 
-        can :show_all, AllocatedLeafe, {user_id: user.id}
         cannot :manage, AllocatedLeafe, :all
 
         can :create, Attendance, {user_id: user.id}
@@ -103,14 +104,17 @@ class Ability
         can :read, Leafe, {user_id: user.id}
         can :destroy, Leafe, {user_id: user.id,status: Leafe.statuses[:rejected]}
 
-        can :manage, Income, {user_id: user.id}
-        cannot :approve, Income, {user_id: user.id}
-        cannot :reject, Income, {user_id: user.id}
-        cannot :manage, Income, {status: Income.statuses[:rejected]}
-        cannot :manage, Income, {status: Income.statuses[:approved]}
-        can :read, Income, {user_id: user.id}
-        can :destroy, Income, {user_id: user.id, status: Income.statuses[:rejected]}
-        can :show_individual, Income, {user_id: user.id}
+        can :show, Income, {user_id: user.id}
+        can :new, Income, {user_id: user.id}
+        can :create, Income, {user_id: user.id}
+        can :edit, Income, {user_id: user.id}
+        can :update, Income, {user_id: user.id}
+        can :destroy, Income, {user_id: user.id}
+        cannot :update, Income, {status: Income.statuses[:approved]}
+        cannot :update, Income, {status: Income.statuses[:rejected]}
+        cannot :approve, Income, :all
+        cannot :reject, Income, :all
+        cannot :destroy, Income, {status: Income.statuses[:approved]}
       end
     else
       cannot :manage, :all

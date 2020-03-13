@@ -3,8 +3,9 @@ class AllocatedLeafe < ApplicationRecord
   belongs_to :user
 
   validates :total_leave, :presence => true
-  validates :user_id, :presence => true, uniqueness: true
+  validates :user_id, :presence => true
   validates :year, :presence => true
+  validates :year, uniqueness: {scope: [:user_id] }
 
   def allocated_leaves_count_for(user)
    leaves = user.leaves.approved
