@@ -27,7 +27,6 @@ class Api::BudgetsController < Api::ApiController
   end
 
   def update
-    #raise params.inspect
     if @budget.update(budget_params)
       render json: { message: "Budget has been updated successfully!!" , url: api_budget_url(@budget, format: :json) }, status: 202
     else
