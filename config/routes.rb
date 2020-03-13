@@ -2,7 +2,11 @@ Rails.application.routes.draw do
 
   namespace :api do
 
-    resources :sessions
+    resources :sessions do
+      collection do
+        put :sign_out
+      end
+    end
 
     resources :registrations
 

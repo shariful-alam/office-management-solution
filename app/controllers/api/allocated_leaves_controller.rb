@@ -21,7 +21,6 @@ class Api::AllocatedLeavesController < Api::ApiController
 
   def show
     @allocated_leaves = @allocated_leafe.allocated_leaves_count_for(@allocated_leafe.user)
-    render json: {allocated_leaves: @allocated_leaves}
   end
 
   def edit
@@ -38,7 +37,7 @@ class Api::AllocatedLeavesController < Api::ApiController
 
   def destroy
     if @allocated_leafe && @allocated_leafe.destroy
-      render json: {message: "Information has been removed!!", index_url: api_allocated_leaves_url(format: :json)}, status: 202
+      render json: {message: "Information has been removed!!"}, status: 202
     else
       render json: {message: "Information could not be deleted!!"}, status: 422
     end
@@ -49,7 +48,6 @@ class Api::AllocatedLeavesController < Api::ApiController
     @leaves_pending = @leaves.pending
     @leaves_approved = @leaves.approved
     @leaves_rejected = @leaves.rejected
-    render json: {leaves_pending: @leaves_pending, leaves_approved: @leaves_approved, leaves_rejected: @leaves_rejected}
   end
 
   private

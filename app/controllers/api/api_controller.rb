@@ -1,11 +1,5 @@
 class Api::ApiController < ApplicationController
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
-
-  def record_not_found
-    render json: {message: "Record not found!!"}, status: 422
-  end
-
   skip_before_action :verify_authenticity_token
 
   def authenticate_user_from_token
@@ -26,6 +20,12 @@ class Api::ApiController < ApplicationController
 
   rescue_from CanCan::AccessDenied do |exception|
     render json: {message: "Access Denied"}, status: 401
+  end
+
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+
+  def record_not_found
+    render json: {message: "Record not found!!"}, status: 422
   end
 
 end

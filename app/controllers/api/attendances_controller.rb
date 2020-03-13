@@ -22,7 +22,7 @@ class Api::AttendancesController < Api::ApiController
   def check_out
     @attendance = current_user.attendances
     @attendance = @attendance.where(date: Date.today.to_date).last
-    if @attendance.status && @attendance.update({ status: false })
+    if @attendance && @attendance.update({ status: false })
       render json: { message: "You have checked Out Successfully!!" }, status: 202
     else
       render json: { message: "You are not checked in" }, status: 422

@@ -1,4 +1,4 @@
-class Api::SessionsController <  Api::ApiController
+class Api::SessionsController < Api::ApiController
 
   def create
     user = User.find_by(email: params[:email])
@@ -24,4 +24,17 @@ class Api::SessionsController <  Api::ApiController
     end
   end
 
+  def sign_out
+    if params[:token].present?
+      user = User.find_by(token: params[:token])
+      unless user.present?
+        render json: {message: "Invalid credentials"}, status: 422
+      else
+        user.update({token: nil})
+        render json: {message: "#{params[:token]} has been destroyed successfully"}, status: 201
+      end
+    else
+      render json: {message: "Invalid credentials"}, status: 422
+    end
+  end
 end
