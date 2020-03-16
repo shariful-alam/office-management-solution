@@ -48,7 +48,7 @@ class Api::ExpensesController < Api::ApiController
     if @expense && @expense.destroy
       render json: { message: "Expense has been removed successfully!!" }, status: 202
     else
-      render json: { message: "Expense could not be deleted!!" }, status: 422
+      render json: { error: "Expense could not be deleted!!" }, status: 422
     end
   end
 
