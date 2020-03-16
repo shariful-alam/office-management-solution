@@ -40,13 +40,13 @@ class Api::ExpensesController < Api::ApiController
     if @expense.update(expense_params)
       render json: { message: "Expense has been updated successfully!!" , url: api_expense_url(@expense, format: :json) }, status: 202
     else
-      render json: @expense.errors, status: 422
+      render json: { errors: @expense.errors }, status: 422
     end
   end
 
   def destroy
     if @expense && @expense.destroy
-      render json: { message: "Expense has been removed successfully!!", index_url: api_expenses_url(format: :json) }, status: 202
+      render json: { message: "Expense has been removed successfully!!" }, status: 202
     else
       render json: { message: "Expense could not be deleted!!" }, status: 422
     end

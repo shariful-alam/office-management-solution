@@ -2,10 +2,11 @@
 * [Index](#markdown-header-index)
 * [Show](#markdown-header-show)
 * [Create](#markdown-header-create)
-* [Destroy](#compatibility)
-* [Update](#notes-and-miscellaneous)
-* [Approve](#building-the-extension-bundles)
-* [Reject](#next-steps)
+* [Update](#markdown-header-update)
+* [Destroy](#markdown-header-destroy)
+* [Approve](#markdown-header-approve)
+* [Undo](#markdown-header-undo)
+* [Reject](#markdown-header-reject)
 
 
 ## Index
@@ -286,6 +287,159 @@ Can update existing expense.
     { "error": "Record not found!!" }
 ```
 
+## DESTROY
+
+Can update existing expense.
+
+* **URL:** `/api/expenses/:id`
+
+* **Method:**  `DELETE` 
+  
+* **Authentication required:**  Yes
+  
+* **Success Response:**
+ 
+       * **Code:** `202 ACCEPTED`
+       * **Content:** 
+   
+```json 
+    {
+      "message": "Expense has been removed successfully!!",
+    }
+```
+* **Error Response:**
+
+      * **Code:** `422 UNPROCESSABLE ENTITY`
+      * **Content:** 
+```json
+    { "error" : "Expense could not be deleted!!" }
+```
+   
+* or   
+
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** 
+```json
+    { "error" : "Access Denied" }
+```
+
+* or
+
+      * **Code:** `422 UNPROCESSABLE ENTITY`
+      * **Content:** 
+```json
+    { "error": "Record not found!!" }
+```
+
+## Approve
+
+Can approve existing expense.
+
+* **URL:** `/api/expenses/19/approve`
+
+* **Method:**  `PUT` 
+  
+* **Authentication required:**  Yes
+  
+* **Success Response:**
+ 
+       * **Code:** `202 ACCEPTED`
+       * **Content:** 
+   
+```json 
+   {
+     "message": "Expense has been approved successfully!!",
+     "url": "/api/expenses/19.json"
+   }
+```
+* **Error Response:**
+
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** 
+```json
+    { "error" : "Access Denied" }
+```
+
+* or
+
+      * **Code:** `422 UNPROCESSABLE ENTITY`
+      * **Content:** 
+```json
+    { "error": "Record not found!!" }
+```
+
+## Undo
+
+Can undo an approve expense.
+
+* **URL:** `/api/expenses/19/approve`
+
+* **Method:**  `PUT` 
+  
+* **Authentication required:**  Yes
+  
+* **Success Response:**
+ 
+       * **Code:** `202 ACCEPTED`
+       * **Content:** 
+   
+```json 
+   {
+     "message": "The Expense has been queued for pending!!",
+     "url": "/api/expenses/19.json"
+   }
+```
+* **Error Response:**
+
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** 
+```json
+    { "error" : "Access Denied" }
+```
+
+* or
+
+      * **Code:** `422 UNPROCESSABLE ENTITY`
+      * **Content:** 
+```json
+    { "error": "Record not found!!" }
+```
+
+## Reject
+
+Can undo an approve expense.
+
+* **URL:** `/api/expenses/10/reject`
+
+* **Method:**  `PUT` 
+  
+* **Authentication required:**  Yes
+  
+* **Success Response:**
+ 
+       * **Code:** `202 ACCEPTED`
+       * **Content:** 
+```json 
+   {
+     "message": "Expense has been rejected successfully!!",
+     "url": "/api/expenses/19.json"
+   }
+```
+* **Error Response:**
+
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** 
+```json
+    { "error" : "Access Denied" }
+```
+
+* or
+
+      * **Code:** `422 UNPROCESSABLE ENTITY`
+      * **Content:** 
+```json
+    { "error": "Record not found!!" }
+```
 
 
 
