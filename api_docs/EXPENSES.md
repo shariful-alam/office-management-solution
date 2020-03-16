@@ -289,7 +289,9 @@ Can update existing expense.
 
 ## DESTROY
 
-Can update existing expense.
+
+Can destroy existing expense.
+
 
 * **URL:** `/api/expenses/:id`
 
@@ -333,7 +335,9 @@ Can update existing expense.
 
 ## Approve
 
+
 Can approve existing expense.
+
 
 * **URL:** `/api/expenses/19/approve`
 
@@ -370,7 +374,9 @@ Can approve existing expense.
 
 ## Undo
 
+
 Can undo an approve expense.
+
 
 * **URL:** `/api/expenses/19/approve`
 
@@ -407,7 +413,9 @@ Can undo an approve expense.
 
 ## Reject
 
-Can undo an approve expense.
+
+Can reject an approve expense.
+
 
 * **URL:** `/api/expenses/10/reject`
 
