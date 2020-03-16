@@ -55,7 +55,7 @@ Shows all the leaves the active user can access.
           "start_date": "04 March, 2020",
           "end_date": "10 March, 2020",
           "leave_type": "Personal Leave",
-          "url": "http://localhost:3000/api/leaves/9.json"
+          "url": "/api/leaves/9.json"
         }
       ],
       "approved_leaves": [
@@ -68,7 +68,7 @@ Shows all the leaves the active user can access.
           "start_date": "17 March, 2020",
           "end_date": "23 March, 2020",
           "leave_type": "Vacation",
-          "url": "http://localhost:3000/api/leaves/10.json"
+          "url": "/api/leaves/10.json"
         }
       ],
       "rejected_leaves": [
@@ -81,7 +81,7 @@ Shows all the leaves the active user can access.
           "start_date": "20 February, 2020",
           "end_date": "28 February, 2020",
           "leave_type": "Training",
-          "url": "http://localhost:3000/api/leaves/8.json"
+          "url": "/api/leaves/8.json"
         }
       ]
     }
@@ -92,21 +92,13 @@ Shows all the leaves the active user can access.
 
     * **Code:** `401 UNAUTHORIZED` 
     
-    * **Content:** 
-      ```json
-      {
-        "error": "User have to sign in"
-      }
-      ```
+    * **Content:** `{ error: "User have to sign in" }`
     
-     OR
+      OR
     
     * **Code:** `401 UNAUTHORIZED`
     
-    * **Content:** 
-    ```json
-          { "error" : "Invalid credentials" }
-    ```
+    * **Content:** `{ error : "Invalid credentials" }`
 
 * **Notes:**
 
@@ -140,14 +132,14 @@ Apply for leave
 ```json
 {
   "message": "Leave has been submitted for approval",
-  "url": "http://localhost:3000/api/leaves/11.json"
+  "url": "/api/leaves/11.json"
 }
 ```
    OR
 ```json
 {
   "message": "Leave has been created",
-  "url": "http://localhost:3000/api/leaves/12.json"
+  "url": "/api/leaves/12.json"
 }
 ```
  
@@ -168,3 +160,45 @@ Apply for leave
 * **Notes:**
 
   <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
+  
+  
+## Show
+Apply for leave
+* **URL** `/api/leaves/:id`
+
+* **Authentication required:**  `Yes`
+
+* **Method:** `GET`
+
+* **Success Response:**
+
+  * **Code:** 200
+  * **Content:** 
+```json
+{
+  "id": 8,
+  "user": {
+    "id": 3,
+    "name": "Shariful Alam"
+  },
+  "start_date": "20 February, 2020",
+  "end_date": "28 February, 2020",
+  "leave_type": "Training",
+  "url": "/api/leaves/8.json",
+  "status": "rejected"
+}
+```
+ 
+* **Error Response:**
+
+  * **Code:** 422 UNPROCESSABLE ENTITY
+    **Content:**
+    ```json
+       {
+         "message": "Record not found!!"
+       }
+    ```
+
+* **Notes:**
+
+      The response will return all the leaves based on their status by 3 arrays( **pending_leaves, approved_leaves, rejected_leaves** ).
