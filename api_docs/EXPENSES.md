@@ -20,23 +20,23 @@ Shows all the expenses the active user can access.
   
 +  **URL Params**
   
-   * **Required:**
-   
-     * User Authentication token
+       * **Required:**
+       
+         * User Authentication token
+         
+            `token=[string]` (i.e. /api/expenses?token=value)
+    
+       * **Optional:**
      
-        `token=[string]` (i.e. /api/expenses?token=value)
-
-   * **Optional:**
- 
-      * The search will be held based on 3 attributes(*user name, category name or product name*) of expense resource.
- 
-         `search=[string]` (i.e. /api/expenses?token=value&search=value)
-    
-      * The date search will be held based on *expense date* of expense resource.
-    
-         `from=[date]`  `to=[date]` (i.e. /api/expenses?token=value&from=date&to=date)
+          * The search will be held based on 3 attributes(*user name, category name or product name*) of expense resource.
+     
+             `search=[string]` (i.e. /api/expenses?token=value&search=value)
         
-         `date format = 'yy-mm-dd'`
+          * The date search will be held based on *expense date* of expense resource.
+        
+             `from=[date]`  `to=[date]` (i.e. /api/expenses?token=value&from=date&to=date)
+            
+             `date format = 'yy-mm-dd'`
    
    
 * **Data Params:** None
@@ -44,7 +44,7 @@ Shows all the expenses the active user can access.
 
 * **Success Response:**
   
-      * **Code:** 200
+      * **Code:**   `200`
       * **Content:** 
     
 ```json 
