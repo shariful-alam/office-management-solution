@@ -68,7 +68,7 @@ Index
    
    
    
-   ##Create
+   Create
    ----
      <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
    
@@ -125,7 +125,7 @@ Index
    
      <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
      
-     ##Show
+     Show
      ----
        <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
      
@@ -182,7 +182,7 @@ Index
      
        <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
        
-       ##Destroy
+       Destroy
        ----
          <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
        
@@ -239,7 +239,7 @@ Index
        
          <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
          
-         ##Update
+         Update
          ----
            <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
          
@@ -296,7 +296,7 @@ Index
          
            <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
            
-           ##Approve
+           Approve
            ----
              <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
            
@@ -353,7 +353,7 @@ Index
            
              <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
              
-             ##Undo
+             Undo
              ----
                <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
              
@@ -410,7 +410,7 @@ Index
              
                <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
                
-               ##Reject
+               Reject
                ----
                  <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
                
