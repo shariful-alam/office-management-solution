@@ -1,6 +1,6 @@
 ### Table of Contents
 * [Index](#markdown-header-index)
-* [Create](#markdown-header-create)
+* [Show](#markdown-header-show)
 * [Show](#troubleshooting)
 * [Destroy](#compatibility)
 * [Update](#notes-and-miscellaneous)
@@ -34,17 +34,14 @@ Shows all the expenses the active user can access.
         
           * The date search will be held based on *expense date* of expense resource.
         
-             `from=[date]`  `to=[date]` (i.e. /api/expenses?token=value&from=date&to=date)
+             `from=[date]`  `to=[date]` (i.e. /api/expenses?token=value&from=start_date&to=end_date)
             
              `date format = 'yy-mm-dd'`
    
    
-* **Data Params:** None
-
-
 * **Success Response:**
   
-      * **Code:**   `200`
+      * **Code:** `200`
       * **Content:** 
     
 ```json 
@@ -60,7 +57,7 @@ Shows all the expenses the active user can access.
            "category": "d",
            "cost": "45.0",
            "expense_date": "2020-03-01",
-           "url": "http://localhost:3000/api/expenses/17.json"
+           "url": "/api/expenses/17.json"
          }
        ],
        "approved_expenses": [
@@ -74,7 +71,7 @@ Shows all the expenses the active user can access.
            "category": "d",
            "cost": "45.0",
            "expense_date": "2020-03-01",
-           "url": "http://localhost:3000/api/expenses/15.json"
+           "url": "/api/expenses/15.json"
          }
      ],
        "rejected_expenses": [
@@ -88,7 +85,7 @@ Shows all the expenses the active user can access.
            "category": "d",
            "cost": "45.0",
            "expense_date": "2020-03-01",
-           "url": "http://localhost:3000/api/expenses/10.json"
+           "url": "/api/expenses/10.json"
          }
        ]
      }
@@ -99,7 +96,7 @@ Shows all the expenses the active user can access.
       * **Code:** `401 UNAUTHORIZED` 
       * **Content:** `{ error: "User have to sign in" }`
 
-      OR
+          OR
 
       * **Code:** `401 UNAUTHORIZED`
       * **Content:** `{ error : "Invalid credentials" }`
@@ -109,5 +106,63 @@ Shows all the expenses the active user can access.
       The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).
   
   
-## Create
+## Show
+
+Show the expense if the login user have access.
+
+* **URL:** `/api/expenses/:id`
+
+* **Method:**  `GET` 
+  
+* **Authentication required:**  Yes
+  
++ **URL Params**
+  
+       * **Required:**
+       
+         * Path Params
+         
+            `id=[integer]`  (i.e. /api/expenses/5)
+       
+         * User Authentication token
+         
+            `token=[string]` (i.e. /api/expenses/5/?token=value)
+
+* **Success Response:**
+  
+      * **Code:** `200`
+      * **Content:** 
+    
+```json 
+     {
+       "id": 17,
+       "user": {
+         "id": 6,
+         "name": "Api Admin"
+       },
+       "product_name": "Pencil",
+       "category": "d",
+       "cost": "45.0",
+       "expense_date": "2020-03-01",
+       "url": "/api/expenses/17.json",
+       "status": "pending"
+     }
+```
+ 
++ **Error Response:**
+
+      * **Code:** `401 UNAUTHORIZED` 
+      * **Content:** `{ error: "User have to sign in" }`
+
+          OR
+
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** `{ error : "Invalid credentials" }`
+      
+          OR
+
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** `{ error: "Access Denied" }`
+
+
   
