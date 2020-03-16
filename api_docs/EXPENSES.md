@@ -92,7 +92,7 @@ Shows all the expenses the active user can access.
 ```json
     { "error" : "User have to sign in" }
 ```
-      OR
+    OR
 
   * **Code:** `401 UNAUTHORIZED`
   * **Content:**
@@ -144,7 +144,7 @@ Show the expense if the login user have access.
     { "error" : "User have to sign in" }
 ```
 
-   OR
+    OR
    
   * **Code:** `401 UNAUTHORIZED`
   * **Content:** 
@@ -152,7 +152,7 @@ Show the expense if the login user have access.
     { "error" : "Invalid credentials" }
 ```
       
-  OR
+    OR
 
   * **Code:** `401 UNAUTHORIZED`
   * **Content:** 
@@ -190,14 +190,14 @@ Show the expense if the login user have access.
 ```json
     { "error" : "User have to sign in" }
 ```
-  OR
+    OR
 
   * **Code:** `401 UNAUTHORIZED`
   * **Content:** 
 ```json
     { "error" : "Invalid credentials" }
 ```
-  OR
+    OR
           
   * **Code:** `401 UNAUTHORIZED`
   * **Content:** 
