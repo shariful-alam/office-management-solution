@@ -1,11 +1,11 @@
 ### Table of Contents
-**[Index](#markdown-header-index)**<br>
-**[Create](#create)**<br>
-**[Show](#troubleshooting)**<br>
-**[Destroy](#compatibility)**<br>
-**[Update](#notes-and-miscellaneous)**<br>
-**[Approve](#building-the-extension-bundles)**<br>
-**[Reject](#next-steps)**<br>
+* [Index](#markdown-header-index)
+* [Create](#markdown-header-create)
+* [Show](#troubleshooting)
+* [Destroy](#compatibility)
+* [Update](#notes-and-miscellaneous)
+* [Approve](#building-the-extension-bundles)
+* [Reject](#next-steps)
 
 
 
@@ -13,7 +13,7 @@
 
 
 
-# Index Elements
+## Index
 **Title**
 ----
   <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
@@ -71,7 +71,7 @@
 
   <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
   
-## Create
+# Create Elements
 **Title**
 ----
   <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
