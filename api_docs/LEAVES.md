@@ -1,4 +1,4 @@
-###TAble of Content
+### Table of Contents
 * [Index](#markdown-header-index)
 * [Create](#markdown-header-create)
 * [Show](#markdown-header-show)
