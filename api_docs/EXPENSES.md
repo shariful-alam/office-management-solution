@@ -154,9 +154,9 @@ Can create new expense.
     
     `cost = [decimal]`
     
-    `expense_date =[string]`
+    `expense_date = [string]`
     
-    `category_id =[integer]`
+    `category_id = [integer]`
     
 * **Payload:**
      
@@ -225,9 +225,9 @@ Can update existing expense.
     
     `cost = [decimal]`
     
-    `expense_date =[string]`
+    `expense_date = [string]`
     
-    `category_id =[integer]`
+    `category_id = [integer]`
     
 * **Payload:**
      
