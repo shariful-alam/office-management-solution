@@ -39,9 +39,9 @@ Shows all the leaves the active user can access.
 
 * **Success Response:**
   
-  * **Code:** `200`
+    * **Code:** `200`
   
-  * **Content:** 
+    * **Content:** 
   
 ```json
     {
@@ -127,8 +127,8 @@ Apply for leave
 
 * **Success Response:**
 
-  * **Code:** 200
-  * **Content:** 
+    * **Code:** 200
+    * **Content:** 
 ```json
 {
   "message": "Leave has been submitted for approval",
@@ -145,13 +145,23 @@ Apply for leave
  
 * **Error Response:**
 
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Log in" }`
+    * **Code:** 401 UNAUTHORIZED <br />
+    * **Content:** 
+    ```json
+      {
+        "error": "Log in"
+      }
+    ```
 
   OR
 
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Email Invalid" }`
+    * **Code:** 422 UNPROCESSABLE ENTRY <br />
+    * **Content:**
+    ```json
+      {
+      	"error": "Email Invalid"
+      }
+    ```
 
 * **Sample Call:**
 
