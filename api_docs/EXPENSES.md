@@ -1,7 +1,7 @@
 ### Table of Contents
 * [Index](#markdown-header-index)
 * [Show](#markdown-header-show)
-* [Show](#troubleshooting)
+* [Create](#markdown-header-create)
 * [Destroy](#compatibility)
 * [Update](#notes-and-miscellaneous)
 * [Approve](#building-the-extension-bundles)
@@ -20,23 +20,17 @@ Shows all the expenses the active user can access.
   
 +  **URL Params**
   
-       * **Required:**
-       
-         * User Authentication token
-         
-            `token=[string]` (i.e. /api/expenses?token=value)
-    
-       * **Optional:**
-     
-          * The search will be held based on 3 attributes(*user name, category name or product name*) of expense resource.
-     
-             `search=[string]` (i.e. /api/expenses?token=value&search=value)
-        
-          * The date search will be held based on *expense date* of expense resource.
-        
-             `from=[date]`  `to=[date]` (i.e. /api/expenses?token=value&from=start_date&to=end_date)
-            
-             `date format = 'yy-mm-dd'`
+     * **Optional:**
+   
+        * The search will be held based on 3 attributes(*user name, category name or product name*) of expense resource.
+   
+           `search=[string]` (i.e. /api/expenses?token=value&search=value)
+      
+        * The date search will be held based on *expense date* of expense resource.
+      
+           `from=[date]`  `to=[date]` (i.e. /api/expenses?token=value&from=start_date&to=end_date)
+          
+           `date format = 'yy-mm-dd'`
    
    
 * **Success Response:**
@@ -94,12 +88,17 @@ Shows all the expenses the active user can access.
 + **Error Response:**
 
       * **Code:** `401 UNAUTHORIZED` 
-      * **Content:** `{ error: "User have to sign in" }`
-
+      * **Content:** 
+```json
+    { "error" : "User have to sign in" }
+```
           OR
 
       * **Code:** `401 UNAUTHORIZED`
-      * **Content:** `{ error : "Invalid credentials" }`
+      * **Content:**
+```json
+    { "error" : "Invalid credentials" }
+```
 
 * **Notes:**
 
@@ -116,18 +115,6 @@ Show the expense if the login user have access.
   
 * **Authentication required:**  Yes
   
-+ **URL Params**
-  
-       * **Required:**
-       
-         * Path Params
-         
-            `id=[integer]`  (i.e. /api/expenses/5)
-       
-         * User Authentication token
-         
-            `token=[string]` (i.e. /api/expenses/5/?token=value)
-
 * **Success Response:**
   
       * **Code:** `200`
@@ -152,17 +139,71 @@ Show the expense if the login user have access.
 + **Error Response:**
 
       * **Code:** `401 UNAUTHORIZED` 
-      * **Content:** `{ error: "User have to sign in" }`
+      * **Content:** 
+```json
+    { "error" : "User have to sign in" }
+```
 
           OR
 
       * **Code:** `401 UNAUTHORIZED`
-      * **Content:** `{ error : "Invalid credentials" }`
+      * **Content:** 
+```json
+    { "error" : "Invalid credentials" }
+```
       
           OR
 
       * **Code:** `401 UNAUTHORIZED`
-      * **Content:** `{ error: "Access Denied" }`
+      * **Content:** 
+```json
+    { "error" : "Access Denied" }
+```
+
+## Create
+
+Show the expense if the login user have access.
+
+* **URL:** `/api/expenses/:id`
+
+* **Method:**  `POST` 
+  
+* **Authentication required:**  Yes
+  
+* **Payload:**
+     
+```json
+    {
+      "expense": {
+        "product_name": "Pencil",
+        "cost": 45.00,
+        "expense_date": "2020-03-01",
+        "category_id": 1
+      }
+     }
+```
+ 
++ **Error Response:**
+
+      * **Code:** `401 UNAUTHORIZED` 
+      * **Content:** 
+```json
+    { "error" : "User have to sign in" }
+```
+          OR
+
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** 
+```json
+    { "error" : "Invalid credentials" }
+```
+          OR
+          
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** 
+```json
+    { "error" : "Access Denied" }
+```
 
 
   
