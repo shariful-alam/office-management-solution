@@ -47,7 +47,7 @@ Shows all the expenses the active user can access.
   * **Code:** 200
     **Content:** 
     
-     ```json
+```json 
      {
        "pending_expenses": [
          {
@@ -92,7 +92,7 @@ Shows all the expenses the active user can access.
          }
        ]
      }
-     ```
+```
  
 * **Error Response:**
 
