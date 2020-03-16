@@ -1,4 +1,4 @@
-### Table of Contents
+## Table of Contents
 * [Index](#markdown-header-index)
 * [Create](#markdown-header-create)
 * [Show](#markdown-header-show)
@@ -11,17 +11,13 @@
 
 ## Index
 
-  <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
-
 * **URL**
 
-  <_The URL Structure (path only, no root url)_>
+  `/api/leaves`
 
 * **Method:**
   
-  <_The request type_>
-
-  `GET` | `POST` | `DELETE` | `PUT`
+  `GET`
   
 *  **URL Params**
 
