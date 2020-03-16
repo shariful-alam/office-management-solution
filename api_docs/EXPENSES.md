@@ -128,7 +128,8 @@ Show the expense if the login user have access.
 ```json
     { "error" : "Access Denied" }
 ```
-*or
+
+* or
 
       * **Code:** `422 UNPROCESSABLE ENTITY`
       * **Content:** 
