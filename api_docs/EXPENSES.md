@@ -20,16 +20,16 @@ Shows all the expenses the active user can access.
   
 *  **URL Params**
   
-   **Required:**
+   * **Required:**
          `token=[string]` (i.e. /api/expenses?token=value)
 
-   **Optional:**
+   * **Optional:**
  
-    * The search will be held based on 3 attributes(*user name, category name or product name*) of expense resource.
+      * The search will be held based on 3 attributes(*user name, category name or product name*) of expense resource.
  
          `search=[string]` (i.e. /api/expenses?token=value&search=value)
     
-    * The date search will be held based on *expense date* of expense resource.
+      * The date search will be held based on *expense date* of expense resource.
     
          `from=[date]`  `to=[date]` (i.e. /api/expenses?token=value&from=date&to=date)
         
