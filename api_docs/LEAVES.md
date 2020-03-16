@@ -1,11 +1,11 @@
 ### Table of Contents
 * [Index](#markdown-header-index)
 * [Create](#markdown-header-create)
-* [Show](#troubleshooting)
-* [Destroy](#compatibility)
-* [Update](#notes-and-miscellaneous)
-* [Approve](#building-the-extension-bundles)
-* [Reject](#next-steps)
+* [Show](#markdown-header-show)
+* [Destroy](#markdown-header-destroy)
+* [Update](#markdown-header-update)
+* [Approve](#markdown-header-undo)
+* [Reject](#markdown-header-reject)
 
 
 ## Index
