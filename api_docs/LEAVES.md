@@ -147,21 +147,23 @@ Apply for leave
 
     * **Code:** 401 UNAUTHORIZED <br />
     * **Content:** 
-    ```json
-      {
-        "error": "Log in"
-      }
-    ```
+    
+      ```json
+        {
+          "error": "Log in"
+        }
+      ```
 
     OR
 
     * **Code:** 422 UNPROCESSABLE ENTRY <br />
     * **Content:**
-    ```json
-      {
-      	"error": "Email Invalid"
-      }
-    ```
+    
+      ```json
+        {
+          "error": "Email Invalid"
+        }
+      ```
 
 * **Sample Call:**
 
