@@ -18,7 +18,7 @@ Shows all the expenses the active user can access.
   
 * **Authentication required:**  Yes
   
-*  **URL Params**
++  **URL Params**
   
    * **Required:**
    
@@ -44,8 +44,8 @@ Shows all the expenses the active user can access.
 
 * **Success Response:**
   
-  * **Code:** 200
-    **Content:** 
+      * **Code:** 200
+      * **Content:** 
     
 ```json 
      {
@@ -94,19 +94,19 @@ Shows all the expenses the active user can access.
      }
 ```
  
-* **Error Response:**
++ **Error Response:**
 
-  * **Code:** `401 UNAUTHORIZED` 
-    **Content:** `{ error: "User have to sign in" }`
+      * **Code:** `401 UNAUTHORIZED` 
+      * **Content:** `{ error: "User have to sign in" }`
 
-  OR
+      OR
 
-  * **Code:** `401 UNAUTHORIZED`
-    **Content:** `{ error : "Invalid credentials" }`
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** `{ error : "Invalid credentials" }`
 
 * **Notes:**
 
-  <pre>The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).</pre>
+      <p> The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ). </p>
   
   
 ## Create
