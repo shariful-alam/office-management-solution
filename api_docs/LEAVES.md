@@ -163,7 +163,8 @@ Apply for leave
   
   
 ## Show
-Apply for leave
+Show the leave information if the logged in user have access
+
 * **URL** `/api/leaves/:id`
 
 * **Authentication required:**  `Yes`
