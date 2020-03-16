@@ -95,19 +95,17 @@ Shows all the expenses the active user can access.
  
 * **Error Response:**
 
-  * **Code:** 401 UNAUTHORIZED <br />
+  * **Code:** `401 UNAUTHORIZED` <br/>
     **Content:** `{ error: "User have to sign in" }`
 
   OR
 
-  * **Code:** 401 UNAUTHORIZED <br />
+  * **Code:** `401 UNAUTHORIZED` <br/>
     **Content:** `{ error : "Invalid credentials" }`
 
 * **Notes:**
 
-  <pre>
-      The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).
-  </pre>
+  <pre>The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).</pre>
   
   
 ## Create
