@@ -139,9 +139,9 @@ Show the expense if the login user have access.
 
 ## Create
 
-Show the expense if the login user have access.
+Can create new expense.
 
-* **URL:** `/api/expenses/:id`
+* **URL:** `/api/expenses`
 
 * **Method:**  `POST` 
   
@@ -180,6 +180,23 @@ Show the expense if the login user have access.
     }
 ```
 * **Error Response:**
+
+      * **Code:** `422 UNPROCESSABLE ENTITY`
+      * **Content:** 
+```json 
+   {
+     "errors": {
+       "product_name": [
+         "can't be blank"
+       ],
+       "cost": [
+         "can't be blank",
+         "is not a number"
+       ]
+     }
+   }
+```
+
 
 
 

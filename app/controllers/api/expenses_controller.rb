@@ -26,7 +26,7 @@ class Api::ExpensesController < Api::ApiController
     if @expense.save
       render json: { message: "Expense has been created successfully!!" , url: api_expense_url(@expense, format: :json) }, status: 201
     else
-      render json: @expense.errors, status: 422
+      render json: { errors: @expense.errors }, status: 422
     end
   end
 
