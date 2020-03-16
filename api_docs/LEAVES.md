@@ -49,46 +49,46 @@ Shows all the leaves the active user can access.
   
 ```json
     {
-   	"pending_leaves": [
-   		{
-   			"id": 9,
-   			"user": {
-   				"id": 1,
-   				"name": "Bazlur Rashid"
-   			},
-   			"start_date": "04 March, 2020",
-   			"end_date": "10 March, 2020",
-   			"leave_type": "Personal Leave",
-   			"url": "http://localhost:3000/api/leaves/9.json"
-   		}
-   	],
-   	"approved_leaves": [
-   		{
-   			"id": 10,
-   			"user": {
-   				"id": 1,
-   				"name": "Bazlur Rashid"
-   			},
-   			"start_date": "17 March, 2020",
-   			"end_date": "23 March, 2020",
-   			"leave_type": "Vacation",
-   			"url": "http://localhost:3000/api/leaves/10.json"
-   		}
-   	],
-   	"rejected_leaves": [
-   		{
-   			"id": 8,
-   			"user": {
-   				"id": 3,
-   				"name": "Shariful Alam"
-   			},
-   			"start_date": "20 February, 2020",
-   			"end_date": "28 February, 2020",
-   			"leave_type": "Training",
-   			"url": "http://localhost:3000/api/leaves/8.json"
-   		}
-   	]
-   }
+      "pending_leaves": [
+        {
+          "id": 9,
+          "user": {
+            "id": 1,
+            "name": "Bazlur Rashid"
+          },
+          "start_date": "04 March, 2020",
+          "end_date": "10 March, 2020",
+          "leave_type": "Personal Leave",
+          "url": "http://localhost:3000/api/leaves/9.json"
+        }
+      ],
+      "approved_leaves": [
+        {
+          "id": 10,
+          "user": {
+            "id": 1,
+            "name": "Bazlur Rashid"
+          },
+          "start_date": "17 March, 2020",
+          "end_date": "23 March, 2020",
+          "leave_type": "Vacation",
+          "url": "http://localhost:3000/api/leaves/10.json"
+        }
+      ],
+      "rejected_leaves": [
+        {
+          "id": 8,
+          "user": {
+            "id": 3,
+            "name": "Shariful Alam"
+          },
+          "start_date": "20 February, 2020",
+          "end_date": "28 February, 2020",
+          "leave_type": "Training",
+          "url": "http://localhost:3000/api/leaves/8.json"
+        }
+      ]
+    }
 ```
    
  
