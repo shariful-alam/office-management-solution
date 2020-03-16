@@ -18,9 +18,9 @@ Shows all the expenses the active user can access.
   
 * **Authentication required:**  Yes
   
-+ **URL Params**
+* **URL Params**
   
-     + **Optional:**
+     * **Optional:**
    
         * The search will be held based on 3 attributes(*user name, category name or product name*) of expense resource.
    
@@ -28,9 +28,9 @@ Shows all the expenses the active user can access.
       
         * The date search will be held based on *expense date* of expense resource.
       
-           `from=[date]`  `to=[date]`   (i.e. /api/expenses?token=value&from=start_date&to=end_date)
-          
-           `date format = 'yy-mm-dd'`
+             `from=[date]`  `to=[date]`   (i.e. /api/expenses?token=value&from=start_date&to=end_date)
+            
+             `date format = 'yy-mm-dd'`
    
    
 * **Success Response:**
@@ -128,7 +128,7 @@ Show the expense if the login user have access.
 ```json
     { "error" : "Access Denied" }
 ```
-*     OR
+*or
 
       * **Code:** `422 UNPROCESSABLE ENTITY`
       * **Content:** 
