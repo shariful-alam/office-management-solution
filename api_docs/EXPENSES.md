@@ -208,6 +208,85 @@ Can create new expense.
 ```
 
 
+## Update
+
+Can update existing expense.
+
+* **URL:** `/api/expenses/:id`
+
+* **Method:**  `PATCH` 
+  
+* **Authentication required:**  Yes
+  
+* **Required Fields**
+    
+    `product_name = [string]`
+    
+    `cost = [decimal]`
+    
+    `expense_date =[string]`
+    
+    `category_id =[integer]`
+    
+* **Payload:**
+     
+```json
+    {
+      "expense": {
+        "product_name": "Pencil",
+        "cost": 45.00,
+        "expense_date": "2020-03-01",
+        "category_id": 1
+      }
+     }
+```
+* **Success Response:**
+ 
+       * **Code:** `202 ACCEPTED`
+       * **Content:** 
+   
+```json 
+    {
+      "message": "Expense has been updated successfully!!",
+      "url": "/api/expenses/19.json"
+    }
+```
+* **Error Response:**
+
+      * **Code:** `422 UNPROCESSABLE ENTITY`
+      * **Content:** 
+```json 
+   {
+     "errors": {
+       "product_name": [
+         "can't be blank"
+       ],
+       "cost": [
+         "can't be blank",
+         "is not a number"
+       ]
+     }
+   }
+   
+```
+   
+* or   
+
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** 
+```json
+    { "error" : "Access Denied" }
+```
+
+* or
+
+      * **Code:** `422 UNPROCESSABLE ENTITY`
+      * **Content:** 
+```json
+    { "error": "Record not found!!" }
+```
+
+
 
 
 
