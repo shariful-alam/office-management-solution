@@ -47,51 +47,51 @@ Shows all the expenses the active user can access.
       * **Code:**   `200`
       * **Content:** 
     
-```json 
-     {
-       "pending_expenses": [
-         {
-           "id": 17,
-           "user": {
-             "id": 6,
-             "name": "Api Admin"
-           },
-           "product_name": "Pencil",
-           "category": "d",
-           "cost": "45.0",
-           "expense_date": "2020-03-01",
-           "url": "http://localhost:3000/api/expenses/17.json"
-         }
-       ],
-       "approved_expenses": [
-         {
-           "id": 15,
-           "user": {
-             "id": 6,
-             "name": "Api Admin"
-           },
-           "product_name": "Pen",
-           "category": "d",
-           "cost": "45.0",
-           "expense_date": "2020-03-01",
-           "url": "http://localhost:3000/api/expenses/15.json"
-         }
-     ],
-       "rejected_expenses": [
-         {
-           "id": 10,
-           "user": {
-             "id": 8,
-             "name": "Bondhan Sarker"
-           },
-           "product_name": "Pen",
-           "category": "d",
-           "cost": "45.0",
-           "expense_date": "2020-03-01",
-           "url": "http://localhost:3000/api/expenses/10.json"
-         }
-       ]
-     }
+```json
+{
+	"pending_expenses": [
+		{
+			"id": 17,
+			"user": {
+				"id": 6,
+				"name": "Api Admin"
+			},
+			"product_name": "Pencil",
+			"category": "d",
+			"cost": "45.0",
+			"expense_date": "2020-03-01",
+			"url": "http://localhost:3000/api/expenses/17.json"
+		}
+	],
+	"approved_expenses": [
+		{
+			"id": 15,
+			"user": {
+				"id": 6,
+				"name": "Api Admin"
+			},
+			"product_name": "Pen",
+			"category": "d",
+			"cost": "45.0",
+			"expense_date": "2020-03-01",
+			"url": "http://localhost:3000/api/expenses/15.json"
+		}
+	],
+	"rejected_expenses": [
+		{
+			"id": 10,
+			"user": {
+				"id": 8,
+				"name": "Bondhan Sarker"
+			},
+			"product_name": "Pen",
+			"category": "d",
+			"cost": "45.0",
+			"expense_date": "2020-03-01",
+			"url": "http://localhost:3000/api/expenses/10.json"
+		}
+	]
+}
 ```
  
 + **Error Response:**

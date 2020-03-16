@@ -20,10 +20,6 @@ Shows all the leaves the active user can access.
   
 *  **URL Params**
   
-   * **Required:**
-   
-        `token=[string]` (i.e. /api/leaves?token=value)
-
    * **Optional:**
  
       * The search will be held based on 2 attributes(*user name or leave type*) of leave resource.
@@ -96,58 +92,66 @@ Shows all the leaves the active user can access.
 
     * **Code:** `401 UNAUTHORIZED` 
     
-    * **Content:** `{ error: "User have to sign in" }`
+    * **Content:** 
+      ```json
+      {
+        "error": "User have to sign in"
+      }
+      ```
     
-      OR
+     OR
     
     * **Code:** `401 UNAUTHORIZED`
     
-    * **Content:** `{ error : "Invalid credentials" }`
+    * **Content:** 
+    ```json
+          { "error" : "Invalid credentials" }
+    ```
 
 * **Notes:**
 
-      The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).
+      The response will return all the leaves based on their status by 3 arrays( **pending_leaves, approved_leaves, rejected_leaves** ).
   
   
 ## Create
-  <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
+Apply for leave
+* **URL** `/api/leaves`
 
-* **URL**
+* **Authentication required:**  `Yes`
 
-  <_The URL Structure (path only, no root url)_>
-
-* **Method:**
+* **Method:** `POST`
   
-  <_The request type_>
-
-  `GET` | `POST` | `DELETE` | `PUT`
-  
-*  **URL Params**
-
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._> 
-
-   **Required:**
- 
-   `id=[integer]`
-
-   **Optional:**
- 
-   `photo_id=[alphanumeric]`
-
 * **Data Params**
 
-  <_If making a post request, what should the body payload look like? URL Params rules apply here too._>
+```json
+{
+	"start_date": "2020-02-20",
+	"end_date": "2020-02-28",
+	"reason": "asdddf",
+	"leave_type": "Training"
+}
+```
+
 
 * **Success Response:**
-  
-  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
 
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
+  * **Code:** 200
+  * **Content:** 
+```json
+{
+  "message": "Leave has been submitted for approval",
+  "url": "http://localhost:3000/api/leaves/11.json"
+}
+```
+   OR
+```json
+{
+  "message": "Leave has been created",
+  "url": "http://localhost:3000/api/leaves/12.json"
+}
+```
  
 * **Error Response:**
-
-  <_Most endpoints will have many ways they can fail. From unauthorized access, to wrongful parameters etc. All of those should be liste d here. It might seem repetitive, but it helps prevent assumptions from being made where they should be._>
 
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "Log in" }`
