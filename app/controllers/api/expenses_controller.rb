@@ -7,7 +7,8 @@ class Api::ExpensesController < Api::ApiController
     @expenses = @expenses.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
-      @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
+      @expenses = @expenses.joins(:user,:category)
+                    .where('users.name ilike :search OR product_name ilike :search OR categories.name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
     @expenses = @expenses.sort_by_attr(:expense_date)
