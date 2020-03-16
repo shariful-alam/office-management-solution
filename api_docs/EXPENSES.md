@@ -1,5 +1,5 @@
 ### Table of Contents
-**[Index](#index)**<br>
+**[Index](#markdown-header-index)**<br>
 **[Create](#create)**<br>
 **[Show](#troubleshooting)**<br>
 **[Destroy](#compatibility)**<br>
@@ -13,7 +13,7 @@
 
 
 
-## Index
+# Index Elements
 **Title**
 ----
   <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
