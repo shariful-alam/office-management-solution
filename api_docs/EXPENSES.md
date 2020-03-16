@@ -18,17 +18,17 @@ Shows all the expenses the active user can access.
   
 * **Authentication required:**  Yes
   
-+  **URL Params**
++ **URL Params**
   
-     * **Optional:**
+     + **Optional:**
    
         * The search will be held based on 3 attributes(*user name, category name or product name*) of expense resource.
    
-           `search=[string]` (i.e. /api/expenses?token=value&search=value)
+            `search=[string]`   (i.e. /api/expenses?token=value&search=value)
       
         * The date search will be held based on *expense date* of expense resource.
       
-           `from=[date]`  `to=[date]` (i.e. /api/expenses?token=value&from=start_date&to=end_date)
+           `from=[date]`  `to=[date]`   (i.e. /api/expenses?token=value&from=start_date&to=end_date)
           
            `date format = 'yy-mm-dd'`
    
@@ -96,7 +96,7 @@ Show the expense if the login user have access.
 
 * **URL:** `/api/expenses/:id`
 
-* **Method:**  `GET` 
+* **Method:** `GET` 
   
 * **Authentication required:**  Yes
   
@@ -128,6 +128,13 @@ Show the expense if the login user have access.
 ```json
     { "error" : "Access Denied" }
 ```
+*     OR
+
+      * **Code:** `422 UNPROCESSABLE ENTITY`
+      * **Content:** 
+```json
+    { "error": "Record not found!!" }
+```
 
 ## Create
 
@@ -153,7 +160,7 @@ Show the expense if the login user have access.
 ```
 * **Success Response:**
  
-       * **Code:** `200`
+       * **Code:** `201 CREATED`
        * **Content:** 
    
 ```json 
