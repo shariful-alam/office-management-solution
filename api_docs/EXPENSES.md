@@ -21,8 +21,7 @@ Shows all the expenses the active user can access.
 *  **URL Params**
   
    **Required:**
-
-      `token=[string]` (i.e. /api/expenses?token=value)
+         `token=[string]` (i.e. /api/expenses?token=value)
 
    **Optional:**
  
