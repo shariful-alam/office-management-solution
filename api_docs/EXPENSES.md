@@ -21,7 +21,8 @@ Shows all the expenses the active user can access.
 *  **URL Params**
   
    * **Required:**
-         `token=[string]` (i.e. /api/expenses?token=value)
+   
+        `token=[string]` (i.e. /api/expenses?token=value)
 
    * **Optional:**
  
@@ -42,11 +43,11 @@ Shows all the expenses the active user can access.
 
 * **Success Response:**
   
-  * **Code:** 200 
+  * **Code:** `200`
   
   * **Content:** 
   
-   ```json
+   ```
    {
      "pending_expenses": [
        {
@@ -95,19 +96,19 @@ Shows all the expenses the active user can access.
  
 * **Error Response:**
 
-  * **Code:** `401 UNAUTHORIZED` 
-  
-  * **Content:** `{ error: "User have to sign in" }`
-
-  OR
-
-  * **Code:** `401 UNAUTHORIZED`
-  
-  * **Content:** `{ error : "Invalid credentials" }`
+    * **Code:** `401 UNAUTHORIZED` 
+    
+    * **Content:** `{ error: "User have to sign in" }`
+    
+      OR
+    
+    * **Code:** `401 UNAUTHORIZED`
+    
+    * **Content:** `{ error : "Invalid credentials" }`
 
 * **Notes:**
 
-  ```The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).```
+  <p>The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).</p>
   
   
 ## Create
