@@ -18,7 +18,7 @@ Shows all the expenses the active user can access.
   
 * **Authentication required:**  Yes
   
-*  **URL Params**
++  **URL Params**
   
    * **Required:**
    
@@ -44,69 +44,69 @@ Shows all the expenses the active user can access.
 
 * **Success Response:**
   
-  * **Code:** 200
-    **Content:** 
+      * **Code:** 200
+      * **Content:** 
     
-```json 
-     {
-       "pending_expenses": [
-         {
-           "id": 17,
-           "user": {
-             "id": 6,
-             "name": "Api Admin"
-           },
-           "product_name": "Pencil",
-           "category": "d",
-           "cost": "45.0",
-           "expense_date": "2020-03-01",
-           "url": "http://localhost:3000/api/expenses/17.json"
-         }
-       ],
-       "approved_expenses": [
-         {
-           "id": 15,
-           "user": {
-             "id": 6,
-             "name": "Api Admin"
-           },
-           "product_name": "Pen",
-           "category": "d",
-           "cost": "45.0",
-           "expense_date": "2020-03-01",
-           "url": "http://localhost:3000/api/expenses/15.json"
-         }
-     ],
-       "rejected_expenses": [
-         {
-           "id": 10,
-           "user": {
-             "id": 8,
-             "name": "Bondhan Sarker"
-           },
-           "product_name": "Pen",
-           "category": "d",
-           "cost": "45.0",
-           "expense_date": "2020-03-01",
-           "url": "http://localhost:3000/api/expenses/10.json"
-         }
-       ]
-     }
-```
+      ```json 
+           {
+             "pending_expenses": [
+               {
+                 "id": 17,
+                 "user": {
+                   "id": 6,
+                   "name": "Api Admin"
+                 },
+                 "product_name": "Pencil",
+                 "category": "d",
+                 "cost": "45.0",
+                 "expense_date": "2020-03-01",
+                 "url": "http://localhost:3000/api/expenses/17.json"
+               }
+             ],
+             "approved_expenses": [
+               {
+                 "id": 15,
+                 "user": {
+                   "id": 6,
+                   "name": "Api Admin"
+                 },
+                 "product_name": "Pen",
+                 "category": "d",
+                 "cost": "45.0",
+                 "expense_date": "2020-03-01",
+                 "url": "http://localhost:3000/api/expenses/15.json"
+               }
+           ],
+             "rejected_expenses": [
+               {
+                 "id": 10,
+                 "user": {
+                   "id": 8,
+                   "name": "Bondhan Sarker"
+                 },
+                 "product_name": "Pen",
+                 "category": "d",
+                 "cost": "45.0",
+                 "expense_date": "2020-03-01",
+                 "url": "http://localhost:3000/api/expenses/10.json"
+               }
+             ]
+           }
+      ```
  
-* **Error Response:**
++ **Error Response:**
 
-  * **Code:** `401 UNAUTHORIZED` 
-    **Content:** `{ error: "User have to sign in" }`
+      * **Code:** `401 UNAUTHORIZED` 
+      * **Content:** `{ error: "User have to sign in" }`
 
-  OR
+      OR
 
-  * **Code:** `401 UNAUTHORIZED`
-    **Content:** `{ error : "Invalid credentials" }`
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** `{ error : "Invalid credentials" }`
 
 * **Notes:**
 
-  <pre>The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).</pre>
+      <p> The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ). </p>
   
   
 ## Create
