@@ -106,7 +106,7 @@ Shows all the leaves the active user can access.
 
 * **Notes:**
 
-  <p>The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).</p>
+      The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).
   
   
 ## Create
