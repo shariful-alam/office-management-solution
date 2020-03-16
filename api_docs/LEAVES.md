@@ -153,7 +153,7 @@ Apply for leave
       }
     ```
 
-  OR
+    OR
 
     * **Code:** 422 UNPROCESSABLE ENTRY <br />
     * **Content:**
