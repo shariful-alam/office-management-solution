@@ -85,21 +85,6 @@ Shows all the expenses the active user can access.
      }
 ```
  
-+ **Error Response:**
-
-  * **Code:** `401 UNAUTHORIZED` 
-  * **Content:** 
-```json
-    { "error" : "User have to sign in" }
-```
-    OR
-
-  * **Code:** `401 UNAUTHORIZED`
-  * **Content:**
-```json
-    { "error" : "Invalid credentials" }
-```
-
 * **Notes:**
 
       The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).
@@ -136,26 +121,10 @@ Show the expense if the login user have access.
      }
 ```
  
-+ **Error Response:**
+* **Error Response:**
 
-  * **Code:** `401 UNAUTHORIZED` 
-  * **Content:** 
-```json
-    { "error" : "User have to sign in" }
-```
-
-    OR
-   
-  * **Code:** `401 UNAUTHORIZED`
-  * **Content:** 
-```json
-    { "error" : "Invalid credentials" }
-```
-      
-    OR
-
-  * **Code:** `401 UNAUTHORIZED`
-  * **Content:** 
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** 
 ```json
     { "error" : "Access Denied" }
 ```
@@ -182,28 +151,29 @@ Show the expense if the login user have access.
       }
      }
 ```
+* **Success Response:**
  
-+ **Error Response:**
+       * **Code:** `200`
+       * **Content:** 
+   
+```json 
+    {
+      "id": 17,
+      "user": {
+        "id": 6,
+        "name": "Api Admin"
+      },
+      "product_name": "Pencil",
+      "category": "d",
+      "cost": "45.0",
+      "expense_date": "2020-03-01",
+      "url": "/api/expenses/17.json",
+      "status": "pending"
+    }
+```
+* **Error Response:**
 
-  * **Code:** `401 UNAUTHORIZED` 
-  * **Content:** 
-```json
-    { "error" : "User have to sign in" }
-```
-    OR
 
-  * **Code:** `401 UNAUTHORIZED`
-  * **Content:** 
-```json
-    { "error" : "Invalid credentials" }
-```
-    OR
-          
-  * **Code:** `401 UNAUTHORIZED`
-  * **Content:** 
-```json
-    { "error" : "Access Denied" }
-```
 
 
   
