@@ -35,8 +35,8 @@ Shows all the expenses the active user can access.
    
 * **Success Response:**
   
-      * **Code:** `200`
-      * **Content:** 
+    * **Code:** `200`
+    * **Content:** 
     
 ```json 
      {
@@ -87,15 +87,15 @@ Shows all the expenses the active user can access.
  
 + **Error Response:**
 
-      * **Code:** `401 UNAUTHORIZED` 
-      * **Content:** 
+  * **Code:** `401 UNAUTHORIZED` 
+  * **Content:** 
 ```json
     { "error" : "User have to sign in" }
 ```
-          OR
+      OR
 
-      * **Code:** `401 UNAUTHORIZED`
-      * **Content:**
+  * **Code:** `401 UNAUTHORIZED`
+  * **Content:**
 ```json
     { "error" : "Invalid credentials" }
 ```
@@ -138,24 +138,24 @@ Show the expense if the login user have access.
  
 + **Error Response:**
 
-      * **Code:** `401 UNAUTHORIZED` 
-      * **Content:** 
+  * **Code:** `401 UNAUTHORIZED` 
+  * **Content:** 
 ```json
     { "error" : "User have to sign in" }
 ```
 
-          OR
-
-      * **Code:** `401 UNAUTHORIZED`
-      * **Content:** 
+   OR
+   
+  * **Code:** `401 UNAUTHORIZED`
+  * **Content:** 
 ```json
     { "error" : "Invalid credentials" }
 ```
       
-          OR
+  OR
 
-      * **Code:** `401 UNAUTHORIZED`
-      * **Content:** 
+  * **Code:** `401 UNAUTHORIZED`
+  * **Content:** 
 ```json
     { "error" : "Access Denied" }
 ```
@@ -185,22 +185,22 @@ Show the expense if the login user have access.
  
 + **Error Response:**
 
-      * **Code:** `401 UNAUTHORIZED` 
-      * **Content:** 
+  * **Code:** `401 UNAUTHORIZED` 
+  * **Content:** 
 ```json
     { "error" : "User have to sign in" }
 ```
-          OR
+  OR
 
-      * **Code:** `401 UNAUTHORIZED`
-      * **Content:** 
+  * **Code:** `401 UNAUTHORIZED`
+  * **Content:** 
 ```json
     { "error" : "Invalid credentials" }
 ```
-          OR
+  OR
           
-      * **Code:** `401 UNAUTHORIZED`
-      * **Content:** 
+  * **Code:** `401 UNAUTHORIZED`
+  * **Content:** 
 ```json
     { "error" : "Access Denied" }
 ```
