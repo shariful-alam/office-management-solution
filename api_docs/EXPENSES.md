@@ -88,7 +88,7 @@ Shows all the expenses the active user can access.
  
 * **Notes:**
 
-      The response will return all the expenses based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).
+The response will return all the expenses based on status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).
   
   
 ## Show
@@ -211,7 +211,7 @@ Can create new expense.
 
 ## Update
 
-Can update existing expense.
+Can update existing expense if user have access and it's status is pending.
 
 * **URL:** `/api/expenses/:id`
 
@@ -290,7 +290,7 @@ Can update existing expense.
 ## DESTROY
 
 
-Can destroy existing expense.
+Can Destroy existing expense if user have access and it's status is pending or rejected.
 
 
 * **URL:** `/api/expenses/:id`
@@ -335,11 +335,10 @@ Can destroy existing expense.
 
 ## Approve
 
+Can approve existing expense if the user is admin and the expense is pending.
 
-Can approve existing expense.
 
-
-* **URL:** `/api/expenses/19/approve`
+* **URL:** `/api/expenses/:id/approve`
 
 * **Method:**  `PUT` 
   
@@ -375,10 +374,10 @@ Can approve existing expense.
 ## Undo
 
 
-Can undo an approve expense.
+Can undo an existing expense if the user is admin and the expense is approved.
 
 
-* **URL:** `/api/expenses/19/approve`
+* **URL:** `/api/expenses/:id/approve`
 
 * **Method:**  `PUT` 
   
@@ -413,11 +412,10 @@ Can undo an approve expense.
 
 ## Reject
 
+Can reject existing expense if the user is admin and the expense is pending.
 
-Can reject an approve expense.
 
-
-* **URL:** `/api/expenses/10/reject`
+* **URL:** `/api/expenses/:id/reject`
 
 * **Method:**  `PUT` 
   

@@ -1,16 +1,22 @@
 ### Table of Contents
 * [Index](#markdown-header-index)
 * [Show](#markdown-header-show)
+* [Show_all](#markdown-header-show_all)
+* [Show_all_expenses](#markdown-header-show_all_expenses)
 * [Create](#markdown-header-create)
 * [Update](#markdown-header-update)
 * [Destroy](#markdown-header-destroy)
-* [Show_all](#markdown-header-show_all)
-* [Show_all_expenses](#markdown-header-show_all_expenses)
+
+
+
+* **Notes:**
+
+Only Admin user can access this resource.
 
 
 ## Index
 
-Shows all the budgets the active user can access.Only admin user has access in this resource.
+Shows all the budgets based on months of a selected year. 
 
 * **URL:** `/api/budgets`
 
@@ -22,7 +28,7 @@ Shows all the budgets the active user can access.Only admin user has access in t
   
      * **Optional:**
    
-        * The search will be held based on YEAR of budget resource. If the parameter is not given 
+        * The search will be held based on YEAR of budget resource. If the parameter is not given then it will show data for the present year.
    
             `search = [year]`   (i.e. /api/budgets?search=2020)
       
@@ -57,7 +63,7 @@ Shows all the budgets the active user can access.Only admin user has access in t
   
 ## Show
 
-Show the budget if the login user have access.
+Show the budget information.
 
 * **URL:** `/api/budgets/:id`
 
@@ -105,7 +111,7 @@ Show the budget if the login user have access.
 
 ## Show_all
 
-Show all catagorized budget information of the paramatererized month and year if the login user have access.
+Show all catagorized budget information of the paramatererized month and year.
 
 * **URL:** `/api/budgets/show_all.json?month=3&year=2020`
 
@@ -184,7 +190,7 @@ Show all catagorized budget information of the paramatererized month and year if
 
 ## Show_all_expenses
 
-Show all expenses of the paramatererized month and year if the login user have access.
+Show all expenses of the paramatererized month and year.
 
 * **URL:** `/api/budgets/show_all_expenses.json?month=3&year=2020`
 
@@ -258,8 +264,7 @@ Show all expenses of the paramatererized month and year if the login user have a
 
 ## Create
 
-Can create new budget.There can be many budgets based on categories for a month.
-but A month cannot have mutliple budgets on same category. 
+Can create new budget.
 
 * **URL:** `/api/budgets.json`
 
@@ -313,6 +318,10 @@ but A month cannot have mutliple budgets on same category.
      }
    }
 ```
+
+* **Notes**
+
+There can be many budgets on different categories for a month. but a month cannot have multiple budgets on same category. 
 
 
 ## Update
@@ -392,7 +401,7 @@ Can update existing budget. and can add more amount by using `add` attribute val
 
 ## DESTROY
 
-Can destroy existing budget.
+Can destroy an existing budget.
 
 
 * **URL:** `/api/budgets/:id`

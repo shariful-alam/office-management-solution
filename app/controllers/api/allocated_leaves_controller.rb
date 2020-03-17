@@ -15,7 +15,7 @@ class Api::AllocatedLeavesController < Api::ApiController
     if @allocated_leafe.save
       render json: {message: "Leave has been allocated successfully!!", url: api_allocated_leafe_url(@allocated_leafe, format: :json)}, status: 201
     else
-      render json: @allocated_leafe.errors, status: 422
+      render json: {errors: @allocated_leafe.errors}, status: 422
     end
   end
 
@@ -28,10 +28,11 @@ class Api::AllocatedLeavesController < Api::ApiController
   end
 
   def update
-    if @allocated_leafe.update(allocated_leafe_params)
+    if @allocated_leafe.update(allocated_leafe_params_for_update)
       render json: {message: "Your information has been updated successfully", url: api_allocated_leafe_url(@allocated_leafe, format: :json)}, status: 202
     else
-      render json: @allocated_leafe.errors, status: 422
+      render json: {errors: @allocated_leafe.errors}, status: 422
+
     end
   end
 
@@ -53,6 +54,9 @@ class Api::AllocatedLeavesController < Api::ApiController
   private
   def allocated_leafe_params
     params.require(:allocated_leafe).permit(:user_id, :total_leave, :year)
+  end
+  def allocated_leafe_params_for_update
+    params.require(:allocated_leafe).permit(:total_leave, :year)
   end
 
 end
