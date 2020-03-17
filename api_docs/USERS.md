@@ -25,7 +25,7 @@ Shows all the users.
    
         * The search will be held based on 1 attribute only(*user name*) of user resource.
    
-           `search=[string]` (i.e. /api/manage/users?token=value&search=value)
+            `search=[string]` (i.e. /api/manage/users?token=value&search=value)
    
 
 * **Success Response:**
@@ -78,17 +78,17 @@ Create user
 
 * **Required Fields**
     
-    `email = [string]`
-    
-    `name = [string]`
-    
-    `phone = [string]`
-    
-    `target_amount = [decimal]`
-    
-    `bonus_percentage = [decimal]`
-    
-    `password = [string]`
+      `email = [string]`
+      
+      `name = [string]`
+      
+      `phone = [string]`
+      
+      `target_amount = [decimal]`
+      
+      `bonus_percentage = [decimal]`
+      
+      `password = [string]`
   
 * **Payload**
 
@@ -199,17 +199,17 @@ Can update existing user information.
   
 * **Required Fields**
     
-    `email = [string]`
-    
-    `name = [string]`
-    
-    `phone = [string]`
-    
-    `target_amount = [decimal]`
-    
-    `bonus_percentage = [decimal]`
-    
-    `password = [string]`
+      `email = [string]`
+      
+      `name = [string]`
+      
+      `phone = [string]`
+      
+      `target_amount = [decimal]`
+      
+      `bonus_percentage = [decimal]`
+      
+      `password = [string]`
     
 * **Payload:**
      
