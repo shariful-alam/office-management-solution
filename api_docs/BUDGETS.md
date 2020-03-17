@@ -59,7 +59,8 @@ Shows all the budgets based on months of a selected year.
  
 * **Notes:**
 
-      The response will return all the budget based on searched year.and It will show searched year's monthly budgets intotal.
+The response will return all the budget based on searched year.and It will show searched year's monthly budgets intotal.
+
   
 ## Show
 

@@ -2,6 +2,11 @@
 * [Index](#markdown-header-index)
 
 
+* **Notes:**
+
+Only Admin user can access this resource.
+
+
 ## Index
 
 It will response the all budgets data,expense data,income data and month names.

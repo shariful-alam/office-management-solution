@@ -1,5 +1,7 @@
 ## README
 
+* [USER_AUTHENTICATION](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/USER_AUTHENTICATION.md)
+
 * [ALLOCATED LEAVE](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/ALLOCATED_LEAVES.md)
 
 * [ATTENDANCE](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/ATTENDANCES.md)

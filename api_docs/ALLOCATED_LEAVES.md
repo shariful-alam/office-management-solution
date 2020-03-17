@@ -29,7 +29,7 @@ Shows all the allocated leaves of all users.
           * The search will be held based on YEAR.
            If the parameter is not given then it will response data for the present year.
 
-            `search = [year]`   (i.e. /api/expenses?search=2020)
+            `search = [year]`   (i.e. /api/allocated_leaves?search=2020)
       
      
    
@@ -354,6 +354,3 @@ Shows all the leaves of a user who has allocated leave.
 ```json
     { "error": "Record not found!!" }
 ```
-
-
-* **Notes:**

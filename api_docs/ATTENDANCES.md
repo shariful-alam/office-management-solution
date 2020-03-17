@@ -58,18 +58,7 @@ Can create new attendance.
 * **Method:**  `POST` 
   
 * **Authentication required:**  Yes
-  
-* **Required Fields**
     
-    `product_name = [string]`
-    
-    `cost = [decimal]`
-    
-    `expense_date = [string]`
-    
-    `category_id = [integer]`
-    
-
 * **Success Response:**
  
        * **Code:** `201 CREATED`
