@@ -25,13 +25,13 @@ Shows all the leaves the active user can access.
    
         * The search will be held based on 2 attributes(*user name or leave type*) of leave resource.
    
-           `search=[string]` (i.e. /api/leaves?token=value&search=value)
+             `search=[string]` (i.e. /api/leaves?token=value&search=value)
       
         * The date search will be held based on *start date* and *end date* of leave resource.
       
-           `from=[date]`  `to=[date]` (i.e. /api/leaves?token=value&from=date&to=date)
+            `from=[date]`  `to=[date]` (i.e. /api/leaves?token=value&from=date&to=date)
           
-           `date format = 'yy-mm-dd'`
+            `date format = 'yy-mm-dd'`
    
 
 * **Success Response:**
@@ -128,17 +128,17 @@ Apply for leave
        * **Code:** `201 CREATED`
        * **Content:** 
 ```json
-{
-  "message": "Leave has been submitted for approval",
-  "url": "/api/leaves/:id"
-}
+    {
+      "message": "Leave has been submitted for approval",
+      "url": "/api/leaves/:id"
+    }
 ```
    OR
 ```json
-{
-  "message": "Leave has been created",
-  "url": "/api/leaves/:id"
-}
+    {
+      "message": "Leave has been created",
+      "url": "/api/leaves/:id"
+    }
 ```
  
 * **Error Response:**
