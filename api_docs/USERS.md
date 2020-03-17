@@ -391,6 +391,12 @@ Shows all the pending resources.
     { "error" : "Access Denied" }
 ```
 
+* **Notes:**
+
+      The response will return all the pending resources by 3 arrays( **pending_expneses, pending_leaves, pending_incomes** ).
+  
+  
+
 ## Show all expenses
 
 
@@ -471,6 +477,12 @@ Shows all expenses of an individual user.
     { "error": "Record not found!!" }
 ```
 
+* **Notes:**
+
+      The response will return all the expenses of an individual user based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).
+  
+  
+
 ## Show all incomes
 
 
@@ -546,6 +558,12 @@ Can reject an pending leave.
 ```json
     { "error": "Record not found!!" }
 ```
+
+* **Notes:**
+
+      The response will return all the incomes of an individual user based on their status by 3 arrays( **pending_incomes, approved_incomes, rejected_incomes** ).
+  
+  
 
 
 
