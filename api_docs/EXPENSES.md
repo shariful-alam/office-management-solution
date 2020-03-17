@@ -208,6 +208,10 @@ Can create new expense.
    }
 ```
 
+* **Note:**
+
+Based on expense date's month and year it will set the budget id.
+
 
 ## Update
 
@@ -286,6 +290,11 @@ Can update existing expense if user have access and it's status is pending.
 ```json
     { "error": "Record not found!!" }
 ```
+
+* **Note:**
+
+Based on expense date's month and year it will set the budget id.
+
 
 ## DESTROY
 
@@ -371,6 +380,10 @@ Can approve existing expense if the user is admin and the expense is pending.
     { "error": "Record not found!!" }
 ```
 
+* **Note:**
+
+Based on expense date's month and year it will set the budget id. So when a expense will be approved the expense will be added to that budget.
+
 ## Undo
 
 
@@ -409,6 +422,11 @@ Can undo an existing expense if the user is admin and the expense is approved.
 ```json
     { "error": "Record not found!!" }
 ```
+
+* **Note:**
+
+Based on expense date's month and year it will set the budget id. So when a expense will be undo the expense will be reduced from that budget.
+
 
 ## Reject
 
