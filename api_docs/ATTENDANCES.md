@@ -3,14 +3,10 @@
 * [Create](#markdown-header-create)
 * [Check_out](#markdown-header-check_out)
 
-* **Notes:**
-
-Only Admin user can access this resource.
-
 
 ## Index
 
-Shows all the available and unavailable users of today.
+Shows all the available and unavailable users of today accessed only by admin.
 
 * **URL:** `/api/attendances`
 
@@ -51,7 +47,7 @@ It will response with two arrays.
 
 ## Create
 
-Can create new attendance.
+Can create new attendance with in office network.
 
 * **URL:** `/api/attendances`
 
@@ -91,7 +87,7 @@ Can create new attendance.
 
 ## Check_out
 
-Can checkout for a attendance.
+Can checkout for a attendance in office network.
 
 * **URL:** `/api/attendances/check_out`
 
