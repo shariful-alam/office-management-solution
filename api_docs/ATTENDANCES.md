@@ -78,6 +78,15 @@ Can create new attendance.
      "message": "You have already checked In Today!!"
    }
 ```
+* or
+      
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** 
+```json 
+   {
+     "message": "You can not access this from outside !!"
+   }
+```
 
 
 ## Check_out
@@ -109,6 +118,15 @@ Can checkout for a attendance.
      "message": "You are not checked in"
    }
    
+```
+* or
+      
+      * **Code:** `401 UNAUTHORIZED`
+      * **Content:** 
+```json 
+   {
+     "message": "You can not access this from outside !!"
+   }
 ```
    
   
