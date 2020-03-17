@@ -25,7 +25,7 @@ Shows all the users.
    
         * The search will be held based on 1 attribute only(*user name*) of user resource.
    
-           `search=[string]` (i.e. /api/manage/users?token=value&search=value)
+            `search=[string]` (i.e. /api/manage/users?token=value&search=value)
    
 
 * **Success Response:**
@@ -78,17 +78,17 @@ Create user
 
 * **Required Fields**
     
-    `email = [string]`
-    
-    `name = [string]`
-    
-    `phone = [string]`
-    
-    `target_amount = [decimal]`
-    
-    `bonus_percentage = [decimal]`
-    
-    `password = [string]`
+      `email = [string]`
+      
+      `name = [string]`
+      
+      `phone = [string]`
+      
+      `target_amount = [decimal]`
+      
+      `bonus_percentage = [decimal]`
+      
+      `password = [string]`
   
 * **Payload**
 
@@ -199,17 +199,17 @@ Can update existing user information.
   
 * **Required Fields**
     
-    `email = [string]`
-    
-    `name = [string]`
-    
-    `phone = [string]`
-    
-    `target_amount = [decimal]`
-    
-    `bonus_percentage = [decimal]`
-    
-    `password = [string]`
+      `email = [string]`
+      
+      `name = [string]`
+      
+      `phone = [string]`
+      
+      `target_amount = [decimal]`
+      
+      `bonus_percentage = [decimal]`
+      
+      `password = [string]`
     
 * **Payload:**
      
@@ -391,6 +391,12 @@ Shows all the pending resources.
     { "error" : "Access Denied" }
 ```
 
+* **Notes:**
+
+      The response will return all the pending resources by 3 arrays( **pending_expneses, pending_leaves, pending_incomes** ).
+  
+  
+
 ## Show all expenses
 
 
@@ -471,6 +477,12 @@ Shows all expenses of an individual user.
     { "error": "Record not found!!" }
 ```
 
+* **Notes:**
+
+      The response will return all the expenses of an individual user based on their status by 3 arrays( **pending_expenses, approved_expenses, rejected_expenses** ).
+  
+  
+
 ## Show all incomes
 
 
@@ -546,6 +558,12 @@ Can reject an pending leave.
 ```json
     { "error": "Record not found!!" }
 ```
+
+* **Notes:**
+
+      The response will return all the incomes of an individual user based on their status by 3 arrays( **pending_incomes, approved_incomes, rejected_incomes** ).
+  
+  
 
 
 
