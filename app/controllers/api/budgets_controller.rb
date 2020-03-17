@@ -19,7 +19,7 @@ class Api::BudgetsController < Api::ApiController
     if @budget.save
       render json: { message: "Budget has been created successfully!!" , url: api_budget_url(@budget, format: :json) }, status: 201
     else
-      render json: @budget.errors, status: 422
+      render json:{errors: @budget.errors}, status: 422
     end
   end
 
@@ -30,15 +30,15 @@ class Api::BudgetsController < Api::ApiController
     if @budget.update(budget_params)
       render json: { message: "Budget has been updated successfully!!" , url: api_budget_url(@budget, format: :json) }, status: 202
     else
-      render json: @budget.errors, status: 422
+      render json: {errors: @budget.errors}, status: 422
     end
   end
 
   def destroy
     if @budget && @budget.destroy
-      render json: { message: "Budget has been removed successfully!!", index_url: api_budgets_url(format: :json) }, status: 202
+      render json: { message: "Budget has been removed successfully!!"}, status: 202
     else
-      render json: { message: "Budget could not be deleted!!" }, status: 422
+      render json: { error: "Budget could not be deleted!!" }, status: 422
     end
   end
 
@@ -63,6 +63,9 @@ class Api::BudgetsController < Api::ApiController
     @year = params[:year].to_i
     @month = params[:month].to_i
     @budgets = @budgets.search_with(@year, @month)
+    unless @budgets.present?
+      render json: { message: "Budget for #{Date::MONTHNAMES[@month]}, #{@year} is not created yet" }, status: 422 and return
+    end
     @total_amount = @budgets.sum(:amount)
     @total_expense = @budgets.sum(:expense)
   end
