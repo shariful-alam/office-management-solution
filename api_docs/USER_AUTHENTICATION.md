@@ -1,6 +1,8 @@
 ### Table of Contents
 * [Create](#markdown-header-create)
-* [sign_out](#markdown-header-sign_out)
+* [Sign_out](#markdown-header-sign_out)
+
+
 
 * **Notes:**
 
@@ -8,9 +10,10 @@ Only registered user can access. after successful sign in the response will retu
 By this token user can access all the resources based on authorization.
 So every time user have to send this token in parameter except the time of creating the token or sign_in.
 
-Example : * (/api/budgets?token=U4fXGfN2vNz1rvUzY6Nn)
-          * (/api/expenses?token=U4fXGfN2vNz1rvUzY6Nn)
-          * (/api/budgets/show_all_expenses.json?token=U4fXGfN2vNz1rvUzY6Nn&month=3&year=2020)
+* Example : 
+      * (/api/budgets?token=U4fXGfN2vNz1rvUzY6Nn)
+      * (/api/expenses?token=U4fXGfN2vNz1rvUzY6Nn)
+      * (/api/budgets/show_all_expenses.json?token=U4fXGfN2vNz1rvUzY6Nn&month=3&year=2020)
 
 
 ## Create
