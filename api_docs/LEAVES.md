@@ -379,6 +379,12 @@ Can approve existing leave if the leave is in pending status.
     { "error": "Record not found!!" }
 ```
 
+* **Notes:**
+
+      Upon successfull approval of a leave request, the user will get an confirmation email.
+  
+  
+
 ## Undo
 
 
@@ -455,6 +461,13 @@ Can reject an pending leave.
 ```json
     { "error": "Record not found!!" }
 ```
+
+
+* **Notes:**
+
+      Upon successfull rejection of a leave request, the user will get an confirmation email.
+  
+  
 
 
 

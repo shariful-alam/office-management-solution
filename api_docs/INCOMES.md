@@ -25,7 +25,7 @@ Shows total income per user on monthly basis.
    
         * The search will be held based on 1 attribute only(*year*) of income resource.
    
-           `search=[integer]` (i.e. /api/incomes?token=value&search=value)
+            `search=[integer]` (i.e. /api/incomes?token=value&search=value)
       
 
 * **Success Response:**
@@ -36,7 +36,7 @@ Shows total income per user on monthly basis.
   
 ```json
     {
-      "Incomes": [
+      "incomes": [
         {
           "Shariful Alam": {
             "January": "0.0",
@@ -70,7 +70,7 @@ Shows total income per user on monthly basis.
           }
         }
       ],
-      "Bonuses": [
+      "bonuses": [
         {
           "Shariful Alam": {
             "January": 0,
@@ -124,11 +124,11 @@ Create new income
 
 * **Required Fields**
     
-    `amount = [decimal]`
-    
-    `income_date = [date]`
-    
-    `source = [string]`
+      `amount = [decimal]`
+      
+      `income_date = [date]`
+      
+      `source = [string]`
   
 * **Payload**
 
@@ -237,11 +237,11 @@ Can update existing leave if the leave is in pending status.
   
 * **Required Fields**
     
-    `amount = [decimal]`
-        
-    `income_date = [date]`
-    
-    `source = [string]`
+      `amount = [decimal]`
+          
+      `income_date = [date]`
+      
+      `source = [string]`
     
 * **Payload:**
      

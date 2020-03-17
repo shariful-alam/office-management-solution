@@ -140,6 +140,13 @@ Create user
       ]
     }
 ```
+
+
+* **Notes:**
+
+      Upon successfull creation of an user, the user will get an welcome email.
+  
+  
   
 ## Show
 
@@ -273,6 +280,12 @@ Can update existing user information.
 ```json
     { "error": "Record not found!!" }
 ```
+
+
+* **Notes:**
+
+      To update the user information, the user must provide his/her current password.
+  
 
 ## DESTROY
 
