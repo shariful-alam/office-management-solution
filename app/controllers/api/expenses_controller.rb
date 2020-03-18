@@ -10,7 +10,7 @@ class Api::ExpensesController < Api::ApiController
       @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
-    @expenses = @expenses.sort_by_attr(:expense_date)
+    @expenses = @expenses.order(expense_date: :desc)
     @pending_expenses = @expenses.pending
     @approved_expenses = @expenses.approved
     @rejected_expenses = @expenses.rejected

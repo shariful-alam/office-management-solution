@@ -57,7 +57,7 @@ class Api::Manage::UsersController < Api::ApiController
     if params[:from].present? and params[:to].present?
       @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]})
     end
-    @expenses = @expenses.sort_by_attr(:expense_date)
+    @expenses = @expenses.order(expense_date: :desc)
     @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => Expense::PER_PAGE)
     @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => Expense::PER_PAGE)
     @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => Expense::PER_PAGE)

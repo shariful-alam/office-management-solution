@@ -6,7 +6,7 @@ class Income < ApplicationRecord
   validates :income_date, :presence => true
   validates :source, :presence => true
 
-  MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  MONTHS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   SOURCE = ['Employee', 'Service']
 
   enum status: {pending: 0, approved: 1, rejected: 2}

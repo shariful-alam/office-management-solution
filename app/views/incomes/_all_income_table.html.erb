@@ -18,7 +18,7 @@
           <td>
             <% income = @all_incomes[user.id][month] %>
             <% if income > 0 %>
-              <%= link_to income, show_all_incomes_manage_user_path(id: user.id, month: month, year: params[:search]), class: find_klass(income, user.target_amount) %>
+              <%= link_to income, show_all_incomes_manage_user_path(id: user.id, month: month+1, year: params[:search]), class: find_klass(income, user.target_amount) %>
               <% @monthly_totals[month] += income.to_i %>
             <% else %>
               <%= income %>
@@ -27,7 +27,7 @@
         <% end %>
         <td>
           <% total_income = @total_income_per_user[user.id] %>
-          <% @monthly_totals[0] += total_income %>
+          <% @monthly_totals[13] += total_income %>
           <strong><%= total_income %></strong>
         </td>
       </tr>
@@ -36,13 +36,13 @@
       <td>
         <strong>Monthly Total</strong>
       </td>
-      <% @monthly_totals.slice(1, 12).each do |mt| %>
+      <% Income::MONTHS.each do |month| %>
         <td>
-          <strong><%= mt %></strong>
+          <strong><%= @monthly_totals[month] %></strong>
         </td>
       <% end %>
       <td>
-        <strong><%= @monthly_totals[0] %></strong>
+        <strong><%= @monthly_totals[13] %></strong>
       </td>
     </tr>
   </table>
