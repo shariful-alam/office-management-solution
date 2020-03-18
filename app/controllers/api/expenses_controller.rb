@@ -7,7 +7,8 @@ class Api::ExpensesController < Api::ApiController
     @expenses = @expenses.includes(:user)
     if params[:search].present?
       search = "%#{params[:search]}%"
-      @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
+      @expenses = @expenses.joins(:user,:category)
+                    .where('users.name ilike :search OR product_name ilike :search OR categories.name ilike :search', {search: search})
     end
     @expenses = @expenses.where('expense_date BETWEEN :from AND :to', {from: params[:from], to: params[:to]}) if params[:from].present? and params[:to].present?
     @expenses = @expenses.order(expense_date: :desc)
@@ -25,7 +26,7 @@ class Api::ExpensesController < Api::ApiController
     if @expense.save
       render json: { message: "Expense has been created successfully!!" , url: api_expense_url(@expense, format: :json) }, status: 201
     else
-      render json: @expense.errors, status: 422
+      render json: { errors: @expense.errors }, status: 422
     end
   end
 
@@ -39,15 +40,15 @@ class Api::ExpensesController < Api::ApiController
     if @expense.update(expense_params)
       render json: { message: "Expense has been updated successfully!!" , url: api_expense_url(@expense, format: :json) }, status: 202
     else
-      render json: @expense.errors, status: 422
+      render json: { errors: @expense.errors }, status: 422
     end
   end
 
   def destroy
     if @expense && @expense.destroy
-      render json: { message: "Expense has been removed successfully!!", index_url: api_expenses_url(format: :json) }, status: 202
+      render json: { message: "Expense has been removed successfully!!" }, status: 202
     else
-      render json: { message: "Expense could not be deleted!!" }, status: 422
+      render json: { error: "Expense could not be deleted!!" }, status: 422
     end
   end
 

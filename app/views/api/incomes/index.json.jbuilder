@@ -1,4 +1,4 @@
-json.Incomes do
+json.incomes do
   json.array! @users_income do |user|
     json.set! user.name do
       json.January    @all_incomes[user.id][1]
@@ -17,7 +17,7 @@ json.Incomes do
   end
 end
 
-json.Bonuses do
+json.bonuses do
   json.array! @users_income do |user|
     json.set! user.name do
       json.January    @all_bonuses[user.id][1]
