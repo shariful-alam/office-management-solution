@@ -21,7 +21,6 @@ class Expense < ApplicationRecord
                        convert_options: {regular: "-posterize 3"}
 
 
-  scope :sort_by_attr, -> (attr) {order(attr)}
 
   before_validation :check_budget
   after_create :admin_approval

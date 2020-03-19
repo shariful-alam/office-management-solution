@@ -27,7 +27,7 @@ class AttendancesController < ApplicationController
 
   def whitelisted?(ip)
     ip_address = Rails.env.development? ? Attendance::LOCALHOST_IP_ADDRESS : Attendance::OFFICE_IP_ADDRESSES
-    ip_address.include?(ip) ? true : false
+    ip_address.include?(ip)
   end
 
   def block_foreign_hosts

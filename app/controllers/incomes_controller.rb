@@ -7,17 +7,20 @@ class IncomesController < ApplicationController
     @users_income = User.paginate(:page => params[:users_incomes], :per_page => Income::PER_PAGE)
     @users_bonus = @users_income.paginate(:page => params[:users_bonuses], :per_page => Income::PER_PAGE)
 
-    @monthly_totals = Array.new(13,0)
-    @all_incomes = Array.new(15){Array.new(15) { 0 } }
-    @all_bonuses = Array.new(15){Array.new(15) { 0 } }
+    @monthly_totals = Array.new(15,0)
+    @all_incomes = []
+    @all_bonuses = []
     @total_income_per_user = Array.new
 
     @users_income.each do |user|
+      @temp_income = []
+      @temp_bonus = []
       Income::MONTHS.each do |month|
-        income = Income.find_incomes_by_months(user,month,params[:search])
-        @all_incomes[user.id][month] = income
-        @all_bonuses[user.id][month] = Income.bonus_amount(user,month,params[:search])
+        @temp_income << Income.find_incomes_by_months(user,month+1,params[:search])
+        @temp_bonus << Income.bonus_amount(user,month+1,params[:search])
       end
+      @all_incomes[user.id] = @temp_income
+      @all_bonuses[user.id] = @temp_bonus
       @total_income_per_user[user.id] = Income.find_total(user,params[:search])
     end
   end

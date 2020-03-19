@@ -2,7 +2,7 @@ class AllocatedLeafe < ApplicationRecord
 
   belongs_to :user
 
-  validates :total_leave, :presence => true
+  validates :total_leave, :presence => true , numericality: {integer: true}
   validates :user_id, :presence => true
   validates :year, :presence => true
   validates :year, uniqueness: {scope: [:user_id] }

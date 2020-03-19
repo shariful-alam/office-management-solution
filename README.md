@@ -1,24 +1,21 @@
-# README
+## README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* [USER_AUTHENTICATION](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/USER_AUTHENTICATION.md)
 
-Things you may want to cover:
+* [ALLOCATED LEAVE](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/ALLOCATED_LEAVES.md)
 
-* Ruby version
+* [ATTENDANCE](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/ATTENDANCES.md)
 
-* System dependencies
+* [BUDGET](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/BUDGETS.md)
 
-* Configuration
+* [CATEGORY](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/CATEGORIES.md)
 
-* Database creation
+* [EXPENSE](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/EXPENSES.md)
 
-* Database initialization
+* [HOME](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/HOME.md)
 
-* How to run the test suite
+* [INCOME](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/INCOMES.md)
 
-* Services (job queues, cache servers, search engines, etc.)
+* [LEAVE](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/LEAVES.md)
 
-* Deployment instructions
-
-* ...
+* [USER](https://bitbucket.org/rightcodes/office_management/src/user_authentication_api/api_docs/USERS.md)

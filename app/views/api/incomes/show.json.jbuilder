@@ -1,0 +1,1 @@
+json.partial! "api/manage/users/income", income: @income
