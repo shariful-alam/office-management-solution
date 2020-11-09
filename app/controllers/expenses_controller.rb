@@ -4,7 +4,7 @@ class ExpensesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @expenses = @expenses.includes(:user)
+    @expenses = @expenses.includes(:user).order(created_at: :desc)
     if params[:search].present?
       search = "%#{params[:search]}%"
       @expenses = @expenses.joins(:user).where('users.name ilike :search OR product_name ilike :search', {search: search})
@@ -14,6 +14,18 @@ class ExpensesController < ApplicationController
     @pending_expenses = @expenses.pending.paginate(:page => params[:pending_expenses], :per_page => Expense::PER_PAGE)
     @approved_expenses = @expenses.approved.paginate(:page => params[:approved_expenses], :per_page => Expense::PER_PAGE)
     @rejected_expenses = @expenses.rejected.paginate(:page => params[:rejected_expenses], :per_page => Expense::PER_PAGE)
+
+    date = Date.today
+    year = date.year.to_i
+    month = date.month.to_i
+    @budgets = Budget.search_with(year, month)
+    if @budgets.present?
+      @total_amount = @budgets.sum(:amount)
+      @total_expense = @budgets.sum(:expense)
+    else
+      flash[:alert]= 'You did not add any budget for the current month'
+    end
+
   end
 
   def new
@@ -26,7 +38,7 @@ class ExpensesController < ApplicationController
       if current_user.admin? || current_user.super_admin?
         redirect_to expenses_path, notice: 'Expense has been created successfully!!'
       else
-        redirect_to expenses_path, notice: 'Expense has been submitted for approval'
+        redirect_to new_expense_path, notice: 'Expense has been submitted for approval'
       end
     else
       render :new
@@ -75,6 +87,7 @@ class ExpensesController < ApplicationController
   end
 
   private
+
   def expense_params
     params.require(:expense).permit(:product_name, :category_id, :cost, :details, :image, :expense_date)
   end

@@ -1,24 +1,38 @@
 <h1>Insert Expense Information</h1>
 
-<div class="col-sm-5">
+<div class="col-8">
   <%= form_for(@expense, html: {autocomplete: 'off'}) do |expense| %>
 
     <%= render partial: 'layouts/error_message', locals: {object: @expense} %>
 
-
-    <div class="form-group">
-      <%= expense.label :product_name, class: "control-label" %>
-      <%= expense.text_field :product_name, class: "form-control" %>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <%= expense.label :product_name, class: "control-label" %>
+          <%= expense.text_field :product_name, class: "form-control" %>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <%= expense.label :category_id %>
+          <%= collection_select(:expense, :category_id, Category.all, :id, :name, {}, {:multiple => false, class: "form-control"}) %>
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <%= expense.label :category_id %>
-      <%= collection_select(:expense, :category_id, Category.all, :id, :name, {}, {:multiple => false, class: "form-control"}) %>
-    </div>
-
-    <div class="form-group">
-      <%= expense.label :cost, class: "control-label" %>
-      <%= expense.text_field :cost, class: "form-control" %>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <%= expense.label :cost, class: "control-label" %>
+          <%= expense.text_field :cost, class: "form-control" %>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <%= expense.label :expense_date, 'Date', class: "control-label" %>
+          <%= expense.text_field :expense_date, class: "form-control", id: "datepicker", placeholder: "yyyy-mm-dd" %>
+        </div>
+      </div>
     </div>
 
     <div class="form-group">
@@ -30,13 +44,6 @@
       <%= expense.label :details, class: "control-label" %>
       <%= expense.text_area :details, class: "form-control" %>
     </div>
-
-
-    <div class="form-group">
-      <%= expense.label :expense_date, 'Date', class: "control-label" %>
-      <%= expense.text_field :expense_date, class: "form-control", id: "datepicker", placeholder: "yyyy-mm-dd" %>
-    </div>
-
 
     <div class="form-group">
       <%= expense.submit 'Submit', class: "btn btn-success" %> |

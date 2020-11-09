@@ -1,19 +1,38 @@
-<h1>Expense List</h1>
 <div class="row">
-  <div class="col-sm">
+  <% if @budgets.present? %>
+    <div class="col-md-4">
+      <div class="card" style="width: 35rem;">
+        <div class="card-body">
+          <h3 class="card-title">Expenses
+            of <%= "#{Date::MONTHNAMES[@budgets.first.month]}, #{@budgets.first.year}" %></h3>
+        </div>
+        <hr>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><b>Total Budget: </b><%= taka(@total_amount) %> </li>
+          <li class="list-group-item"><b>Expense: </b><%= taka(@total_expense) %></li>
+          <li class="list-group-item"><b>Remaining: </b><%= taka(@total_amount - @total_expense) %></li>
+        </ul>
+      </div>
+    </div>
+    <div class="offset-md-2">
+
+    </div>
+  <% end %>
+
+  <div class="col-md-4">
     <%= form_tag(expenses_path, :method => "get", :autocomplete => "off") do %>
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-12">
           <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
         </div>
       </div>
       <br>
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-6">
           <%= text_field_tag :from, params[:from], :selected => params[:from], class: "form-control", id: "datepicker", placeholder: "yyyy-mm-dd" %>
           <br>
         </div>
-        <div class="col-sm-3">
+        <div class="col-6">
           <%= text_field_tag :to, params[:to], :selected => params[:to], class: "form-control", id: "datepicker2", placeholder: "yyyy-mm-dd" %>
           <br>
         </div>
@@ -29,6 +48,18 @@
 
 <br>
 
+<button class="accordion btn btn-success" data-toggle="collapse" data-target="#approved">Approved
+  (<%= @approved_expenses.count %>)
+</button>
+<div class="collapse show in" id="approved">
+  <%= render partial: 'table', locals: {expenses: @approved_expenses} %>
+  <div>
+    <%= will_paginate @approved_expenses, :param_name => 'approved_expenses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </div>
+</div>
+<br>
+<br>
+
 <button class="accordion btn btn-warning" data-toggle="collapse" data-target="#pending">Pending
   (<%= @pending_expenses.count %>)
 </button>
@@ -42,22 +73,12 @@
 <br>
 <br>
 
-<button class="accordion btn btn-success" data-toggle="collapse" data-target="#approved">Approved
-  (<%= @approved_expenses.count %>)
-</button>
-<div class="collapse in" id="approved">
-  <%= render partial: 'table', locals: {expenses: @approved_expenses} %>
-  <div>
-    <%= will_paginate @approved_expenses, :param_name => 'approved_expenses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-  </div>
-</div>
-<br>
-<br>
+
 
 <button class="accordion btn btn-danger" data-toggle="collapse" data-target="#rejected">Rejected
   (<%= @rejected_expenses.count %>)
 </button>
-<div class="collapse in" id="rejected">
+<div class="collapse show in" id="rejected">
   <%= render partial: 'table', locals: {expenses: @rejected_expenses} %>
   <div>
     <%= will_paginate @rejected_expenses, :param_name => 'rejected_expenses', renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

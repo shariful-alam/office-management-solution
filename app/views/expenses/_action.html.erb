@@ -5,6 +5,7 @@
   <td><%= expense.user.name %></td>
   <td><%= taka(expense.cost) %></td>
   <td><%= expense.category.name %></td>
+  <td><%= full_date(expense.expense_date) %></td>
   <td style="text-align: center;">
 
     <% if can? :approve, expense %>
