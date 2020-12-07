@@ -1,47 +1,62 @@
 <div class="row">
-  <% if @budgets.present? %>
-    <div class="col-md-4">
-      <div class="card" style="width: 35rem;">
-        <div class="card-body">
-          <h3 class="card-title">Expenses
-            of <%= "#{Date::MONTHNAMES[@budgets.first.month]}, #{@budgets.first.year}" %></h3>
+  <% if @budgets.present? && current_user.super_admin?%>
+      <div class="col-md-4" style="min-width: 45%;">
+        <div class="d-flex flex-column">
+          <div class="mb-4">
+            <h4>Expenses of <%= "#{Date.today.strftime("%b")}, #{Date.today.year}" %></h4>
+          </div>
+          <div class="d-flex flex-row justify-content-start flex  rap">
+            <div class="mr-5">
+              <b>Total Budget: </b><%= taka(@total_amount) %>
+            </div>
+            <div class="mr-5">
+              <b>Expense: </b><%= taka(@total_expense) %>
+            </div>
+            <div style="position: relative;">
+              <b>Remaining: </b><%= taka(@total_amount - @total_expense) %>
+              <i id="plus-sign" class="fa fa-plus ml-2" aria-hidden="true"></i>
+              <div id="modal">
+                <ul>
+                  <% @budgets.each do |budget| %>
+                      <li><%= budget.category.name %>: <%= taka(budget.amount - budget.expense) %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-        <hr>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"><b>Total Budget: </b><%= taka(@total_amount) %> </li>
-          <li class="list-group-item"><b>Expense: </b><%= taka(@total_expense) %></li>
-          <li class="list-group-item"><b>Remaining: </b><%= taka(@total_amount - @total_expense) %></li>
-        </ul>
       </div>
-    </div>
-    <div class="offset-md-2">
-
-    </div>
   <% end %>
 
-  <div class="col-md-4">
+  <div class="col-md-4" style="float: right;">
     <%= form_tag(expenses_path, :method => "get", :autocomplete => "off") do %>
-      <div class="row">
-        <div class="col-12">
-          <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
+        <div class="row">
+          <div class="col-10">
+            <div class="row">
+              <div class="col-12">
+                <%= text_field_tag :search, params[:search], placeholder: "Search by Name or Month", class: "form-control" %>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-6">
+                <%= text_field_tag :from, params[:from], :selected => params[:from], class: "form-control", id: "datepicker", placeholder: "yyyy-mm-dd" %>
+                <br>
+              </div>
+              <div class="col-6">
+                <%= text_field_tag :to, params[:to], :selected => params[:to], class: "form-control", id: "datepicker2", placeholder: "yyyy-mm-dd" %>
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="row container">
+              <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
+              <%= link_to 'Reset', expenses_path, class: "btn btn-secondary" %>
+            </div>
+          </div>
         </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-6">
-          <%= text_field_tag :from, params[:from], :selected => params[:from], class: "form-control", id: "datepicker", placeholder: "yyyy-mm-dd" %>
-          <br>
-        </div>
-        <div class="col-6">
-          <%= text_field_tag :to, params[:to], :selected => params[:to], class: "form-control", id: "datepicker2", placeholder: "yyyy-mm-dd" %>
-          <br>
-        </div>
-      </div>
 
-      <div class="row container">
-        <%= submit_tag 'Search', class: "btn btn-dark " %> &nbsp
-        <%= link_to 'Reset', expenses_path, class: "btn btn-secondary" %>
-      </div>
     <% end %>
   </div>
 </div>
@@ -90,3 +105,17 @@
   <br>
   <%= link_to "Back", root_path, class: "btn btn-dark" %>
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#plus-sign').click(function () {
+            if ($(this).css('transform') == 'none') {
+                $(this).css({'transform': 'rotate(-90deg)'});
+            } else {
+                $(this).css({'transform': ''});
+            }
+            $('#modal').slideToggle();
+        });
+    });
+</script>

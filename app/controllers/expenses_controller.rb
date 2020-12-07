@@ -22,8 +22,6 @@ class ExpensesController < ApplicationController
     if @budgets.present?
       @total_amount = @budgets.sum(:amount)
       @total_expense = @budgets.sum(:expense)
-    else
-      flash[:alert]= 'You did not add any budget for the current month'
     end
 
   end

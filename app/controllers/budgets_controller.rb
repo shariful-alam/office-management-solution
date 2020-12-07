@@ -4,6 +4,26 @@ class BudgetsController < ApplicationController
   load_and_authorize_resource
   before_action :show_all, only: [:show_all_expenses]
 
+  def copy_budget
+    budgets = Budget.where(month: params[:month].to_i)
+    last_budget = Budget.order(year: :desc).order(month: :desc).first
+    next_month = last_budget.month + 1
+    year = last_budget.year
+    budgets.each do |budget|
+      new_budget = budget.dup
+      new_budget.expense = 0.0
+      if next_month <=12
+        new_budget.month = next_month
+        new_budget.year = year
+      else
+        new_budget.month = 1
+        new_budget.year = year + 1
+      end
+      new_budget.save
+    end
+    redirect_to budgets_path, notice: 'Budget has been created successfully!!'
+  end
+
   def index
     @year = params[:search].present? ? "#{params[:search]}" : Date.today.year
     @budgets = @budgets.includes(:user).where(year: @year)

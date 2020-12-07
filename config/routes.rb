@@ -77,6 +77,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post '/copy-budget', to: 'budgets#copy_budget', as: :copy_budget
+
   resources :budgets do
     collection do
       get :show_all_expenses
