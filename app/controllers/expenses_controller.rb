@@ -19,6 +19,7 @@ class ExpensesController < ApplicationController
     year = date.year.to_i
     month = date.month.to_i
     @budgets = Budget.search_with(year, month)
+
     if @budgets.present?
       @total_amount = @budgets.sum(:amount)
       @total_expense = @budgets.sum(:expense)
@@ -51,7 +52,9 @@ class ExpensesController < ApplicationController
   end
 
   def update
+    updated_budget = @expense.budget.expense + expense_params[:cost].to_i - @expense.cost if @expense.approved?
     if @expense.update(expense_params)
+      @expense.budget.update({expense: updated_budget}) if @expense.approved?
       redirect_to expenses_path, notice: 'Expense has been updated successfully!!'
     else
       render :edit
@@ -59,7 +62,12 @@ class ExpensesController < ApplicationController
   end
 
   def destroy
+    if @expense.approved?
+      @budget = @expense.budget
+      updated_budget = @budget.expense - @expense.cost
+    end
     if @expense && @expense.destroy
+      @budget.update({expense: updated_budget}) if @expense.approved?
       flash[:alert] = 'Expense has been removed successfully!!'
     else
       flash[:alert] = 'Expense could not be deleted!!'
