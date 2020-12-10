@@ -14,8 +14,9 @@
             </div>
             <div style="position: relative;">
               <b>Remaining: </b><%= taka(@total_amount - @total_expense) %>
-              <i id="plus-sign" class="fa fa-plus ml-2" aria-hidden="true"></i>
-              <div id="modal">
+              <i id="expense-modal-arrow" class="fa fa-caret-down ml-2" aria-hidden="true"></i>
+              <div id="expense-modal-background"></div>
+              <div id="expense-modal">
                 <ul>
                   <% @budgets.each do |budget| %>
                       <li><%= budget.category.name %>: <%= taka(budget.amount - budget.expense) %></li>
@@ -109,13 +110,31 @@
 
 <script>
     $(document).ready(function () {
-        $('#plus-sign').click(function () {
-            if ($(this).css('transform') == 'none') {
-                $(this).css({'transform': 'rotate(-90deg)'});
-            } else {
-                $(this).css({'transform': ''});
+
+        $('#expense-modal-background').click(function () {
+           if ($('#expense-modal').is(':visible')){
+               $('#expense-modal-arrow').removeClass('fa-caret-up');
+               $('#expense-modal-arrow').addClass('fa-caret-down');
+               $('#expense-modal').slideToggle();
+               $(this).hide();
+           }
+        });
+
+        $('#expense-modal').click(function () {
+           return false;
+        });
+
+        $('#expense-modal-arrow').click(function () {
+            if ($(this).hasClass('fa-caret-down')){
+                $(this).removeClass('fa-caret-down');
+                $(this).addClass('fa-caret-up');
             }
-            $('#modal').slideToggle();
+            else if ($(this).hasClass('fa-caret-up')){
+                $(this).removeClass('fa-caret-up');
+                $(this).addClass('fa-caret-down');
+            }
+            $('#expense-modal-background').show();
+            $('#expense-modal').slideToggle();
         });
     });
 </script>

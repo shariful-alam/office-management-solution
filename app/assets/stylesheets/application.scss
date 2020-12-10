@@ -34,12 +34,12 @@
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-#plus-sign {
+#expense-modal-arrow {
   cursor: pointer;
   transition: transform 0.8s;
 }
 
-#modal {
+#expense-modal {
   display: none;
   position: absolute;
   right: 0;
@@ -56,4 +56,15 @@
       padding: 4px;
     }
   }
+}
+
+#expense-modal-background {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  display: none;
 }
